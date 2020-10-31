@@ -1,0 +1,73 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{tocloft}
+\usepackage{todonotes}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{pdfpages}
+\usepackage{pdflscape}
+\usepackage{scrlayer}
+\usepackage{scrhack}
+\begin{document}
+\begin{titlepage}
+    \centering
+    {\scshape\large AA 2020/2021 \par}
+    \vfill
+    \includegraphics[width=100pt]{assets/logo-polimi-new}\par\vspace{1cm}
+    {\scshape\LARGE Politecnico di Milano \par}
+    \vspace{1.5cm}
+    {\huge\bfseries RASD\@: Requirement Analysis
+        and Specification Document \par}
+    \vspace{2cm}
+    {\Large {Alice Piemonti\quad Luca Pirovano\quad Nicolò Sonnino}\par}
+    \vfill
+    {\large Professor\par
+        Matteo \textsc{Rossi}}
+    \vfill
+    {\large \today \par}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section{Introduction}
+CLup (Customers Line-up) is an easy-to-use application which intent is to limit as much as possible the number of accesses to grocery shopping.\\
+
+Due to the recent worldwide spread of SARS-CoV-2 (COVID-19), many countries are imposing lockdowns and strict regulations about social distancing such as: the closure of restaurants in the evening, limitations on public transports, curfews, etc.
+
+In particular, citizens are experiences difficulties in accessing supermarkets because of their limited capacity.
+\subsection{Purpose}
+The aim of the product is to avoid gatherings outside grocery stores, improving the safety of the customers.
+
+This is achieved through monitoring accesses to the buildings, managing time slots for visits and optimizing people flows inside the stores.\\
+
+The application will be operable freely, widely available and very intuitive because \todo{completare}
+
+The userbase is expected to be both people with an Internet access and ones without it, from young people to elderly.
+
+\subsection{Scope}
+The product shall be called CLup and will let users to plan their shopping session in two different ways:
+\begin{itemize}
+    \item {\textbf{ASAP}: the user will claim the first available ticket and receive an estimated queue time.}
+    \item {\textbf{Reservation}: the user will choose a time slot from a list of available ones, in order to book his visit to the structure.}
+\end{itemize}
+
+Every customer can choose one of these modes \textbf{remotely} via an official app or through a web browser, or \textbf{in presence} by asking to a staff member, who will act as an intermediate between the customer and the system.
+
+When a customer makes a reservation, the system allows him to choose the duration of his visit and insert a list of possible purchases, in order to optimize his stay.\\
+
+In addition, the user can change time slot/store based on system's suggestions and enable periodically notifications of available slots in a day/time range.
+
+
+\newpage
+\section{Overall Description}
+\newpage
+\section{Specific Requirements}
+\newpage
+\section{Formal Analysis}
+\newpage
+\section{Effort spent}
+\end{document}
