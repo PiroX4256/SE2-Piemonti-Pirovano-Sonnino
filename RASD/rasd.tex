@@ -47,9 +47,9 @@ CLup (Customers Line-up) is an easy-to-use application which intent is to help g
 
 In fact, due to the recent worldwide spread of SARS-CoV-2 (COVID-19), many countries are imposing lockdowns and strict regulations about social distancing such as: the closure of restaurants in the evening, limitations on public transports, curfews, etc.
 
-In particular, supermarkets are imposed to restrict accesses to their stores, in order to avoid having too much people inside, which stands at the basis of social distancing. Furthermore, the staggered access needed by stores lead to the same problem in the outside, such as long queues and crowds.
+In particular, supermarkets are imposed to restrict accesses to their stores, in order to avoid having too much people inside them, which stands at the basis of social distancing. Furthermore, the staggered access needed by stores lead to the same problem in the outside, such as long queues and crowds.
 
-Grocery stores need an application which main intent is to manage in an efficient way customers arrival on the outside of the supermarket, and to count the access of people to the inside. The advantage is to regulate the influx of people near the stores, according to the vigent strict rules, and to avoid long hours of waiting, saving people from line up.
+Grocery stores need an application which main intent is to manage in an efficient way customers arrival on the outside of the supermarket, and to count the access of people inside them. The advantage is to regulate the influx of people near the stores, according to the vigent strict rules, and to avoid long hours of waiting, saving people from line up.
 
 \subsection{Purpose}
 The aim of the product is to avoid gatherings outside and inside grocery stores,  improving the safety of the customers.
@@ -64,9 +64,9 @@ In addition, users can book a visit to the supermarket for a different time or d
 
 The application can also register in advance the duration of the visit of a customer and a list of categories that the customer indends to buy, so that the system can suggest the best slot and plan in a finer way the visits, in order to guarantee a correct distance through the aisles inside the store. In fact, the application will be able to balance the presence of people in all the areas of the supermarket, as well as the flows of visitors throughout the day.
 
-The customer will be able to activate an additional functionality: the application will send a notification of available slots in a certain day/time range, in order to leave to the user the minimum effort.
+Customers will be able to activate an additional functionality: the application will send a notification of available slots in a certain day/time range, in order to leave to the user the minimum effort.
 
-Attendants will have the possibility to scan a QR code at the entance of the sotre, in order to verify the correctness of the arrival of the customer and, in the meanwhile, monitor the number of entrances.
+Attendants will have the possibility to scan a QR code at the entrance of the store, in order to verify the correctness of the arrival of the customer and, in the meanwhile, monitor the number of entrances.
 
 In addition, attendants should have access to a proper area of the application that permits to behave as a proxy and hand out tickets on spot in order to guarantee the access to those people who doesn't have the application.
 
@@ -85,7 +85,7 @@ Every customer can choose one of these modes \textbf{remotely} via an official a
 
 When a customer makes a reservation, the system allows him to choose the duration of his visit and insert a list of possible purchases, in order to optimize his stay.\\
 
-In addition, the user can change time slot/store based on system's suggestions and enable periodically notifications of available slots in a day/time range.
+In addition to that, the user can change time slot/store relying on system's suggestions and enable periodically notifications of available slots in a day/time range.
 
 \subsection{Goals}
 The main objectives of our system are the following:
@@ -103,7 +103,38 @@ The main objectives of our system are the following:
     \item {\textbf{G6: Allow customers to receive a suggestion of alternative slots}\\The aim of this goal is to balance out the number of people in the store. The suggestion could be on the same shop chain or also on different chains.}
     \item {\textbf{G7: Allow customers to receive notifications on free slots}\\Customers could enable notifications in order to receive the first available slot and, if needed, to book it.}
 \end{itemize}
-
+\subsection{Definitions, Acronyms, Abbreviations}
+\subsubsection{Definitions}
+\begin{itemize}
+    \item {\textbf{Customers:} the common people whom this service is directed. They can belong to any age and sex. Their main purpose is to request a ticket to schedule their line up at the shop.}
+    \item {\textbf{Shop:} it's the provider of the goods that customers want to buy. It's obliged to limit the number of people entering in its building through a line up method, in order to respect the local laws for COVID-19 pandemic.}
+    \item {\textbf{Queue number:} it's the unique ID assigned to each customer. It's composed of alphanumerical elements, and it's needed in order to access the desired shop. It can be retrieved online or on the spot.}
+    \item {\textbf{Visit:} it refers to the customers entering the shop, and also to their staying time.}
+    \item {\textbf{QR Code:} it's a graphic representation of a string, which can be easily read through barcode readers. It contains the visual representation of the queue number, in order to let shops make a customer "check-in".}
+\end{itemize}
+\subsubsection{Acronyms}
+\begin{itemize}
+    \item {\textbf{ASAP:} As Soon As Possible. It refers to the possibility of getting an appointment on the first available slot.}
+    \item {\textbf{S2B:} Software to Be, it's the one designed in this document and not yet implemented.}
+    \item {\textbf{API:} Application Programming Interface, it indicates on demand procedure which supply a specific task.}
+\end{itemize}
+\subsubsection{Abbreviations}
+\begin{itemize}
+    \item {\textbf{ID:} identifier. It's a generally unique sequence of numbers or letters in order to unambiguously identify an entity.}
+\end{itemize}
+\subsection{Revision History}
+\subsection{Reference Documents}
+\begin{itemize}
+    \item {Specification document: "R\&DD Assignment A.Y. 2020-2021"}
+    \item {Alloy official documentation: \href{https://alloytools.org/documentation.html}{https://alloytools.org/documentation.html}}
+\end{itemize}
+\subsection{Document Structure}
+\begin{itemize}
+    \item {\textbf{Section 1: Introduction}\\This section offers a brief description of the problem and required functionalities. \\It also contains the list of definitions, acronyms and abbreviations that could be found in this document. \\Finally, there are changelog of the document, containing the revisions list and their content, and document structure, which describes the main purposes of the sections of this document.}
+    \item {\textbf{Section 2: Overall Description}\\This section offers a summary description about interactions between the S2B and the external interfaces.}
+    \item {\textbf{Section 3: Specific Requirements}}
+    \item {\textbf{Section 4: Formal Analysis through Alloy}}
+\end{itemize}
 \newpage
 \section{Overall Description}
 \newpage
@@ -112,4 +143,12 @@ The main objectives of our system are the following:
 \section{Formal Analysis}
 \newpage
 \section{Effort spent}
+\begin{tabular}{ | l || c | r | l | c |}
+    \hline
+    Student        & Time for S.1 & Time for S.2 & Time for S.3 & Time for S.4 \\ \hline
+    Alice Piemonti &              &              &              &              \\ \hline
+    Luca Pirovano  & 2h25         &              &              &              \\ \hline
+    Nicolò Sonnino &              &              &              &              \\
+    \hline
+\end{tabular}
 \end{document}
