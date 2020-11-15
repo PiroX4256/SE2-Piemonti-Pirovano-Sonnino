@@ -91,10 +91,10 @@ In addition to that, the user can change both the slot and the store relying on 
 \todo{aggiungere introduzione e nome sottosezione}
 \begin{center}
     \begin{table}
-
+        \rowcolors{3}{blue!15}{white}
         \begin{tabular}{|c|c|c|}
             \hline
-            \rowcolor{lightgray}
+            \rowcolor{blue!50}
             Phenomenon                                 & Who controls it? & Is shared? \\
             \hline
             The formation of queues                    & W                & N          \\
@@ -231,7 +231,20 @@ It's a shop. For the application's purpose only, we identify stores as grocery s
 \subsection{Functional Requirements}
 \subsubsection{User Scenarios}
 \textbf{Scenario 1}\\
+Alice is an housewife. She lives with her husband and four children in a small village, not too far from Milan. Due to the Covid-19 spread, the government of the region decided to impose a maximum of 30 people inside grocery stores simultaneously. Some days before, Alice went to the nearest supermarket and she discovered there was a queue with more than 50 people in-line; it would take more than two hours for entering, so Alice decided to give up. Just yesterday, the same supermarket launched CLup, an application which helps to manage queues remotely. Alice downloaded it on her smartphone as soon as she discovered it: thanks to CLup she can now retrieve a virtual number and wait for her turn from home, without losing time in a real queue outside the supermarket.\\
 
+\textbf{Scenario 2}\\
+Rodolfo is a middle-aged man who lives in Rome. He has been CLup on his iPhone since the beginning of the lock-down in Italy. Whenever Rodolfo decided it's time to go shopping for some food, he launches the application, he logs in, and he retrieves his number: 355. Rodolfo knows that the nearest Esselunga is the most popular, so it always takes at least 40 minutes until his number is called. For this reason, he starts to watch the latest episode of his favorite tv series. After 30 minutes, the iPhone vibrates: the application CLup is notifying that in 10 minutes the number 355 will be called. Hence, Rodolfo reaches safely the store (there are just a bunch of people who are entering): he shows to the attendant the QR code on the iPhone and he calmly goes to buy the necessary. \\
+
+\textbf{Scenario 3}\\
+A full-time student at Politecnico di Milano decided to stay in his apartment in Milan, although he started to follow all the lectures remotely. He study a lot and he can't go to the grocery store whenever he wants, due to the huge amounts of lessons. But, he uses to go on CLup website and book a slot a couple of days before: he logs in and he goes to the booking section. He selects the date and the time he preferred and one of the nearest available stores. Usually, the system doesn't suggest him other combinations (in order to balance people throughout the day) since he usually books for late evening slots, which are very little frequented. He doesn't even have to insert the expected duration time for the visit since he always stays 30 minutes, so the system autocomplete the field with that value. Then, he selects the list of item's categories he intends to buy: pasta, snacks, beverages, fruits and cleaning. At the end, he confirms everything, and the page displays the QR-code. He clicks on the sharing button and sends it to his smartphone, via Telegram. Once he receives the message, he knows everything worked fine.\\
+
+\subsubsection{Attendant Scenarios}
+\textbf{Scenario 4}\\
+Hassan works at the new Coop located in Marsala street in Monza. Once the store decided to adopt CLup for the management of flows in and out the supermarket, the manager of Hassan assigned him the task of monitoring the main entrance. Therefore, Hassan downloaded the application and registered as a staff member. Hassan's job is to scan the QR code of the customer with his smartphone, and to make sure that everything works fine. The application always displays a counter, so that Hassan can know exactly how many people there are inside the store. However, it does never happen that the counter reaches the maximum value allowed for laws. Hassan is happy for the introduction of CLup because it has got everything needed so that his job became very easy.\\
+
+\textbf{Scenario 5}\\
+Salvatore is a young boy who lives in a little village near Marsala, in Sicily. The chain of supermarkets where he works as an assistant has introduced a new application for managing queues, in order to avoid gatherings outside its buildings. However, Salvatore knows that there are a lot of elderly people in his village, so how can they use the application without even having a smartphone? Surprisingly, Salvatore came to know that the service has got a function which allows him to act as an intermediate for the aged people who come to his store. His job now is to log in on the application as a staff member and take the credentials of customers who need help. After that, he asks to customers when they want to come again, so that he can reserve them a slot. The application generates the QR code, which he prints and gives to the customer. Salvatore's days are full of work now, because there are a lot of old ladies who need an help, but he knows he must done his job for community's sake.
 \newpage
 \section{Formal Analysis}
 \newpage
