@@ -1,18 +1,17 @@
-\documentclass[12pt]{article}
+\documentclass[table, 12pt]{article}
 \usepackage{graphicx}
 \usepackage[T1]{fontenc}
 \usepackage{tocloft}
 \usepackage{todonotes}
-\usepackage{subcaption}
 \usepackage{caption}
 \usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{listings}
-\usepackage{wrapfig}
 \usepackage{pdfpages}
 \usepackage{pdflscape}
-\usepackage{scrlayer}
 \usepackage{scrhack}
+\usepackage{xcolor}
+
 
 \begin{document}
 \begin{titlepage}
@@ -94,6 +93,7 @@ In addition to that, the user can change both the slot and the store relying on 
     \begin{table}
         \begin{tabular}{|c|c|c|}
             \hline
+            \rowcolor{lightgray}
             Phenomenon                                 & Who controls it? & Is shared? \\
             \hline
             The formation of queues                    & W                & N          \\
