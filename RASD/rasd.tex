@@ -13,6 +13,7 @@
 \usepackage{pdflscape}
 \usepackage{scrlayer}
 \usepackage{scrhack}
+
 \begin{document}
 \begin{titlepage}
     \centering
@@ -86,6 +87,49 @@ Every customer can choose one of these modalities \textbf{remotely} via an offic
 When a customer makes a reservation, the system allows him to choose the duration of his visit and insert a list of possible purchases, in order to optimize his stay.\\
 
 In addition to that, the user can change both the slot and the store relying on system's suggestions: the application will display the best recommendation in order to balance the number of people inside a store throughout the day, merging in the same time slots those people who will purchase different product, in order to guarantee a good distancing through the aisles as well. The user can also enable periodically notifications of available slots in a day/time range: this will allow the application to notify the user when a desirable slot (according to day/time preferences) is available.
+
+
+\todo{aggiungere introduzione e nome sottosezione}
+\begin{center}
+    \begin{table}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            Phenomenon                                 & Who controls it? & Is shared? \\
+            \hline
+            The formation of queues                    & W                & N          \\
+            Social distancing                          & W                & N          \\
+            User registration                          & M                & Y          \\
+            User login                                 & W                & Y          \\
+            Check username and password                & M                & N          \\
+            User retrieves a new number                & W                & Y          \\
+            Generate a unique number                   & M                & N          \\
+            Visualize queue number                     & W                & Y          \\
+            Check time-out                             & M                & N          \\
+            Notify number is going to be called        & M                & Y          \\
+            Generate a QR code                         & M                & N          \\
+            Visualize QR code                          & M                & Y          \\
+            Attendant scans QR code                    & W                & Y          \\
+            Check QR code validity                     & M                & N          \\
+            Customer retrieves a number on spot        & W                & Y          \\
+            User selects day/time of slot              & W                & Y          \\
+            Check availability of slot                 & M                & N          \\
+            User adds visit duration                   & W                & Y          \\
+            Check visit duration validity              & M                & N          \\
+            User indicates list if items               & W                & Y          \\
+            Confirm slot has been reserved             & M                & Y          \\
+            Cross data                                 & M                & N          \\
+            Make recommendation of alternative slots   & M                & N          \\
+            Visualize suggestions of alternative slots & M                & Y          \\
+            Check customers balance                    & M                & N          \\
+            Accept receipt of notifications            & W                & Y          \\
+            Search periodically for available slots    & M                & N          \\
+            Notify for available slots                 & M                & Y          \\
+
+            \hline
+        \end{tabular}
+        \caption{phenomena table}
+    \end{table}
+\end{center}
 
 \subsection{Goals}
 The main objectives of our system are the following:
