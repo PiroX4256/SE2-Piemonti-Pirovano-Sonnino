@@ -11,6 +11,7 @@
 \usepackage{pdflscape}
 \usepackage{scrhack}
 \usepackage{xcolor}
+\usepackage{float}
 
 \begin{document}
 \begin{titlepage}
@@ -220,7 +221,7 @@ It's a customer, i.e., a normal person who intend to go to the grocery shop. It 
 It's a worker of a specific store. Its job is to help customers and monitor the entrances of people. It uses the application for scanning the QR code of users at the entrance of the store. In addition, it can enter in a dedicated section of the application in order to act as an intermediate for those customers who don't have an Internet access.
 
 \subsubsection{Store Administrator}
-It's the administrator of a shop or a chain of stores. For the application's purpose only, we identify stores as grocery shops. It chooses to adopt the service in order to manage the flows of people inside and outside the building, as well as observing the laws on social distancing.
+It's the administrator of a shop or a chain of stores. For the application's purpose only, we identify stores as grocery shops. The store administrator is the person who chooses to adopt the service in order to manage the flows of people inside and outside the building, as well as observing the laws on social distancing.
 
 \subsection{Assumption, Dependencies, Constraints}
 
@@ -237,6 +238,42 @@ Rodolfo is a middle-aged man who lives in Rome. He has CLup installed on his iPh
 
 \textbf{Scenario 3}\\
 A full-time student at Politecnico di Milano decided to stay in his apartment in Milan, although he started to follow all the lectures remotely. He studies a lot and he can't go to the grocery store whenever he wants, due to the huge amounts of lessons. But, he uses to go on CLup website and book a slot a couple of days before: he logs in and he goes to the booking section. He selects the date and the time he preferred and one of the nearest available stores. Usually, the system doesn't suggest him other combinations (in order to balance people throughout the day) since he usually books for late evening slots, which are very little frequented. He doesn't even have to insert the expected duration time for the visit since he always stays 30 minutes, so the system autocomplete the field with that value. Then, he selects the list of item's categories he intends to buy: pasta, snacks, beverages, fruits and cleaning. At the end, he confirms everything, and the page displays the QR-code. He clicks on the sharing button and sends it to his smartphone, via Telegram. Once he receives the message, he knows everything worked fine.\\
+
+\textbf{Use cases tables}\\
+\begin{table}[H]
+    \begin{tabular}{ | l | p{10cm} | }
+        \hline
+                         & Sign Up User on the application                                                                                                                                                                                                                                        \\
+        \hline
+        Actor            & User                                                                                                                                                                                                                                                                   \\
+        \hline
+        Entry conditions &
+        \begin{itemize}
+            \item User has downloaded and opened the application on his smartphone
+        \end{itemize}                                                                                                                                                                                                                                                                \\
+        \hline
+        Events flow      & \begin{itemize}
+            \item The application displays the Login screen
+            \item User clicks on Sign Up button
+            \item The application displays a selection list about which account the user intends to create
+            \item User selects the option "User" and confirm
+            \item The application displays a list of fields that User must compile: Name, Surname, e-mail, municipality, User name, password, date of birth. Some fields are optional: phone number, address, ID of the store card.
+            \item User inserts the mandatory data and eventually one or more optional data
+            \item User clicks on confirm button
+            \item The application displays the acceptance of registration and invite User to go on his inbox in order to confirm the registration
+            \item User opens his inbox, checks the e-mails and clicks on confirmation link
+        \end{itemize}                                                                                                                                                                                                                                             \\
+        \hline
+        Exit conditions  & User registration has been successful: user data are stored in the database of the system. User can now Login with his credentials.                                                                                                                                    \\
+        \hline
+        \hline
+        Exception 1      & User insert an e-mail which is already stored in the database. So, after the user inserts his data and clicks on confirm, the application displays an error page which tells that user is already registered to the service and invites him to login with that e-mail. \\
+        \hline
+        Exception 2      & User inserts an invalid e-mail. So, after user clicks on confirm button, the application displays the same page and an error message, which suggests to the user to check the e-mail inserted or to change it.                                                         \\
+        \hline
+    \end{tabular}
+    \caption{Sign Up User}
+\end{table}
 
 \subsubsection{Attendant Scenarios}
 \textbf{Scenario 4}\\
