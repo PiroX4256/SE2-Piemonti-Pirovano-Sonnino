@@ -257,6 +257,46 @@ It's the administrator of a shop or a chain of stores. For the application's pur
 \newpage
 \section{Specific Requirements}
 \subsection{Interface Requirements}
+\subsubsection{User interfaces}
+In figure \ref{mock_sign_in_up} we can see the initial screen of the application.
+It asks the user to log in or create an account.
+
+In case he decides to create an account, there are three possibilities of subscription (customer, administrator or attendant).\\
+In each case, further custom information needs to be provided.
+
+For example, in the case of a Store Administrators, the system would ask them the details of their store (name, position, etc).\\
+Instead, in the case of Store Attendants, it would ask them the store in which they are actual working, and their personal attendant code.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\textwidth]{assets/mock_sign_in_sign_up.png}
+        \caption{Sign In and Sign Up procedures.}
+        \label{mock_sign_in_up}
+    \end{center}
+\end{figure}
+
+In figure \ref{mock_home} instead it is possible to see the application state after a customer has successfully logged in.\\
+Through a side menù it is possible to access to different pages; the most important and relevant of them is for sure the \textit{My bookings} one.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=150pt]{assets/mock_home.png}
+        \caption{Home page of the application.}
+        \label{mock_home}
+    \end{center}
+\end{figure}
+
+You can access to bookings page described in figure \ref{mock_bookings} through the contextual menù described before.\\
+Once here, there is the possibility of managing the upcoming bookings or check for the details of them and also for past bookings, which are listed immediately below.
+
+When you are on a details page, all the information about the selected booking is listed. Through a button, it is possible to cancel that booking (if it is an upcoming one).
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\textwidth]{assets/mock_bookings.png}
+        \caption{Home page of the application.}
+        \label{mock_bookings}
+    \end{center}
+\end{figure}
+
 \subsection{Functional Requirements}
 \subsubsection{User Scenarios}
 \textbf{Scenario 1}\\
