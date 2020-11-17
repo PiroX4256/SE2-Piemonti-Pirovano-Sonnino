@@ -167,6 +167,7 @@ The main objectives of our system are the following:
     \item {\textbf{ASAP:} As Soon As Possible. It refers to the possibility of getting an appointment on the first available slot.}
     \item {\textbf{S2B:} Software to Be, it's the one designed in this document and not yet implemented.}
     \item {\textbf{API:} Application Programming Interface, it indicates on demand procedure which supply a specific task.}
+    \item {\textbf{UML:} Universal Modelling Language, it's a way of designing application based on its graphic class representation.}
 \end{itemize}
 \subsubsection{Abbreviations}
 \begin{itemize}
@@ -179,12 +180,13 @@ The main objectives of our system are the following:
     \item {Specification document: "R\&DD Assignment A.Y. 2020-2021"}
     \item {Alloy official documentation: \href{https://alloytools.org/documentation.html}{https://alloytools.org/documentation.html}}
     \item {Paper: "Jackson and Zave: the world and the machine"}
+    \item {UML official specification \href{https://www.omg.org/spec/UML/}{https://www.omg.org/spec/UML/}}
 \end{itemize}
 \subsection{Document Structure}
 \begin{itemize}
     \item {\textbf{Section 1: Introduction}\\This section offers a brief description of the problem and required functionalities. \\It also contains the list of definitions, acronyms and abbreviations that could be found in this document. \\Finally, there are changelog of the document, containing the revisions list and their content, and document structure, which describes the main purposes of the sections of this document.}
-    \item {\textbf{Section 2: Overall Description}\\This section offers a summary description about interactions between the S2B and the external interfaces.}
-    \item {\textbf{Section 3: Specific Requirements}}
+    \item {\textbf{Section 2: Overall Description}\\This section offers a summary description about the overall organization of the system, the Hardware and Software constraints and the interfaces needed to get it work.\\It also contains a description of all the features offered by the application, and of the actors who use it.}
+    \item {\textbf{Section 3: Specific Requirements}\\This section contains several visual mockups in order to explain the interfaces listed in Section 2. It also contains a description of functional requirement through some scenarios, use cases and diagrams.}
     \item {\textbf{Section 4: Formal Analysis through Alloy}}
 \end{itemize}
 \newpage
@@ -196,18 +198,39 @@ It does not lean on a previously existent system and does not offer integrations
 
 CLup provides all the module that are necessary for its execution. However, it must exploit external interfaces to accomplish its requirements.
 
+We can see a brief report of the information stored by the application through the class diagram of figure 1.
+
+\begin{figure}
+    \begin{center}
+        \hspace*{-1.5in}
+        \includegraphics[width=\paperwidth]{assets/UML.png}
+        \caption{High-level UML diagram with main classes}
+    \end{center}
+
+\end{figure}
+
 \subsubsection{User Interfaces}
 The system should interfaces with users through devices which must be connected to Internet.
 
 Everyone that needs to use this service would connect to the service through a Web Interface (through an existent domain, like \textit{www.clup.com}) or through a mobile application that can be installed on smartphones (both IOS and Android).
 
 \subsubsection{Software Interfaces}
+CLup will use some important external interfaces in order to accomplish its functionalities.
+
+The first one is a QRCode generator in order to print a check-in code to customers.
+The ticket unique ID will be sent to the generator interface, which will return a valid QR representation of it.\\
+The code will then be scanned by store attendants for entrances counting.
+
+The second one is an API provided by a map service owner (like \textit{Google Maps} or \textit{OpenStreetMaps}), which will use the position given by the application to return an interactive map with a marker on that exact position.
+
+Another API service used is the one of the DBMS system, which will be adopted in order to query the database in an efficient way.
 \subsubsection{Hardware Interfaces}
 The system "as it is" does not provide any hardware interface. However, local shops could use the QR Code given by the application on their local systems in order to monitor the number of customers who have entered the shop.
 \subsubsection{Hardware Constraints}
 Each person interested in using the system described in this document to line up for a shop should have a device connected to Internet, which could be a smartphone, tablet or personal computer.
 
 The basic requirement is to have an Internet browser installed on the used device.
+There is then the possibility of downloading and installing the official CLup application from the most important store, like Apple's \textit{App Store} or Android's \textit{Play Store}.
 
 Shops, instead, should have some devices connected to the service (through web interface or application) in order to monitor queue length, entrances and, if needed, close the booking session.
 
@@ -223,7 +246,13 @@ It's a worker of a specific store. Its job is to help customers and monitor the 
 \subsubsection{Store Administrator}
 It's the administrator of a shop or a chain of stores. For the application's purpose only, we identify stores as grocery shops. The store administrator is the person who chooses to adopt the service in order to manage the flows of people inside and outside the building, as well as observing the laws on social distancing.
 
-\subsection{Assumption, Dependencies, Constraints}
+\subsection{Assumptions, Dependencies, Constraints}
+\subsubsection{Assumptions}
+\begin{itemize}
+    \item \textbf{D1:} GPS position of the shop is exact and leads to that shop.
+    \item \textbf{D2:} in case of QR Code entrances monitoring, shop should have an internal system in order to count them.
+    \item
+\end{itemize}
 
 \newpage
 \section{Specific Requirements}
