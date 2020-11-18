@@ -331,14 +331,26 @@ When you are on a details page, all the information about the selected booking i
 \end{figure}
 
 Finally, in figure \ref{mock_new_booking}, you can create a new booking through a dedicated page.\\
-The procedure consists of selecting the reservation type (\textit{Grab a ticket})
+The procedure consists of selecting the reservation type (\textit{Grab a ticket} vs \textit{Book a slot}), the date and time preferred and the preferred nearby store.
+
+If the store can not accept people anymore at the selected time, the application suggests to change date, time or, alternatively, it suggests to change grocery shop, providing a list of available ones, as shown in figure \ref{mock_new_booking_unavailable}.
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=300pt]{assets/mock_new_booking.png}
+        \includegraphics[width=225pt]{assets/mock_new_booking.png}
         \caption{New booking procedure.}
         \label{mock_new_booking}
     \end{center}
 \end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=225pt]{assets/mock_new_booking_unavailable.png}
+        \caption{New booking procedure with unavailable date/time.}
+        \label{mock_new_booking_unavailable}
+    \end{center}
+\end{figure}
+
+\subsubsection{Store Administrator interfaces}
 
 \subsection{Functional Requirements}
 \subsubsection{User Scenarios}
