@@ -308,17 +308,7 @@ Instead, in the case of Store Attendants, it would ask them the store in which t
     \end{center}
 \end{figure}
 
-In figure \ref{mock_home} instead it is possible to see the application state after a customer has successfully logged in.\\
-Through a side menù it is possible to access to different pages; the most important and relevant of them is for sure the \textit{My bookings} one.
-\begin{figure}[H]
-    \begin{center}
-        \includegraphics[width=150pt]{assets/mock_home.png}
-        \caption{Home page of the application.}
-        \label{mock_home}
-    \end{center}
-\end{figure}
-
-You can access to bookings page described in figure \ref{mock_bookings} through the contextual menù described before.\\
+You can access to bookings page described in figure \ref{mock_bookings} through the contextual menù on the left side of application.\\
 Once here, there is the possibility of managing the upcoming bookings or check for the details of them and also for past bookings, which are listed immediately below.
 
 When you are on a details page, all the information about the selected booking is listed. Through a button, it is possible to cancel that booking (if it is an upcoming one).
@@ -352,6 +342,19 @@ If the store can not accept people anymore at the selected time, the application
 \end{figure}
 
 \subsubsection{Store Administrator interfaces}
+In figure \ref{mock_store_admin_home} there is a brief overview of the web interface of Store Administrator.\\
+As it can be seen, there are four macro areas, each one with its own features. The store administrator can edit information about its grocery shop, its time slot, and can manage the attendants and can also see the list of upcoming booking for the shop.
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{assets/mock_home_store_admin_page.png}
+    \caption{Store administrator home page}
+    \label{mock_store_admin_home}
+\end{figure}
+
+\subsubsection{Hardware Interfaces}
+As said before, the application "as it is" does not provide any hardware interface.\\
+However, there is the possibility of integration with shops' system and hardware in order to monitor entrances through the given QR code.
+\subsubsection{Software Interfaces}
+The software, through an exposition of API, could manage the reading of the QR code in order to check its validity and its consistence with actual date and time.
 
 \subsection{Functional Requirements}
 \subsubsection{User Scenarios}
@@ -508,7 +511,7 @@ Salvatore is a young boy who lives in a little village near Marsala, in Sicily. 
     \hline
     Student        & Time for S.1 & Time for S.2 & Time for S.3 & Time for S.4 \\ \hline
     Alice Piemonti & 3h           & 20 min       & 4h           &              \\ \hline
-    Luca Pirovano  & 3h           & 5h           & 2h           &              \\ \hline
+    Luca Pirovano  & 3h           & 5h           & 4h           &              \\ \hline
     Nicolò Sonnino &              &              &              &              \\
     \hline
 \end{tabular}
