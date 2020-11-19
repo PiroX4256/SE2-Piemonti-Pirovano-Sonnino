@@ -12,6 +12,7 @@
 \usepackage{scrhack}
 \usepackage{xcolor}
 \usepackage{float}
+\usepackage{longtable}
 
 \begin{document}
 \begin{titlepage}
@@ -363,41 +364,135 @@ Rodolfo is a middle-aged man who lives in Rome. He has CLup installed on his iPh
 \textbf{Scenario 3}\\
 A full-time student at Politecnico di Milano decided to stay in his apartment in Milan, although he started to follow all the lectures remotely. He studies a lot and he can't go to the grocery store whenever he wants, due to the huge amounts of lessons. But, he uses to go on CLup website and book a slot a couple of days before: he logs in and he goes to the booking section. He selects the date and the time he preferred and one of the nearest available stores. Usually, the system doesn't suggest him other combinations (in order to balance people throughout the day) since he usually books for late evening slots, which are very little frequented. He doesn't even have to insert the expected duration time for the visit since he always stays 30 minutes, so the system autocomplete the field with that value. Then, he selects the list of item's categories he intends to buy: pasta, snacks, beverages, fruits and cleaning. At the end, he confirms everything, and the page displays the QR-code. He clicks on the sharing button and sends it to his smartphone, via Telegram. Once he receives the message, he knows everything worked fine.\\
 
+\newpage
 \textbf{Use cases tables}\\
-\begin{table}[H]
-    \begin{tabular}{ | l | p{10cm} | }
-        \hline
-                         & Sign Up User on the application                                                                                                                                                                                                                                        \\
-        \hline
-        Actor            & User                                                                                                                                                                                                                                                                   \\
-        \hline
-        Entry conditions &
-        \begin{itemize}
-            \item User has downloaded and opened the application on his smartphone
-        \end{itemize}                                                                                                                                                                                                                                                                \\
-        \hline
-        Events flow      & \begin{itemize}
-            \item The application displays the Login screen
-            \item User clicks on Sign Up button
-            \item The application displays a selection list about which account the user intends to create
-            \item User selects the option "User" and confirm
-            \item The application displays a list of fields that User must compile: Name, Surname, e-mail, municipality, User name, password, date of birth. Some fields are optional: phone number, address, ID of the store card.
-            \item User inserts the mandatory data and eventually one or more optional data
-            \item User clicks on confirm button
-            \item The application displays the acceptance of registration and invite User to go on his inbox in order to confirm the registration
-            \item User opens his inbox, checks the e-mails and clicks on confirmation link
-        \end{itemize}                                                                                                                                                                                                                                             \\
-        \hline
-        Exit conditions  & User registration has been successful: user data are stored in the database of the system. User can now Login with his credentials.                                                                                                                                    \\
-        \hline
-        \hline
-        Exception 1      & User insert an e-mail which is already stored in the database. So, after the user inserts his data and clicks on confirm, the application displays an error page which tells that user is already registered to the service and invites him to login with that e-mail. \\
-        \hline
-        Exception 2      & User inserts an invalid e-mail. So, after user clicks on confirm button, the application displays the same page and an error message, which suggests to the user to check the e-mail inserted or to change it.                                                         \\
-        \hline
-    \end{tabular}
-    \caption{Sign Up User}
-\end{table}
+
+\begin{longtable}{ | c | p{10cm} | }
+    \caption{Sign Up User}                                                                                                                                                                                                                                                                    \\
+
+    \hline
+                     & Sign Up User on the application                                                                                                                                                                                                                                        \\
+    \hline
+    Actor            & User                                                                                                                                                                                                                                                                   \\
+    \hline
+    Entry conditions &
+    \begin{itemize}
+        \item User has downloaded and opened the application on his smartphone
+    \end{itemize}                                                                                                                                                                                                                                                                \\
+    \hline
+    Events flow      & \begin{itemize}
+        \item The application displays the Login screen
+        \item User clicks on Sign Up button
+        \item The application displays a selection list about which account the user intends to create
+        \item User selects the option "User" and confirm
+        \item The application displays a list of fields that User must compile: Name, Surname, e-mail, municipality, User name, password, date of birth. Some fields are optional: phone number, address, ID of the store card.
+        \item User inserts the mandatory data and eventually one or more optional data
+        \item User clicks on confirm button
+        \item The application displays the acceptance of registration and invite User to go on his inbox in order to confirm the registration
+        \item User opens his inbox, checks the e-mails and clicks on confirmation link
+    \end{itemize}                                                                                                                                                                                                                                             \\
+    \hline
+    Exit conditions  & User registration has been successful: user data are stored in the database of the system. User can now Login with his credentials.                                                                                                                                    \\
+    \hline
+    \hline
+    Exception 1      & User insert an e-mail which is already stored in the database. So, after the user inserts his data and clicks on confirm, the application displays an error page which tells that user is already registered to the service and invites him to login with that e-mail. \\
+    \hline
+    Exception 2      & User inserts an invalid e-mail. So, after user clicks on confirm button, the application displays the same page and an error message, which suggests to the user to check the e-mail inserted or to change it.                                                         \\
+    \hline
+\end{longtable}
+
+\begin{longtable}{|c| p{10cm}|}
+    \caption{Login User}                                                                                                                                                                             \\
+    \hline
+                     & Login User on the application                                                                                                                                                 \\
+    \hline
+    Actor            & User                                                                                                                                                                          \\
+    \hline
+    Entry conditions & \begin{itemize}
+        \item User has downloaded and opened the application on his smartphone
+        \item User has registered to the service
+    \end{itemize}                                                                                                                                                    \\
+    \hline
+    Events flow      & \begin{itemize}
+        \item The system displays the Login page
+        \item User inserts in apposite fields the credentials for logging in and presses the Login button
+        \item The system checks the correctness of the credential inserted
+        \item The system displays the home page of the application
+    \end{itemize}                                                                                                                                                    \\
+    \hline
+    Exit condition   & User is logged in                                                                                                                                                             \\
+    \hline
+    \hline
+    Exception 1      & User inserts wrong combination of credentials and presses Login button. In this case, the system detects the error and the application displays the Login page with an error. \\
+    \hline
+\end{longtable}
+
+
+\begin{longtable}{|c| p{10cm}|}
+    \caption{Retrieve a ticket}                                                                                                                                                                                                 \\
+    \hline
+                     & Retrieve a ticket                                                                                                                                                                                        \\
+    \hline
+    Actor            & User                                                                                                                                                                                                     \\
+    \hline
+    Entry conditions & \begin{itemize}
+        \item User has logged in
+    \end{itemize}                                                                                                                                                                               \\
+    \hline
+    Events flow      & \begin{itemize}
+        \item User presses the New Ticket button
+        \item The application displays a confirm page with the time and date of the first slot available
+        \item User presses on confirm button
+    \end{itemize}                                                                                                                                                                               \\
+    \hline
+    Exit condition   &
+    The application displays the unique ID number of the ticket and the QR-code associated to it                                                                                                                                \\
+    \hline
+    \hline
+    Exception 1      & User presses on confirm button but it has got a ticket in his current bookings, which is still valid. In this case, the application displays an error page which suggests to go on the tickets' section. \\
+    \hline
+    Exception 2      & User doesn't like the date/time of the first slot available. In this case, it has to presses on Go Back button in order to go back to the home page or, in alternative, it can close the application.    \\
+    \hline
+\end{longtable}
+
+
+
+\begin{longtable}{|c| p{10cm}|}
+    \caption{Book a visit}                                                                                                                                          \\
+    \hline
+                     & Book a visit                                                                                                                                 \\
+    \hline
+    Actor            & User                                                                                                                                         \\
+    \hline
+    Entry conditions & \begin{itemize}
+        \item User has logged in
+    \end{itemize}                                                                                                                   \\
+    \hline
+    Events flow      & \begin{itemize}
+        \item User presses the Book a Slot button
+        \item The application displays a page with the day/time slots already available for a certain range (e.g. for the current month or for the next month) for a certain store
+        \item User select the store and the slot he prefers (from the available ones) and clicks on the confirm button
+        \item The system estimates the expected duration of the visit based on the analysis of previous visits or, in alternative, it takes a default value
+        \item The application displays the visit duration time and a checklist with the categories of products that the customer wants to buy
+        \item User selects all the categories he intends to buy (optional) and, eventually, he changes the expected duration time. Then, User clicks on confirm button
+        \item The system checks whether if there are better alternatives based on the categories' selections of User
+        \item The application displays a page with the summary of all the previous selections and eventually displays other available slots that can balance better with the choices of other customers' reservations
+        \item User checks his selections and presses the confirm button
+        \item The system adds the booking to the database and generates the unique ID number and the QR code
+
+    \end{itemize}                                                                                                                   \\
+    \hline
+    Exit condition   & The application displays the summary page of the booking, with the preferences selected by the user, the ID number and the QR code generated
+    \\
+    \hline
+    \hline
+    Exception 1      & User has another reservation in the same day. In this case, the application displays an error message and redirect User to the home page.    \\
+    \hline
+\end{longtable}
+
+
+
+
 
 \subsubsection{Attendant Scenarios}
 \textbf{Scenario 4}\\
@@ -412,7 +507,7 @@ Salvatore is a young boy who lives in a little village near Marsala, in Sicily. 
 \begin{tabular}{ | l || c | r | l | c |}
     \hline
     Student        & Time for S.1 & Time for S.2 & Time for S.3 & Time for S.4 \\ \hline
-    Alice Piemonti & 3h           & 20 min       & 2h           &              \\ \hline
+    Alice Piemonti & 3h           & 20 min       & 4h           &              \\ \hline
     Luca Pirovano  & 3h           & 5h           & 2h           &              \\ \hline
     Nicolò Sonnino &              &              &              &              \\
     \hline
