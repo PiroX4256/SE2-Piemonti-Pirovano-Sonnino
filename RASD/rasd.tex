@@ -396,8 +396,8 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     Events flow      & \begin{itemize}[nosep,after=\strut]
         \item The application displays the Login screen
         \item User clicks on Sign Up button
-        \item The application displays a selection list about which account the user intends to create
-        \item User selects the option "User" and confirm
+        \item The application displays a selection list about which account the user intends to create (Customer, Store Administrator or Store Attendant)
+        \item User selects the option "Customer" and confirm
         \item The application displays a list of fields that User must compile: Name, Surname, e-mail, municipality, User name, password, date of birth. Some fields are optional: phone number, address, ID of the store card.
         \item User inserts the mandatory data and eventually one or more optional data
         \item User clicks on confirm button
@@ -453,8 +453,10 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     \end{itemize}                                                                                                                                                                               \\
     \hline
     Events flow      & \begin{itemize}[nosep,after=\strut]
-        \item User presses the New Ticket button
-        \item The application displays a confirm page with the time and date of the first slot available
+        \item User presses the New Booking button
+        \item The application displays two alternatives of booking
+        \item User selects the alternative "Retrieve a ticket"
+        \item The application displays a confirm page, with the store selected and the time and date of the first slot available
         \item User presses on confirm button
     \end{itemize}                                                                                                                                                                               \\
     \hline
@@ -464,7 +466,7 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     \hline
     Exception 1      & User presses on confirm button but it has got a ticket in his current bookings, which is still valid. In this case, the application displays an error page which suggests to go on the tickets' section. \\
     \hline
-    Exception 2      & User doesn't like the date/time of the first slot available. In this case, it has to presses on Go Back button in order to go back to the home page or, in alternative, it can close the application.    \\
+    Exception 2      & User doesn't like the date/time of the first slot available. In this case, it has to press on Cancel button in order to go back to the home page or, in alternative, it can close the application.       \\
     \hline
 \end{longtable}
 
@@ -482,9 +484,11 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     \end{itemize}                                                                                                                   \\
     \hline
     Events flow      & \begin{itemize}[nosep,after=\strut]
-        \item User presses the Book a Slot button
+        \item User presses the New Booking button
+        \item The application displays two alternatives of booking
+        \item User selects the alternative "Book a slot"
         \item The application displays a page with the day/time slots already available for a certain range (e.g. for the current month or for the next month) for a certain store
-        \item User select the store and the slot he prefers (from the available ones) and clicks on the confirm button
+        \item User selects the store and the slot he prefers (from the available ones) and clicks on the confirm button
         \item The system estimates the expected duration of the visit based on the analysis of previous visits or, in alternative, it takes a default value
         \item The application displays the visit duration time and a checklist with the categories of products that the customer wants to buy
         \item User selects all the categories he intends to buy (optional) and, eventually, he changes the expected duration time. Then, User clicks on confirm button
@@ -502,12 +506,75 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     \hline
 \end{longtable}
 
+
+\begin{longtable}{|c| p{10cm}|}
+    \caption{Remove a booking}                                                                                                                                                                                   \\
+    \hline
+                     & Remove a booking                                                                                                                                                                          \\
+    \hline
+    Actor            & User                                                                                                                                                                                      \\
+    \hline
+    Entry conditions & \begin{itemize}
+        \item User has logged in
+    \end{itemize}                                                                                                                                                                \\
+    \hline
+    Events flow      & \begin{itemize}[nosep,after=\strut]
+        \item User clicks on a reservation already done
+        \item The application answers with the details of the booking selected, such as: booking ID, day and time of the booking, store selected.
+        \item User presses the button "Remove"
+        \item The application displays a popup with the notice that the booking is going to be removed permanently
+        \item User confirms the removal
+        \item The system proceeds with the deletion of the booking from the database
+    \end{itemize}                                                                                                                                                                \\
+    \hline
+    Exit condition   & The application notifies that the booking has been removed correctly and it returns to the home page.
+    \\
+    \hline
+    \hline
+    Exception 1      & User wrongly presses the delete button. In this case, the application displays the popup with the notice that the booking is going to be removed and the user presses on "Cancel" button. \\
+    \hline
+\end{longtable}
+
 \subsubsection{Attendant Scenarios}
 \textbf{Scenario 4}\\
 Hassan works at the new Coop located in Marsala street in Monza. Once the store decided to adopt CLup for the management of flows in and out the supermarket, the manager of Hassan assigned him the task of monitoring the main entrance. Therefore, Hassan downloaded the application and registered as a staff member. Hassan's job is to scan the QR code of the customers with his smartphone, and to make sure that everything works fine. The application always displays a counter, so that Hassan can know exactly how many people there are inside the store. However, it does never happen that the counter reaches the maximum value allowed for laws. Hassan is happy for the introduction of CLup because it has got everything needed so that his job became very easy.\\
 
 \textbf{Scenario 5}\\
-Salvatore is a young boy who lives in a little village near Marsala, in Sicily. The chain of supermarkets where he works as an assistant has introduced a new application for managing queues, in order to avoid gatherings outside its buildings. However, Salvatore knows that there are a lot of elderly people in his village, so how can they use the application without even having a smartphone? Surprisingly, Salvatore came to know that the service has got a function which allows him to act as an intermediate for the aged people who come to his store. His job now is to log in on the application as a staff member and take the credentials of customers who need help. After that, he asks to customers when they want to come again, so that he can reserve them a slot. The application generates the QR code, which he prints and gives to the customer. Salvatore's days are full of work now, because there are a lot of old ladies who need an help, but he knows he must done his job for community's sake.
+Salvatore is a young boy who lives in a little village near Marsala, in Sicily. The chain of supermarkets where he works as an assistant has introduced a new application for managing queues, in order to avoid gatherings outside its buildings. However, Salvatore knows that there are a lot of elderly people in his village, so how can they use the application without even having a smartphone? Surprisingly, Salvatore came to know that the service has got a function which allows him to act as an intermediate for the aged people who come to his store. His job now is to log in on the application as a staff member and take the credentials of customers who need help. After that, he asks to customers when they want to come again, so that he can reserve them a slot. The application generates the QR code, which he prints and gives to the customer. Salvatore's days are full of work now, because there are a lot of old ladies who need an help, but he knows he must done his job for community's sake.\\
+
+\textbf{Attendant use case tables}\\
+
+\begin{longtable}{|c| p{10cm}|}
+    \caption{Scan QR code}                                                                                                                                                                                                                                                                \\
+    \hline
+                     & Scan QR code                                                                                                                                                                                                                                                       \\
+    \hline
+    Actor            & Store Attendant                                                                                                                                                                                                                                                    \\
+    \hline
+    Entry conditions & \begin{itemize}
+        \item Store Attendant has logged in
+    \end{itemize}                                                                                                                                                                                                                                         \\
+    \hline
+    Events flow      & \begin{itemize}[nosep,after=\strut]
+        \item Store Attendant presses on the button "Scan"
+        \item The application displays a page with the QR code scanner
+        \item The attendant frames a QR code
+        \item The system reads the QR code and checks if it is associated to an acceptable reservation, according to the actual date, time and location
+        \item The application notifies whether if the QR code is valid
+    \end{itemize}                                                                                                                                                                                                                                         \\
+    \hline
+    Exit condition   & The application displays a page with the total number of people inside the store at that moment
+    \\
+    \hline
+    \hline
+    Exception 1      & The system cannot read the QR code. In this case, the application displays an error status which invites the attendant to frame the QR code again.                                                                                                                 \\
+    \hline
+    Exception 2      & The system cannot read the QR code for 3 times consecutively. In this case, the application displays an error status which invites the attendant to make sure that the QR code is original.                                                                        \\
+    \hline
+    Exception 3      & The system reads a QR code with an unacceptable day/time/store reservation. In this case, the application displays the details of the reservation in order to show where is the problem (e.g. it's too early or too much late or it isn't the correct date/store). \\
+    \hline
+\end{longtable}
+
 
 \subsection{Software System Attributes}
 \subsubsection{Easy usability}
