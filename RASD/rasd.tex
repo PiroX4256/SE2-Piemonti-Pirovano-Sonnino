@@ -677,6 +677,31 @@ The manager of Eurospin's chain of discount in Italy asked to the store managers
     \hline
 \end{longtable}
 
+\begin{longtable}{|c| p{10cm}|}
+    \caption{View Upcoming Bookings Details}                                                                                                                             \\
+    \hline
+                     & View Upcoming Bookings Details                                                                                                                    \\
+    \hline
+    Actor            & Store Manager                                                                                                                                     \\
+    \hline
+    Entry conditions & \begin{itemize}
+        \item Store Manager has logged in
+    \end{itemize}                                                                                                                        \\
+    \hline
+    Events flow      & \begin{itemize}[nosep,after=\strut]
+        \item Store Manager goes to upcoming bookings section and clicks on the "Details" button
+        \item The system takes from the database the list of all the reservations made for that store and the application displays the list
+        \item Store Manager clicks on one of the bookings
+    \end{itemize}                                                                                                                        \\
+    \hline
+    Exit condition   & The application displays a page with the details of the selected booking, such as: ID of the ticket, date and time, list of product's categories.
+    \\
+    \hline
+    \hline
+    Exception 1      & CLup application cannot reach the database. In this case, an error message is displayed.                                                          \\
+    \hline
+\end{longtable}
+
 
 \todo . Tables: lista dei clienti, generatore statistiche prenotazioni, modifica dati o time slots
 
