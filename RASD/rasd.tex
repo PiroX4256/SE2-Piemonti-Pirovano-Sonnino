@@ -220,7 +220,7 @@ We can see a brief report of the information stored by the application through t
 \end{figure}
 
 \subsubsection{User Interfaces}
-The system should interfaces with users through devices which must be connected to Internet.
+The system should interface with users through devices which must be connected to the Internet.
 
 Everyone that needs to use this service would connect to it through a Web Interface (from an existent domain, like \textit{www.clup.com}) or through a mobile application that can be installed on smartphones (both IOS and Android).
 
@@ -237,12 +237,12 @@ Another API service used is the one of the DBMS system, which will be adopted in
 \subsubsection{Hardware Interfaces}
 The system "as it is" does not provide any hardware interface. However, local shops could use the QR Code given by the application on their local systems in order to monitor the number of customers who have entered the shop.
 \subsubsection{Hardware Constraints}
-Each person interested in using the system described in this document to line up for a shop should have a device connected to Internet, which could be a smartphone, tablet or personal computer.
+Each person interested in using the system described in this document to line up for a shop should have a device connected to the Internet, which could be a smartphone, tablet or personal computer.
 
 The basic requirement is to have an Internet browser installed on the used device.
-There is then the possibility of downloading and installing the official CLup application from the most important store, like Apple's \textit{App Store} or Android's \textit{Play Store}.
+There is then the possibility of downloading and installing the official CLup application from the most important stores, like Apple's \textit{App Store} or Android's \textit{Play Store}.
 
-Shops, instead, should have some devices connected to the service (through web interface or application) in order to monitor queue length, entrances and, if needed, anticipately close the booking sessions.
+Shops, instead, should have some devices connected to the service (through web interface or application) in order to monitor queue length, entrances, generate ticket on the spot and, if needed, anticipately close the booking sessions.
 
 \newpage
 \subsection{Product Functions}
@@ -639,41 +639,41 @@ Salvatore is a young boy who lives in a little village near Marsala, in Sicily. 
     \hline
 \end{longtable}
 
-\subsubsection{Store Manager Scenarios}
+\subsubsection{Store Administrator Scenarios}
 \textbf{Scenario 5}\\
-The Esselunga store located in San Fruttuoso (Monza) imposed a maximum limit of 100 people inside the store at the same moment, in order to observe the regulations of government. Due to this, a long queue always forms, from the entrance of the supermarket to the church of Triante's neighborhood. For this reason, Marco, which is the store manager in action on the territory of Monza and Brianza, decided to adopt CLup in his stores.
+The Esselunga store located in San Fruttuoso (Monza) imposed a maximum limit of 100 people inside the store at the same moment, in order to observe the regulations of government. Due to this, a long queue always forms, from the entrance of the supermarket to the church of Triante's neighborhood. For this reason, Marco, which is the store administrator in action on the territory of Monza and Brianza, decided to adopt CLup in his stores.
 Thanks to CLup the customers can now take reservations and waiting their turn from home, avoiding the formation of queues and crowds nearby the stores.\\
 
 \textbf{Scenario 6}
-Giannamaria is the manager of the biggest grocery shop in Rome. The store can contain more than a thousand people at the same time, in normal conditions, but due to the coronavirus spread and the consequent laws about social distancing inside buildings, the store must limit the number of entrances at a maximum of 300 people. Giannamaria always thought it would have been difficult to keep track of the people entering and exiting in such a big store, so she immediately decided to adopt CLup. Thanks to the application, she can make use of only a couple of attendants in order to managing the entrances, and she can know exactly how many people there are in the store, at any time, through the Store Manager section. Moreover, she can easily manage time slots and change timetables with few procedures, through the application. According to Giannamaria, the managing of the store has never been so easy: in fact, she is thinking about to continue to use CLup even after the virus situation has been solved.
+Giannamaria is the manager of the biggest grocery shop in Rome. The store can contain more than a thousand people at the same time, in normal conditions, but due to the coronavirus spread and the consequent laws about social distancing inside buildings, the store must limit the number of entrances at a maximum of 300 people. Giannamaria always thought it would have been difficult to keep track of the people entering and exiting in such a big store, so she immediately decided to adopt CLup. Thanks to the application, she can make use of only a couple of attendants in order to managing the entrances, and she can know exactly how many people there are in the store, at any time, through the Store Administrator section. Moreover, she can easily manage time slots and change timetables with few procedures, through the application. According to Giannamaria, the managing of the store has never been so easy: in fact, she is thinking about to continue to use CLup even after the virus situation has been solved.
 
 \textbf{Scenario 7}
-The manager of Eurospin's chain of discount in Italy asked to the store managers of each area to draw up a document about the more frequented hours of their customers. Months ago, the stores converted to the use of CLup application. Therefore, the store managers of each area can make use of it in order to write the document and make statistics. In fact, the application has a section, only for the store managers, where they can see the list of all the upcoming and all the past bookings made in a specific store by the customers, with all the necessary details. So, the store managers export the list on an Excel file and, starting from that, they can quickly make all the statistics they need to.
+The manager of Eurospin's chain of discount in Italy asked to the store administrators of each area to draw up a document about the more frequented hours of their customers. Months ago, the stores converted to the use of CLup application. Therefore, the store administrators of each area can make use of it in order to write the document and make statistics. In fact, the application has a section, only for the store administrators, where they can see the list of all the upcoming and all the past bookings made in a specific store by the customers, with all the necessary details. So, the store administrators export the list on an Excel file and, starting from that, they can quickly make all the statistics they need to.
 
 \begin{longtable}{|c| p{10cm}|}
-    \caption{Modify time slots}                                                                                                                                        \\
+    \caption{Modify time slots}                                                                                                                                              \\
     \hline
-                     & Modify time slots                                                                                                                               \\
+                     & Modify time slots                                                                                                                                     \\
     \hline
-    Actor            & Store Manager                                                                                                                                   \\
+    Actor            & Store Administrator                                                                                                                                   \\
     \hline
     Entry conditions & \begin{itemize}
-        \item Store Manager has logged in
-    \end{itemize}                                                                                                                      \\
+        \item Store Administrator has logged in
+    \end{itemize}                                                                                                                            \\
     \hline
     Events flow      & \begin{itemize}[nosep,after=\strut]
-        \item Store Manager goes to "My Time Slots" section and clicks on the edit button
+        \item Store Administrator goes to "My Time Slots" section and clicks on the edit button
         \item The system extract the data from the database and the application displays the required information, such as: name of the store, location, capacity of the store, time of the slots, opening hours.
-        \item Store Manager makes his modifications, for example extending the opening hours of the store, and it clicks on confirm button
+        \item Store Administrator makes his modifications, for example extending the opening hours of the store, and it clicks on confirm button
         \item The application checks whether if the changes are acceptable and then it displays a confirm page with the summary of the changes
         \item Store manager confirms again
-    \end{itemize}                                                                                                                      \\
+    \end{itemize}                                                                                                                            \\
     \hline
     Exit condition   & The application displays a page with the updated information of the store
     \\
     \hline
     \hline
-    Exception 1      & Store Manager inserts unacceptable value of time. In this case, the system detects the inconsistency of the data and displays an error message. \\
+    Exception 1      & Store Administrator inserts unacceptable value of time. In this case, the system detects the inconsistency of the data and displays an error message. \\
     \hline
 \end{longtable}
 
@@ -682,16 +682,16 @@ The manager of Eurospin's chain of discount in Italy asked to the store managers
     \hline
                      & View Upcoming Bookings Details                                                                                                                    \\
     \hline
-    Actor            & Store Manager                                                                                                                                     \\
+    Actor            & Store Administrator                                                                                                                               \\
     \hline
     Entry conditions & \begin{itemize}
-        \item Store Manager has logged in
+        \item Store Administrator has logged in
     \end{itemize}                                                                                                                        \\
     \hline
     Events flow      & \begin{itemize}[nosep,after=\strut]
-        \item Store Manager goes to upcoming bookings section and clicks on the "Details" button
+        \item Store Administrator goes to upcoming bookings section and clicks on the "Details" button
         \item The system takes from the database the list of all the reservations made for that store and the application displays the list
-        \item Store Manager clicks on one of the bookings
+        \item Store Administrator clicks on one of the bookings
     \end{itemize}                                                                                                                        \\
     \hline
     Exit condition   & The application displays a page with the details of the selected booking, such as: ID of the ticket, date and time, list of product's categories.
