@@ -136,6 +136,7 @@ In addition to that, the user can change both the slot and the store relying on 
 \end{center}
 \newpage
 \subsection{Goals}
+\label{goals}
 The main objectives of our system are the following:
 \begin{itemize}
     \item {\textbf{G1: Allow users to retrieve a unique queue number}\\This is the main feature of the application, through which customers are invited not staying outside the structure. Through an appropriate estimation of each customer's permanence time, the user receives an estimated queue time after which he can go to the store. The number is guaranteed to be unique.}
@@ -154,18 +155,19 @@ The main objectives of our system are the following:
 \subsection{Definitions, Acronyms, Abbreviations}
 \subsubsection{Definitions}
 \begin{itemize}
-    \item {\textbf{Customers:} the people whom this service is directed. They can belong to any age and sex. Their main purpose is to request a ticket to schedule their line up at the shop.}
-    \item {\textbf{User:} it is a customer who uses the application. }\label{User}
-    \item {\textbf{Store:} it is the provider of the goods that customers want to buy. It is obliged to limit the number of people entering in its building through a line up method, in order to respect the local laws for COVID-19 pandemic.}
-    \item {\textbf{Attendant:} it is a store's employee. Its aim is both to manage entrances and to help customers. For this reasons attendants can scan QR codes from customers' application and also release tickets on spot acting as intermediate for customers.}
+    \item \textbf{Customers:} the people whom this service is directed. They can belong to any age and sex. Their main purpose is to request a ticket to schedule their line up at the shop.
+    \item \textbf{User:} it is a customer who uses the application.\label{User}
+    \item \textbf{Store:} it is the provider of the goods that customers want to buy. It is obliged to limit the number of people entering in its building through a line up method, in order to respect the local laws for COVID-19 pandemic.
+    \item \textbf{Attendant:} it is a store's employee. Its aim is both to manage entrances and to help customers. For this reasons attendants can scan QR codes from customers' application and also release tickets on spot acting as intermediate for customers.
     \item \textbf{Store Administrator:} it is the profile of the store's page creator. It can manage opening hours, available slots, people per slot, etc.
-    \item {\textbf{Queue number:} it is the ID assigned to each user. It's composed of alphanumerical elements, and it's needed to access the desired shop. It can be retrieved online or on the spot.}
-    \item {\textbf{Visit:} it refers to the customers entering the shop, and also to their staying time. It is associated to both a certain store and a day/time range.}
-    \item {\textbf{Slot:} it is a day/time range. It can be reserved by a limit number of users in order to guarantee a maximum number of people who are inside a store in every time of the day.}
-    \item {\textbf{QR Code:} it's a graphic representation of a string, which can be easily read through barcode readers. It contains the visual representation of the queue number, in order to let attendants make a customer "check-in".}\label{QR}
-    \item {\textbf{Notification:} it's an alert that a certain event occurred. This alert can be a "Push Notification" on the smartphone, an SMS, an email and so on.}
-    \item {\textbf{Push notification:} it's an automated message sent by an application to a user when the application is not running.}
+    \item \textbf{Queue number:} it is the ID assigned to each user. It's composed of alphanumerical elements, and it's needed to access the desired shop. It can be retrieved online or on the spot.
+    \item \textbf{Visit:} it refers to the customers entering the shop, and also to their staying time. It is associated to both a certain store and a day/time range.
+    \item \textbf{Slot:} it is a day/time range. It can be reserved by a limit number of users in order to guarantee a maximum number of people who are inside a store in every time of the day.
+    \item \textbf{QR Code:} it's a graphic representation of a string, which can be easily read through barcode readers. It contains the visual representation of the queue number, in order to let attendants make a customer "check-in".\label{QR}
+    \item \textbf{Notification:} it's an alert that a certain event occurred. This alert can be a "Push Notification" on the smartphone, an SMS, an email and so on.
+    \item \textbf{Push notification:} it's an automated message sent by an application to a user when the application is not running.
     \item \textbf{Actor:} user, attendant or store administrator.
+    \item \textbf{Man in the Middle:} it is a cyberattack where the attacker secretly relays and possibly alters the communications between two parties who believe that they are directly communicating with each other.
 \end{itemize}
 \subsubsection{Acronyms}
 \begin{itemize}
@@ -248,9 +250,15 @@ Shops, instead, should have some devices connected to the service (through web i
 \subsection{Product Functions}
 \label{product_functions}
 
+<<<<<<< HEAD
 \subsubsection{ASAP: As Soon As Possible}
 
 This functionality is accessible to all \textbf{Users} (\ref{User}). The user clicks a button and the system tries to generate the first available ticket for the current day's queue; if the generation fails the system suggests them to book a future visit.
+=======
+\subsubsection{Line-up}
+\label{line_up}
+This functionality is accessible to all \textbf{Users} (\ref{User}). The application provides all available slots during the current day and, if the user chooses an unavailable slot, the system suggests them to book a future visit instead.
+>>>>>>> a5f1692bbf35015c73cb181eb7af0cbc24bb97fa
 Alternatively, the ticket is generated alongside a QR code identifying uniquely users and their queue number. The waiting time is shown to the user until it reaches the last 10 minutes marker alerting them to approach the store.
 \begin{figure}[!htb]
     \begin{center}
@@ -297,6 +305,7 @@ It's the administrator of a shop or a chain of stores. For the application's pur
     \item In case of QR Code entrances monitoring, shop should have an internal system in order to count them.
     \item Each user wanting to use the online service is needed to have a device connected to Internet (such as PC, Mac, smartphone, etc).
     \item There are no connection issues when actors interface with the system.
+    \item Each attendant knows the personal code and register to the correct shop.
 \end{enumerate}
 
 \newpage
@@ -332,12 +341,13 @@ When you are on a details page, all the information about the selected booking i
     \end{center}
 \end{figure}
 
-Finally, in figure \ref{mock_new_booking}, you can create a new booking through a dedicated page, as explained in \ref{book_a_visit}.\\
+Finally, in figure \ref{mock_new_booking}, you can create a request a new queue number through a dedicated page, as explained in \ref{line_up}.
+Otherwise, if you use "Book a visit" function, and the time slot you selected is not available, the system will suggest you another one, as shown in Figure \ref{mock_new_booking_unavailable}.
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=225pt]{assets/mock_new_booking.png}
-        \caption{New booking procedure.}
+        \includegraphics[width=225pt]{assets/mock_line_up.png}
+        \caption{Line-up functionality.}
         \label{mock_new_booking}
     \end{center}
 \end{figure}
@@ -345,7 +355,7 @@ Finally, in figure \ref{mock_new_booking}, you can create a new booking through 
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=225pt]{assets/mock_new_booking_unavailable.png}
-        \caption{New booking procedure with unavailable date/time.}
+        \caption{"Book a visit" procedure with unavailable date/time.}
         \label{mock_new_booking_unavailable}
     \end{center}
 \end{figure}
@@ -705,6 +715,80 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
 
 \todo . Tables: lista dei clienti, generatore statistiche prenotazioni, modifica dati o time slots
 
+\subsubsection{Requirements}
+This subsection summarizes the goals describe in \ref{goals}, showing the requirements and the domain assumptions for each of them.
+
+\begin{enumerate}[label=\textbf{G\arabic*}:]
+    \item {Allow users to retrieve a unique queue number
+          \begin{itemize}
+              \item
+          \end{itemize}
+          }
+    \item {Allow users to generate a QR Code
+          \begin{itemize}
+              \item
+          \end{itemize}
+          }
+    \item {Allow shops to offer CLup service
+          \begin{itemize}
+              \item
+          \end{itemize}
+          }
+    \item {Allow users to "book a visit"
+          \begin{itemize}
+              \item
+          \end{itemize}
+          }
+    \item {Let the system to infer a visit duration
+          \begin{itemize}
+              \item
+          \end{itemize}
+          }
+    \item {Allow users to receive a suggestion of alternative slots
+          \begin{itemize}
+              \item
+          \end{itemize}
+          }
+    \item {Allow users to receive notifications on available slots
+          \begin{itemize}
+              \item
+          \end{itemize}
+          }
+\end{enumerate}
+
+\subsubsection{Traceability Matrix}
+\begin{table}[H]
+    \begin{center}
+        \begin{tabular}{|l|l|}
+            \hline
+            \textbf{Requirement} & \textbf{Use case} \\
+            \hline
+        \end{tabular}
+        \caption{Traceability matrix schema.}
+    \end{center}
+\end{table}
+
+\subsection{Performance Requirements}
+Of course, the system should have a good response time, which could be included between 0.1 and 2 seconds.
+Otherwise, customers and store workers may think that the service is interrupted or does not work.
+
+The average workload of the system is expected to be very high, because of its principal functionality. However, it depends on the number of stores that would adopt it.
+With a rough calculation, the system must guarantee at least 1 billion of operations per day.
+
+Through a good distribution of the application it is possible to accomplish this specific requirement.
+
+\subsection{Design constraints}
+\subsubsection{Hardware Constraints}
+On stores side, each attendant is required to have a device from which it is possible to check-in customers by scanning their QR Code.
+For this functionality stores could have a Barcode Reader connected through usb to a personal computer or, otherwise, they could use a mobile application connected to their system.
+
+Each customer, instead, must have a mobile device on which grab a ticket or make a reservation.
+
+\subsubsection{Privacy Constraint}
+The system, since the main application area is the european one, must be compliant to EU's GDPR law. Furthermore, the data must pass through a secure connection, in order to prevent \textit{Man in the Middle} attacks.
+
+When a customer, store attendant or store manager registers to the application, the privacy policy must be read and accepter. Otherwise, the user will not be able to use the service.
+
 \subsection{Software System Attributes}
 \subsubsection{Easy usability}
 The system must be very easy to use, because the user base target is various.
@@ -736,7 +820,7 @@ Design techniques must in fact guarantee an high reusability.
     \hline
     Student        & Time for S.1 & Time for S.2 & Time for S.3 & Time for S.4 \\ \hline
     Alice Piemonti & 3h           & 20 min       & 9h           &              \\ \hline
-    Luca Pirovano  & 3h           & 6h           & 6h           & 3h           \\ \hline
+    Luca Pirovano  & 3h           & 6h           & 8h           & 3h           \\ \hline
     Nicolò Sonnino &              &              &              &              \\
     \hline
 \end{tabular}
