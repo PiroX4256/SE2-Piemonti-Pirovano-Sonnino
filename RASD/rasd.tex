@@ -138,20 +138,13 @@ In addition to that, the user can change both the slot and the store relying on 
 \subsection{Goals}
 \label{goals}
 The main objectives of our system are the following:
-\begin{itemize}
-    \item {\textbf{G1: Allow users to retrieve a unique queue number}\\This is the main feature of the application, through which customers are invited not staying outside the structure. Through an appropriate estimation of each customer's permanence time, the user receives an estimated queue time after which he can go to the store. The number is guaranteed to be unique.}
-    \item {\textbf{G2: Allow users to generate a QR Code}\\The QR Code is needed in order to let store attendants to monitor entrances, scanning the customer's code upon entering.}
-    \item {\textbf{G3: Allow shops to offer this service}\\This goal can be split into the following:
-          \begin{itemize}
-              \item {\textbf{Allow shops to offer the remote queue function}\\Each shop can register to the service and let customers to Line-Up from home. The application will track the state of the queue.}
-              \item {\textbf{Allow shops to generate tickets on the spot}\\If someone does not have access to the required technology, they can still take advantage of the system by getting their queue number directly at the store, where an attendant will act as an intermediate.}
-          \end{itemize}
-          }
-    \item {\textbf{G4: Allow users to "book a visit"}\\Users can book a slot providing the expected duration of the visit. Moreover, users can provide a list which describes the categories of products they intend to buy. Thank to this, visits are optimized and those customers who belong to the same slot, are supposed to buy different types of product, so that they stay in different areas of the store.}
-    \item {\textbf{G5: Let the system to infer a visit duration}\\For long term users, the system provides an estimation of visit duration, relying on their previous shopping sessions data.}
-    \item {\textbf{G6: Allow users to receive a suggestion of alternative slots}\\During the reservation procedure users will receive a list of alternatives. This help to balance out the number of people in the store during the day. The suggestions could be both on the same shop chain and on different chains.}
-    \item {\textbf{G7: Allow users to receive notifications on available slots}\\Users could enable notifications in order to receive periodic announcements of available slots in a preferred day/time range.}
-\end{itemize}
+\begin{enumerate}[label=$\bullet$ \textbf{G\arabic*:}]
+    \item \textbf{Allow users to retrieve a ticket}\\This is the main feature of the application, through which customers are invited not staying outside the structure. Through an appropriate estimation of each customer's permanence time, the user receives an estimated queue time after which he can go to the store. The number is guaranteed to be unique. The QR Code is needed in order to let store attendants to monitor entrances, scanning the customer's code upon entering.
+    \item \textbf{Allow Store Administrators to add a shop to the list of available ones.}\\The shop can be registered by its manager, who can also add opening hours and GPS Position. Furthermore, attendants can sign up and use the system to check-in people.
+    \item \textbf{Allow users to "book a visit"}\\Users can book a slot providing the expected duration of the visit. Moreover, users can provide a list which describes the categories of products they intend to buy. Thank to this, visits are optimized and those customers who belong to the same slot, are supposed to buy different types of product, so that they stay in different areas of the store.
+    \item \textbf{Let the system to make suggestions to users}\\For long term users, the system provides an estimation of visit duration, relying on their previous shopping sessions data. Furthermore, during the reservation procedure users will receive a list of alternatives. This help to balance out the number of people in the store during the day. The suggestions could be both on the same shop chain and on different chains.
+    \item \textbf{Allow users to receive notifications about the expiration of the queue time}\\Customers are informed when their queue slot booked is becoming free, in order to let they go to the store.
+\end{enumerate}
 \subsection{Definitions, Acronyms, Abbreviations}
 \subsubsection{Definitions}
 \begin{itemize}
@@ -296,10 +289,14 @@ It's the administrator of a shop or a chain of stores. For the application's pur
 \subsubsection{Assumptions}
 \begin{enumerate}[label=\textbf{D\arabic*}:]
     \item GPS position of the shop is exact and leads to that shop.
+    \item The queue number of each ticket is unique.
     \item In case of QR Code entrances monitoring, shop should have an internal system in order to count them.
-    \item Each user wanting to use the online service is needed to have a device connected to Internet (such as PC, Mac, smartphone, etc).
+    \item Each user who wants to use the online service is needed to have a device connected to Internet (such as PC, Mac, smartphone, etc).
     \item There are no connection issues when actors interface with the system.
     \item Each attendant knows the personal code and register to the correct shop.
+    \item The list of products and the duration of the visit inserted are acceptable.
+    \item The recommendations are based on the analysis of user's interactions with the application.
+    \item The recommendations are such that the number of visits in each store during the day are balanced.
 \end{enumerate}
 
 \newpage
