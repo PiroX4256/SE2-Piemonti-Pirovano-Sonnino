@@ -250,7 +250,7 @@ This functionality is accessible to all \textbf{Users} (\ref{User}). The user cl
 Alternatively, the ticket is generated alongside a QR code identifying uniquely users and their queue number. The waiting time is shown to the user until it reaches the last 10 minutes marker alerting them to approach the store.
 \begin{figure}[!htb]
     \begin{center}
-        \includegraphics[scale=0.6]{assets/function-line-up.png}
+        \includegraphics[scale=0.25]{assets/function-line-up.png}
         \caption{BPMN diagram line-up method}
     \end{center}
 \end{figure}
@@ -260,7 +260,7 @@ Alternatively, the ticket is generated alongside a QR code identifying uniquely 
 This functionality is available to every \textbf{User} (\ref{User}). The user accesses the booking through the menu and the application displays a calendar with all available slots. Alongside this, the system suggests a new booking including various choices: different time slots of the same day, different days, different stores or different chains (if the application is used by different ones). The alternatives are generated through previous data (if exists) or in order to balance the flow to the facilities. After the selection, the reservation is booked and the user is asked to create a shopping list. Finally duration time is generated from previous data, otherwise is inserted by the user.
 \begin{figure}[!htb]
     \begin{center}
-        \includegraphics[scale=0.4]{assets/function-book-a-visit.png}
+        \includegraphics[scale=0.15]{assets/function-book-a-visit.png}
         \caption{BPMN diagram booking method}
     \end{center}
 \end{figure}
@@ -270,7 +270,7 @@ This functionality is available to every \textbf{User} (\ref{User}). The user ac
 This functionality is reserved only for staff members. The customer reaches the supermarket/grocery shop and asks the staff to be queued up. The personnel accesses the system which interacts with the database and generates a ticket, granting the customer a position in the queue.
 \begin{figure}[!htb]
     \begin{center}
-        \includegraphics[scale=0.8]{assets/function-hand-up.png}
+        \includegraphics[scale=0.5]{assets/function-hand-up.png}
         \caption{BPMN diagram site method}
     \end{center}
 \end{figure}
@@ -279,7 +279,7 @@ This functionality is reserved only for staff members. The customer reaches the 
 The application occasionally sends notifications to the user with available slots. If the user accepts, they follow the same procedure of the \textit{Make a reservation (\ref{book_a_visit})}.
 \begin{figure}[!htb]
     \begin{center}
-        \includegraphics[scale=0.7]{assets/periodic-notifications.png}
+        \includegraphics[scale=0.35]{assets/periodic-notifications.png}
         \caption{BPMN diagram site method}
     \end{center}
 \end{figure}
@@ -423,7 +423,11 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     Exception 2      & User inserts an invalid e-mail. So, after user clicks on confirm button, the application displays the same page and an error message, which suggests to the user to check the e-mail inserted or to change it.                                                         \\
     \hline
 \end{longtable}
-
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.38]{assets/sign-up.png}
+    \caption{\textit{SignUp sequence diagram}}
+\end{figure}
 \begin{longtable}{|c| p{10cm}|}
     \caption{Login User}                                                                                                                                                                             \\
     \hline
@@ -449,8 +453,13 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     Exception 1      & User inserts wrong combination of credentials and presses Login button. In this case, the system detects the error and the application displays the Login page with an error. \\
     \hline
 \end{longtable}
-
-
+\newpage
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.33]{assets/login.png}
+    \caption{\textit{Login sequence diagram}}
+\end{figure}
+\newpage
 \begin{longtable}{|c| p{10cm}|}
     \caption{Retrieve a ticket}                                                                                                                                                                                                 \\
     \hline
@@ -479,9 +488,12 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     Exception 2      & User doesn't like the date/time of the first slot available. In this case, it has to press on Cancel button in order to go back to the home page or, in alternative, it can close the application.       \\
     \hline
 \end{longtable}
-
-
-
+\newpage
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.4]{assets/ASAP.png}
+    \caption{\textit{ASAP sequence diagram}}
+\end{figure}
 \begin{longtable}{|c| p{10cm}|}
     \caption{Book a visit}                                                                                                                                          \\
     \hline
@@ -515,8 +527,13 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     Exception 1      & User has another reservation in the same day. In this case, the application displays an error message and redirect User to the home page.    \\
     \hline
 \end{longtable}
-
-
+\newpage
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.4]{assets/book-a-visit.png}
+    \caption{\textit{Make a reservation sequence diagram}}
+\end{figure}
+\newpage
 \begin{longtable}{|c| p{10cm}|}
     \caption{Remove a booking}                                                                                                                                                                                   \\
     \hline
@@ -544,11 +561,16 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     Exception 1      & User wrongly presses the delete button. In this case, the application displays the popup with the notice that the booking is going to be removed and the user presses on "Cancel" button. \\
     \hline
 \end{longtable}
-
+\newpage
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.38]{assets/remove-a-booking.png}
+    \caption{\textit{Remove booking sequence diagram}}
+\end{figure}
 \subsubsection{Attendant Scenarios}
 \textbf{Scenario 4}\\
 Hassan works at the new Coop located in Marsala street in Monza. Once the store decided to adopt CLup for the management of flows in and out the supermarket, the manager of Hassan assigned him the task of monitoring the main entrance. Therefore, Hassan downloaded the application and registered as a staff member. Hassan's job is to scan the QR code of the customers with his smartphone, and to make sure that everything works fine. The application always displays a counter, so that Hassan can know exactly how many people there are inside the store. However, it does never happen that the counter reaches the maximum value allowed for laws. Hassan is happy for the introduction of CLup because it has got everything needed so that his job became very easy.\\
-
+\newpage
 \textbf{Scenario 5}\\
 Salvatore is a young boy who lives in a little village near Marsala, in Sicily. The chain of supermarkets where he works as an assistant has introduced a new application for managing queues, in order to avoid gatherings outside its buildings. However, Salvatore knows that there are a lot of elderly people in his village, so how can they use the application without even having a smartphone? Surprisingly, Salvatore came to know that the service has got a function which allows him to act as an intermediate for the aged people who come to his store. His job now is to log in on the application as a staff member and take the credentials of customers who need help. After that, he asks to customers when they want to come again, so that he can reserve them a slot. The application generates the QR code, which he prints and gives to the customer. Salvatore's days are full of work now, because there are a lot of old ladies who need an help, but he knows he must done his job for community's sake.\\
 
@@ -584,7 +606,12 @@ Salvatore is a young boy who lives in a little village near Marsala, in Sicily. 
     Exception 3      & The system reads a QR code with an unacceptable day/time/store reservation. In this case, the application displays the details of the reservation in order to show where is the problem (e.g. it's too early or too much late or it isn't the correct date/store). \\
     \hline
 \end{longtable}
-
+\newpage
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.38]{assets/scan-QR-code.png}
+    \caption{\textit{Scan QR code sequence diagram}}
+\end{figure}
 \begin{longtable}{|c| p{10cm}|}
     \caption{Release a ticket}                                                                                                                                                      \\
     \hline
@@ -618,7 +645,12 @@ Salvatore is a young boy who lives in a little village near Marsala, in Sicily. 
     Exception 2      & The printer returns an error. In this case, the application deletes from the database the ticket generated and displays an error message.                    \\
     \hline
 \end{longtable}
-
+\newpage
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.38]{assets/release-ticket.png}
+    \caption{\textit{Release a ticket sequence diagram}}
+\end{figure}
 \begin{longtable}{|c| p{10cm}|}
     \caption{Delete a reservation}                                                                                                                              \\
     \hline
