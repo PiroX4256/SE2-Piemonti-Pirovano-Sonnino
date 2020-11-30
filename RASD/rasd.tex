@@ -167,7 +167,7 @@ The main objectives of our system are the following:
     \item \textbf{Notification:} it's an alert that a certain event occurred. This alert can be a "Push Notification" on the smartphone, an SMS, an email and so on.
     \item \textbf{Push notification:} it's an automated message sent by an application to a user when the application is not running.
     \item \textbf{Actor:} user, attendant or store administrator.
-    \item \textbf{Man in the Middle:} it is a cyberattack where the attacker secretly relays and possibly alters the communications between two parties who believe that they are directly communicating with each other.
+    \item \textbf{Man in the Middle:} it is a cyber attack where the attacker secretly relays and possibly alters the communications between two parties who believe that they are directly communicating with each other.
 \end{itemize}
 \subsubsection{Acronyms}
 \begin{itemize}
@@ -244,50 +244,52 @@ Each person interested in using the system described in this document to line up
 The basic requirement is to have an Internet browser installed on the used device.
 There is then the possibility of downloading and installing the official CLup application from the most important stores, like Apple's \textit{App Store} or Android's \textit{Play Store}.
 
-Shops, instead, should have some devices connected to the service (through web interface or application) in order to monitor queue length, entrances, generate ticket on the spot and, if needed, anticipately close the booking sessions.
+Shops, instead, should have some devices connected to the service (through web interface or application) in order to monitor queue length, entrances, generate ticket on the spot and, if needed, close the booking sessions in advance.
 
 \newpage
 \subsection{Product Functions}
 \label{product_functions}
 
-<<<<<<< HEAD
 \subsubsection{ASAP: As Soon As Possible}
 
 This functionality is accessible to all \textbf{Users} (\ref{User}). The user clicks a button and the system tries to generate the first available ticket for the current day's queue; if the generation fails the system suggests them to book a future visit.
-=======
-\subsubsection{Line-up}
-\label{line_up}
-This functionality is accessible to all \textbf{Users} (\ref{User}). The application provides all available slots during the current day and, if the user chooses an unavailable slot, the system suggests them to book a future visit instead.
->>>>>>> a5f1692bbf35015c73cb181eb7af0cbc24bb97fa
 Alternatively, the ticket is generated alongside a QR code identifying uniquely users and their queue number. The waiting time is shown to the user until it reaches the last 10 minutes marker alerting them to approach the store.
 \begin{figure}[!htb]
     \begin{center}
-        \includegraphics[scale=0.29]{assets/function-line-up.png}
+        \includegraphics[scale=0.6]{assets/function-line-up.png}
         \caption{BPMN diagram line-up method}
     \end{center}
 \end{figure}
 
 \subsubsection{Make a reservation}
 \label{book_a_visit}
-This functionality is available to every \textbf{User} (\ref{User}). The user accesses the booking through the menu and teh application displays a calendar with all available slots. Alongside this the system suggests               requests a new booking, the system displays all available slots. The service identifies as available a slot with the following requisites: it must be within the capacity allowed by the shop and must include a limited number of customers in order to balance the daily flow to the facility. If the slot is available the user is taken to the last step discussed later on, otherwise the application suggests different results based on the user's choice. They can filter results with the same time of the previous one and be suggested with alternative stores of the same chain or different one; if the user decides otherwise, the system displays alternative days/time slots analyzed from the customer's previous data.
-The last step is the optional filling of an hypothetical shopping list and the final confirmation.
+This functionality is available to every \textbf{User} (\ref{User}). The user accesses the booking through the menu and the application displays a calendar with all available slots. Alongside this, the system suggests a new booking including various choices: different time slots of the same day, different days, different stores or different chains (if the application is used by different ones). The alternatives are generated through previous data (if exists) or in order to balance the flow to the facilities. After the selection, the reservation is booked and the user is asked to create a shopping list. Finally duration time is generated from previous data, otherwise is inserted by the user.
 \begin{figure}[!htb]
     \begin{center}
-        \includegraphics[scale=0.2]{assets/function-book-a-visit.png}
+        \includegraphics[scale=0.4]{assets/function-book-a-visit.png}
         \caption{BPMN diagram booking method}
     \end{center}
 \end{figure}
-
+\newpage
 \subsubsection{Hand out tickets on spot}
 
-This functionality is reserved only for staff members. The customer reaches the supermarket/grocery shop and asks the staff to be queued up. The personnel accesses the system which interacts with the database and generates a ticket, granting the customer a spot in the queue.
+This functionality is reserved only for staff members. The customer reaches the supermarket/grocery shop and asks the staff to be queued up. The personnel accesses the system which interacts with the database and generates a ticket, granting the customer a position in the queue.
 \begin{figure}[!htb]
     \begin{center}
-        \includegraphics[scale=0.5]{assets/function-hand-up.png}
+        \includegraphics[scale=0.8]{assets/function-hand-up.png}
         \caption{BPMN diagram site method}
     \end{center}
 \end{figure}
 
+\subsubsection{Periodic notifications}
+The application occasionally sends notifications to the user with available slots. If the user accepts, they follow the same procedure of the \textit{Make a reservation (\ref{book_a_visit})}.
+\begin{figure}[!htb]
+    \begin{center}
+        \includegraphics[scale=0.7]{assets/periodic-notifications.png}
+        \caption{BPMN diagram site method}
+    \end{center}
+\end{figure}
+\newpage
 \subsection{Actors}
 \subsubsection{User}
 It's a customer, i.e. a normal person who intend to go to the grocery shop. It is able to use the smartphone application or surf on its website. It uses the service in order to access the stores, according to the regulations. It takes advantage in using the application since, when it want to access a store, it retrieves the unique number and can wait from a close and safe building.
