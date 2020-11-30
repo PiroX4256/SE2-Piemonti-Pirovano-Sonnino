@@ -376,7 +376,6 @@ However, there is the possibility of integration with shops' system and hardware
 \subsubsection{Software Interfaces}
 The software, through appropriate APIs, could manage the reading of the QR codes in order to check their validity and their consistence with actual date and time.
 
-<<<<<<< HEAD
 \begin{minipage}{\textwidth}
     \subsection{Functional Requirements}
     \subsubsection{User Scenarios}
@@ -539,7 +538,7 @@ The software, through appropriate APIs, could manage the reading of the QR codes
 
 
 \end{minipage}
-=======
+
 \subsection{Functional Requirements}
 \subsubsection{User Scenarios}
 \textbf{Scenario 1}\\
@@ -698,7 +697,6 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     \caption{\textit{Make a reservation sequence diagram}}
 \end{figure}
 \newpage
->>>>>>> 1e5f2eb9337c70a183a0ba390b8c22e0fd081e6e
 \begin{longtable}{|c| p{10cm}|}
     \caption{Remove a booking}                                                                                                                                                                                   \\
     \hline
@@ -726,9 +724,7 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     Exception 1      & User wrongly presses the delete button. In this case, the application displays the popup with the notice that the booking is going to be removed and the user presses on "Cancel" button. \\
     \hline
 \end{longtable}
-<<<<<<< HEAD
 
-=======
 \newpage
 \begin{figure}[!htb]
     \centering
@@ -911,7 +907,6 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
     Exception 1      & CLup application cannot reach the database. In this case, an error message is displayed.                                                          \\
     \hline
 \end{longtable}
->>>>>>> 1e5f2eb9337c70a183a0ba390b8c22e0fd081e6e
 
 \begin{minipage}{\textwidth}
     \subsubsection{Attendant Scenarios}
@@ -1188,29 +1183,32 @@ This subsection summarizes the goals describe in \ref{goals}, showing the requir
           }
 \end{enumerate}
 
-\subsubsection{Traceability Matrix}
-\begin{table}[H]
-    \begin{center}
-        \begin{tabular}{|l|l|}
-            \hline
-            \textbf{Requirement} & \textbf{Use cases}   \\
-            \hline
-            R1                   & Request booking      \\
-            R2                   & Request booking      \\
-            R3                   & Request booking      \\
-            R4                   & Manage data          \\
-            R5                   & Attendant's sign up  \\
-            R6                   & Book a slot          \\
-            R7                   & Book a slot          \\
-            R8                   & Book a slot          \\
-            R9                   & Book a slot          \\
-            R10                  & Request booking      \\
-            R11                  & View booking's state \\
-            \hline
-        \end{tabular}
-        \caption{Traceability matrix schema.}
-    \end{center}
-\end{table}
+\begin{minipage}{\textwidth}
+    \subsubsection{Traceability Matrix}
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|l|l|}
+                \hline
+                \textbf{Requirement} & \textbf{Use cases}   \\
+                \hline
+                R1                   & Request booking      \\
+                R2                   & Request booking      \\
+                R3                   & Request booking      \\
+                R4                   & Manage data          \\
+                R5                   & Attendant's sign up  \\
+                R6                   & Book a slot          \\
+                R7                   & Book a slot          \\
+                R8                   & Book a slot          \\
+                R9                   & Book a slot          \\
+                R10                  & Request booking      \\
+                R11                  & View booking's state \\
+                \hline
+            \end{tabular}
+            \caption{Traceability matrix schema.}
+        \end{center}
+    \end{table}
+
+\end{minipage}
 
 \subsection{Performance Requirements}
 Of course, the system should have a good response time, which could be included between 0.1 and 2 seconds.
