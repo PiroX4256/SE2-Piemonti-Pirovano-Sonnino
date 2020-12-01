@@ -440,119 +440,117 @@ The software, through appropriate APIs, could manage the reading of the QR codes
     \end{longtable}
 \end{minipage}
 
-\begin{minipage}{\textwidth}
-    \begin{longtable}{|c| p{10cm}|}
-        \caption{Login User}                                                                                                                                                                             \\
-        \hline
-                         & Login User on the application                                                                                                                                                 \\
-        \hline
-        Actor            & User                                                                                                                                                                          \\
-        \hline
-        Entry conditions & \begin{itemize}[nosep,after=\strut]
-            \item User has downloaded and opened the application on his smartphone
-            \item User has registered to the service
-        \end{itemize}                                                                                                                                                    \\
-        \hline
-        Events flow      & \begin{itemize}[nosep,after=\strut]
-            \item The system displays the Login page
-            \item User inserts in apposite fields the credentials for logging in and presses the Login button
-            \item The system checks the correctness of the credential inserted
-            \item The system displays the home page of the application
-        \end{itemize}                                                                                                                                                    \\
-        \hline
-        Exit condition   & User is logged in                                                                                                                                                             \\
-        \hline
-        \hline
-        Exception 1      & User inserts wrong combination of credentials and presses Login button. In this case, the system detects the error and the application displays the Login page with an error. \\
-        \hline
-    \end{longtable}
-\end{minipage}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[scale=0.35]{assets/sign-up.png}
+    \caption{\textit{Sign Up sequence diagram}}
+\end{figure}
+
+\begin{longtable}{|c| p{10cm}|}
+    \caption{Login User}                                                                                                                                                                             \\
+    \hline
+                     & Login User on the application                                                                                                                                                 \\
+    \hline
+    Actor            & User                                                                                                                                                                          \\
+    \hline
+    Entry conditions & \begin{itemize}[nosep,after=\strut]
+        \item User has downloaded and opened the application on his smartphone
+        \item User has registered to the service
+    \end{itemize}                                                                                                                                                    \\
+    \hline
+    Events flow      & \begin{itemize}[nosep,after=\strut]
+        \item The system displays the Login page
+        \item User inserts in apposite fields the credentials for logging in and presses the Login button
+        \item The system checks the correctness of the credential inserted
+        \item The system displays the home page of the application
+    \end{itemize}                                                                                                                                                    \\
+    \hline
+    Exit condition   & User is logged in                                                                                                                                                             \\
+    \hline
+    \hline
+    Exception 1      & User inserts wrong combination of credentials and presses Login button. In this case, the system detects the error and the application displays the Login page with an error. \\
+    \hline
+\end{longtable}
 
 
-\begin{figure}[!htb]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.33]{assets/login.png}
     \caption{\textit{Login sequence diagram}}
 \end{figure}
 
-\newpage
 
-\begin{minipage}{\textwidth}
-    \begin{longtable}{|c| p{10cm}|}
-        \caption{Retrieve a ticket}                                                                                                                                                                                                 \\
-        \hline
-                         & Retrieve a ticket                                                                                                                                                                                        \\
-        \hline
-        Actor            & User                                                                                                                                                                                                     \\
-        \hline
-        Entry conditions & \begin{itemize}
-            \item User has logged in
-        \end{itemize}                                                                                                                                                                               \\
-        \hline
-        Events flow      & \begin{itemize}[nosep,after=\strut]
-            \item User presses the New Booking button
-            \item The application displays two alternatives of booking
-            \item User selects the alternative "Retrieve a ticket"
-            \item The application displays a confirm page, with the store selected and the time and date of the first slot available
-            \item User presses on confirm button
-        \end{itemize}                                                                                                                                                                               \\
-        \hline
-        Exit condition   &
-        The application displays the unique ID number of the ticket and the QR-code associated to it                                                                                                                                \\
-        \hline
-        \hline
-        Exception 1      & User presses on confirm button but it has got a ticket in his current bookings, which is still valid. In this case, the application displays an error page which suggests to go on the tickets' section. \\
-        \hline
-        Exception 2      & User doesn't like the date/time of the first slot available. In this case, it has to press on Cancel button in order to go back to the home page or, in alternative, it can close the application.       \\
-        \hline
-    \end{longtable}
+\begin{longtable}{|c| p{10cm}|}
+    \caption{Retrieve a ticket}                                                                                                                                                                                                 \\
+    \hline
+                     & Retrieve a ticket                                                                                                                                                                                        \\
+    \hline
+    Actor            & User                                                                                                                                                                                                     \\
+    \hline
+    Entry conditions & \begin{itemize}
+        \item User has logged in
+    \end{itemize}                                                                                                                                                                               \\
+    \hline
+    Events flow      & \begin{itemize}[nosep,after=\strut]
+        \item User presses the New Booking button
+        \item The application displays two alternatives of booking
+        \item User selects the alternative "Retrieve a ticket"
+        \item The application displays a confirm page, with the store selected and the time and date of the first slot available
+        \item User presses on confirm button
+    \end{itemize}                                                                                                                                                                               \\
+    \hline
+    Exit condition   &
+    The application displays the unique ID number of the ticket and the QR-code associated to it                                                                                                                                \\
+    \hline
+    \hline
+    Exception 1      & User presses on confirm button but it has got a ticket in his current bookings, which is still valid. In this case, the application displays an error page which suggests to go on the tickets' section. \\
+    \hline
+    Exception 2      & User doesn't like the date/time of the first slot available. In this case, it has to press on Cancel button in order to go back to the home page or, in alternative, it can close the application.       \\
+    \hline
+\end{longtable}
 
-\end{minipage}
-
-\begin{figure}[!htb]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.4]{assets/ASAP.png}
     \caption{\textit{ASAP sequence diagram}}
 \end{figure}
 
 
-\begin{minipage}{\textwidth}
-    \begin{longtable}{|c| p{10cm}|}
-        \caption{Book a visit}                                                                                                                                          \\
-        \hline
-                         & Book a visit                                                                                                                                 \\
-        \hline
-        Actor            & User                                                                                                                                         \\
-        \hline
-        Entry conditions & \begin{itemize}
-            \item User has logged in
-        \end{itemize}                                                                                                                   \\
-        \hline
-        Events flow      & \begin{itemize}[nosep,after=\strut]
-            \item User presses the New Booking button
-            \item The application displays two alternatives of booking
-            \item User selects the alternative "Book a slot"
-            \item The application displays a page with the day/time slots already available for a certain range (e.g. for the current month or for the next month) for a certain store
-            \item User selects the store and the slot he prefers (from the available ones) and clicks on the confirm button
-            \item User selects all the categories he intends to buy. Then, he clicks on confirm button
-            \item  The system estimates the expected duration of the visit based on the analysis of previous visits or, in alternative, it takes a default value
-            \item The user can add or change the expected duration time
-            \item The application displays the visit duration time and a checklist with the categories of products that the customer wants to buy
-            \item The application displays a page with the summary of all the previous selections and eventually displays other available slots that can balance better with the choices of other customers' reservations
-            \item User checks his selections and presses the confirm button
-            \item The system adds the booking to the database and generates the unique ID number and the QR code
-        \end{itemize}                                                                                                                   \\
-        \hline
-        Exit condition   & The application displays the summary page of the booking, with the preferences selected by the user, the ID number and the QR code generated
-        \\
-        \hline
-        \hline
-        Exception 1      & User has another reservation in the same day. In this case, the application displays an error message and redirect User to the home page.    \\
-        \hline
-    \end{longtable}
+\begin{longtable}{|c| p{10cm}|}
+    \caption{Book a visit}                                                                                                                                          \\
+    \hline
+                     & Book a visit                                                                                                                                 \\
+    \hline
+    Actor            & User                                                                                                                                         \\
+    \hline
+    Entry conditions & \begin{itemize}
+        \item User has logged in
+    \end{itemize}                                                                                                                   \\
+    \hline
+    Events flow      & \begin{itemize}[nosep,after=\strut]
+        \item User presses the New Booking button
+        \item The application displays two alternatives of booking
+        \item User selects the alternative "Book a slot"
+        \item The application displays a page with the day/time slots already available for a certain range (e.g. for the current month or for the next month) for a certain store
+        \item User selects the store and the slot he prefers (from the available ones) and clicks on the confirm button
+        \item User selects all the categories he intends to buy. Then, he clicks on confirm button
+        \item  The system estimates the expected duration of the visit based on the analysis of previous visits or, in alternative, it takes a default value
+        \item The user can add or change the expected duration time
+        \item The application displays the visit duration time and a checklist with the categories of products that the customer wants to buy
+        \item The application displays a page with the summary of all the previous selections and eventually displays other available slots that can balance better with the choices of other customers' reservations
+        \item User checks his selections and presses the confirm button
+        \item The system adds the booking to the database and generates the unique ID number and the QR code
+    \end{itemize}                                                                                                                   \\
+    \hline
+    Exit condition   & The application displays the summary page of the booking, with the preferences selected by the user, the ID number and the QR code generated
+    \\
+    \hline
+    \hline
+    Exception 1      & User has another reservation in the same day. In this case, the application displays an error message and redirect User to the home page.    \\
+    \hline
+\end{longtable}
 
 
-\end{minipage}
 
 
 \begin{figure}[!htb]
@@ -660,90 +658,82 @@ The software, through appropriate APIs, could manage the reading of the QR codes
 
 \end{minipage}
 
-\newpage
-\begin{figure}[!htb]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.38]{assets/scan-QR-code.png}
     \caption{\textit{Scan QR code sequence diagram}}
 \end{figure}
 
-\begin{minipage}{\textwidth}
+\begin{longtable}{|c| p{10cm}|}
+    \caption{Release a ticket}                                                                                                                                                      \\
+    \hline
+                     & Release a ticket                                                                                                                                             \\
+    \hline
+    Actor            & Store Attendant                                                                                                                                              \\
+    \hline
+    Entry conditions & \begin{itemize}
+        \item Store Attendant has logged in
+        \item The application is connected with a working printer
+    \end{itemize}                                                                                                                                   \\
+    \hline
+    Events flow      & \begin{itemize}[nosep,after=\strut]
+        \item Store Attendant presses on the button "Release a ticket"
+        \item The application displays a page with a list of fields to be filled, such as Customer Name, Customer Surname, Store and it shows the available slots for the current day and for the next days for the store selected
+        \item Store Attendant completes all fields with Customer's information and presses on "Confirm" button
+        \item The application displays the confirmation page with a summary of the data inserted
+        \item The attendant checks the data are correct and confirms
+        \item The system inserts the new ticket in the database and generates the unique ID number and the QR code associated
+        \item The application displays a page with the QR code
+        \item Store Attendant clicks on "print" button
+        \item The application generates the pdf to print with all the necessary data of the ticket and sends it to the printer
+    \end{itemize}                                                                                                                                   \\
+    \hline
+    Exit condition   & The application notifies that the pdf is going to be printed and it displays the home page of Store Attendant
+    \\
+    \hline
+    \hline
+    Exception 1      & There are not slots compatible with customer's desires. In this case, Store Attendant can cancel the procedure and the application returns to the home page. \\
+    \hline
+    Exception 2      & The printer returns an error. In this case, the application deletes from the database the ticket generated and displays an error message.                    \\
+    \hline
+\end{longtable}
 
-
-    \begin{longtable}{|c| p{10cm}|}
-        \caption{Release a ticket}                                                                                                                                                      \\
-        \hline
-                         & Release a ticket                                                                                                                                             \\
-        \hline
-        Actor            & Store Attendant                                                                                                                                              \\
-        \hline
-        Entry conditions & \begin{itemize}
-            \item Store Attendant has logged in
-            \item The application is connected with a working printer
-        \end{itemize}                                                                                                                                   \\
-        \hline
-        Events flow      & \begin{itemize}[nosep,after=\strut]
-            \item Store Attendant presses on the button "Release a ticket"
-            \item The application displays a page with a list of fields to be filled, such as Customer Name, Customer Surname, Store and it shows the available slots for the current day and for the next days for the store selected
-            \item Store Attendant completes all fields with Customer's information and presses on "Confirm" button
-            \item The application displays the confirmation page with a summary of the data inserted
-            \item The attendant checks the data are correct and confirms
-            \item The system inserts the new ticket in the database and generates the unique ID number and the QR code associated
-            \item The application displays a page with the QR code
-            \item Store Attendant clicks on "print" button
-            \item The application generates the pdf to print with all the necessary data of the ticket and sends it to the printer
-        \end{itemize}                                                                                                                                   \\
-        \hline
-        Exit condition   & The application notifies that the pdf is going to be printed and it displays the home page of Store Attendant
-        \\
-        \hline
-        \hline
-        Exception 1      & There are not slots compatible with customer's desires. In this case, Store Attendant can cancel the procedure and the application returns to the home page. \\
-        \hline
-        Exception 2      & The printer returns an error. In this case, the application deletes from the database the ticket generated and displays an error message.                    \\
-        \hline
-    \end{longtable}
-
-\end{minipage}
-
-\newpage
-\begin{figure}[!htb]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.38]{assets/release-ticket.png}
     \caption{\textit{Release a ticket sequence diagram}}
 \end{figure}
 
-\begin{minipage}{\textwidth}
-    \begin{longtable}{|c| p{10cm}|}
-        \caption{Delete a reservation}                                                                                                                              \\
-        \hline
-                         & Delete a reservation                                                                                                                     \\
-        \hline
-        Actor            & Store Attendant                                                                                                                          \\
-        \hline
-        Entry conditions & \begin{itemize}
-            \item Store Attendant has logged in
-        \end{itemize}                                                                                                               \\
-        \hline
-        Events flow      & \begin{itemize}[nosep,after=\strut]
-            \item Store Attendant presses on the button "delete a reservation"
-            \item The application displays a page with the list of all the tickets generated by all the Store Assistant of that store and a search bar
-            \item Store Attendant clicks on the search bar and inserts the name and surname of a customer
-            \item The system checks the record in the list and displays the results
-            \item Store Attendant selects the record he wants to delete and presses on "delete" button
-            \item The application displays a page with the summary of the reservation selected
-            \item Store Attendant clicks on "confirm" button
-            \item The system deletes the reservation from the database and displays a message of deletion completed
-        \end{itemize}                                                                                                               \\
-        \hline
-        Exit condition   & The application returns to the home page
-        \\
-        \hline
-        \hline
-        Exception 1      & The system doesn't find any record associated to the name and surname inserted. In this case, the application displays an error message. \\
-        \hline
-    \end{longtable}
-\end{minipage}
+\begin{longtable}{|c| p{10cm}|}
+    \caption{Delete a reservation}                                                                                                                              \\
+    \hline
+                     & Delete a reservation                                                                                                                     \\
+    \hline
+    Actor            & Store Attendant                                                                                                                          \\
+    \hline
+    Entry conditions & \begin{itemize}
+        \item Store Attendant has logged in
+    \end{itemize}                                                                                                               \\
+    \hline
+    Events flow      & \begin{itemize}[nosep,after=\strut]
+        \item Store Attendant presses on the button "delete a reservation"
+        \item The application displays a page with the list of all the tickets generated by all the Store Assistant of that store and a search bar
+        \item Store Attendant clicks on the search bar and inserts the name and surname of a customer
+        \item The system checks the record in the list and displays the results
+        \item Store Attendant selects the record he wants to delete and presses on "delete" button
+        \item The application displays a page with the summary of the reservation selected
+        \item Store Attendant clicks on "confirm" button
+        \item The system deletes the reservation from the database and displays a message of deletion completed
+    \end{itemize}                                                                                                               \\
+    \hline
+    Exit condition   & The application returns to the home page
+    \\
+    \hline
+    \hline
+    Exception 1      & The system doesn't find any record associated to the name and surname inserted. In this case, the application displays an error message. \\
+    \hline
+\end{longtable}
+
 
 \begin{minipage}{\textwidth}
     \subsubsection{Store Administrator Scenarios}
