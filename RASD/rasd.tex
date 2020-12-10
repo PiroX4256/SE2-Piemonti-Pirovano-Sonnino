@@ -17,6 +17,8 @@
 \usepackage{tasks}
 \usepackage{tabularx}
 \usepackage{titlesec}
+\usepackage{listing}
+\usepackage{alloy}
 
 \titleformat{\paragraph}
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
@@ -955,14 +957,349 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
     Design techniques must in fact guarantee an high reusability.
     \newpage
     \section{Formal Analysis}
+    \subsection{Alloy Code}
+    \begin{lstlisting}[language=alloy]
+abstract sig AccountRegistration {
+    username: one Username,
+    password: one Password,
+    emailAddress: one EmailAddress
+}
+
+sig Username{}
+sig Password{}
+{ //each password is associated to a registration (some registration may have the same password)
+	all p: Password | (some r: AccountRegistration | r.password = p)
+}
+sig EmailAddress{}
+
+sig User extends AccountRegistration{
+	upcomingTickets: set Ticket,
+	pastTickets: set Ticket,
+}
+
+sig Ticket{
+	store: one Store,
+	status: one TicketStatus,
+	booking: one Booking,
+	bookingId: one Int,
+	qrCode: one QRCode
+}
+{
+	bookingId > 0
+}
+
+sig QRCode{}
+{  // There can not be two tickets with the same QR Code
+	no disj t1, t2: Ticket | t1.qrCode = t2.qrCode
+}
+
+//Abstract definition of Ticket status, with its extensions
+abstract sig TicketStatus{}
+one sig RESERVED extends TicketStatus{}
+one sig SCHEDULED extends TicketStatus{}
+one sig USED extends TicketStatus{}
+one sig CANCELLED extends TicketStatus{}
+
+sig Booking{
+	slot: one Slot,
+	shoppingList: set Category
+}
+
+sig Slot{
+	appointment: one DateTime,
+	visitDuration: one Int,
+}
+{
+	visitDuration >= 0
+}
+
+sig DateTime{}
+{
+	no disj s1, s2: Slot | s1.appointment = s2.appointment
+}
+
+sig Product{
+	name: one ProductName,
+	brand: one Brand,
+	description: lone Description,
+	price: one Float,
+	category: one Category,
+	quantity: one Int,
+}
+{
+	price.beforePoint > 0 and
+	quantity > 0
+}
+
+sig ProductName{}
+sig Description{}
+sig Brand{}
+
+sig Float{
+	beforePoint: one Int,
+	afterPoint: one Int
+}
+{
+	afterPoint > 0
+}
+
+abstract sig Category{
+	capacity: one Int,
+	products: set Product
+}
+{
+	capacity > 0
+}
+
+sig BEVERAGES extends Category{}
+sig BAKERY extends Category{}
+sig JARREDGOODS extends Category{}
+sig DAIRY extends Category{}
+sig BAKINGGOODS extends Category{}
+sig FROZENFOOD extends Category{}
+sig MEAT extends Category{}
+sig CLEANERS extends Category{}
+sig PAPERGOODS extends Category{}
+sig PERSONALCARE extends Category{}
+sig OTHER extends Category{}
+
+sig StoreAttendant extends AccountRegistration {
+	workingStore: one Store,
+	attendantCode: one Int,
+}
+{
+	attendantCode > 0
+}
+
+sig StoreAdministrator extends AccountRegistration {
+	store: one Store,
+	name: one Name,
+	surname: one Surname
+}
+
+sig Name{}
+sig Surname{}
+
+sig Store{
+	name: one Name,
+	chain: lone Chain,
+	position: one GPSPosition,
+	cap: one Int,
+	upcomingBookings: set Ticket,
+	phoneNumber: one PhoneNumber
+}
+
+sig Chain{}
+
+sig StoreList{
+	stores: set Store
+}
+{
+	no s: Store | s not in stores
+}
+
+sig PhoneNumber {}
+{ //There can not exists more than one store with the same phone number
+	no disj s1, s2: Store | s2.phoneNumber = s1.phoneNumber
+}
+
+sig GPSPosition {}
+{  //There can not exists more than one store with the same GPS position
+	no disj s1, s2: Store | s2.position = s1.position
+}
+
+-----------------------------------------------------------------
+
+// Facts
+
+fact{ //a unique username is associated to each registration
+	no disj r1, r2: AccountRegistration | r1.username = r2.username
+}
+
+fact{ //a unique email address is associated to each registration
+	no disj r1, r2: AccountRegistration | r1.emailAddress = r2.emailAddress
+}
+
+fact { //There can not exist two products with the same name and the same brand}
+	no disj p1, p2: Product | p2.name = p1.name and p2.brand = p1.brand
+}
+
+fact { //for each user, the set of bookings must be different
+	all disj u1, u2: User | (u1.pastTickets + u1.upcomingTickets)
+		& (u2.pastTickets + u2.upcomingTickets) = none
+}
+
+fact { //a user can not have two bookings at the same time
+	all u: User | (no disj t1, t2: Ticket | 
+		t1 in u.upcomingTickets and t2 in u.upcomingTickets
+			and t1.booking.slot.appointment = t2.booking.slot.appointment)
+}
+
+fact { //a ticket refers only to one user
+	all t: Ticket | (no disj u1, u2: User | (t in u1.upcomingTickets and t in u2.upcomingTickets) or (t in u1.pastTickets and t in u2.pastTickets))
+}
+
+fact { //a ticket always has a user
+	all t: Ticket | (one u: User | t in u.upcomingTickets or t in u.pastTickets)
+}
+
+fact { //each user has disjoint upcoming and past bookings
+	all u: User | u.upcomingTickets & u.pastTickets = none
+}
+
+fact { //each booking id is unique
+	no disj t1, t2: Ticket | t1.bookingId = t2.bookingId
+}
+
+fact { //A booking refers only to one ticket
+	no disj t1, t2: Ticket | t1.booking = t2.booking
+}
+
+fact { //A booking cannot exist without an associated ticket
+	all b: Booking | one t: Ticket | t.booking = b
+}
+
+fact { //There can not exist one slot without any booking
+	all s: Slot | some b: Booking | b.slot = s
+}
+
+fact { //two products with the same name could not be in different categories
+	no disj p1, p2: Product | (p1.name = p2.name and not (p1.category = p2.category))
+}
+
+fact { //Each attendant code is unique
+	no disj a1, a2: StoreAttendant | a1.attendantCode = a2.attendantCode
+}
+
+fact { //Each store has at most one adminstrator
+	no disj sa1, sa2: StoreAdministrator | sa1.store = sa2.store
+}
+
+fact { //A cancelled or used ticket cannot be in upcoming tickets
+	all u: User | (all t: Ticket | t.status != SCHEDULED implies u.upcomingTickets & t = none)
+}
+
+fact { //An active ticket cannot be in past tickets
+	all u: User | (all t: Ticket | t.status = SCHEDULED implies u.pastTickets & t = none)
+}
+
+fact { //If a ticket exists, it must be scheduled, reserved, cancelled or used
+	all t: Ticket | t.status = SCHEDULED or t.status = RESERVED or t.status = USED or t.status = CANCELLED
+}
+
+fact { //The store name must be unique
+	no disj s1, s2: Store | s1.name = s2.name
+}
+
+fact { //A chain must me unique
+	no disj c1, c2: Chain | c1 = c2
+}
+
+fact { //An active ticket cannot be in past ticket list
+	all t: Ticket | not(t.status = RESERVED and one u: User | t in u.pastTickets) and not(t.status = SCHEDULED and one u:User | t in u.pastTickets)
+}
+
+fact { //If a ticket is scheduled, it must have a duration greater then 0
+	all t:Ticket | not(t.status = SCHEDULED and t.booking.slot.visitDuration = 0)
+}
+
+fact { //A store can not exist without an administrator
+	all s: Store | one a: StoreAdministrator | a.store = s
+}
+
+fact { //A ticket always has a QR Code
+	all t: Ticket | one q: QRCode | t.qrCode = q
+}
+
+fact { //A DateTime is always associated to a slot
+	all s: Slot | one d: DateTime | s.appointment = d
+}
+
+fact { //There can not exist a chain without any store
+	all c: Chain | some s: Store | s.chain = c
+}
+
+fact { //A chain can contain more than one store
+	all c: Chain | some s: Store | s.chain = c
+}
+
+fact { //There cannot be a category without products
+	all c: Category | some p: Product | p.category = c
+}
+------------------------------------------------------------
+//assertions
+
+// G1
+assert retrieveTicket{
+	all t: Ticket | t.status = RESERVED implies (one u: User | t in u.upcomingTickets
+		and t.booking.slot.visitDuration = 0)
+}
+check retrieveTicket for 4
+
+//G2
+assert newStore {
+	no s: Store | one sl: StoreList | s not in sl.stores
+}
+check newStore for 4
+
+//G3
+assert bookAVisit{
+	all t:Ticket | t.status = SCHEDULED implies (one u: User | t in u.upcomingTickets
+		and t.booking.slot.visitDuration > 0)
+}
+check bookAVisit for 4
+
+------------------------------------------------------------
+//predicates
+
+// simulation  that  shows  the  result  some registrations
+pred world1 {
+	#User = 2
+	#Password > 1
+	#StoreAdministrator = 2
+	#StoreAttendant = 2
+	#Store = 2
+	#Brand = 0
+	#ProductName = 0
+	#Description = 0
+	#DateTime = 0
+}
+run world1 for 6
+
+// simulation that shows a set of upcoming bookings and a set of past bookings
+pred world2 {
+	#User = 2
+	#Store = 1
+	#Ticket = 4
+	some u:User | #(u.pastTickets) > 0 and #(u.upcomingTickets) > 0
+}
+run world2 for 4
+
+pred world3 {
+	#User = 2
+	#Password > 1
+	#Store = 3
+	#Chain = 2
+	#Ticket > 2
+	#Slot > 1
+	#Category > 2
+	#Product > 3
+}
+run world3 for 10
+
+    \end{lstlisting}
+
+    \newpage
+    \subsection{Worlds}
+
     \newpage
     \section{Effort spent}
     \begin{tabular}{ | c || c | c | c | c|}
         \hline
         Student        & Time for S.1 & S.2    & Time for S.3 & Time for S.4 \\ \hline
         Alice Piemonti & 3h           & 20 min & 11h          &              \\ \hline
-        Luca Pirovano  & 3h           & 6h     & 10h          & 6h           \\ \hline
-        Nicolò Sonnino & 3h           & 3h     & 11h          & 3h           \\
+        Luca Pirovano  & 3h           & 6h     & 10h          & 8h           \\ \hline
+        Nicolò Sonnino & 3h           & 3h     & 11h          & 7h           \\
         \hline
     \end{tabular}
 \end{flushleft}
