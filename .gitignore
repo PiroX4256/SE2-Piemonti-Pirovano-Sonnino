@@ -298,4 +298,5 @@ TSWLatexianTemp*
 .vscode/
 .idea/
 RASD/*.pdf
+DD/*.pdf
 __latexindent_temp.tex

@@ -1,0 +1,105 @@
+\documentclass[table, 12pt]{article}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{tocloft}
+\usepackage{todonotes}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{pdfpages}
+\usepackage{pdflscape}
+\usepackage{textpos}
+\usepackage{scrhack}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{tasks}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{listing}
+\usepackage{graphicx}
+
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\begin{document}
+\begin{titlepage}
+    \centering
+    {\scshape\large AY 2020/2021 \par}
+    \vfill
+    \includegraphics[width=100pt]{assets/logo-polimi-new}\par\vspace{1cm}
+    {\scshape\LARGE Politecnico di Milano \par}
+    \vspace{1.5cm}
+    {\huge\bfseries DD\@: Design Document \par}
+    \vspace{2cm}
+    {\Large {Alice Piemonti\quad Luca Pirovano\quad Nicolò Sonnino}\par}
+    \vfill
+    {\large Professor\par
+        Matteo \textsc{Rossi}}
+    \vfill
+    {\large \today \par}
+\end{titlepage}
+\hypersetup{%
+    pdfborder = {0 0 0}
+}
+\thispagestyle{plain}
+\pagenumbering{gobble}
+\mbox{}
+\newpage
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section{Introduction}
+\subsection{Purpose}
+The purpose of this document is to provide an exhausting explanation about the S2B, focusing in particular on the architecture that will be adopted, the modules of the system and their interfaces.
+
+Furthermore, a runtime view of the core functionalities of the S2B is provided, accompanied by some detailed interactions diagrams that show the message exchanging between the components.
+
+Finally, there are mentions about the implementation, testing and integration processes.
+
+\subsection{Scope}
+The application provides different actors that will use the application, which are users, store administrators and store attendants.
+
+\textbf{Users} can access to the application in order to plan their visit to the grocery shop, which can be booked in two different ways. In fact, they can grab the first available ticket (which is called \textit{ASAP} mode) or they can choose a date and time slot in which they plan to visit the store, and also a duration or some articles they are intended to buy, in order to optimize schedules and reduce queues.
+
+\textbf{Store Administrators} can register their shop on the platform, in order to become visible and bookable by users. They can also edit store information (such as opening hours, capacity of slots, etc.) and add or remove the store attendants.
+
+Finally, \textbf{Store Attendants} can sign up with their personal store code in order to monitor entrances through a specific section of the application.
+
+\subsection{Definitions, Acronyms, Abbreviations}
+\subsubsection{Definitions}
+\begin{itemize}
+    \item \textbf{Visit:} it refers to the customers entering the shop, and also to their staying time. It is associated to both a certain store and a visit slot.
+    \item \textbf{Slot:} it is a day/time range. It can be reserved by a limit number of users in order to guarantee a maximum number of people who are inside a store in every time of the day.
+\end{itemize}
+
+\subsubsection{Acronyms}
+\begin{itemize}
+    \item \textbf{S2B:} Software to Be, it is the one designed in this document and not yet implemented.
+    \item {\textbf{ASAP:} As Soon As Possible. It refers to the possibility of getting an appointment on the first available slot.}
+\end{itemize}
+
+\subsubsection{Abbreviations}
+\begin{itemize}
+    \item \textbf{Gn}: goal number n.
+    \item \textbf{Rn}: requirement number n.
+    \item \textbf{ID}: identifier.
+\end{itemize}
+
+\subsection{Revision History}
+
+\subsection{Reference Documents}
+
+\subsection{Document Structure}
+
+\newpage
+
+\section{Architectural Design}
+
+\end{document}
