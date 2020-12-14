@@ -298,5 +298,7 @@ TSWLatexianTemp*
 .vscode/
 .idea/
 RASD/*.pdf
-DD/*.pdf
+DD/*
+specs/*
+DeliveryFolder/*
 __latexindent_temp.tex
