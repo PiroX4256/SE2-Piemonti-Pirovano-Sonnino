@@ -97,9 +97,9 @@
         \item {\textbf{Reservation}: the user will choose a day/time slot from a list of available ones, in order to book his visit to the structure.}
     \end{itemize}
 
-    Every customer can choose one of these modalities \textbf{remotely} via an official app or through a web browser, or \textbf{in presence} by asking to a staff member, who will act as an intermediate between the customer and the system.
+    Every customer can choose one of these modalities \textbf{remotely} via a mobile app or through a web browser, or \textbf{in presence} by asking to a staff member, who will act as an intermediate between the customer and the system.
 
-    When a customer makes a reservation, the system allows him to choose the duration of his visit and insert a list of possible purchases, in order to optimize his stay.\\
+    When customers make a reservation, the system allows them to choose the duration of their visit and insert a list of possible purchases, in order to optimize the estimate of their stay.\\
 
     In addition to that, the user can change both the slot and the store relying on system's suggestions: the application will display the best recommendation in order to balance the number of people inside a store throughout the day, merging in the same time slots those people who will purchase different product, in order to guarantee a good distancing through the aisles as well. The user can also enable periodically notifications of available slots in a day/time range: this will allow the application to notify the user when a desirable slot (according to day/time preferences) is available.
 
@@ -153,7 +153,7 @@
     \label{goals}
     The main objectives of our system are the following:
     \begin{enumerate}[label=$\bullet$ \textbf{G\arabic*:}]
-        \item \textbf{Allow users to retrieve a ticket}\\This is the main feature of the application, through which customers are invited not staying outside the structure. Through an appropriate estimation of each customer's permanence time, the user receives an estimated queue time after which he can go to the store. The number is guaranteed to be unique. The QR Code is needed in order to let store attendants to monitor entrances, scanning the customer's code upon entering.
+        \item \textbf{Allow users to retrieve a ticket}\\This is the main feature of the application, through which customers are invited not staying outside the structure. Through an appropriate estimation of each customer's permanence time, the user receives an estimated queue time after which he can go to the store. The number is guaranteed to be unique. The QR Code is needed in order to let store attendants to monitor accesses, scanning the customer's code upon entering.
         \item \textbf{Allow Store Administrators to add a shop to the list of available ones.}\\The shop can be registered by its manager, who can also add opening hours and GPS Position. Furthermore, attendants can sign up and use the system to check-in people.
         \item \textbf{Allow users to "book a visit"}\\Users can book a slot providing the expected duration of the visit. Moreover, users can provide a list which describes the categories of products they intend to buy. Thank to this, visits are optimized and those customers who belong to the same slot, are supposed to buy different types of product, so that they stay in different areas of the store.
         \item \textbf{Let the system to make suggestions to users}\\For long term users, the system provides an estimation of visit duration, relying on their previous shopping sessions data. Furthermore, during the reservation procedure users will receive a list of alternatives. This help to balance out the number of people in the store during the day. The suggestions could be both on the same shop chain and on different chains.
@@ -162,9 +162,9 @@
     \subsection{Definitions, Acronyms, Abbreviations}
     \subsubsection{Definitions}
     \begin{itemize}
-        \item \textbf{Customers:} the people whom this service is directed. They can belong to any age and sex. Their main purpose is to request a ticket to schedule their line up at the shop.
-        \item \textbf{User:} it is a customer who uses the application.\label{User}
-        \item \textbf{Store:} it is the provider of the goods that customers want to buy. It is obliged to limit the number of people entering in its building through a line up method, in order to respect the local laws for COVID-19 pandemic.
+        \item \textbf{Customers:} the people whom this service is directed. They can belong to any age and gender. Their main purpose is to request a ticket to schedule their line up at the shop.
+        \item \textbf{User:} it is a customer who registers and then uses the application.\label{User}
+        \item \textbf{Store:} it is the provider of the goods that customers want to buy. It is obliged to limit the number of people accessing its building through a line up method, in order to respect the local laws for COVID-19 pandemic.
         \item \textbf{Attendant:} it is a store's employee. Its aim is both to manage entrances and to help customers. For this reasons attendants can scan QR codes from customers' application and also release tickets on spot acting as intermediate for customers.
         \item \textbf{Store Administrator:} it is the profile of the store's page creator. It can manage opening hours, available slots, people per slot, etc.
         \item \textbf{Queue number:} it is the ID assigned to each user. It's composed of alphanumerical elements, and it's needed to access the desired shop. It can be retrieved online or on the spot.
@@ -191,10 +191,11 @@
         \item {\textbf{ID:} identifier. It's a generally unique sequence of numbers or letters in order to unambiguously identify an entity.}
         \item {\textbf{Gn:} goal number n}
         \item \textbf{Dn:} domain assumption number n
+        \item \textbf{Rn:} requirement number n
     \end{itemize}
     \subsection{Revision History}
     \begin{itemize}
-        \item December 10, 2020: version 1.0
+        \item December 10, 2020: version 1.0 (first release)
     \end{itemize}
     \subsection{Reference Documents}
     \begin{itemize}
@@ -246,14 +247,14 @@
 
     Another API service used is the one of the DBMS system, which will be adopted in order to query the database in an efficient way.
     \subsubsection{Hardware Interfaces}
-    The system "as it is" does not provide any hardware interface. However, local shops could use the QR Code given by the application on their local systems in order to monitor the number of customers who have entered the shop.
+    The system "as it is" does not provide specific hardware equipment in order to scan QR Codes; this feature will be managed through the mobile application, using smartphones' integrated camera.
     \subsubsection{Hardware Constraints}
     Each person interested in using the system described in this document to line up for a shop should have a device connected to the Internet, which could be a smartphone, tablet or personal computer.
 
     The basic requirement is to have an Internet browser installed on the used device.
-    There is then the possibility of downloading and installing the official CLup application from the most important stores, like Apple's \textit{App Store} or Android's \textit{Play Store}.
+    There is then the possibility of downloading and installing the official CLup application from the most important stores, like Apple's \textit{App Store} or Google's \textit{Play Store}.
 
-    Shops, instead, should have some devices connected to the service (through web interface or application) in order to monitor queue length, entrances, generate ticket on the spot and, if needed, close the booking sessions in advance.
+    Shops, instead, should have some devices connected to the service (through web interface or application) in order to monitor queue length, entrances, generate and print tickets on the spot and, if needed, close the booking sessions in advance.
 
     \newpage
     \subsection{Product Functions}
@@ -281,7 +282,7 @@
     \end{figure}
     \subsubsection{Hand out tickets on spot}
 
-    This functionality is reserved only for staff members. The customer reaches the supermarket/grocery shop and asks the staff to be queued up. The personnel accesses the system which interacts with the database and generates a ticket, granting the customer a position in the queue.
+    This functionality is reserved only for staff members. The customer reaches the supermarket/grocery shop and asks the staff to be queued up. The personnel accesses the system which generates and prints a ticket, granting the customer a position in the queue.
     \begin{figure}[H]
         \begin{center}
             \includegraphics[scale=0.5]{assets/function-hand-up.png}
@@ -299,23 +300,23 @@
     \end{figure}
     \subsection{Actors}
     \subsubsection{User}
-    It's a customer, i.e. a normal person who intend to go to the grocery shop. It is able to use the CLup smartphone application or surf on CLup's website. It uses the service in order to access the stores, according to the regulations. It takes advantage in using the application since, when it want to access a store, it retrieves the unique number whereby it can stay in a virtual queue and wait from a close and safe building. In addition, thanks to the application, it can either book a reservation for a next moment.
+    It's a customer, i.e. a person who intend to go to the grocery shop. It is able to use the CLup smartphone application or surf on CLup's website. It uses the service in order to access the stores, according to the regulations. It takes advantage in using the application since, when it want to access a store, it retrieves the unique number whereby it can stay in a virtual queue and wait from a close and safe building. In addition, thanks to the application, it can either book a reservation for a next moment.
 
     \subsubsection{Attendant}
     It's a worker of a specific store. Its job is to help customers and monitor the entrances of customers. It uses the application for scanning the QR code of users at the entrance of the store. In addition, it can enter in a dedicated section of the application in order to act as an intermediate for those customers who don't have an Internet access, thanks to which it can release tickets on spot. Furthermore, through the application, it can always know the number of customers who are inside the store at any moment.
 
     \subsubsection{Store Administrator}
-    It's the administrator of a shop or a chain of stores. For the application's purpose only, we identify stores as grocery shops. The store administrator is the person who chooses to adopt the service in order to let attendants managing efficiently the flows of people inside and outside the building, as well as observing the laws on social distancing. It takes advantages through the application since it can knows easily the situation of its stores, such that the upcoming bookings of customers, the influx inside the stores. In addition, the store administrator is the only one who can modify store's information, such that opening hours, slot's capacity, opening hours.
+    It's the administrator of a shop. For the application's purpose only, we identify stores as grocery shops. The store administrator is the person who chooses to adopt the service in order to let attendants managing efficiently the flows of people inside and outside the building, as well as observing the laws on social distancing. It takes advantages through the application since it can knows easily the situation of its stores, such that the upcoming bookings of customers, the influx inside the stores. In addition, the store administrator is the only one who can modify store's information, such that opening hours, slot's capacity, opening hours.
 
     \subsection{Assumptions, Dependencies, Constraints}
     \subsubsection{Assumptions}
     \begin{enumerate}[label=\textbf{D\arabic*}:]
         \item GPS position of the shop is exact and leads to that shop.
         \item The queue number of each ticket is unique.
-        \item In case of QR Code entrances monitoring, shop should have an internal system in order to count them.
+        \item In case of QR Code entrances monitoring, the attendant must scan the ticket through the mobile application on the smartphone.
         \item Each user who wants to use the online service is needed to have a device connected to Internet (such as PC, Mac, smartphone, etc).
         \item There are no connection issues when actors interface with the system.
-        \item Each attendant knows the personal code and register to the correct shop.
+        \item Each attendant has a unique personal code and register to the correct shop.
         \item The list of products and the duration of the visit inserted are acceptable.
         \item The recommendations are based on the analysis of user's interactions with the application.
         \item The recommendations are such that the number of visits in each store during the day are balanced.
@@ -944,7 +945,7 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
 
     In fact, anyone needs to go to grocery shop, from the teenager to the elderly man or woman.
 
-    The application should then be accessible to anyone in this age range. Of course, in case of people who can not use this system, there is the possibility of manual grabbing ticket on the spot.
+    The application should then be accessible to anyone in this age range. Of course, in case of people who can not use this system, there is the possibility of retrieving tickets on the spot.
     \subsubsection{Reliability}
     The system must prevent downtime, in order to let people going to the grocery shop in the opening hours. \\
     The highest number of simultaneous accesses is expected in the most frequented shopping hours (early morning or late afternoon).
@@ -957,7 +958,7 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
     \subsubsection{Cross Platform}
     The system must be supported on the principal operating systems, either mobile and computers. It is in any case usable on every web browser, from every device.
 
-    The downloadable application, instead, must be supported by Windows, Linux, Mac OS, IOS and Android.
+    The downloadable application, instead, must be supported by IOS and Android.
     \subsubsection{Maintainability}
     The system must be designed in such a way that permits future addition of functionalities with minimum effort.
     Design techniques must in fact guarantee an high reusability.
