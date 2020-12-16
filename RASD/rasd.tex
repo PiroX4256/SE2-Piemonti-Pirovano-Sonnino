@@ -27,6 +27,7 @@
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
 \titlespacing*{\paragraph}
 {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
 \begin{document}
 \begin{titlepage}
     \centering
@@ -86,9 +87,13 @@
 
     In addition, attendants will have access to a proper area of the application that permits to behave as a proxy and hand out tickets on spot, in order to guarantee the access to those people who doesn't have access to the application (elderly people, people who don't have a smartphone or an Internet access).\\
 
+    Finally, store administrators can register their shop to the platform, becoming accessible to every user that needs to go buying something at it. They can also edit information about the store, such as opening hours, time slot, etc.
+
     The application will be operable freely, widely available and very intuitive, because the range of users (i.e. people who need to go to the grocery store) extends to the entire population.
 
     The user base is expected to be both people with an Internet access and ones without it, from young people to elderly, thanks to the possibility of attendants to act as a proxy.
+
+    In order to use this service a registration is needed. A customer can sign up simply through an email address and a password. A store administrator, instead, has to insert all the information about the shop to be added. Finally, an attendant has to insert the personal code by which he (she) is identified in the internal store system.
 
     \subsection{Scope}
     The product shall be called CLup and will let users to plan their shopping session in two different ways:
@@ -315,11 +320,12 @@
         \item The queue number of each ticket is unique.
         \item In case of QR Code entrances monitoring, the attendant must scan the ticket through the mobile application on the smartphone.
         \item Each user who wants to use the online service is needed to have a device connected to Internet (such as PC, Mac, smartphone, etc).
-        \item There are no connection issues when actors interface with the system.
         \item Each attendant has a unique personal code and register to the correct shop.
         \item The list of products and the duration of the visit inserted are acceptable.
         \item The recommendations are based on the analysis of user's interactions with the application.
         \item The recommendations are such that the number of visits in each store during the day are balanced.
+        \item The user does not insert fraudulent information as input (e.g. a wrong visit duration in order to grab the first availabe slot).
+        \item Each store has a printer for the handing out tickets on the spot process.
     \end{enumerate}
 
     \newpage
@@ -850,7 +856,6 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
                   \item \textbf{R3:} The system generates a QR Code associated to the ticket.
                   \item \textbf{D2:} The queue number of each ticket is unique.
                   \item \textbf{D4:} Each user who wants to use the online service is needed to have a device connected to Internet (such as PC, Mac, smartphone, etc).
-                  \item \textbf{D5:} There are no connection issues when actors interface with the system.
               \end{itemize}
               }
         \item {Allow Store Administrators to add a shop to the list of available ones
@@ -859,7 +864,6 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
                   \item \textbf{R5:} The system allows Store Attendants to register with their attendant code.
                   \item \textbf{D1:} GPS Position of the shop is exact and leads to that shop.
                   \item \textbf{D4:} Each user who wants to use the online service is needed to have a device connected to Internet (such as PC, Mac, smartphone, etc).
-                  \item \textbf{D5:} There are no connection issues when actors interface with the system.
                   \item \textbf{D6:} Each attendant knows the personal code and registers to the correct shop.
               \end{itemize}
               }
@@ -870,7 +874,6 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
                   \item \textbf{R6:} The system allows users to select a day/time slot from the available ones.
                   \item \textbf{R7:} The system allows users to add a list of products (categories) to purchase and the duration time of the visit.
                   \item \textbf{D4:} Each user who wants to use the online service is needed to have a device connected to Internet (such as PC, Mac, smartphone, etc).
-                  \item \textbf{D5:} There are no connection issues when actors interface with the system.
                   \item \textbf{D7:} The list of products and the duration time inserted are acceptable.
               \end{itemize}
               }
@@ -886,7 +889,6 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
               \begin{itemize}
                   \item \textbf{R10:} The system takes note about the actual queue number.
                   \item \textbf{R11:} The system notifies the user when its queue number is going to be called.
-                  \item \textbf{D5:} There are no connection issues when actors interface with the system.
               \end{itemize}
               }
     \end{enumerate}
@@ -933,6 +935,8 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
     For this functionality stores could have a Barcode Reader connected through usb to a personal computer or, otherwise, they could use a mobile application connected to their system.
 
     Each customer, instead, must have a mobile device on which grab a ticket or make a reservation.
+
+    In addition to that, each store must have a printer in order to accomplish to the "Grab on spot" feature. If the store contains a totem with a computer it suffices to be a USB printer. Otherwise, if the tickets are generated from the attendant at the entrance, the store must have a Wi-Fi printer that connects to the attendant mobile device.
 
     \subsubsection{Privacy Constraint}
     The system, since the main application area is the european one, must be compliant to EU's GDPR law. Furthermore, the data must pass through a secure connection, in order to prevent \textit{Man in the Middle} attacks.
