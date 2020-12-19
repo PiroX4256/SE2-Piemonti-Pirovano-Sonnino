@@ -94,6 +94,15 @@ The user base is expected to be both people with an Internet access and ones wit
 
 In order to use this service a registration is needed. A customer can sign up simply through an email address and a password, or via an external identity provider (such as Facebook, Twitter, etc.). A store administrator, instead, has to insert all the information about the shop to be added. Finally, an attendant has to insert the personal code by which he (she) is identified in the internal store system (which can be, for example, the badge number).
 
+The application will define the concept of minimum viable product (MVP) as the first step to reach. The identified MVP is the "Retrieve a ticket" (ASAP) functionality.
+
+The application will then be developed modularly, following this distinction:
+\begin{itemize}
+    \item \textbf{Module 1 (MVP):} retrieve a ticket functionality, together with web interface and application;
+    \item \textbf{Module 2:} module 1 + book a visit functionality;
+    \item \textbf{Module 3:} module 2 + custom organization deploy.
+\end{itemize}
+
 \subsection{Scope}
 The product shall be called CLup and will let users to plan their shopping session in two different ways:
 \begin{itemize}
@@ -185,6 +194,7 @@ The main objectives of our system are the following:
 \begin{itemize}
     \item {\textbf{ASAP:} As Soon As Possible. It refers to the possibility of getting an appointment on the first available slot.}
     \item {\textbf{S2B:} Software to Be, it is the one designed in this document and not yet implemented.}
+    \item \textbf{MVP:} Minimum Viable Product, it is a version of a product with just enough features to be usable by early customers who can then provide feedback for future product development.
     \item {\textbf{API:} Application Programming Interface, it indicates on demand procedure which supply a specific task.}
     \item \textbf{DBMS:} Data Base Management System, it is an interface between the end user and the database, simultaneously managing the data, the database engine, and the database schema in order to facilitate the organization and manipulation of data.
     \item {\textbf{UML:} Universal Modelling Language, it is a way of designing application based on its graphic class representation.}
@@ -261,7 +271,6 @@ There is then the possibility of downloading and installing the official CLup ap
 
 Shops, instead, should have some devices connected to the service (through web interface or application) in order to monitor queue length, entrances, generate and print tickets on the spot and, if needed, close the booking sessions in advance.
 
-\newpage
 \subsection{Product Functions}
 \label{product_functions}
 
@@ -304,6 +313,8 @@ The application occasionally sends notifications to the user with available slot
     \end{center}
 \end{figure}
 \subsection{Actors}
+\subsubsection{Customer}
+It's a person with no access to the CLup application. In this case, he (she) goes to the desired shop and requests to be queued up. The store attendant prints the ticket with the position and an expected waiting time.
 \subsubsection{User}
 It's a customer, i.e. a person who intend to go to the grocery shop. It is able to use the CLup smartphone application or surf on CLup's website. It uses the service in order to access the stores, according to the regulations. It takes advantage in using the application since, when it want to access a store, it retrieves the unique number whereby it can stay in a virtual queue and wait from a close and safe building. In addition, thanks to the application, it can either book a reservation for a next moment.
 
@@ -916,15 +927,16 @@ This subsection summarizes the goals describe in \ref{goals}, showing the requir
 \end{table}
 
 
-
 \subsection{Performance Requirements}
 Of course, the system should have a good response time, which could be included between 0.1 and 2 seconds.
 Otherwise, customers and store workers may think that the service is interrupted or does not work.
 
 The average workload of the system is expected to be very high, because of its principal functionality. However, it depends on the number of stores that would adopt it.
-With a rough calculation, the system must guarantee at least 10 millions of operations per day.
+With a rough calculation, the system must guarantee at least 1 millions of operations per day.
 
 Through a good distribution of the application it is possible to accomplish this specific requirement.
+
+The module 3 of the application provides the installation and deploymeny of CLup on the organization's server, in order to customize the user experience and avoid service downtime in case of CLup's servers problems.
 
 \subsection{Design constraints}
 \subsubsection{Hardware Constraints}
@@ -965,6 +977,10 @@ The downloadable application, instead, must be supported by IOS and Android.
 \subsubsection{Maintainability}
 The system must be designed in such a way that permits future addition of functionalities with minimum effort.
 Design techniques must in fact guarantee an high reusability.
+\subsubsection{Modularity}
+The system is designed to be modular, as described in the purpose. The most important module is the "Retrieve a ticket" one, which permits to each shop to implement a low cost queue system.
+
+In case of more complex needs, there are modules 2 and 3, which provides the "Book a visit" functionality and the "Custom deploymeent" service respectively.
 \newpage
 \section{Formal Analysis}
 \subsection{Alloy Code}
