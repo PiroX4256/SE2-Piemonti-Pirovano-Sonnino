@@ -195,6 +195,7 @@ The main objectives of our system are the following:
     \item {\textbf{ASAP:} As Soon As Possible. It refers to the possibility of getting an appointment on the first available slot.}
     \item {\textbf{S2B:} Software to Be, it is the one designed in this document and not yet implemented.}
     \item \textbf{MVP:} Minimum Viable Product, it is a version of a product with just enough features to be usable by early customers who can then provide feedback for future product development.
+    \item \textbf{IdP:} Identity Provider, see definition above.
     \item {\textbf{API:} Application Programming Interface, it indicates on demand procedure which supply a specific task.}
     \item \textbf{DBMS:} Data Base Management System, it is an interface between the end user and the database, simultaneously managing the data, the database engine, and the database schema in order to facilitate the organization and manipulation of data.
     \item {\textbf{UML:} Universal Modelling Language, it is a way of designing application based on its graphic class representation.}
@@ -211,6 +212,12 @@ The main objectives of our system are the following:
 \subsection{Revision History}
 \begin{itemize}
     \item December 10, 2020: version 1.0 (first release)
+    \item December 31, 2020: version 1.1 \begin{itemize}
+              \item MVP concepts;
+              \item activity diagrams instead of sequence ones;
+              \item new mockups to improve user experience;
+              \item typo fixing.
+          \end{itemize}
 \end{itemize}
 \subsection{Reference Documents}
 \begin{itemize}
@@ -232,13 +239,13 @@ The main objectives of our system are the following:
 \subsection{Perspective}
 CLup is a complete system that offers the functionalities described in the specific \textit{Product Functions (\ref{product_functions})} section.
 
-It does not lean on a previously existent system and does not offer integrations with other existing systems.
+It takes advantage of some useful integrations, such as external IdP, API interfaces for some features, and so on. It also exploits some pre-existent graphic packages in order to make the user experience more comfortable.
 
 CLup provides all the module that are necessary for its execution. However, it must exploit external interfaces to accomplish its requirements.
 
 We can see a brief report of the information stored by the application through the class diagram of figure \ref{class_diagram}.
 
-\begin{figure}[H]
+\begin{figure}
     \hspace{-108px}
     \includegraphics[scale=0.46]{assets/UML/HighLevelUML.png}
     \caption{High-level UML diagram with main classes}
@@ -271,8 +278,19 @@ There is then the possibility of downloading and installing the official CLup ap
 
 Shops, instead, should have some devices connected to the service (through web interface or application) in order to monitor queue length, entrances, generate and print tickets on the spot and, if needed, close the booking sessions in advance.
 
+In case of ticket retrieved on the spot, shops must have a printer; it could be a USB one if tickets are generated from a PC, it must be a wireless one otherwise.
+
 \subsection{Product Functions}
 \label{product_functions}
+
+\subsubsection{Sign Up}
+\label{sign_up}
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=0.25]{assets/Functions/function-sign-up.png}
+        \caption{BPMN diagram sign up method}
+    \end{center}
+\end{figure}
 
 \subsubsection{ASAP: As Soon As Possible}
 \label{line_up}
@@ -1341,9 +1359,9 @@ run world3 for 10
 \begin{tabular}{ | c || c | c | c | c|}
     \hline
     Student        & Time for S.1 & S.2 & Time for S.3 & Time for S.4 \\ \hline
-    Alice Piemonti & 3h           & 1h  & 11h          & 1h           \\ \hline
-    Luca Pirovano  & 3h           & 6h  & 10h          & 8h           \\ \hline
-    Nicolò Sonnino & 3h           & 3h  & 11h          & 8h           \\
+    Alice Piemonti & 3h           & 3h  & 11h          & 1h           \\ \hline
+    Luca Pirovano  & 3h           & 8h  & 10h          & 8h           \\ \hline
+    Nicolò Sonnino & 3h           & 6h  & 11h          & 8h           \\
     \hline
 \end{tabular}
 \end{document}
