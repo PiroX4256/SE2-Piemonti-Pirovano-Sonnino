@@ -174,10 +174,26 @@ Otherwise, if the buyer intends to purchase only module 1 or module 2, the end u
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/Architectural-Design/Component-Diagram.png}
+        \includegraphics[width=\textwidth]{assets/Architectural-Design/ComponentDiagram.png}
         \caption{Component Diagram}
         \label{component_diagram}
     \end{center}
 \end{figure}
+
+In figure \ref{component_diagram} we can see a more detailed diagram representing the layers described before.
+
+The web server has the function to route the browser requests to the application server and send back its responses.
+
+\begin{itemize}
+    \item \textbf{Client Manager}\\This module handles all the requests made by the client. At the beginning, while the client is not logged in, the module offers a \textit{loginInterface} which permits to execute a sign up or sign in operation. Once the client has logged in, the module shows only the other types of interfaces relying on user's role. A client logged as a user will exploit the \textit{UserInterface}, a store attendant an \textit{AttendantInterface} and a store administrator an \textit{Administrator Interface}.
+    \item \textbf{Login Handler}
+    \item \textbf{SignUp Handler}
+    \item \textbf{ASAP Handler}
+    \item \textbf{Reservation Handler}
+    \item \textbf{Notification Handler}
+    \item \textbf{Generate on spot}
+    \item \textbf{QRCode Validation}
+    \item \textbf{Store Management}
+\end{itemize}
 
 \end{document}
