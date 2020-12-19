@@ -230,7 +230,7 @@ We can see a brief report of the information stored by the application through t
 
 \begin{figure}[H]
     \hspace{-108px}
-    \includegraphics[scale=0.46]{assets/HighLevelUML.png}
+    \includegraphics[scale=0.46]{assets/UML/HighLevelUML.png}
     \caption{High-level UML diagram with main classes}
     \label{class_diagram}
 
@@ -271,7 +271,7 @@ This functionality is accessible to all \textbf{Users} (\ref{User}). The user cl
 Alternatively, the ticket is generated alongside a QR code identifying uniquely users and their queue number. The waiting time is shown to the user until it reaches the last 10 minutes marker alerting them to approach the store.
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=0.25]{assets/function-line-up.png}
+        \includegraphics[scale=0.25]{assets/Functions/function-line-up.png}
         \caption{BPMN diagram line-up method}
     \end{center}
 \end{figure}
@@ -281,7 +281,7 @@ Alternatively, the ticket is generated alongside a QR code identifying uniquely 
 This functionality is available to every \textbf{User} (\ref{User}). The user accesses the booking through the menu and the application displays a calendar with all available slots. Alongside this, the system suggests a new booking including various choices: different time slots of the same day, different days, different stores or different chains (if the application is used by different ones). The alternatives are generated through previous data (if exists) or in order to balance the flow to the facilities. After the selection, the reservation is booked and the user is asked to create a shopping list. Finally duration time is generated from previous data, otherwise is inserted by the user.
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=0.15]{assets/function-book-a-visit.png}
+        \includegraphics[scale=0.15]{assets/Functions/function-book-a-visit.png}
         \caption{BPMN diagram booking method}
     \end{center}
 \end{figure}
@@ -290,7 +290,7 @@ This functionality is available to every \textbf{User} (\ref{User}). The user ac
 This functionality is reserved only for staff members. The customer reaches the supermarket/grocery shop and asks the staff to be queued up. The personnel accesses the system which generates and prints a ticket, granting the customer a position in the queue.
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=0.5]{assets/function-hand-up.png}
+        \includegraphics[scale=0.5]{assets/Functions/function-hand-up.png}
         \caption{BPMN diagram site method}
     \end{center}
 \end{figure}
@@ -299,7 +299,7 @@ This functionality is reserved only for staff members. The customer reaches the 
 The application occasionally sends notifications to the user with available slots. If the user accepts, they follow the same procedure of the \textit{Make a reservation (\ref{book_a_visit})}.
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=0.35]{assets/periodic-notifications.png}
+        \includegraphics[scale=0.35]{assets/Functions/function-periodic-notifications.png}
         \caption{BPMN diagram site method}
     \end{center}
 \end{figure}
@@ -342,7 +342,7 @@ For example, in the case of a Store Administrators, the system would ask them th
 Instead, in the case of Store Attendants, it would ask them the store in which they are actual working, and their personal attendant code.
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/mock_sign_in_sign_up.png}
+        \includegraphics[width=\textwidth]{assets/Mockups/mock_sign_in_sign_up.png}
         \caption{Sign In and Sign Up procedures.}
         \label{mock_sign_in_up}
     \end{center}
@@ -355,7 +355,7 @@ When you are on a details page, all the information about the selected booking i
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/mock_bookings.png}
+        \includegraphics[width=\textwidth]{assets/Mockups/mock_bookings.png}
         \caption{Home page of the application.}
         \label{mock_bookings}
     \end{center}
@@ -366,7 +366,7 @@ Otherwise, if you use "Book a visit" function, and the time slot you selected is
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=225pt]{assets/mock_line_up.png}
+        \includegraphics[width=225pt]{assets/Mockups/mock_line_up.png}
         \caption{Line-up functionality.}
         \label{mock_new_booking}
     \end{center}
@@ -374,7 +374,7 @@ Otherwise, if you use "Book a visit" function, and the time slot you selected is
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=225pt]{assets/mock_new_booking_unavailable.png}
+        \includegraphics[width=225pt]{assets/Mockups/mock_new_booking_unavailable.png}
         \caption{"Book a visit" procedure with unavailable date/time.}
         \label{mock_new_booking_unavailable}
     \end{center}
@@ -385,7 +385,7 @@ In figure \ref{mock_store_admin_home} there is a brief overview of the web inter
 As it can be seen, there are four macro areas, each one with its own features.
 The store administrator can edit information about its grocery shop, its time slot, can manage the attendants and can also see the list of upcoming booking for the shop.
 \begin{figure}[H]
-    \includegraphics[width=\textwidth]{assets/mock_home_store_admin.png}
+    \includegraphics[width=\textwidth]{assets/Mockups/mock_home_store_admin.png}
     \caption{Store administrator home page}
     \label{mock_store_admin_home}
 \end{figure}
@@ -419,7 +419,7 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
 \paragraph{Use case diagram}
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/use_case_diagram_user.png}
+        \includegraphics[width=\textwidth]{assets/Use-Case-Diagrams/use_case_diagram_user.png}
         \caption{User - Use Case Diagram}
     \end{center}
 \end{figure}
@@ -429,7 +429,6 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
 \textbf{Use case tables}
 
 \begin{longtable}{ | c | p{10cm} | }
-    \caption{Sign Up User}                                                                                                                                                                                                                                                                    \\
 
     \hline
                      & Sign Up User on the application                                                                                                                                                                                                                                        \\
@@ -460,17 +459,17 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     \hline
     Exception 2      & User inserts an invalid e-mail. So, after user clicks on confirm button, the application displays the same page and an error message, which suggests to the user to check the e-mail inserted or to change it.                                                         \\
     \hline
+    \caption{Sign Up User}                                                                                                                                                                                                                                                                    \\
 \end{longtable}
 
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[scale=0.35]{assets/sign-up.png}
-    \caption{\textit{Sign Up sequence diagram}}
+    \includegraphics[scale=0.45]{assets/Activity-Diagrams/act_sign.png}
+    \caption{\textit{Sign Up activity diagram}}
 \end{figure}
 \newpage
 \begin{longtable}{|c| p{10cm}|}
-    \caption{Login User}                                                                                                                                                                             \\
     \hline
                      & Login User on the application                                                                                                                                                 \\
     \hline
@@ -493,18 +492,18 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     \hline
     Exception 1      & User inserts wrong combination of credentials and presses Login button. In this case, the system detects the error and the application displays the Login page with an error. \\
     \hline
+    \caption{Login User}                                                                                                                                                                             \\
 \end{longtable}
 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.33]{assets/login.png}
-    \caption{\textit{Login sequence diagram}}
+    \includegraphics[scale=0.45]{assets/Activity-Diagrams/act_login.png}
+    \caption{\textit{Login activity diagram}}
 \end{figure}
 
 
 \begin{longtable}{|c| p{10cm}|}
-    \caption{Retrieve a ticket}                                                                                                                                                                                                 \\
     \hline
                      & Retrieve a ticket                                                                                                                                                                                        \\
     \hline
@@ -530,17 +529,17 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     \hline
     Exception 2      & User doesn't like the date/time of the first slot available. In this case, it has to press on Cancel button in order to go back to the home page or, in alternative, it can close the application.       \\
     \hline
+    \caption{Retrieve a ticket}                                                                                                                                                                                                 \\
 \end{longtable}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.4]{assets/ASAP.png}
-    \caption{\textit{ASAP sequence diagram}}
+    \includegraphics[scale=0.4]{assets/Activity-Diagrams/act_retrieve.png}
+    \caption{\textit{Retrieve a ticket activity diagram}}
 \end{figure}
 
 
 \begin{longtable}{|c| p{10cm}|}
-    \caption{Book a visit}                                                                                                                                          \\
     \hline
                      & Book a visit                                                                                                                                 \\
     \hline
@@ -571,6 +570,7 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     \hline
     Exception 1      & User has another reservation in the same day. In this case, the application displays an error message and redirect User to the home page.    \\
     \hline
+    \caption{Book a visit}                                                                                                                                          \\
 \end{longtable}
 
 
@@ -578,14 +578,13 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.4]{assets/book-a-visit.png}
-    \caption{\textit{Make a reservation sequence diagram}}
+    \includegraphics[scale=0.26]{assets/Activity-Diagrams/act_booking.png}
+    \caption{\textit{Booking a visit diagram}}
 \end{figure}
 \newpage
 
 
 \begin{longtable}{|c| p{10cm}|}
-    \caption{Remove a booking}                                                                                                                                                                                   \\
     \hline
                      & Remove a booking                                                                                                                                                                          \\
     \hline
@@ -610,6 +609,7 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     \hline
     Exception 1      & User wrongly presses the delete button. In this case, the application displays the popup with the notice that the booking is going to be removed and the user presses on "Cancel" button. \\
     \hline
+    \caption{Remove a booking}                                                                                                                                                                                   \\
 \end{longtable}
 
 
@@ -617,8 +617,8 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
 \newpage
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.38]{assets/remove-a-booking.png}
-    \caption{\textit{Remove booking sequence diagram}}
+    \includegraphics[scale=0.5]{assets/Activity-Diagrams/act_remove.png}
+    \caption{\textit{Remove booking activity diagram}}
 \end{figure}
 
 
@@ -635,7 +635,7 @@ Salvatore is a young boy who lives in a little village near Marsala, in Sicily. 
 \paragraph{Use case diagram}
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/use_case_diagram_assistant.png}
+        \includegraphics[width=\textwidth]{assets/Use-Case-Diagrams/use_case_diagram_assistant.png}
         \caption{Store Attendant - Use Case Diagram}
     \end{center}
 \end{figure}
@@ -646,7 +646,6 @@ Salvatore is a young boy who lives in a little village near Marsala, in Sicily. 
 \paragraph{Use case tables}
 
 \begin{longtable}{|c| p{10cm}|}
-    \caption{Scan QR code}                                                                                                                                                                                                                                                                \\
     \hline
                      & Scan QR code                                                                                                                                                                                                                                                       \\
     \hline
@@ -674,18 +673,18 @@ Salvatore is a young boy who lives in a little village near Marsala, in Sicily. 
     \hline
     Exception 3      & The system reads a QR code with an unacceptable day/time/store reservation. In this case, the application displays the details of the reservation in order to show where is the problem (e.g. it's too early or too much late or it isn't the correct date/store). \\
     \hline
+    \caption{Scan QR code}                                                                                                                                                                                                                                                                \\
 \end{longtable}
 
 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.38]{assets/scan-QR-code.png}
-    \caption{\textit{Scan QR code sequence diagram}}
+    \includegraphics[scale=0.4]{assets/Activity-Diagrams/act_scan.png}
+    \caption{\textit{Scan QR code activity diagram}}
 \end{figure}
 
 \begin{longtable}{|c| p{10cm}|}
-    \caption{Release a ticket}                                                                                                                                                      \\
     \hline
                      & Release a ticket                                                                                                                                             \\
     \hline
@@ -716,16 +715,16 @@ Salvatore is a young boy who lives in a little village near Marsala, in Sicily. 
     \hline
     Exception 2      & The printer returns an error. In this case, the application deletes from the database the ticket generated and displays an error message.                    \\
     \hline
+    \caption{Release a ticket}                                                                                                                                                      \\
 \end{longtable}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.38]{assets/release-ticket.png}
-    \caption{\textit{Release a ticket sequence diagram}}
+    \includegraphics[scale=0.45]{assets/Activity-Diagrams/act_release.png}
+    \caption{\textit{Release a ticket activity diagram}}
 \end{figure}
 
 \begin{longtable}{|c| p{10cm}|}
-    \caption{Delete a reservation}                                                                                                                              \\
     \hline
                      & Delete a reservation                                                                                                                     \\
     \hline
@@ -752,6 +751,7 @@ Salvatore is a young boy who lives in a little village near Marsala, in Sicily. 
     \hline
     Exception 1      & The system doesn't find any record associated to the name and surname inserted. In this case, the application displays an error message. \\
     \hline
+    \caption{Delete a reservation}                                                                                                                              \\
 \end{longtable}
 
 
@@ -778,7 +778,7 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
 \paragraph{Use case diagram}
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/use_case_diagram_store_manager.png}
+        \includegraphics[width=\textwidth]{assets/Use-Case-Diagrams/use_case_diagram_store_manager.png}
         \caption{Store Administrator - Use Case Diagram}
     \end{center}
 \end{figure}
@@ -787,7 +787,6 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
 \paragraph{Use case tables}
 
 \begin{longtable}{|c| p{10cm}|}
-    \caption{Modify time slots}                                                                                                                                              \\
     \hline
                      & Modify time slots                                                                                                                                     \\
     \hline
@@ -811,13 +810,13 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
     \hline
     Exception 1      & Store Administrator inserts unacceptable value of time. In this case, the system detects the inconsistency of the data and displays an error message. \\
     \hline
+    \caption{Modify time slots}                                                                                                                                              \\
 \end{longtable}
 
 
 
 
 \begin{longtable}{|c| p{10cm}|}
-    \caption{View Upcoming Bookings Details}                                                                                                                             \\
     \hline
                      & View Upcoming Bookings Details                                                                                                                    \\
     \hline
@@ -839,6 +838,7 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
     \hline
     Exception 1      & CLup application cannot reach the database. In this case, an error message is displayed.                                                          \\
     \hline
+    \caption{View Upcoming Bookings Details}                                                                                                                             \\
 \end{longtable}
 
 \subsubsection{Requirements}
@@ -1239,20 +1239,20 @@ fact { //There cannot be a category without products
 ------------------------------------------------------------
 //assertions
 
-// G1
+// G1: Allow users to retrieve a ticket
 assert retrieveTicket{
 	all t: Ticket | t.status = RESERVED implies (one u: User | t in u.upcomingTickets
 		and t.booking.slot.visitDuration = 0)
 }
 check retrieveTicket for 4
 
-//G2
+//G2: Allow Store Administrators to add a shop to the list of avail-able ones
 assert newStore {
 	no s: Store | one sl: StoreList | s not in sl.stores
 }
 check newStore for 4
 
-//G3
+//G3: Allow users to "book a visit"
 assert bookAVisit{
 	all t:Ticket | t.status = SCHEDULED implies (one u: User | t in u.upcomingTickets
 		and t.booking.slot.visitDuration > 0)
@@ -1305,19 +1305,19 @@ run world3 for 10
         \begin{figure}[H]
             \vspace{100px}
             \hspace{-100px}
-            \includegraphics[scale=1.5]{assets/world.pdf}
+            \includegraphics[scale=1.5]{assets/Alloy-Analyzer/world.pdf}
         \end{figure}
     \end{textblock}
     \begin{figure}[H]
         \vspace*{-100px}
         \hspace*{-170px}
-        \includegraphics[scale=1.3]{assets/world2.pdf}
+        \includegraphics[scale=1.3]{assets/Alloy-Analyzer/world2.pdf}
     \end{figure}
     \thispagestyle{empty}
     \begin{figure}[H]
         \vspace*{-100px}
         \hspace*{-150px}
-        \includegraphics[scale=1.5]{assets/world3.pdf}
+        \includegraphics[scale=1.5]{assets/Alloy-Analyzer/world3.pdf}
     \end{figure}
 \end{landscape}
 \pagestyle{plain}
