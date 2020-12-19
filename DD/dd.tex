@@ -114,5 +114,62 @@ Finally, \textbf{Store Attendants} can sign up with their personal store code in
 \newpage
 
 \section{Architectural Design}
+\subsection{Overview}
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\textwidth/2]{assets/Architectural-Design/Client-Server.png}
+        \caption{Client-Server paradigm}
+        \label{client_server_par}
+    \end{center}
+\end{figure}
+
+As figure \ref{client_server_par} represents, the system is a distributed application which follows the common known client-server paradigm.
+
+In particular, the client is \textit{thin}, which means that it does not contain the application business logic, but only the presentation layer. The server, instead, is \textit{fat} and contains all the data management and business logic.
+
+In this section the architecture will be described in an easy way, justifying all the choices for adopted patterns.
+
+\begin{figure}
+    \begin{center}
+        \caption{Three layers application}
+        \label{three_tier_desc}
+    \end{center}
+\end{figure}
+
+In figure \ref{three_tier_desc} the three S2B layers are shown, which respectively are:
+\begin{itemize}
+    \item \textbf{Presentation Layer:} it manages the presentation logic and, consequently, all the interactions with the end user. This is also called \textit{rendering layer}.
+    \item \textbf{Application (Logic) Layer:} it manages the business functions that the S2B must provide.
+    \item \textbf{Data Layer:} it manages the safe storage and the relative access to data.
+\end{itemize}
+
+As shown in the high level representation of figure \ref{three_tier_application} the S2B is divided into three layers that are physically separated by installing them on different tiers. A tier is a physical (or a set of) machine, each of them with its own computational power.
+
+The application described in this document is composed by four tiers.
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{assets/Architectural-Design/ApplicationArchitecture.png}
+    \caption{Architecture of the application}
+    \label{three_tier_application}
+\end{figure}
+
+The service is supposed to be accessed through both a web interface and a mobile application, and this is valid for all kinds of users.
+
+To make possible the construction of the web application, a client-side scripting paradigm will be adopted; this one will be described in detail in the final section of this document.
+
+The architectural figure divides the application in the layers described above, and contains a Web Server, which act as a middleware between the user's browser and the application servers.
+In case of using the mobile application, instead, the core of the software installed on user's device will interfaces with the business layer's APIs, which send and receive all the information in order to work properly directly to the application servers.
+
+Finally, the application servers interfaces with the DBMS APIs, in order to retrieve and store the data required for the considered computation.
+
+The nodes are separated by firewalls to guarantee a higher level of security of the whole system.
+
+All the component will be described in depth in the following sections.
+
+According to RASD specifications, if a buyer decides to purchase the third module option, which includes the installation on organization's servers, the entire architecture will be deployed and configured on that servers, without interfacing with CLup ones.
+
+Otherwise, if the buyer intends to purchase only module 1 or module 2, the end user will interface with official CLup servers.
+
+\subsection{Component View}
 
 \end{document}
