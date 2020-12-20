@@ -196,6 +196,27 @@ The web server has the function to route the browser requests to the application
     \item \textbf{QRCode Validation}\\The functionality carried out from this component is the \textit{check-in} one. When a user arrives at the store, the attendant scans the QRCode generated from the application (or printed on the reservation) and lets the user entering the structure. The attendant scans the ticket (through CLup mobile app) with the integrated camera of a smartphone. The application then sends a request of check-in to the server, which responds with a status of the request (which can be either valid or invalid).
     \item \textbf{Store Management}\\This last module handles the store administrator's personal area. In fact, it permits editing store information, which includes opening hours, maximum slots capacity, booking management and so on.
 \end{itemize}
+
+\subsection{Logical Description of Data}
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\textwidth]{assets/Architectural-Design/ER.png}
+        \caption{ER Diagram}
+        \label{er_diagram}
+    \end{center}
+\end{figure}
+The diagram in figure \ref{er_diagram} shows a logic representation of what kind of data is stored in the internal database of the S2B.
+
+First of all, we can see the distinction in different modules (as s. 1.1 of RASD explains) and their respectively database structure in case of deployment on organization's servers. Of course, if the buyer chooses to remain on CLup official servers, the structure will remain the entire one, limiting the functionalities store by store.
+
+The most important fact is that there are three different tables, each one for each customer type. In fact, since they contain different types of information, the most intuitive choice is the one of separating these types of data.
+
+We then can see a table containing the list of all tickets, each of them associated to a specific store and (in case of \textit{Reservation} functionality) to a specific booking.
+
+Finally, a booking can contain a list of categories, each one with a set of product inside it.
+
+Looking at the relations, we can see that there is a \textit{bridge table} between Booking and Category, which associates a set of categories to one or more bookings. This association is used if a customer decides to insert a list of product in a reservation request.
+
 \pagestyle{plain}
 
 \section{Effort spent}
