@@ -41,7 +41,7 @@
     {\large Professor\par
         Matteo \textsc{Rossi}}
     \vfill
-    {\large \today \par}
+    {\large \textbf{Version 1.0} \\ \today \par}
 \end{titlepage}
 \hypersetup{%
     pdfborder = {0 0 0}
@@ -85,6 +85,7 @@ Finally, \textbf{Store Attendants} can sign up with their personal store code in
     \item \textbf{DD:} Design Document
     \item \textbf{S2B:} Software to Be, it is the one designed in this document and not yet implemented.
     \item {\textbf{ASAP:} As Soon As Possible. It refers to the possibility of getting an appointment on the first available slot.}
+    \item \textbf{MVP:} Minimum Viable Product, it is a version of a product with just enough features to be usable by early customers who can then provide feedback for future product development.
 \end{itemize}
 
 \subsubsection{Abbreviations}
@@ -114,5 +115,97 @@ Finally, \textbf{Store Attendants} can sign up with their personal store code in
 \newpage
 
 \section{Architectural Design}
+\subsection{Overview}
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\textwidth/2]{assets/Architectural-Design/Client-Server.png}
+        \caption{Client-Server paradigm}
+        \label{client_server_par}
+    \end{center}
+\end{figure}
+
+As figure \ref{client_server_par} represents, the system is a distributed application which follows the common known client-server paradigm.
+
+In particular, the client is \textit{thin}, which means that it does not contain the application business logic, but only the presentation layer. The server, instead, is \textit{fat} and contains all the data management and business logic.
+
+In this section the architecture will be described in an easy way, justifying all the choices for adopted patterns.
+
+\begin{figure}
+    \begin{center}
+        \caption{Three layers application}
+        \label{three_tier_desc}
+    \end{center}
+\end{figure}
+
+In figure \ref{three_tier_desc} the three S2B layers are shown, which respectively are:
+\begin{itemize}
+    \item \textbf{Presentation Layer:} it manages the presentation logic and, consequently, all the interactions with the end user. This is also called \textit{rendering layer}.
+    \item \textbf{Application (Logic) Layer:} it manages the business functions that the S2B must provide.
+    \item \textbf{Data Layer:} it manages the safe storage and the relative access to data.
+\end{itemize}
+
+As shown in the high level representation of figure \ref{three_tier_application} the S2B is divided into three layers that are physically separated by installing them on different tiers. A tier is a physical (or a set of) machine, each of them with its own computational power.
+
+The application described in this document is composed by four tiers.
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{assets/Architectural-Design/ApplicationArchitecture.png}
+    \caption{Architecture of the application}
+    \label{three_tier_application}
+\end{figure}
+
+The service is supposed to be accessed through both a web interface and a mobile application, and this is valid for all kinds of users.
+
+To make possible the construction of the web application, a client-side scripting paradigm will be adopted; this one will be described in detail in the final section of this document.
+
+The architectural figure divides the application in the layers described above, and contains a Web Server, which act as a middleware between the user's browser and the application servers.
+In case of using the mobile application, instead, the core of the software installed on user's device will interfaces with the business layer's APIs, which send and receive all the information in order to work properly directly to the application servers.
+
+Finally, the application servers interfaces with the DBMS APIs, in order to retrieve and store the data required for the considered computation.
+
+The nodes are separated by firewalls to guarantee a higher level of security of the whole system.
+
+All the component will be described in depth in the following sections.
+
+According to RASD specifications, if a buyer decides to purchase the third module option, which includes the installation on organization's servers, the entire architecture will be deployed and configured on that servers, without interfacing with CLup ones.
+
+Otherwise, if the buyer intends to purchase only module 1 or module 2, the end user will interface with official CLup servers.
+
+\subsection{Component View}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\textwidth]{assets/Architectural-Design/ComponentDiagram.png}
+        \caption{Component Diagram}
+        \label{component_diagram}
+    \end{center}
+\end{figure}
+
+In figure \ref{component_diagram} we can see a more detailed diagram representing the layers described before.
+
+The web server has the function to route the browser requests to the application server and send back its responses.
+
+\begin{itemize}
+    \item \textbf{Client Manager}\\This module handles all the requests made by the client. At the beginning, while the client is not logged in, the module offers a \textit{loginInterface} which permits to execute a sign up or sign in operation. Once the client has logged in, the module shows only the other types of interfaces relying on user's role. A client logged as a user will exploit the \textit{UserInterface}, a store attendant an \textit{AttendantInterface} and a store administrator an \textit{Administrator Interface}.
+    \item \textbf{Login Handler}\\This component handles the process of sign in. It receives the credentials inserted by the user (which are username and password) and checks for a correspondence in the database. If it found something, the user becomes authenticated and can continue to the correct private area.
+    \item \textbf{SignUp Handler}\\This module's goal is to permit a user registration to the CLup service. There are three different sign up processes, each for every account type. The default registration flow, as the application's main target is a customer, provides the steps in order to register as user. However, at the beginning of the process, a prompt permits to switch sign up type to \textit{Attendant} or \textit{Administrator}. Some data will be asked to the registering client such as, in the main case, an email and a password.
+    \item \textbf{ASAP Handler}\\This component handles the process of the MVP (see RASD section 1.1), which is the \textit{Retrieve a ticket} functionality. A registered and authenticated user selects the desired grocery store and requests, through a button, a new ticket. The S2B then provides an unique queue number, an estimated waiting time and a QRCode to check-in.
+    \item \textbf{Reservation Handler}\\This is the second module of our S2B described in s. 1.1 of RASD document. Through this component, the registered and authenticated user can select a store and book a visit slot in the desired date and time (if available). The component can also optionally receive from user an estimated duration and a shopping list, in order to optimize people flows in the structure. Once the computation has finished, the component returns to user a confirmation, together with a QRCode to check-in.
+    \item \textbf{Notification Handler}\\The goal of this component is to handle notifications of imminent calling of a ticket. In fact, when a number is going to be called, a trigger is generated, which sends an instant notification to the user who retrieved that ticket.
+    \item \textbf{Generate on spot}\\This module handles the manual procedure of generating a ticket on the spot. In fact, when a user cannot sign up to CLup service, there is the possibility of going physically to the desired store and ask to be queued up. The attendant, through this component, sends a request of retrieving of a ticket, and the server returns the first slot available. This ticket is then printed, together with a QRCode generated from the system.
+    \item \textbf{QRCode Validation}\\The functionality carried out from this component is the \textit{check-in} one. When a user arrives at the store, the attendant scans the QRCode generated from the application (or printed on the reservation) and lets the user entering the structure. The attendant scans the ticket (through CLup mobile app) with the integrated camera of a smartphone. The application then sends a request of check-in to the server, which responds with a status of the request (which can be either valid or invalid).
+    \item \textbf{Store Management}\\This last module handles the store administrator's personal area. In fact, it permits editing store information, which includes opening hours, maximum slots capacity, booking management and so on.
+\end{itemize}
+\pagestyle{plain}
+
+\section{Effort spent}
+\begin{tabular}{ | c || c | c | c | c| c|}
+    \hline
+    Student        & Time for S.1 & S.2 & Time for S.3 & Time for S.4 & Time for S.5 \\ \hline
+    Alice Piemonti &              &     &              &              &              \\ \hline
+    Luca Pirovano  & 2h           & 4h  &              &              &              \\ \hline
+    Nicolò Sonnino &              & 3h  &              &              &              \\
+    \hline
+\end{tabular}
 
 \end{document}
