@@ -77,6 +77,12 @@ Finally, \textbf{Store Attendants} can sign up with their personal store code in
 \begin{itemize}
     \item \textbf{Visit:} it refers to the customers entering the shop, and also to their staying time. It is associated to both a certain store and a visit slot.
     \item \textbf{Slot:} it is a day/time range. It can be reserved by a limit number of users in order to guarantee a maximum number of people who are inside a store in every time of the day.
+    \item \textbf{Tier:} it is a row or layer in a series of similarly arranged objects. In computer programming, the parts of a program can be distributed among several tiers, each located in a different computer in a network.
+    \item \textbf{Web Interface:} it permits to use a service only through the web browser.
+    \item \textbf{Middleware:} in distributed applications, it represents the software that enables communication and management of data.
+    \item \textbf{RESTful:} it s a software architectural style that defines a set of constraints to be used for creating Web services.
+    \item \textbf{Code On Demand:} in distributed computing, it is any technology that sends executable software code from a server computer to a client computer upon request from the client's software.
+    \item \textbf{Client-side scripting:} it is performed to generate a code that can run on the client end (browser) without needing the server side processing.
 \end{itemize}
 
 \subsubsection{Acronyms}
@@ -84,8 +90,13 @@ Finally, \textbf{Store Attendants} can sign up with their personal store code in
     \item \textbf{RASD:} Requirements Analysis and Specification Document
     \item \textbf{DD:} Design Document
     \item \textbf{S2B:} Software to Be, it is the one designed in this document and not yet implemented.
-    \item {\textbf{ASAP:} As Soon As Possible. It refers to the possibility of getting an appointment on the first available slot.}
+    \item \textbf{ASAP:} As Soon As Possible. It refers to the possibility of getting an appointment on the first available slot.
     \item \textbf{MVP:} Minimum Viable Product, it is a version of a product with just enough features to be usable by early customers who can then provide feedback for future product development.
+    \item \textbf{API:} Application Programming Interface, it indicates on demand procedure which supply a specific task.
+    \item \textbf{ER:} Entity-Relationship model, it describes interrelated things of interest in a specific domain of knowledge.
+    \item \textbf{DBMS:} DataBase Management System.
+    \item \textbf{HTTPS:} Hypertext Transfer Protocol Secure (HTTPS) is an extension of the Hypertext Transfer Protocol (HTTP). It is used for secure communication over a computer network, and is widely adopted on the Internet.
+    \item \textbf{TLS:} Transport Layer Security, it is a protocol which aims primarily to provide privacy and data integrity between two or more communicating computer applications
 \end{itemize}
 
 \subsubsection{Abbreviations}
@@ -220,6 +231,22 @@ Finally, a booking can contain a list of categories, each one with a set of prod
 
 Looking at the relations, we can see that there is a \textit{bridge table} between Booking and Category, which associates a set of categories to one or more bookings. This association is used if a customer decides to insert a list of product in a reservation request.
 
+\subsection{Architectural Style and Patterns}
+\subsubsection{Four-tiered architecture}
+The choice is on this architecture for many reasons:
+\begin{itemize}
+    \item \textbf{Flexibility:} \todo[]{Insert here}
+    \item \textbf{Scalability:} an application divided on several tiers guarantee that the approach of scaling the architecture is adopted only for the most critical components. The result obtained maximizes the performance but also minimizes the costs.
+    \item \textbf{Load Distribution:} the presence of several application server, preceded by a load balancer, guarantees that a single node would not become over-requested, sending the entire system down.
+\end{itemize}
+
+\subsubsection{RESTful Architecture}
+The restful application will be adopted both on web and mobile side. This architecture is based on the stateless principle, in which the server does not contain any information about the state of client, that is managed directly on client side.
+
+An useful property of this architecture is the \textit{code on demand} one, which permits sending some code snippets from the server to the client, and then make the client executing them locally (usually in the web browser). This behavior guarantees less computational load on the server and also a dynamic attitude of the service.
+
+The application is then intended to be developed through \textit{client side scripting}, which means that all requests and update of the page are made on client side. This behavior also improves the user experience, and prevent refreshing the page each time an action is made.
+
 \section{User Interface Design}
 
 \section{Requirements Traceability}
@@ -287,7 +314,7 @@ Also the system attributes are guaranteed by the design choices explained in thi
     \hline
     Student        & Time for S.1 & S.2 & Time for S.3 & Time for S.4 & Time for S.5 \\ \hline
     Alice Piemonti &              &     &              &              &              \\ \hline
-    Luca Pirovano  & 2h           & 5h  &              &              &              \\ \hline
+    Luca Pirovano  & 2h           & 5h  &              & 2h           &              \\ \hline
     Nicolò Sonnino &              & 3h  &              &              &              \\
     \hline
 \end{tabular}
