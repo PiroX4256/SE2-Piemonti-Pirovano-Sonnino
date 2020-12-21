@@ -271,6 +271,15 @@ This section will shown the traceability between requirements and modules descri
           \end{itemize}
 \end{itemize}
 
+Also the system attributes are guaranteed by the design choices explained in this document; more precisely:
+\begin{itemize}
+    \item \textbf{Easy usability}: guaranteed through a very simple, minimal and intuitive user interface. Since the main target of the application is the customer-side, the experience is designed to be very simple. In fact, there are only a few buttons with clear and precise functionalities. The aim is to complete the \textit{ASAP} ticket retrieval in no more than five taps (or clicks).
+    \item \textbf{Reliability and Availability}: accomplished through a replication of the running application in different clones, following the \textit{scale-out} method. The physical nodes of the system would then work in parallel, avoiding system downtimes due to a failure. In fact, when a clone breaks down, there are others in parallel which can supply the requested service, but with some performance issues. The scope is to obtain at least 97\% of availability for each tier (the total system would then have 97\% of availability).
+    \item \textbf{Security}: guaranteed through an encrypted communication between client and server. If the client is connecting through the web interface, connection moves on HTTPS protocol. Otherwise, connection goes on TLS protocol.
+    \item \textbf{Cross Platform}: firstly obtained through a development of a web interface, which can be accessed from any type of connected device. The mobile application, instead, will be available only for IOS and Android users.
+    \item \textbf{Maintainability and Modularity:} the first is accomplished through the second, because the application will be divided in some small parts (called modules) which interacts each other to provide the requested service.
+\end{itemize}
+
 \pagestyle{plain}
 
 \section{Effort spent}
