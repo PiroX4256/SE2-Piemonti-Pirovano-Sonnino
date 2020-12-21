@@ -130,8 +130,9 @@ In particular, the client is \textit{thin}, which means that it does not contain
 
 In this section the architecture will be described in an easy way, justifying all the choices for adopted patterns.
 
-\begin{figure}
+\begin{figure}[H]
     \begin{center}
+        \includegraphics[width=\textwidth]{assets/Architectural-Design/3-tier.png}
         \caption{Three layers application}
         \label{three_tier_desc}
     \end{center}
@@ -194,6 +195,8 @@ The web server has the function to route the browser requests to the application
     \item \textbf{Notification Handler}\\The goal of this component is to handle notifications of imminent calling of a ticket. In fact, when a number is going to be called, a trigger is generated, which sends an instant notification to the user who retrieved that ticket.
     \item \textbf{Generate on spot}\\This module handles the manual procedure of generating a ticket on the spot. In fact, when a user cannot sign up to CLup service, there is the possibility of going physically to the desired store and ask to be queued up. The attendant, through this component, sends a request of retrieving of a ticket, and the server returns the first slot available. This ticket is then printed, together with a QRCode generated from the system.
     \item \textbf{QRCode Validation}\\The functionality carried out from this component is the \textit{check-in} one. When a user arrives at the store, the attendant scans the QRCode generated from the application (or printed on the reservation) and lets the user entering the structure. The attendant scans the ticket (through CLup mobile app) with the integrated camera of a smartphone. The application then sends a request of check-in to the server, which responds with a status of the request (which can be either valid or invalid).
+    \item \textbf{QRCode Generation}\\The goal of this module is to generate the QR Code of the ticket from a pre-defined string, which can be seen as the unique id of the ticket.
+    \item \textbf{Alternative Slot Recommender}\\This component's aim is to suggest alternative slots to the end user, relying on people flows estimation from the other bookings.
     \item \textbf{Store Management}\\This last module handles the store administrator's personal area. In fact, it permits editing store information, which includes opening hours, maximum slots capacity, booking management and so on.
 \end{itemize}
 
@@ -216,6 +219,57 @@ We then can see a table containing the list of all tickets, each of them associa
 Finally, a booking can contain a list of categories, each one with a set of product inside it.
 
 Looking at the relations, we can see that there is a \textit{bridge table} between Booking and Category, which associates a set of categories to one or more bookings. This association is used if a customer decides to insert a list of product in a reservation request.
+
+\section{User Interface Design}
+
+\section{Requirements Traceability}
+This section will shown the traceability between requirements and modules described in component diagram.
+
+\begin{itemize}
+    \item \textbf{R1:} The system allows registered users to select the store where they want to shop
+          \begin{itemize}
+              \item \textbf{Login Handler}: this module allows registered users to select a store if they provide a correct combination of username and password.
+              \item \textbf{ASAP Handler} \textit{or} \textbf{Reservation Handler:} this module allows to select a store either in case of ASAP functionality choice or Reservation functionality choice.
+          \end{itemize}
+    \item \textbf{R2:} The system allows users to retrieve a queue number
+          \begin{itemize}
+              \item \textbf{ASAP Handler}
+              \item \textbf{Generate on spot:} this module allows people who are not registered to CLup service to be queued up manually by the store attendants.
+          \end{itemize}
+    \item \textbf{R3:} The system generates a QR Code associated to the ticket
+          \begin{itemize}
+              \item \textbf{QRCode Generator:} this component allows the QRCode to be generated from the ticket id.
+          \end{itemize}
+    \item \textbf{R4:} The system allows Store Administrators to add GPS Position and opening hours of the store
+          \begin{itemize}
+              \item \textbf{Store Management:} this module allows store administrator to edit all the information about their stores.
+          \end{itemize}
+    \item \textbf{R5:} The system allows Store Attendants to register with their attendant code
+          \begin{itemize}
+              \item \textbf{Sign Up:} this module allows the three types of users to register to the platform of CLup.
+          \end{itemize}
+    \item \textbf{R6:} The system allows users to select a day/time slot from the available ones
+          \begin{itemize}
+              \item \textbf{Reservation Handler}
+          \end{itemize}
+    \item \textbf{R7:} The system allows users to add a list of products (categories) to purchase and the duration time of the visit
+    \item \textbf{R8:} The system computes a prediction of expected time duration of a customer's visit
+          \begin{itemize}
+              \item \textbf{}
+          \end{itemize}
+    \item \textbf{R9:} The system recommends alternative day/time slots or store/chains to a user
+          \begin{itemize}
+              \item \textbf{Alternative slot recommender:} this component lets the system suggests alternative visit slots relying on people flows parameters.
+          \end{itemize}
+    \item \textbf{R10:} The system takes note about the actual queue number
+          \begin{itemize}
+              \item \textbf{ASAP Handler} \textit{or} \textbf{Reservation Handler}
+          \end{itemize}
+    \item \textbf{R11:} The system notifies the user when its queue number is going to be called
+          \begin{itemize}
+              \item \textbf{Notification Handler:} this module triggers an action when a number is going to be called and informs the user through a notification.
+          \end{itemize}
+\end{itemize}
 
 \pagestyle{plain}
 
