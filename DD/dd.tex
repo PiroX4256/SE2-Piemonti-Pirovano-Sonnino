@@ -247,6 +247,21 @@ An useful property of this architecture is the \textit{code on demand} one, whic
 
 The application is then intended to be developed through \textit{client side scripting}, which means that all requests and update of the page are made on client side. This behavior also improves the user experience, and prevent refreshing the page each time an action is made.
 
+\subsection{Other Design Decision}
+\subsubsection{Scale-Out}
+This method consists of cloning the nodes in which we expect to have a bottleneck in order to increase the general system scalability.
+
+This choice leads to a higher deployment effort but also to a lower hardware upgrade cost when the limits are reached. In conclusion, the scale-out is a preferable road.
+
+Once split, the system requires a load balancer in order to correctly redirects the incoming requests to the node with the lowest workload.
+
+\subsubsection{Thin client and fat server}
+This architecture consists of keeping as low information as possible on client side. It means that the business logic resides only on server side.
+
+The minimum requirement of this choice is a stable connection between the parts; otherwise the application would not work as expected.
+
+Of course, the main advantage of choosing this implementation style is that the client machine is not required to have an high computational power.
+
 \section{User Interface Design}
 
 \section{Requirements Traceability}
