@@ -211,6 +211,26 @@ The web server has the function to route the browser requests to the application
     \item \textbf{Store Management}\\This last module handles the store administrator's personal area. In fact, it permits editing store information, which includes opening hours, maximum slots capacity, booking management and so on.
 \end{itemize}
 
+\subsection{Deployment View}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\textwidth]{assets/DeploymentDiagram/DeploymentDiagram1.png}
+        \caption{Deployment Diagram}
+        \label{deployment_diagram}
+    \end{center}
+\end{figure}
+
+The deployment diagram in figure \ref{deployment_diagram} shows the needed components for a correct system behavior, except the Maps APIs and the Authentication APIs ones.
+
+Each device has its own Operative System where the software run. The tiers in the image are the following:
+\begin{itemize}
+    \item \textbf{Tier 1:} it is the client machine, which can be a computer with a web browser (running, for example, on Windows 10 OS) or the downloadable mobile application (available on both Apple's store and Google's Store).
+    \item \textbf{Tier 2:} it is the web server, which does not execute any business logic, but it simply receives requests from the client, routes them to the server and wraps the application server's response into an HTML file, sending it back to the client. It also appends the styling logic of the page (CSS sheets, JS sheets, etc.).
+    \item \textbf{Tier 3:} it is the application server, which runs the core functionalities of the S2B. The whole application layer is mapped into this tier, which communicates to the client tier through the web server and to the data tier through the DBMS gateway.
+    \item \textbf{Tier 4:} it is composed by the database servers (DBMS, database). They store the data and execute actions on it, according to the instruction given by the application servers.
+\end{itemize}
+
 \subsection{Logical Description of Data}
 \begin{figure}[H]
     \begin{center}
