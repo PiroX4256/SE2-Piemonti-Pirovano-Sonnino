@@ -432,15 +432,19 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     \caption{Sign Up User}                                                                                                                                                                                                                                                                    \\
 
     \hline
-                     & Sign Up User on the application                                                                                                                                                                                                                                        \\
+    ID               & 1                                                                                                                                                                                                                                                                      \\ \hline
+    Name             & Sign Up User with email                                                                                                                                                                                                                                                \\
     \hline
     Actor            & User                                                                                                                                                                                                                                                                   \\
     \hline
     Entry conditions &
     \begin{itemize}
         \item User has downloaded and opened the application on his smartphone
-    \end{itemize}                                                                                                                                                                                                                                                                \\
+    \end{itemize}
+    \\
     \hline
+
+    Input            & email to use for the registration                                                                                                                                                                                                                                      \\ \hline
     Events flow      & \begin{itemize}[nosep,after=\strut]
         \item The application displays the Login screen
         \item User clicks on Sign Up button
@@ -453,7 +457,8 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
         \item User opens his inbox, checks the e-mails and clicks on confirmation link
     \end{itemize}                                                                                                                                                                                                                                             \\
     \hline
-    Exit conditions  & User registration has been successful: user data are stored in the database of the system. User can now Login with his credentials.                                                                                                                                    \\
+    Exit conditions  & User registration has been successful: user data are stored in the database of the system. User can now Login with his credentials.                                                                                                                                    \\ \hline
+    Output           & The email is stored in the database of the application.                                                                                                                                                                                                                \\
     \hline
     \hline
     Exception 1      & User insert an e-mail which is already stored in the database. So, after the user inserts his data and clicks on confirm, the application displays an error page which tells that user is already registered to the service and invites him to login with that e-mail. \\
@@ -470,9 +475,9 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
 \end{figure}
 \newpage
 \begin{longtable}{|c| p{10cm}|}
-    \caption{Login User}                                                                                                                                                                             \\
+    \caption{Login User}                                                                                                                                                                             \\ \hline ID & 2                                                                                                                                                                         \\
     \hline
-                     & Login User on the application                                                                                                                                                 \\
+    Name             & Login User on the application                                                                                                                                                 \\
     \hline
     Actor            & User                                                                                                                                                                          \\
     \hline
