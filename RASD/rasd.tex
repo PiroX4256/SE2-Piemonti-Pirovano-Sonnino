@@ -364,40 +364,39 @@ It's the administrator of a shop. For the application's purpose only, we identif
 \subsection{Interface Requirements}
 \subsubsection{Customer interfaces}
 In figure \ref{mock_sign_in_up} we can see the initial screen of the application.
-It asks the user to log in or create an account.
+It asks the user to log in or create an account. The user can also sign up with a Google or Facebook account.
 
-In case he decides to create an account, there are three possibilities of subscription (customer, administrator or attendant).\\
-In each case, further custom information needs to be provided.
+In case he decides to create an account, the user must insert his email and a password. Attendants and store managers who want to sign up must go on the dedicated section (clicking on the link in the buttom). In this case, further information must be added.\\
 
 For example, in the case of a Store Administrators, the system would ask them the details of their store (name, position, etc).\\
-Instead, in the case of Store Attendants, it would ask them the store in which they are actual working, and their personal attendant code.
+Instead, in the case of Store Attendants, it would ask them the store in which they are actual working, and their personal attendant code. The system will check the veracity of the data in order to avoid wrong registrations (for example, a customer sign up as an attendant).
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/Mockups/mock_sign_in_sign_up.png}
+        \includegraphics[width=\textwidth]{assets/Mockups/new_mock/sign_in__sign_up.png}
         \caption{Sign In and Sign Up procedures.}
         \label{mock_sign_in_up}
     \end{center}
 \end{figure}
 
-You can access to bookings page described in figure \ref{mock_bookings} through the contextual menù on the left side of application.\\
-Once here, there is the possibility of managing the upcoming bookings or check for the details of them and also for past bookings, which are listed immediately below.
+The home page is described in figure \ref{mock_bookings}. As you can see it is simple and intuitive: you can see immediately the list of his active bookings and you can access to the main functionalities with just one tap.\\
+Once here, there is the possibility of checking the details of upcoming bookings or creating new ones.
 
 When you are on a details page, all the information about the selected booking is listed. Through a button, it is possible to cancel that booking (if it is an upcoming one).
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/Mockups/mock_bookings.png}
-        \caption{Home page of the application.}
+        \includegraphics[width=\textwidth]{assets/Mockups/new_mock/home_page__booking_details.png}
+        \caption{Home page of the application \& Booking details page.}
         \label{mock_bookings}
     \end{center}
 \end{figure}
 
-Finally, in figure \ref{mock_new_booking}, you can create a request a new queue number through a dedicated page, as explained in \ref{line_up}.
-Otherwise, if you use "Book a visit" function, and the time slot you selected is not available, the system will suggest you another one, as shown in Figure \ref{mock_new_booking_unavailable}.
+Finally, from the home page you can request a new queue number with just a bounch of clicks. As always, the procedure of retrieving a ticket is simple and intuitive, as represented in figure \ref{mock_new_booking}.
+Otherwise, if you use "Book" function (see figure \ref{mock_book_a_visit}) you can book an available slot in a different day and time. Moreover, you can add additional information in order to extend the number of available slots (for example, if you know you want to make a fast visit).
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=225pt]{assets/Mockups/mock_line_up.png}
+        \includegraphics[width=225pt]{assets/Mockups/new_mock/retrieve_a_ticket.png}
         \caption{Line-up functionality.}
         \label{mock_new_booking}
     \end{center}
@@ -405,9 +404,9 @@ Otherwise, if you use "Book a visit" function, and the time slot you selected is
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=225pt]{assets/Mockups/mock_new_booking_unavailable.png}
+        \includegraphics[width=400pt]{assets/Mockups/new_mock/book.png}
         \caption{"Book a visit" procedure with unavailable date/time.}
-        \label{mock_new_booking_unavailable}
+        \label{mock_book_a_visit}
     \end{center}
 \end{figure}
 
@@ -476,19 +475,20 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
 
     Input            & email to use for the registration                                                                                                                                                                                                                                      \\ \hline
     Events flow      & \begin{itemize}[nosep,after=\strut]
-        \item The application displays the Login screen
-        \item User clicks on Sign Up button
-        \item The application displays a selection list about which account the user intends to create (Customer, Store Administrator or Store Attendant)
-        \item User selects the option "Customer" and confirm
-        \item The application displays a list of fields that User must compile: Name, Surname, e-mail, municipality, User name, password, date of birth. Some fields are optional: phone number, address, ID of the store card.
-        \item User inserts the mandatory data and eventually one or more optional data
+        \item The application displays the Sign In screen
+        \item User clicks on "Sign Up"
+        \item The application displays a list of fields that User must compile: email and password
+        \item User inserts the mandatory data and accepts the "Terms of Services"
         \item User clicks on confirm button
         \item The application displays the acceptance of registration and invite User to go on his inbox in order to confirm the registration
         \item User opens his inbox, checks the e-mails and clicks on confirmation link
     \end{itemize}                                                                                                                                                                                                                                             \\
     \hline
     Exit conditions  & User registration has been successful: user data are stored in the database of the system. User can now Login with his credentials.                                                                                                                                    \\ \hline
-    Output           & The email is stored in the database of the application.                                                                                                                                                                                                                \\
+    Output           & \begin{itemize}
+        \item The email of the user is stored in the database of the application
+        \item The user receives the email of confirmation
+    \end{itemize}                                                                                                                                                                                                                                             \\
     \hline
     \hline
     Exception 1      & User insert an e-mail which is already stored in the database. So, after the user inserts his data and clicks on confirm, the application displays an error page which tells that user is already registered to the service and invites him to login with that e-mail. \\
@@ -506,10 +506,7 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
 \end{figure}
 \newpage
 \begin{longtable}{|c| p{10cm}|}
-<<<<<<< HEAD
-    \caption{Login User}                                                                                                                                                                             \\ \hline ID & 2                                                                                                                                                                         \\
-=======
->>>>>>> f23ef44fd4d283f4901f7ddefa6db052fba22ccb
+    \hline ID        & 2                                                                                                                                                                             \\
     \hline
     Name             & Login User on the application                                                                                                                                                 \\
     \hline
@@ -518,7 +515,8 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     Entry conditions & \begin{itemize}[nosep,after=\strut]
         \item User has downloaded and opened the application on his smartphone
         \item User has registered to the service
-    \end{itemize}                                                                                                                                                    \\
+    \end{itemize}                                                                                                                                                    \\ \hline
+    Input            & User email and password associated to a valid registration                                                                                                                    \\
     \hline
     Events flow      & \begin{itemize}[nosep,after=\strut]
         \item The system displays the Login page
@@ -544,25 +542,30 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
 
 
 \begin{longtable}{|c| p{10cm}|}
+    \hline ID        & 3                                                                                                                                                                                                        \\
     \hline
                      & Retrieve a ticket                                                                                                                                                                                        \\
     \hline
     Actor            & User                                                                                                                                                                                                     \\
     \hline
-    Entry conditions & \begin{itemize}
-        \item User has logged in
-    \end{itemize}                                                                                                                                                                               \\
+    Entry conditions & User has logged in                                                                                                                                                                                       \\
     \hline
     Events flow      & \begin{itemize}[nosep,after=\strut]
-        \item User presses the New Booking button
-        \item The application displays two alternatives of booking
-        \item User selects the alternative "Retrieve a ticket"
-        \item The application displays a confirm page, with the store selected and the time and date of the first slot available
+        \item User presses "Retrieve a ticket" button
+        \item The application displays a page with a brief description of the functionality and two boxes to fill out (city and store name)
+        \item User inserts the city name, selects the preferred store and clicks on continue button
+        \item The application displays a confirm popup, with the essential details of the upcoming booking
         \item User presses on confirm button
     \end{itemize}                                                                                                                                                                               \\
     \hline
     Exit condition   &
-    The application displays the unique ID number of the ticket and the QR-code associated to it                                                                                                                                \\
+    The application displays the unique ID number of the ticket, the QR-code associated to it and some useful data.                                                                                                             \\
+    \hline
+    Output           & \begin{itemize}
+        \item   The system has the information about the ticket generated and its owner
+        \item The user sees the ticket on the top of his home page or in the previous bookings section
+
+    \end{itemize}                                                                                                                                                                               \\
     \hline
     \hline
     Exception 1      & User presses on confirm button but it has got a ticket in his current bookings, which is still valid. In this case, the application displays an error page which suggests to go on the tickets' section. \\
@@ -580,6 +583,7 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
 
 
 \begin{longtable}{|c| p{10cm}|}
+    \hline ID        & 4                                                                                                                                            \\
     \hline
                      & Book a visit                                                                                                                                 \\
     \hline
@@ -590,21 +594,25 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     \end{itemize}                                                                                                                   \\
     \hline
     Events flow      & \begin{itemize}[nosep,after=\strut]
-        \item User presses the New Booking button
-        \item The application displays two alternatives of booking
-        \item User selects the alternative "Book a slot"
-        \item The application displays a page with the day/time slots already available for a certain range (e.g. for the current month or for the next month) for a certain store
-        \item User selects the store and the slot he prefers (from the available ones) and clicks on the confirm button
-        \item User selects all the categories he intends to buy. Then, he clicks on confirm button
-        \item  The system estimates the expected duration of the visit based on the analysis of previous visits or, in alternative, it takes a default value
-        \item The user can add or change the expected duration time
-        \item The application displays the visit duration time and a checklist with the categories of products that the customer wants to buy
-        \item The application displays a page with the summary of all the previous selections and eventually displays other available slots that can balance better with the choices of other customers' reservations
+        \item User presses "Book" button
+        \item The application displays a screen with some boxes to fill out (city name, store name, date)
+        \item User inserts the city name and selects the store name
+        \item The user can add more information: change the expected duration time or add a list of categories he intends to buy
+        \item The application update the page with the day slots already available for a certain range (e.g. for the current month or for the next month) for the store selected, based also on the quantity of information added
+        \item User selects the day he prefers (from the available ones)
+        \item The application displays a screen with the available slots in the day selected
+        \item User selects the time slot he prefers (from the available ones)
+        \item The application displays a popup with the summary of all the previous selections and all useful information for the upcoming booking
         \item User checks his selections and presses the confirm button
         \item The system adds the booking to the database and generates the unique ID number and the QR code
     \end{itemize}                                                                                                                   \\
     \hline
-    Exit condition   & The application displays the summary page of the booking, with the preferences selected by the user, the ID number and the QR code generated
+    Exit condition   & The application displays the summary page of the booking, with the preferences selected by the user, the ID number and the QR code generated \\ \hline
+    Output           & \begin{itemize}
+        \item   The system has the information about the ticket generated and its owner
+        \item The user sees the booking on the top of his home page or in the previous bookings section
+
+    \end{itemize}
     \\
     \hline
     \hline
@@ -625,6 +633,7 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
 
 
 \begin{longtable}{|c| p{10cm}|}
+    \hline ID        & 5                                                                                                                                                                                         \\
     \hline
                      & Remove a booking                                                                                                                                                                          \\
     \hline
@@ -632,18 +641,24 @@ A full-time student at Politecnico di Milano decided to stay in his apartment in
     \hline
     Entry conditions & \begin{itemize}
         \item User has logged in
+        \item User has at least one upcoming booking
     \end{itemize}                                                                                                                                                                \\
     \hline
     Events flow      & \begin{itemize}[nosep,after=\strut]
         \item User clicks on a reservation already done
         \item The application answers with the details of the booking selected, such as: booking ID, day and time of the booking, store selected.
-        \item User presses the button "Remove"
+        \item User presses the button "Delete this reservation"
         \item The application displays a popup with the notice that the booking is going to be removed permanently
         \item User confirms the removal
         \item The system proceeds with the deletion of the booking from the database
     \end{itemize}                                                                                                                                                                \\
     \hline
-    Exit condition   & The application notifies that the booking has been removed correctly and it returns to the home page.
+    Exit condition   & The application notifies that the booking has been removed correctly and it returns to the home page.                                                                                     \\ \hline
+    Output           & \begin{itemize}
+        \item   The system has removed the information about the booking removed
+        \item The user doesn't see the booking neither on the top of his home page or in the previous bookings section
+
+    \end{itemize}
     \\
     \hline
     \hline
@@ -686,24 +701,37 @@ Salvatore is a young boy who lives in a little village near Marsala, in Sicily. 
 \paragraph{Use case tables}
 
 \begin{longtable}{|c| p{10cm}|}
+    \hline ID        & 6                                                                                                                                                                                                                                                                  \\
     \hline
                      & Scan QR code                                                                                                                                                                                                                                                       \\
     \hline
-    Actor            & Store Attendant                                                                                                                                                                                                                                                    \\
+    Actors           & \begin{itemize}
+        \item Store Attendant
+        \item User
+    \end{itemize}                                                                                                                                                                                                                                         \\
     \hline
     Entry conditions & \begin{itemize}
         \item Store Attendant has logged in
-    \end{itemize}                                                                                                                                                                                                                                         \\
+        \item User has logged in
+        \item User has made a booking
+    \end{itemize}                                                                                                                                                                                                                                         \\  \hline
+    Input            & QR Code of the booking                                                                                                                                                                                                                                             \\
     \hline
     Events flow      & \begin{itemize}[nosep,after=\strut]
         \item Store Attendant presses on the button "Scan"
         \item The application displays a page with the QR code scanner
-        \item The attendant frames a QR code
-        \item The system reads the QR code and checks if it is associated to an acceptable reservation, according to the actual date, time and location
-        \item The application notifies whether if the QR code is valid
+        \item User goes on booking details and he shows the QR Code of his booking to the attendant
+        \item The attendant frames the QR code
+        \item The system reads the QR code
+        \item The system checks if the QR Code scanned is associated to an acceptable reservation, according to the actual date, time and location
+        \item The application notifies with a popup whether if the QR code is valid or not
     \end{itemize}                                                                                                                                                                                                                                         \\
     \hline
-    Exit condition   & The application displays a page with the total number of people inside the store at that moment
+    Exit condition   & The application displays the home page with the total number of people inside the store at that moment                                                                                                                                                             \\ \hline
+    Output           & \begin{itemize}
+        \item The system marks the booking as "in use" in his data
+        \item In the application booking's details the booking is marked as "in use"
+    \end{itemize}
     \\
     \hline
     \hline
@@ -726,28 +754,46 @@ Salvatore is a young boy who lives in a little village near Marsala, in Sicily. 
 
 \begin{longtable}{|c| p{10cm}|}
     \hline
+    ID               & 7                                                                                                                                                            \\
+    \hline
                      & Release a ticket                                                                                                                                             \\
     \hline
-    Actor            & Store Attendant                                                                                                                                              \\
+    Actor            & \begin{itemize}
+        \item Store Attendant
+        \item Customer
+    \end{itemize}                                                                                                                                   \\
     \hline
     Entry conditions & \begin{itemize}
         \item Store Attendant has logged in
-        \item The application is connected with a working printer
+        \item The application is connected to a working printer
+    \end{itemize}                                                                                                                                   \\ \hline
+    Input            & \begin{itemize}
+        \item Log in data of the store attendant are in the database
     \end{itemize}                                                                                                                                   \\
     \hline
     Events flow      & \begin{itemize}[nosep,after=\strut]
-        \item Store Attendant presses on the button "Release a ticket"
-        \item The application displays a page with a list of fields to be filled, such as Customer Name, Customer Surname, Store and it shows the available slots for the current day and for the next days for the store selected
-        \item Store Attendant completes all fields with Customer's information and presses on "Confirm" button
+        \item Store Attendant presses on the button "Generate a ticket"
+        \item The application displays a page with a list of fields to be filled
+        \item Customer tells to the attendant the city and the store for which he wants to make a booking
+        \item Attendant fills out the fields with customer information
+        \item The application updates the page with the available days in the current month, for the store selected
+        \item Store attendant select a day from the available ones
+        \item The application displays the time slots for the day selected
+        \item Store attendant selects an available slot
         \item The application displays the confirmation page with a summary of the data inserted
-        \item The attendant checks the data are correct and confirms
+        \item The attendant checks the data are correct (with the help of customer) and confirms
         \item The system inserts the new ticket in the database and generates the unique ID number and the QR code associated
-        \item The application displays a page with the QR code
-        \item Store Attendant clicks on "print" button
-        \item The application generates the pdf to print with all the necessary data of the ticket and sends it to the printer
+        \item The application displays a page with the QR code and all useful information of the ticket generated
+        \item Store Attendant clicks on "print" icon
+        \item The application sends the page to the printer
     \end{itemize}                                                                                                                                   \\
     \hline
-    Exit condition   & The application notifies that the pdf is going to be printed and it displays the home page of Store Attendant
+    Exit condition   & The application notifies that the pdf is going to be printed and it displays the home page of Store Attendant                                                \\ \hline
+    Output           & \begin{itemize}
+        \item The generated ticket is added to attendant's previous bookings
+        \item The system stored all data for that booking
+        \item The details page of the booking is printed
+    \end{itemize}
     \\
     \hline
     \hline
@@ -766,26 +812,34 @@ Salvatore is a young boy who lives in a little village near Marsala, in Sicily. 
 
 \begin{longtable}{|c| p{10cm}|}
     \hline
+    ID               & 8                                                                                                                                        \\
+    \hline
                      & Delete a reservation                                                                                                                     \\
     \hline
     Actor            & Store Attendant                                                                                                                          \\
     \hline
     Entry conditions & \begin{itemize}
         \item Store Attendant has logged in
-    \end{itemize}                                                                                                               \\
+        \item There is at least one past booking in the previous bookings section
+    \end{itemize}                                                                                                               \\ \hline
+    Input            & Log in and booking data are stored in the system                                                                                         \\
     \hline
     Events flow      & \begin{itemize}[nosep,after=\strut]
         \item Store Attendant presses on the button "delete a reservation"
         \item The application displays a page with the list of all the tickets generated by all the Store Assistant of that store and a search bar
-        \item Store Attendant clicks on the search bar and inserts the name and surname of a customer
+        \item Store Attendant makes a search based on day/time of the booking he wants to delete
         \item The system checks the record in the list and displays the results
-        \item Store Attendant selects the record he wants to delete and presses on "delete" button
-        \item The application displays a page with the summary of the reservation selected
-        \item Store Attendant clicks on "confirm" button
+        \item Store Attendant selects the record he wants to delete
+        \item The system shows the details of the booking selected
+        \item Store attendant clicks on "Delete this reservation"
         \item The system deletes the reservation from the database and displays a message of deletion completed
     \end{itemize}                                                                                                               \\
     \hline
-    Exit condition   & The application returns to the home page
+    Exit condition   & The application returns to the home page                                                                                                 \\ \hline
+    Output           & \begin{itemize}
+        \item The booking has been removed from the system
+        \item The booking is not visible on store attendant's application anymore
+    \end{itemize}
     \\
     \hline
     \hline
@@ -827,6 +881,7 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
 \paragraph{Use case tables}
 
 \begin{longtable}{|c| p{10cm}|}
+    \hline ID        & 9                                                                                                                                                     \\
     \hline
                      & Modify time slots                                                                                                                                     \\
     \hline
@@ -857,6 +912,7 @@ The manager of Eurospin's chain of discount in Italy asked to the store administ
 
 
 \begin{longtable}{|c| p{10cm}|}
+    \hline ID        & 10                                                                                                                                                \\
     \hline
                      & View Upcoming Bookings Details                                                                                                                    \\
     \hline
