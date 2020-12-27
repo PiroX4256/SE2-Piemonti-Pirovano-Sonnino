@@ -255,7 +255,7 @@ Looking at the relations, we can see that there is a \textit{bridge table} betwe
 \subsubsection{Four-tiered architecture}
 The choice is on this architecture for many reasons:
 \begin{itemize}
-    \item \textbf{Flexibility:} \todo[]{Insert here}
+    \item \textbf{Flexibility:} Once the interfaces of the S2B are defined, then the interior logic is dependent from outside. This fact implicates that each module can be improved without changing all the others.
     \item \textbf{Scalability:} an application divided on several tiers guarantee that the approach of scaling the architecture is adopted only for the most critical components. The result obtained maximizes the performance but also minimizes the costs.
     \item \textbf{Load Distribution:} the presence of several application server, preceded by a load balancer, guarantees that a single node would not become over-requested, sending the entire system down.
 \end{itemize}
@@ -281,6 +281,11 @@ This architecture consists of keeping as low information as possible on client s
 The minimum requirement of this choice is a stable connection between the parts; otherwise the application would not work as expected.
 
 Of course, the main advantage of choosing this implementation style is that the client machine is not required to have an high computational power.
+
+\subsubsection{Adoption of IdP Providers}
+We decided to adopt some external IdP providers (such as Facebook, Google, etc.) in order to simplify the process of user registration, without asking him any additional information.
+
+This service is based on the providers API, which will communicate with our service in order to provide the basic information necessarily (such as an email address).
 
 \section{User Interface Design}
 The aim of this section is to show the design of the main screens of the User app, describing the flow of the main functionalities for which the application was intended. The flow is created according to specific and illustrated input of the final user \\
