@@ -376,6 +376,10 @@ The following table presents the functionalities described in the RASD document 
 \todo[]{Descrivere l'implementazione di ciascun componente}
 
 \subsection{Clarification on component integration}
+In this section there will be a brief description about how the components are integrated and communicate, in order to build the entire S2B.
+
+First of all, in figure \ref{components_integration} it is clear that the first component to be built is the DBMS, followed by the application components that exploit it.
+
 \begin{center}
     \begin{figure}[H]
         \includegraphics[width=\textwidth]{assets/ITPlan/Components-Integration.png}
@@ -384,6 +388,49 @@ The following table presents the functionalities described in the RASD document 
     \end{figure}
 \end{center}
 
+After this, we have to integrate the API communication between the S2B and the external services that will be used, which are some \textit{IdP} providers, as explained in figure \ref{external_services}.
+
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{assets/ITPlan/External-Services.png}
+        \caption{External APIs integrations}
+        \label{external_services}
+    \end{figure}
+\end{center}
+
+At this point it is possible to integrate the Client Manager, which permits to the end user to exploit all the functionalities, as shown in figure \ref{client_manager}.
+
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{assets/ITPlan/ClientManager.png}
+        \caption{Client Manager Integration}
+        \label{client_manager}
+    \end{figure}
+\end{center}
+
+Finally, it is possible to integrate the web server module and the mobile application module and the browser with the web server module. This work in necessary in order to make possible the client-server communication.
+
+This last part is shown in figure \ref{client_server_integration}.
+
+Together with this, as shown in figure \ref{maps_api}, the client will be integrated with the maps API, which are provided by \textit{OpenStreetMaps}.
+
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{assets/ITPlan/ClientServerIntegration.png}
+        \caption{Client-Server Integration}
+        \label{client_server_integration}
+    \end{figure}
+\end{center}
+
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{assets/ITPlan/OpenStreetMaps.png}
+        \caption{Client-Side Maps Integration}
+        \label{maps_api}
+    \end{figure}
+\end{center}
+
+
 \pagestyle{plain}
 
 \section{Effort spent}
@@ -391,7 +438,7 @@ The following table presents the functionalities described in the RASD document 
     \hline
     Student        & Time for S.1 & S.2 & Time for S.3 & Time for S.4 & Time for S.5 \\ \hline
     Alice Piemonti &              &     &              &              &              \\ \hline
-    Luca Pirovano  & 2h           & 7h  &              & 2h           &              \\ \hline
+    Luca Pirovano  & 2h           & 7h  & 2h           & 2h           & 2h           \\ \hline
     Nicolò Sonnino &              & 3h  &              &              &              \\
     \hline
 \end{tabular}
