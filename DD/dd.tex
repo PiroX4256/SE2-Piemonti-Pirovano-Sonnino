@@ -344,6 +344,46 @@ Also the system attributes are guaranteed by the design choices explained in thi
     \item \textbf{Maintainability and Modularity:} the first is accomplished through the second, because the application will be divided in some small parts (called modules) which interacts each other to provide the requested service.
 \end{itemize}
 
+\section{Implementation, Integration and Test Plan}
+The S2B will be divided as follows:
+\begin{itemize}
+    \item Client: it includes either web browser or mobile application;
+    \item Web Server;
+    \item Application Server;
+    \item Internal Database;
+    \item External services (such as OpenStreetMaps, IdP providers, etc).
+\end{itemize}
+
+These elements will be implemented following a bottom up logic, in order to avoid stub structures that would be more difficult to implement and test.
+
+The main focus is on the module of the application server, because of its importance in the S2B development and also due to its testing difficulty.
+
+The following table presents the functionalities described in the RASD document and highlight for each of them the importance for the customer and the difficulty of their implementation.
+
+\begin{center}
+    \begin{tabular}{ | c | c | c |}
+        \hline
+        \textbf{Functionality}        & \textbf{Importance for customer} & \textbf{Difficulty} \\ \hline
+        Sign Up and Login             & Low                              & Low                 \\ \hline
+        ASAP (MVP)                    & High                             & Medium              \\\hline
+        Make a reservation (module 2) & Medium                           & High                \\\hline
+        Hand out on spot              & High                             & Medium              \\\hline
+        Periodic notifications        & Low                              & High                \\
+        \hline
+    \end{tabular}
+\end{center}
+
+\todo[]{Descrivere l'implementazione di ciascun componente}
+
+\subsection{Clarification on component integration}
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{assets/ITPlan/Components-Integration.png}
+        \caption{Components Integration}
+        \label{components_integration}
+    \end{figure}
+\end{center}
+
 \pagestyle{plain}
 
 \section{Effort spent}
