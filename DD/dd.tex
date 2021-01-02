@@ -231,6 +231,41 @@ Each device has its own Operative System where the software run. The tiers in th
     \item \textbf{Tier 4:} it is composed by the database servers (DBMS, database). They store the data and execute actions on it, according to the instruction given by the application servers.
 \end{itemize}
 
+\subsection{Component Interfaces}
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=0.35]{assets/Interfaces/Interface-Diagram.png}
+        \caption{Interfaces Diagram}
+        \label{interfaces_diagram}
+    \end{center}
+\end{figure}
+
+The interfaces shown in figure \ref{interfaces_diagram} are the principal ones needed to make CLup run. The arrows represent the implementation classes of the interfaces.
+
+Starting from the beginning, the \textbf{AccessInterface} is needed in order to hold the customer, store administrator and store attendant sign up and login processes. It is realized through two different controllers, called SignUpHandler and LoginHandler.
+
+Then we can see the \textbf{UserInterface}, which main goal is to achieve user functionalities, such as the ASAP or the Reservation ones. It is realized by five different controllers, one for each functionality.
+\begin{itemize}
+    \item \textbf{ASAPController}: it manages the ASAP request sent by the user and returns a valid response with the booked slot or an error.
+    \item \textbf{ReservationController}: same as above, but specifically designed for the \textit{Book a visit} functionality.
+    \item \textbf{AlternativeSlotRecommender}: it calculates the best alternative slot and returns them back to the user.
+    \item \textbf{QRCodeGeneration}: it manages the creation of the QRCode, when the user confirm the given (or chosen) slot.
+    \item \textbf{Notification}: it manages the feature of periodic notification, sending to the user a message when it is almost time to go!
+\end{itemize}
+
+Then we have a store attendant interface, which main features are realized through different controllers.
+\begin{itemize}
+    \item \textbf{QRCodeValidationController}: it manages the process of QRCode validation at the entrance of the store. It receives the data sent from the attendant's mobile device and process them in order to send him a response, which can be valid (so the customer can enter the store) or not.
+    \item \textbf{GenerateOnSpot}: it manages the creation of a booking, held by the attendant from a proper desk. It simply receives the request from the attendant's device and computes a valid booking slot, sending it back to the attendant.
+\end{itemize}
+
+Finally, we have the \textbf{StoreAdminInterface}, which permits to each store manager to edit all the information about the shop. This job is done through different methods:
+\begin{itemize}
+    \item \underline{editStoreInfo}: this method receives as input some new store information (which are basically String objects) and a StoreAdministrator object. It edits the Store object in the database if only the manager is its administrator.
+    \item \underline{editTimeslots}: this method receives as input the new timeslot information and, as before, a StoreAdministrator object. It edits the information in the database.
+    \item \underline{editAttendants}: this last method receives some information about an attendant to be edited, and makes the change in the database.
+\end{itemize}
+
 \subsection{Logical Description of Data}
 \begin{figure}[H]
     \begin{center}
