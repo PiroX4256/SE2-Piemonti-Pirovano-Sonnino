@@ -198,16 +198,16 @@ In figure \ref{component_diagram} we can see a more detailed diagram representin
 The web server has the function to route the browser requests to the application server and send back its responses.
 
 \begin{itemize}
-    \item \textbf{Client Manager}\\This module handles all the requests made by the client. At the beginning, while the client is not logged in, the module offers a \textit{loginInterface} which permits to execute a sign up or sign in operation. Once the client has logged in, the module shows only the other types of interfaces relying on user's role. A client logged as a user will exploit the \textit{UserInterface}, a store attendant an \textit{AttendantInterface} and a store administrator an \textit{Administrator Interface}.
+    \item \textbf{Client Manager}\\This module handles all the requests made by the client. At the beginning, when the client is not logged in, the module offers a \textit{loginInterface} which permits to execute a sign up or sign in operation. Once the client has logged in, the module shows only the other types of interfaces relying on the type of log in: a client logged as a user will exploit the \textit{UserInterface}, a store attendant an \textit{AttendantInterface} and a store administrator an \textit{Administrator Interface}.
     \item \textbf{Login Handler}\\This component handles the process of sign in. It receives the credentials inserted by the user (which are username and password) and checks for a correspondence in the database. If it found something, the user becomes authenticated and can continue to the correct private area.
-    \item \textbf{SignUp Handler}\\This module's goal is to permit a user registration to the CLup service. There are three different sign up processes, each for every account type. The default registration flow, as the application's main target is a customer, provides the steps in order to register as user. However, at the beginning of the process, a prompt permits to switch sign up type to \textit{Attendant} or \textit{Administrator}. Some data will be asked to the registering client such as, in the main case, an email and a password.
-    \item \textbf{ASAP Handler}\\This component handles the process of the MVP (see RASD section 1.1), which is the \textit{Retrieve a ticket} functionality. A registered and authenticated user selects the desired grocery store and requests, through a button, a new ticket. The S2B then provides an unique queue number, an estimated waiting time and a QRCode to check-in.
-    \item \textbf{Reservation Handler}\\This is the second module of our S2B described in s. 1.1 of RASD document. Through this component, the registered and authenticated user can select a store and book a visit slot in the desired date and time (if available). The component can also optionally receive from user an estimated duration and a shopping list, in order to optimize people flows in the structure. Once the computation has finished, the component returns to user a confirmation, together with a QRCode to check-in.
+    \item \textbf{SignUp Handler}\\This module's goal is to permit a user registration to the CLup service. There are three different sign up processes, one for each account type. The default registration flow firstly allows to register as a general user, since the application is intended to be used mostly by customers. However, at the beginning of the process, a prompt permits to switch the type of sign up from \textit{User} to \textit{Attendant} or \textit{Administrator}. Some data will be asked to the registering client, such as an email and a password.
+    \item \textbf{ASAP Handler}\\This component handles the process of the MVP (see RASD section 1.1), which is the \textit{Retrieve a ticket} functionality. A registered and authenticated user selects the desired grocery store and requests, through a button, a new ticket. The S2B then provides an unique queue number, an estimated waiting time and a QRCode which will be user to check-in at the entrances of the store.
+    \item \textbf{Reservation Handler}\\This is the second module of our S2B described in s. 1.1 of RASD document. Through this component, the registered and authenticated user can select a store and book a visit slot in the desired date and time (if available). The component can optionally receive from user an estimated duration of the visit and a shopping list, in order to optimize people flows in the structure. Once the computation has finished, the component returns to user a confirmation, together with a QRCode to check-in.
     \item \textbf{Notification Handler}\\The goal of this component is to handle notifications of imminent calling of a ticket. In fact, when a number is going to be called, a trigger is generated, which sends an instant notification to the user who retrieved that ticket.
-    \item \textbf{Generate on spot}\\This module handles the manual procedure of generating a ticket on the spot. In fact, when a user cannot sign up to CLup service, there is the possibility of going physically to the desired store and ask to be queued up. The attendant, through this component, sends a request of retrieving of a ticket, and the server returns the first slot available. This ticket is then printed, together with a QRCode generated from the system.
-    \item \textbf{QRCode Validation}\\The functionality carried out from this component is the \textit{check-in} one. When a user arrives at the store, the attendant scans the QRCode generated from the application (or printed on the reservation) and lets the user entering the structure. The attendant scans the ticket (through CLup mobile app) with the integrated camera of a smartphone. The application then sends a request of check-in to the server, which responds with a status of the request (which can be either valid or invalid).
-    \item \textbf{QRCode Generation}\\The goal of this module is to generate the QR Code of the ticket from a pre-defined string, which can be seen as the unique id of the ticket.
-    \item \textbf{Alternative Slot Recommender}\\This component's aim is to suggest alternative slots to the end user, relying on people flows estimation from the other bookings.
+    \item \textbf{Generate on spot}\\This module handles the manual procedure of generating a ticket on the spot. In fact, when a customer cannot sign up to CLup service, there is the possibility of going physically to the desired store and ask to an attendant to be queued up. The attendant, through this component, sends a request of retrieving a ticket, and the server returns the first slot available. This ticket is then printed, together with a QRCode generated from the system.
+    \item \textbf{QRCode Validation}\\The functionality carried out by this component is the \textit{check-in}. When a user arrives at the store, the attendant scans the QRCode generated from the application (or printed) and lets the user entering the structure. The attendant scans the ticket (through CLup mobile app) with the integrated camera of a smartphone. The application then sends a request of check-in to the server, which responds with a status of the request (which can be either valid or invalid).
+    \item \textbf{QRCode Generation}\\The goal of this module is to generate the QR Code of the ticket from a pre-defined string, which is the unique id of the ticket.
+    \item \textbf{Alternative Slot Recommender}\\This component's aim is to suggest alternative slots to the end user, relying on people flows estimation which derives from an analysis of all bookings' time slot and duration time.
     \item \textbf{Store Management}\\This last module handles the store administrator's personal area. In fact, it permits editing store information, which includes opening hours, maximum slots capacity, booking management and so on.
 \end{itemize}
 
@@ -223,7 +223,7 @@ The web server has the function to route the browser requests to the application
 
 The deployment diagram in figure \ref{deployment_diagram} shows the needed components for a correct system behavior, except the Maps APIs and the Authentication APIs ones.
 
-Each device has its own Operative System where the software run. The tiers in the image are the following:
+Each device has its own Operating System where the software runs. The tiers in the image are the following:
 \begin{itemize}
     \item \textbf{Tier 1:} it is the client machine, which can be a computer with a web browser (running, for example, on Windows 10 OS) or the downloadable mobile application (available on both Apple's store and Google's Store).
     \item \textbf{Tier 2:} it is the web server, which does not execute any business logic, but it simply receives requests from the client, routes them to the server and wraps the application server's response into an HTML file, sending it back to the client. It also appends the styling logic of the page (CSS sheets, JS sheets, etc.).
@@ -250,12 +250,12 @@ Then we can see the \textbf{UserInterface}, which main goal is to achieve user f
     \item \textbf{ReservationController}: same as above, but specifically designed for the \textit{Book a visit} functionality.
     \item \textbf{AlternativeSlotRecommender}: it calculates the best alternative slot and returns them back to the user.
     \item \textbf{QRCodeGeneration}: it manages the creation of the QRCode, when the user confirm the given (or chosen) slot.
-    \item \textbf{Notification}: it manages the feature of periodic notification, sending to the user a message when it is almost time to go!
+    \item \textbf{Notification}: it manages the feature of periodic notification, sending to the user a message when it is almost time to go.
 \end{itemize}
 
 Then we have a store attendant interface, which main features are realized through different controllers.
 \begin{itemize}
-    \item \textbf{QRCodeValidationController}: it manages the process of QRCode validation at the entrance of the store. It receives the data sent from the attendant's mobile device and process them in order to send him a response, which can be valid (so the customer can enter the store) or not.
+    \item \textbf{QRCodeValidationController}: it manages the process of QRCode validation at the entrances of the store. It receives the data sent from the attendant's mobile device and processes them in order to send him a response, which can be valid (so the customer can enter the store) or not.
     \item \textbf{GenerateOnSpot}: it manages the creation of a booking, held by the attendant from a proper desk. It simply receives the request from the attendant's device and computes a valid booking slot, sending it back to the attendant.
 \end{itemize}
 
@@ -280,7 +280,7 @@ First of all, we can see the distinction in different modules (as s. 1.1 of RASD
 
 The most important fact is that there are three different tables, each one for each customer type. In fact, since they contain different types of information, the most intuitive choice is the one of separating these types of data.
 
-We then can see a table containing the list of all tickets, each of them associated to a specific store and (in case of \textit{Reservation} functionality) to a specific booking.
+Then, we can see a table containing the list of all tickets, each of them associated to a specific store and (in case of \textit{Reservation} functionality) to a specific booking.
 
 Finally, a booking can contain a list of categories, each one with a set of product inside it.
 
@@ -288,11 +288,11 @@ Looking at the relations, we can see that there is a \textit{bridge table} betwe
 
 \subsection{Architectural Style and Patterns}
 \subsubsection{Four-tiered architecture}
-The choice is on this architecture for many reasons:
+We chose this architecture for many reasons:
 \begin{itemize}
     \item \textbf{Flexibility:} Once the interfaces of the S2B are defined, then the interior logic is dependent from outside. This fact implicates that each module can be improved without changing all the others.
-    \item \textbf{Scalability:} an application divided on several tiers guarantee that the approach of scaling the architecture is adopted only for the most critical components. The result obtained maximizes the performance but also minimizes the costs.
-    \item \textbf{Load Distribution:} the presence of several application server, preceded by a load balancer, guarantees that a single node would not become over-requested, sending the entire system down.
+    \item \textbf{Scalability:} an application divided on several tiers guarantees that the approach of scaling the architecture is adopted only for the most critical components. The result obtained maximizes the performance but also minimizes the costs.
+    \item \textbf{Load Distribution:} the presence of several application servers, preceded by a load balancer, guarantees an acceptable division of requests. Otherwise, the presence of a single node means that node can become over-requested, sending the entire system down.
 \end{itemize}
 
 \subsubsection{RESTful Architecture}
@@ -320,7 +320,7 @@ Of course, the main advantage of choosing this implementation style is that the 
 \subsubsection{Adoption of IdP Providers}
 We decided to adopt some external IdP providers (such as Facebook, Google, etc.) in order to simplify the process of user registration, without asking him any additional information.
 
-This service is based on the providers API, which will communicate with our service in order to provide the basic information necessarily (such as an email address).
+This service is based on the providers API, which will communicate with our service in order to provide the necessary information (such as an email address).
 
 \section{User Interface Design}
 The aim of this section is to show the design of the main screens of the User app, describing the flow of the main functionalities for which the application was intended. The flow is created according to specific and illustrated input of the final user \\
@@ -484,14 +484,14 @@ According to the table \ref{implementation_precedences} we decided to implement 
     \item \textbf{ASAP (MVP):} for this functionality it is necessary to implement and execute tests on the ASAPHandler and the QRCode Generation component. The ASAP handler is tested through an appropriate choice of store and through a check about the assigned time slot. The QRCode Generation is tested through a check on the content of it, which can also test the functionality of the QRCode Validation component.
     \item \textbf{Hand out on spot:} this functionality is managed by the GenerateOnSpot component, on which the unit tests will be made. They will check that the module manages in a correct way all the requests of ticket that are made on spot, by an attendant of the considered store. Finally, an integration test with the DBMS is made.
     \item \textbf{Make a reservation (module 2):} this module is an extension of the MVP one. It exploits some components, which are the ReservationHandler, AlternativeSlotRecommender, QRCode Validation and QRCode Generation ones. They will need some unit tests and, in particular, the ReservationHandler one also needs an integration test with the DBMS.
-    \item \textbf{SignUp and Login;} the two functionalities are strictly related, in fact the Login result is somehow affected by the SignUp function. So it would be a good idea to implement the SignUpHandler first and then the LoginHandler and then execute a unit test. The test of the SignUpHandler requires a demo of the DBMS containing some accounts. In fact it’s necessary to test the correct call to the DBMS functions in order to retrieve the account already registered and then it is important to check the module recognize when a user is already registered or if the sent data presents some inconsistencies. Relying on the DBMS functions, an integration test is required to check the correct communication between the module and DBMS. These tests must also be executed for the LoginHandler because it retrieves data from the database to execute credentials check.
-    \item \textbf{Periodic notifications:} this functionality is accomplished through the NotificationHandler, on which some unit tests are needed to be executed. To properly make this tests, a demo scenario is needed, in which a customer has retrieved a ticket (through, for example, the ASAP functionality) and the system triggers because it is going to be called.
+    \item \textbf{SignUp and Login:} the two functionalities are strictly related, since the Login result is somehow affected by the SignUp function. So it would be a good idea to implement the SignUpHandler first and then the LoginHandler and then execute a unit test. The test of the SignUpHandler requires a demo of the DBMS containing some accounts. In fact it’s necessary to test the correct call to the DBMS functions in order to retrieve the account already registered and then it is important to check the module recognize when a user is already registered or if the sent data presents some inconsistencies. Relying on the DBMS functions, an integration test is required to check the correct communication between the module and DBMS. These tests must also be executed for the LoginHandler because it retrieves data from the database to execute credentials check.
+    \item \textbf{Periodic notifications:} this functionality is accomplished through the NotificationHandler, on which some unit tests are needed to be executed. To properly make this tests, a demo scenario is needed, in which a customer retrieves a ticket (through, for example, the ASAP functionality) and the system triggers because the ticket is going to be called.
 \end{itemize}
 
 \subsection{Clarification on component integration}
 In this section there will be a brief description about how the components are integrated and communicate, in order to build the entire S2B.
 
-First of all, in figure \ref{components_integration} it is clear that the first component to be built is the DBMS, followed by the application components that exploit it.
+First of all, in figure \ref{components_integration} it is clear that the first component to build is the DBMS, followed by the application components that exploit it.
 
 \begin{center}
     \begin{figure}[H]
