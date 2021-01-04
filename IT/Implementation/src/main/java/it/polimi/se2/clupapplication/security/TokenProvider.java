@@ -1,4 +1,4 @@
-package it.polimi.se2.clupapplication.utils.jwt;
+package it.polimi.se2.clupapplication.security;
 
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;

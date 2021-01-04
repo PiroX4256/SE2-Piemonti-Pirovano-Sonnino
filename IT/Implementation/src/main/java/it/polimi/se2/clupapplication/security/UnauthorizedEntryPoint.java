@@ -1,4 +1,4 @@
-package it.polimi.se2.clupapplication.utils.jwt;
+package it.polimi.se2.clupapplication.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

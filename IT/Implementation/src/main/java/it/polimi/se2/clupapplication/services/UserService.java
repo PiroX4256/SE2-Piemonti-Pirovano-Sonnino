@@ -1,4 +1,4 @@
-package it.polimi.se2.clupapplication.services.jwt;
+package it.polimi.se2.clupapplication.services;
 
 import it.polimi.se2.clupapplication.entities.User;
 import it.polimi.se2.clupapplication.entities.UserDto;

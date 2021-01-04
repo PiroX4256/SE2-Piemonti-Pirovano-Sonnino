@@ -1,10 +1,12 @@
-package it.polimi.se2.clupapplication.services.jwt;
+package it.polimi.se2.clupapplication.security.services;
 
 
 import it.polimi.se2.clupapplication.entities.Role;
 import it.polimi.se2.clupapplication.entities.User;
 import it.polimi.se2.clupapplication.entities.UserDto;
 import it.polimi.se2.clupapplication.repositories.UserRepository;
+import it.polimi.se2.clupapplication.services.RoleService;
+import it.polimi.se2.clupapplication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

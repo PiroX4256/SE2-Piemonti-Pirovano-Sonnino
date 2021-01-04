@@ -1,7 +1,7 @@
-package it.polimi.se2.clupapplication.configuration;
+package it.polimi.se2.clupapplication.config;
 
-import it.polimi.se2.clupapplication.utils.jwt.JwtAuthenticationFilter;
-import it.polimi.se2.clupapplication.utils.jwt.UnauthorizedEntryPoint;
+import it.polimi.se2.clupapplication.security.JwtAuthenticationFilter;
+import it.polimi.se2.clupapplication.security.UnauthorizedEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
