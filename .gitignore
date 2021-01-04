@@ -302,3 +302,4 @@ DD/*.pdf
 __latexindent_temp.tex
 *.png:Zone.Identifier
 *.DS_Store
+*.asta.lock
