@@ -1,8 +1,8 @@
 package it.polimi.se2.clupapplication.json;
 
 public class LoginUser {
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
 
     public LoginUser(String username, String password) {
         this.username = username;

@@ -1,5 +1,6 @@
 package it.polimi.se2.clupapplication.config;
 
+import it.polimi.se2.clupapplication.security.FailureLoginHandler;
 import it.polimi.se2.clupapplication.security.JwtAuthenticationFilter;
 import it.polimi.se2.clupapplication.security.UnauthorizedEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.annotation.Resource;
 
+/**
+ * This class is the configuration one of the Web Security Backend offered by Spring framework.
+ * @see org.springframework.security.config.annotation.SecurityConfigurer
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -38,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/users/authenticate", "/users/register").permitAll()
+                .antMatchers("/auth/login", "/auth/signup").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint).and()

@@ -1,5 +1,8 @@
 package it.polimi.se2.clupapplication.entities;
 
+import com.sun.istack.NotNull;
+import com.sun.istack.Nullable;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
@@ -9,8 +12,12 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
+    @NotNull
+    @Column(unique = true)
     private String username;
+    @NotNull
     private String password;
+    @Column(unique = true)
     private String token;
     private String name;
     private String surname;

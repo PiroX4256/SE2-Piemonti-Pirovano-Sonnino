@@ -1,4 +1,6 @@
-package it.polimi.se2.clupapplication.entities;
+package it.polimi.se2.clupapplication.json;
+
+import it.polimi.se2.clupapplication.entities.User;
 
 public class UserDto {
 
@@ -6,11 +8,10 @@ public class UserDto {
     private String password;
     private String name;
     private String surname;
+    private String role;
 
     public User getUserFromDto(){
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
+        User user = new User(username, password);
         user.setName(name);
         user.setSurname(surname);
 
@@ -31,5 +32,9 @@ public class UserDto {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getRole() {
+        return role;
     }
 }

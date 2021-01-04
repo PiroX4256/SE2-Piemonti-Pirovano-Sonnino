@@ -1,7 +1,6 @@
 package it.polimi.se2.clupapplication.entities;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 public class Role {
