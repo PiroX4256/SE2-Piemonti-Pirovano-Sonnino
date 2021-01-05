@@ -43,7 +43,7 @@ public class UserController {
      * @return the authentication token to be stored on client side.
      * @throws AuthenticationException if there are some troubles with the login procedure.
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping(value = "/login")
     public ResponseEntity<?> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
         final Authentication authentication = authenticationManager.authenticate(
