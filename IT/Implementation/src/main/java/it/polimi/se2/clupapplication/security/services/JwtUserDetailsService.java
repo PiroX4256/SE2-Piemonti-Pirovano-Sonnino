@@ -1,4 +1,4 @@
-package it.polimi.se2.clupapplication.services;
+package it.polimi.se2.clupapplication.security.services;
 
 import it.polimi.se2.clupapplication.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
