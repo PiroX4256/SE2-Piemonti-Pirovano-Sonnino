@@ -292,9 +292,9 @@ Both of the previous actions are optional and at the User's discretion.
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/remove-a-booking.png}
     \end{center}
 \end{figure}
-The above diagram describes the process of removing a reservation.
-The user accesses the specific page and selects the slot to be removed, this sends the request to the ClientManager and to the ReservationHandler.
-The handler updates the database with the removal of the selected slots from the user's data and returns the confirmation. 
+The above diagram describes the process of removing a reservation.\\
+The user accesses the specific page and selects the slot to be removed, this sends the request to the ClientManager and to the ReservationHandler.\\
+The handler updates the database with the removal of the selected slots from the user's data and returns the confirmation. \\
 \subsubsection{Release a ticket}
 \begin{figure}[H]
     \begin{center}
@@ -314,7 +314,9 @@ The handler updates the database with the removal of the selected slots from the
         \caption{Modify time slots sequence diagram}
     \end{center}
 \end{figure}
-This process 
+This process is only available for the Store Administrator and lets them to edit time slots of their store.\\
+Through the appropriate page the Store Administartor edits the time slots of the store, this triggers a request from the App to the ClientManager and to the StoreManagement handler, which is responsible to update the database with the newly time slots an report back to ClientManager.
+The App then displays a confirmation.
 \subsection{Component Interfaces}
 \begin{figure}[H]
     \begin{center}
