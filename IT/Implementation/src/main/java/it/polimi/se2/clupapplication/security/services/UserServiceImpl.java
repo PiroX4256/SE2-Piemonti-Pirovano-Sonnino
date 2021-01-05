@@ -3,7 +3,7 @@ package it.polimi.se2.clupapplication.security.services;
 
 import it.polimi.se2.clupapplication.entities.Role;
 import it.polimi.se2.clupapplication.entities.User;
-import it.polimi.se2.clupapplication.json.UserDto;
+import it.polimi.se2.clupapplication.model.UserDTO;
 import it.polimi.se2.clupapplication.repositories.UserRepository;
 import it.polimi.se2.clupapplication.services.RoleService;
 import it.polimi.se2.clupapplication.services.UserService;
@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -61,7 +60,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public User save(UserDto user) {
+    public User save(UserDTO user) {
 
         User nUser = user.getUserFromDto();
         nUser.setPassword(bcryptEncoder.encode(user.getPassword()));

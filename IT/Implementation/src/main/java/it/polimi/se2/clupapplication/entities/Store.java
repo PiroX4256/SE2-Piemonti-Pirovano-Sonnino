@@ -21,6 +21,8 @@ public class Store {
     private User manager;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User> attendants;
+    @OneToMany(mappedBy = "store")
+    private List<Ticket> tickets;
 
     protected Store() {}
 
@@ -38,19 +40,47 @@ public class Store {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public double getLongitude() {
         return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public double getLatitude() {
         return latitude;
     }
 
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
     public User getManager() {
         return manager;
     }
 
+    public void setManager(User manager) {
+        this.manager = manager;
+    }
+
     public List<User> getAttendants() {
         return attendants;
+    }
+
+    public void setAttendants(List<User> attendants) {
+        this.attendants = attendants;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

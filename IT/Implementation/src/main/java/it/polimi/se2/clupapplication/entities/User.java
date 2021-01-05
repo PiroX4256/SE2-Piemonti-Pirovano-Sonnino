@@ -5,6 +5,7 @@ import com.sun.istack.Nullable;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,6 +31,9 @@ public class User {
             inverseJoinColumns = {
                     @JoinColumn(name = "ROLE_ID") })
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "user")
+    private List<Ticket> tickets;
 
     protected User() {}
 
@@ -87,5 +91,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

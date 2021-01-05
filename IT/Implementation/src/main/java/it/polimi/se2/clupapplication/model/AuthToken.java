@@ -1,4 +1,4 @@
-package it.polimi.se2.clupapplication.security;
+package it.polimi.se2.clupapplication.model;
 
 public class AuthToken {
 

@@ -1,10 +1,10 @@
 package it.polimi.se2.clupapplication.controllers;
 
 import it.polimi.se2.clupapplication.entities.User;
-import it.polimi.se2.clupapplication.json.UserDto;
-import it.polimi.se2.clupapplication.json.LoginUser;
+import it.polimi.se2.clupapplication.model.UserDTO;
+import it.polimi.se2.clupapplication.model.LoginUser;
 import it.polimi.se2.clupapplication.services.UserService;
-import it.polimi.se2.clupapplication.security.AuthToken;
+import it.polimi.se2.clupapplication.model.AuthToken;
 import it.polimi.se2.clupapplication.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,7 +17,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLIntegrityConstraintViolationException;
+import javax.validation.Valid;
 
 /**
  * This class handles the authentication backend of CLup, which is composed by the sign up and login methods.
@@ -63,7 +63,7 @@ public class UserController {
      * @return a fresh-new user object.
      */
     @RequestMapping(value="/signup", method = RequestMethod.POST)
-    public ResponseEntity<?> saveUser(@RequestBody UserDto user){
+    public ResponseEntity<?> saveUser(@RequestBody UserDTO user){
         try {
             User userEntity = userService.save(user);
             return ResponseEntity.ok(userEntity);
@@ -72,7 +72,7 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
     @RequestMapping(value="/userping", method = RequestMethod.GET)
     public String userPing(){
         return "Any User Can Read This";

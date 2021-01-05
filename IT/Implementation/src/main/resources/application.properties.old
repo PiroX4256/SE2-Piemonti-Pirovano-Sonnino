@@ -12,3 +12,7 @@ jwt.authorities.key=roles
 jwt.token.prefix=Bearer
 jwt.header.string=Authorization
 jwt.secret=signingkey
+spring.security.oauth2.client.registration.facebook.client-id=821156638448534
+spring.security.oauth2.client.registration.facebook.client-secret=f9fc6815f618911d6a49af1a902ea499
+spring.security.oauth2.client.registration.facebook.redirect-uri=
+spring.security.oauth2.client.registration.facebook.scope=

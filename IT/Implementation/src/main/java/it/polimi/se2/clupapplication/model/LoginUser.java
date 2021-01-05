@@ -1,4 +1,4 @@
-package it.polimi.se2.clupapplication.json;
+package it.polimi.se2.clupapplication.model;
 
 public class LoginUser {
     private final String username;

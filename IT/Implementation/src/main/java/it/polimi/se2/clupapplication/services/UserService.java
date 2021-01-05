@@ -1,13 +1,12 @@
 package it.polimi.se2.clupapplication.services;
 
 import it.polimi.se2.clupapplication.entities.User;
-import it.polimi.se2.clupapplication.json.UserDto;
+import it.polimi.se2.clupapplication.model.UserDTO;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public interface UserService {
-    User save(UserDto user);
+    User save(UserDTO user);
     List<User> findAll();
     User findOne(String username);
 }
