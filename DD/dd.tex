@@ -301,12 +301,9 @@ The handler updates the database with the removal of the selected slots from the
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/release-a-ticket.png}
     \end{center}
 \end{figure}
-If a customer can't install the app, they can still ask the staff to generate a ticket directly on the spot as shown above.
+If a customer can't install the app, they can still ask the staff to generate a ticket directly on the spot as shown above.\\
 The Store Attendant navigates to the right page and requests a new ticket from the App to the ClientManager, which forwards it to the GenerateOnSpot handler.\\
-
-
-
-
+The handler interrogates the database for the next available free slots of the current day: if successful it generates a ticket with its own QR code (using the QRCodeGenerator component) and sends it to the App; it sends an error otherwise.\\
 \subsubsection{Scan QR code}
 \begin{figure}[H]
     \begin{center}
