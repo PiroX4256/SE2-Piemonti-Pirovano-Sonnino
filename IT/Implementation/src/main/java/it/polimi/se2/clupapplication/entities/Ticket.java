@@ -1,5 +1,6 @@
 package it.polimi.se2.clupapplication.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import it.polimi.se2.clupapplication.model.Status;
 
@@ -10,16 +11,22 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "user")
     @NotNull
     private User user;
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "store")
     @NotNull
     private Store store;
     @NotNull
     private Status status;
+    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn
+    private Booking booking;
 
     protected Ticket() {}
 
@@ -55,5 +62,13 @@ public class Ticket {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Booking getBooking() {
+        return booking;
+    }
+
+    public void setBooking(Booking booking) {
+        this.booking = booking;
     }
 }

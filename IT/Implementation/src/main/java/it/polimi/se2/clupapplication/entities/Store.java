@@ -1,10 +1,12 @@
 package it.polimi.se2.clupapplication.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import com.sun.istack.Nullable;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
 import java.util.List;
 
 @Entity
@@ -25,10 +27,12 @@ public class Store {
     private User manager;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User> attendants;
+    @JsonBackReference
     @OneToMany(mappedBy = "store")
     private List<Ticket> tickets;
-    @ManyToMany(mappedBy = "stores")
-    private List<OpeningHours> openingHours;
+    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Slot> slots;
 
     protected Store() {}
 
@@ -98,11 +102,15 @@ public class Store {
         this.chain = chain;
     }
 
-    public List<OpeningHours> getOpeningHours() {
-        return openingHours;
+    public List<Slot> getSlots() {
+        return slots;
     }
 
-    public void setOpeningHours(List<OpeningHours> openingHours) {
-        this.openingHours = openingHours;
+    public void setSlots(List<Slot> openingHours) {
+        this.slots = openingHours;
+    }
+
+    public void addSlot(Slot openingHour) {
+        this.slots.add(openingHour);
     }
 }

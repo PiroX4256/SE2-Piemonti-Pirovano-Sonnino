@@ -1,14 +1,20 @@
 package it.polimi.se2.clupapplication.controllers;
 
 import it.polimi.se2.clupapplication.entities.Store;
-import it.polimi.se2.clupapplication.model.HoursDTO;
+import it.polimi.se2.clupapplication.model.SlotDTO;
 import it.polimi.se2.clupapplication.model.StoreDTO;
 import it.polimi.se2.clupapplication.services.StoreService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/store")
@@ -23,15 +29,26 @@ public class StoreController {
         return ResponseEntity.ok(store);
     }
 
-    @PostMapping("/addHours")
+    @PostMapping("/addSlot")
     @PreAuthorize("hasAnyRole('MANAGER')")
-    public ResponseEntity<?> addHours(@RequestBody HoursDTO hoursDTO) {
-        storeService.addOpeningHours(hoursDTO);
+    public ResponseEntity<?> addHours(@RequestBody SlotDTO slotDTO) {
+        storeService.addSlot(slotDTO);
         return null;
     }
 
-    @GetMapping("/getOpeningHours")
-    public ResponseEntity<?> getOpeningHours(@RequestParam Long storeId) {
-        return ResponseEntity.ok(storeService.getOpeningHours(storeId));
+    @GetMapping("/getStoreById")
+    public ResponseEntity<?> getStore(@RequestParam Long storeId) {
+        Store store = storeService.getStoreById(storeId);
+        return ResponseEntity.ok(store);
+    }
+
+    @GetMapping("/getAllStores")
+    public ResponseEntity<?> getAllStores() {
+        return ResponseEntity.ok(storeService.getAllStores());
+    }
+
+    @GetMapping("/getAvailableSlots")
+    public ResponseEntity<?> getAllSlots(@RequestParam Long storeId) {
+        return ResponseEntity.ok(storeService.getAvailableSlots(storeId));
     }
 }

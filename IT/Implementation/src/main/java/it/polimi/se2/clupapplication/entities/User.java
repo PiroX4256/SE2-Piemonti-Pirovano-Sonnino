@@ -1,5 +1,7 @@
 package it.polimi.se2.clupapplication.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import com.sun.istack.Nullable;
 
@@ -17,7 +19,9 @@ public class User {
     @Column(unique = true)
     private String username;
     @NotNull
+    @JsonIgnore
     private String password;
+    @JsonIgnore
     @Column(unique = true)
     private String token;
     private String name;
@@ -32,6 +36,7 @@ public class User {
                     @JoinColumn(name = "ROLE_ID") })
     private Set<Role> roles;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
 
