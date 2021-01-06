@@ -301,6 +301,8 @@ The handler updates the database with the removal of the selected slots from the
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/release-a-ticket.png}
     \end{center}
 \end{figure}
+If a customer can't install the app, they can still ask the staff to generate a ticket directly on the spot as shown above.
+The Store Attendant navigates to the right page and requests a new ticket from the App to the ClientManager, which forwards it to the GenerateOnSpot handler.\\
 
 
 
@@ -311,9 +313,11 @@ The handler updates the database with the removal of the selected slots from the
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/scan-QR-code.png}
     \end{center}
 \end{figure}
-
-
-
+The previous diagram describes the process of scanning a customer's QR code.\\
+The store attendant greets the customer, asking for the ticket's QR code, and opens the specific page.\\
+After that they press the "scan" button and, using the webcam on the phone, scan the code; at this point the App sends the data to the ClientManager which forwards it to the QRCodeValidation component.\\
+This last one interrogates the database to validate the the code: if the query returns a value it means the code is valid, otherwise it sends an error.\\
+If the validation is successful, the QRCodeValidation handler reports it to the ClientManager and to the App, where a message status it's displayed.
 \subsubsection{Modify time slots}
 \begin{figure}[H]
     \begin{center}
