@@ -16,6 +16,8 @@ spring:
     facebook:
       appId: 821156638448534
       appSecret: f9fc6815f618911d6a49af1a902ea499
+  #mvc:
+  #  static-path-pattern: /content/**
 jwt:
   token:
     validity: 18000

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Calendar;
 
 @RestController
-@RequestMapping("/ticket")
+@RequestMapping("/api/ticket")
 public class TicketController {
     @Autowired
     private TicketService ticketService;

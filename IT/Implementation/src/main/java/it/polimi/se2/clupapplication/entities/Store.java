@@ -31,7 +31,6 @@ public class Store {
     @OneToMany(mappedBy = "store")
     private List<Ticket> tickets;
     @OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<Slot> slots;
 
     protected Store() {}

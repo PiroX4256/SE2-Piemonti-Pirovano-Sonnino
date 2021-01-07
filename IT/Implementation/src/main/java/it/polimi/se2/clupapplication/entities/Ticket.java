@@ -11,19 +11,16 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "user")
     @NotNull
     private User user;
-    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "store")
     @NotNull
     private Store store;
     @NotNull
     private Status status;
-    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Booking booking;
