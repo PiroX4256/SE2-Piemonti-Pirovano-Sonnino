@@ -227,7 +227,7 @@ Each device has its own Operating System where the software runs. The tiers in t
 \end{itemize}
 
 \subsection{Runtime View}
-\subsubsection{Signup}
+\subsubsection{Sign Up}
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/signup.png}
@@ -237,15 +237,15 @@ The diagram above represents the process of signing up a user (store attendant a
 There two possible situations:
 \begin{itemize}
     \item User is already registered;
-    \item User isn't already registered
+    \item User isn't already registered.
 \end{itemize}
-The two situations differs only after submitting the user's data to the database and are analyzed below.\\
+The two situations differ only after submitting the user's data to the database and are analyzed below.\\
 The user is presented with two choices: registering via social network or with an email and password; if the user chooses the first one, they click on their preferred social network displayed in the mobile/webapp.\\
 Afterwards the app sends the request to the Client Manager, which is responsible for all client's app interactions, and it forwards the request to the SignupHandler.\\
 First, this component requests the social's login through dedicated APIs to the IdentityProvider and then sends the login page information to the App in order to be displayed to the user.\\
 After the user inserts their social's credentials and the IdentityProvider validates them (otherwise the App displays an error and the user is redirected to the sign up page), the SignupHandler generates a query and sends it to the DBMS; this last component communicates with the database and searches for an account with the provided credentials.\\
-If an entry is found and the DBMS returns it, the SignupHandler interprets as the user is already registered into the system; then it generates an error and sends it to the ClientManager and ultimately to the App where it's displayed.\\
-If the returned entry is null instead, the SignupHandler updates the database with the account's data and generates a JSON token associated with the user.\\
+If an entry is found and the DBMS returns it, the SignupHandler interprets that the user is already registered in the system; then it generates an error and sends it to the ClientManager and ultimately to the App where it's displayed.\\
+If the returned entry is null, instead, the SignupHandler updates the database with the account's data and generates a JSON token associated with the user.\\
 After that, a successful status message is sent to the ClientManager and then to the App, which redirects the User to their home page.\\
 If the user decides to insert an email and password and they are already registered, the SignupHandler updates the database and then the ClientManager sends a verification email to the provided one.\\
 When the user clicks the link provided in the email it's correctly registered.
@@ -256,9 +256,9 @@ When the user clicks the link provided in the email it's correctly registered.
     \end{center}
 \end{figure}
 The process of logging in is similar to the sign up process (store attendant and administrator  registration are omitted in order to avoid unnecessary repetitions).\\
-The User chooses their preferred login method, whenever it's social network or email and password.\\
-If the first one it's chosen, then the App sends the request, through the ClientManager, to the LoginHandler which requests the login page to the IdentityProvider.\\
-After the user inserted their social account credentials or CLup's credentials, they are checked by the LoginHandler through a query; if this one returns no values then a status error message it's sent to the App, stating that the user isn't registered.\\
+The User chooses their preferred login method, whether it's social network or email and password.\\
+If the first one is chosen, then the App sends the request, through the ClientManager, to the LoginHandler which requests the login page to the IdentityProvider.\\
+After the user inserted their social account credentials or CLup's credentials, they are checked by the LoginHandler through a query; if this one returns no values then a status error message is sent to the App, stating that the user isn't registered.\\
 Otherwise the user is redirected to their home page.
 \subsubsection{Retrieve a ticket}
 \begin{figure}[H]
@@ -267,9 +267,9 @@ Otherwise the user is redirected to their home page.
     \end{center}
 \end{figure}
 The process of retrieving a ticket is used by any User in order to generate and queue a ticket for the current day. \\
-The User navigates to their home page and presses the button dedicated to this function.\\
-After this the App sends the request to the ClientManager, which routes it to the RetrieveHandler. \\
-The component interrogates the database in order to check if there is an available slot.\\
+The User navigates to their home page and presses the button assigned to this function.\\
+Afterwards the App sends the request to the ClientManager, which routes it to the RetrieveHandler. \\
+The component checks the database to see if there is an available slot.\\
 If the query is successful, the RetrieveHandler generates a unique QR code by transferring the data to the QRCodeGenerator; right after this step, the RetrieveHandler sends the ticket info to the ClientManager and finally to the app.\\
 If the query returns no values, then the RetrieveHandler warns the ClientManager which sends an error message to the App.
 
@@ -279,12 +279,12 @@ If the query returns no values, then the RetrieveHandler warns the ClientManager
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/make-a-reservation.png}
     \end{center}
 \end{figure}
-Booking a visit is the process that affects the ClientManager, the ReservationHandler and the QRCodeGenerator.\\
+Booking a visit is a process which involves the ClientManager, the ReservationHandler and the QRCodeGenerator.\\
 It starts with the User pressing the dedicated button and requesting a reservation, then the App forwards their request to the ClientManager which sends it to the ReservationHandler.\\
-This handler interrogates the databases with all available slots and, after receiving the results, generates alternatives for the most popular slots based on a different schedule or store.\\
-The User chooses their preferred slot by pressing on it, this action triggers the request from the App to ClientManager and to the ReservationHandler, which checks again if the slot is valid (otherwise it returns an error leading to the start of the reservation process) and claims it in the database.\\
-Afterwards the ReservationHandler checks the database for previous bookings; if the search is successful, the handler proceeds to generate a time visit based on the collected data, otherwise the visit's duration request is transferred to the ClientManager and App so the user can specified it.\\
-Then it generates the ticket with the help of the QRCodeGenerator and requests the compiling of the shopping list, sending to the Database.\\
+This handler checks the database for all available slots and, after receiving the results, generates alternatives for the most popular slots based on a different schedule or store.\\
+The User chooses their preferred slot by pressing it, this action triggers the request from the App to ClientManager and to the ReservationHandler, which checks again if the slot is valid (otherwise it returns an error leading to the start of the reservation process) and claims it in the database.\\
+Afterwards the ReservationHandler checks the database for previous bookings; if the search is successful, the handler proceeds to generate a visit duration based on the collected data, otherwise the visit's duration request is transferred to the ClientManager and App so the user can specify it.\\
+Then it generates the ticket with the help of the QRCodeGenerator and requests the filling of the shopping list, then sends it to the Database.\\
 Both of the previous actions are optional and at the User's discretion.
 \subsubsection{Remove a reservation}
 \begin{figure}[H]
@@ -294,7 +294,7 @@ Both of the previous actions are optional and at the User's discretion.
 \end{figure}
 The above diagram describes the process of removing a reservation.\\
 The user accesses the specific page and selects the slot to be removed, this sends the request to the ClientManager and to the ReservationHandler.\\
-The handler updates the database with the removal of the selected slots from the user's data and returns the confirmation. \\
+The handler updates the database by removing the selected slots from the user's data and returns the confirmation. \\
 \subsubsection{Release a ticket}
 \begin{figure}[H]
     \begin{center}
@@ -303,18 +303,18 @@ The handler updates the database with the removal of the selected slots from the
 \end{figure}
 If a customer can't install the app, they can still ask the staff to generate a ticket directly on the spot as shown above.\\
 The Store Attendant navigates to the right page and requests a new ticket from the App to the ClientManager, which forwards it to the GenerateOnSpot handler.\\
-The handler interrogates the database for the next available free slots of the current day: if successful it generates a ticket with its own QR code (using the QRCodeGenerator component) and sends it to the App; it sends an error otherwise.\\
+The handler checks the database for the closest free slot of the current day: if successful it generates a ticket with its own QR code (using the QRCodeGenerator component) and sends it to the App; it sends an error otherwise.\\
 \subsubsection{Scan QR code}
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/scan-QR-code.png}
     \end{center}
 \end{figure}
-The previous diagram describes the process of scanning a customer's QR code.\\
+The diagram above describes the process of scanning a customer's QR code.\\
 The store attendant greets the customer, asking for the ticket's QR code, and opens the specific page.\\
 After that they press the "scan" button and, using the webcam on the phone, scan the code; at this point the App sends the data to the ClientManager which forwards it to the QRCodeValidation component.\\
-This last one interrogates the database to validate the the code: if the query returns a value it means the code is valid, otherwise it sends an error.\\
-If the validation is successful, the QRCodeValidation handler reports it to the ClientManager and to the App, where a message status it's displayed.
+This last one interrogates the database to validate the code: if the query returns a value it means the code is valid, otherwise it sends an error.\\
+If the validation is successful, the QRCodeValidation handler reports it to the ClientManager and to the App, where a message status is displayed.
 \subsubsection{Modify time slots}
 \begin{figure}[H]
     \begin{center}
@@ -322,8 +322,8 @@ If the validation is successful, the QRCodeValidation handler reports it to the 
         \caption{Modify time slots sequence diagram}
     \end{center}
 \end{figure}
-This process is only available for the Store Administrator and lets them to edit time slots of their store.\\
-Through the appropriate page the Store Administartor edits the time slots of the store, this triggers a request from the App to the ClientManager and to the StoreManagement handler, which is responsible to update the database with the newly time slots an report back to ClientManager.\\
+This process is only available for the Store Administrator  and lets them edit the time slots of their store.\\
+Through the appropriate page the Store Administrator edits the time slots of the store, this triggers a request from the App to the ClientManager and to the StoreManagement handler, which is responsible for updating the database with the new time slots and then reporting back to the ClientManager.\\
 The App then displays a confirmation.
 \subsection{Component Interfaces}
 \begin{figure}[H]
@@ -575,7 +575,7 @@ According to the table\ref{implementation_precedences} we decided to implement t
     \item \textbf{ASAP (MVP):} for this functionality it is necessary to implement and execute tests on the ASAPHandler and the QRCode Generation component. The ASAP handler is tested through an appropriate choice of store and through a check about the assigned time slot. The QRCode Generation is tested through a check on the content of it, which can also test the functionality of the QRCode Validation component.
     \item \textbf{Hand out on spot:} this functionality is managed by the GenerateOnSpot component, on which the unit tests will be made. They will check that the module manages in a correct way all the requests of ticket that are made on spot, by an attendant of the considered store. Finally, an integration test with the DBMS is made.
     \item \textbf{Make a reservation (module 2):} this module is an extension of the MVP one. It exploits some components, which are the ReservationHandler, AlternativeSlotRecommender, QRCodeValidation and QRCodeGenerator ones. They will need some unit tests and, in particular, the ReservationHandler one also needs an integration test with the DBMS.
-    \item \textbf{SignUp and Login:} the two functionalities are strictly related, since the Login result is somehow affected by the SignUp function. So it would be a good idea to implement the SignUpHandler first and then the LoginHandler and then execute a unit test. The test of the SignUpHandler requires a demo of the DBMS containing some accounts. In fact it’s necessary to test the correct call to the DBMS functions in order to retrieve the account already registered and then it is important to check the module recognize when a user is already registered or if the sent data presents some inconsistencies. Relying on the DBMS functions, an integration test is required to check the correct communication between the module and DBMS. These tests must also be executed for the LoginHandler because it retrieves data from the database to execute credentials check.
+    \item \textbf{SignUp and Login:} the two functionalities are strictly related, since the Login result is somehow affected by the Sign Up function. So it would be a good idea to implement the SignUpHandler first and then the LoginHandler and then execute a unit test. The test of the SignUpHandler requires a demo of the DBMS containing some accounts. In fact it’s necessary to test the correct call to the DBMS functions in order to retrieve the account already registered and then it is important to check the module recognize when a user is already registered or if the sent data presents some inconsistencies. Relying on the DBMS functions, an integration test is required to check the correct communication between the module and DBMS. These tests must also be executed for the LoginHandler because it retrieves data from the database to execute credentials check.
     \item \textbf{Periodic notifications:} this functionality is accomplished through the NotificationHandler, on which some unit tests are needed to be executed. To properly make this tests, a demo scenario is needed, in which a customer retrieves a ticket (through, for example, the ASAP functionality) and the system triggers because the ticket is going to be called.
 \end{itemize}
 
