@@ -24,7 +24,7 @@ public class Ticket {
     @NotNull
     private Status status;
     @JsonManagedReference
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Booking booking;
 
