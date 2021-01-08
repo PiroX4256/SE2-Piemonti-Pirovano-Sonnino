@@ -3,13 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <title>Home &bull; CLup</title>
+    <link rel="stylesheet" type="text/css" href="/static/semantic/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/home.css">
 </head>
 <body>
-<div id="app">
-    {{ message }}
+<div class="ui inverted vertical masthead center aligned segment" style="background-color: #575A88 !important;">
+    <div class="ui text container">
+        <h1 class="ui inverted header">
+            CLup<br>Customers Lineup
+        </h1>
+        <h2>An innovative grocery shops queuing system for the actual Sars-CoV2 pandemic.</h2>
+        <a href="login" class="ui huge primary button">Get Started<i class="right arrow icon"></i></a>
+    </div>
+
 </div>
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script src="/static/js/test.js"></script>
+
+<div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+        <div class="row">
+            <div class="eight wide column">
+                <h3 class="ui header">Whatever you dream up</h3>
+                <p>Purple Next Generation can now integrate your custom designs into our powerful, proven framework. If you have a vision for how you'd like your shop landing page or product landing page to look, just fork this Codepen, design whatever you wish,
+                    then turn it over to us to integrate into your digital environment.</p>
+                <h3 class="ui header">We use the Semantic UI CSS framework</h3>
+                <p>Semantic UI offers the responsive design power of Bootstrap, but with many more elements. Visit their site for ideas on all the different components they feature that you can easily incorporate into your design.</p>
+            </div>
+            <div class="six wide right floated column">
+                <img src="/static/img/queue.svg" class="ui large bordered rounded image">
+            </div>
+        </div>
+        <div class="row">
+            <div class="center aligned column">
+                <a class="ui huge violet button">Here is a violet button that doesn't do anything</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="ui vertical stripe quote segment">
+    <div class="ui equal width stackable internally celled grid">
+        <div class="center aligned row">
+            <div class="column">
+                <h3>Responsive design.</h3>
+                <p>You and your customers will be happy with how Semantic UI automatically lays out your page to fit any size screen, from the smallest smartphone to the biggest computer monitor or smart TV.</p>
+            </div>
+            <div class="column">
+                <h3>"I love Purple Next Generation!"</h3>
+                <p>
+                    <img src="https://semantic-ui.com/examples/assets/images/avatar/nan.jpg" class="ui avatar image"> <b>Suzy</b> CEO @ some amazing company
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="ui inverted vertical footer segment">
+    <div class="ui container">
+        <div class="ui stackable inverted divided equal height stackable grid">
+            <div class="three wide column">
+                <h4 class="ui inverted header">About</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Sitemap</a>
+                    <a href="#" class="item">Contact Us</a>
+                    <a href="#" class="item">Religious Ceremonies</a>
+                    <a href="#" class="item">Gazebo Plans</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">Services</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Banana Pre-Order</a>
+                    <a href="#" class="item">DNA FAQ</a>
+                    <a href="#" class="item">How To Access</a>
+                    <a href="#" class="item">Favorite X-Men</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header">About Us</h4>
+                <p>We are a small team of the "Politecnico di Milano"</p>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

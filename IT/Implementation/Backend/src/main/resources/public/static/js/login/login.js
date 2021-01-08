@@ -8,7 +8,7 @@ $('#loginForm').on('submit', function () {
         data: JSON.stringify({username: username, password: password}),
         success: function (data) {
             localStorage.setItem('token', data.token);
-            console.log(localStorage.getItem('token'));
+            window.location.href = "/";
         },
         error: function (err) {
             if(err.status==401) {
