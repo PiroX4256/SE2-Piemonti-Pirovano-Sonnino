@@ -9,15 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
 @RestController
-@RequestMapping("/store")
+@RequestMapping("/api/store")
 public class StoreController {
     @Autowired
     private StoreService storeService;

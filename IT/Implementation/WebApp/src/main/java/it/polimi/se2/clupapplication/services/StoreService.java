@@ -11,6 +11,7 @@ import it.polimi.se2.clupapplication.repositories.WeekDayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +51,7 @@ public class StoreService {
     }
 
     public List<Slot> getAvailableSlots(Long storeId) {
-        return slotRepository.findByStoreAndWeekDayOrderByStartingHour(storeRepository.findById(storeId).get(), weekDayRepository.findById(2).get());
+        Calendar calendar = Calendar.getInstance();
+        return slotRepository.findByStoreAndWeekDayOrderByStartingHour(storeRepository.findById(storeId).get(), weekDayRepository.findById(calendar.get(Calendar.DAY_OF_WEEK)).get());
     }
 }

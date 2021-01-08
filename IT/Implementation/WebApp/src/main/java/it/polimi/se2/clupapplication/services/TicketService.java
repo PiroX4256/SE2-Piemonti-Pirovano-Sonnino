@@ -33,24 +33,51 @@ public class TicketService {
     public Ticket createNewASAPTicket(Long storeId, User user) {
         Store store;
         Optional<Store> storeQuery = storeRepository.findById(storeId);
-        if(storeQuery.isPresent()) {
+        if (storeQuery.isPresent()) {
             store = storeQuery.get();
             Ticket ticket = new Ticket(user, store, Status.SCHEDULED);
             Calendar calendar = Calendar.getInstance();
             List<Slot> slots = slotRepository.findByStoreAndWeekDayOrderByStartingHour(store, weekDayRepository.findById(calendar.get(Calendar.DAY_OF_WEEK)).get());
             LocalDateTime localDateTime = LocalDateTime.now();
             LocalTime now = localDateTime.toLocalTime();
-            for(Slot s: slots) {
-                if (now.compareTo(s.getStartingHour()) < 0 && bookingRepository.findBySlot(s).stream().count() < s.getStoreCapacity()) {
-                    Booking b = new Booking(ticket, Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()), s, UUID.randomUUID().toString());
-                    ticket.setBooking(b);
-                    b.setTicket(ticket);
-                    bookingRepository.save(b);
-                    ticketRepository.save(ticket);
-                    return ticket;
+            for (Slot s : slots) {
+                if (now.compareTo(s.getStartingHour()) < 0) {
+                    long scheduledOnSlot = bookingRepository.findBySlotAndTicketStatus(s, Status.SCHEDULED).stream().count();
+                    long bookedOnSlot = bookingRepository.findBySlotAndTicketStatus(s, Status.BOOKED).stream().count();
+                    if (scheduledOnSlot + bookedOnSlot < s.getStoreCapacity()) {
+                        Booking b = new Booking(ticket, Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()), s, UUID.randomUUID().toString());
+                        ticket.setBooking(b);
+                        b.setTicket(ticket);
+                        bookingRepository.save(b);
+                        ticketRepository.save(ticket);
+                        return ticket;
+                    }
                 }
             }
         }
         return null;
+    }
+
+    public void voidTicket(Long ticketId) {
+        Optional<Ticket> optionalTicket = ticketRepository.findById(ticketId);
+        if (optionalTicket.isPresent()) {
+            Ticket ticket = optionalTicket.get();
+            ticket.setStatus(Status.VOID);
+            ticketRepository.save(ticket);
+        }
+    }
+
+    public Ticket getTicketById(Long ticketId) {
+        return ticketRepository.findById(ticketId).get();
+    }
+
+    public boolean validateTicket(String uuid) {
+        Booking booking = bookingRepository.findByUuid(uuid);
+        if (booking != null) {
+            booking.getTicket().setStatus(Status.USED);
+            ticketRepository.save(booking.getTicket());
+            return true;
+        }
+        return false;
     }
 }
