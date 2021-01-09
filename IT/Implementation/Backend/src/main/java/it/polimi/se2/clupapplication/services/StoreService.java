@@ -25,7 +25,7 @@ public class StoreService {
     private WeekDayRepository weekDayRepository;
 
     public Store save(StoreDTO storeDTO) {
-        Store store = new Store(storeDTO.getName(), storeDTO.getChain(), storeDTO.getLongitude(), storeDTO.getLatitude());
+        Store store = new Store(storeDTO.getName(), storeDTO.getChain(), storeDTO.getCity(), storeDTO.getAddress(), storeDTO.getCap(), storeDTO.getLongitude(), storeDTO.getLatitude());
         storeRepository.save(store);
         return store;
     }
@@ -53,5 +53,9 @@ public class StoreService {
     public List<Slot> getAvailableSlots(Long storeId) {
         Calendar calendar = Calendar.getInstance();
         return slotRepository.findByStoreAndWeekDayOrderByStartingHour(storeRepository.findById(storeId).get(), weekDayRepository.findById(calendar.get(Calendar.DAY_OF_WEEK)).get());
+    }
+
+    public List<Store> getAllByCap(int cap) {
+        return storeRepository.findByCap(cap);
     }
 }

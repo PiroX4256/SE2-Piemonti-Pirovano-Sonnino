@@ -35,6 +35,7 @@ public class StoreController {
         return ResponseEntity.ok(store);
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER')")
     @GetMapping("/getAllStores")
     public ResponseEntity<?> getAllStores() {
         return ResponseEntity.ok(storeService.getAllStores());
@@ -43,5 +44,10 @@ public class StoreController {
     @GetMapping("/getAvailableSlots")
     public ResponseEntity<?> getAllSlots(@RequestParam Long storeId) {
         return ResponseEntity.ok(storeService.getAvailableSlots(storeId));
+    }
+
+    @GetMapping("/getStoresByCap")
+    public ResponseEntity<?> getStoresByCap(@RequestParam int cap) {
+        return ResponseEntity.ok(storeService.getAllByCap(cap));
     }
 }

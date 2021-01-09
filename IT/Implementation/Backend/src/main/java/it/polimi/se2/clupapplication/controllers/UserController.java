@@ -21,6 +21,7 @@ import javax.validation.Valid;
 
 /**
  * This class handles the authentication backend of CLup, which is composed by the sign up and login methods.
+ *
  * @author Luca Pirovano
  */
 @RestController
@@ -39,6 +40,7 @@ public class UserController {
 
     /**
      * This method generates a Json Web Token (JWT), according to the RestFUL paradigm.
+     *
      * @param loginUser the user credentials (in a JSON Object form)
      * @return the authentication token to be stored on client side.
      * @throws AuthenticationException if there are some troubles with the login procedure.
@@ -59,11 +61,12 @@ public class UserController {
 
     /**
      * This method permits to users to sign up and join the CLup community!
+     *
      * @param user the JSON representation of user's credentials
      * @return a fresh-new user object.
      */
-    @RequestMapping(value="/signup", method = RequestMethod.POST)
-    public ResponseEntity<?> saveUser(@RequestBody UserDTO user){
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public ResponseEntity<?> saveUser(@RequestBody UserDTO user) {
         try {
             User userEntity = userService.save(user);
             return ResponseEntity.ok(userEntity);
@@ -73,9 +76,15 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
-    @RequestMapping(value="/userping", method = RequestMethod.GET)
-    public String userPing(){
+    @RequestMapping(value = "/userping", method = RequestMethod.GET)
+    public String userPing() {
         return "Any User Can Read This";
+    }
+
+    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
+    @RequestMapping(value = "/checkLogin", method = RequestMethod.GET)
+    public ResponseEntity<?> checkLogin() {
+        return ResponseEntity.ok().build();
     }
 
 }

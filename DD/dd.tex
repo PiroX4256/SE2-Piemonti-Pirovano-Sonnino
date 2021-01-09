@@ -178,7 +178,7 @@ All the component will be described in depth in the following sections.
 
 According to RASD specifications, if a buyer decides to purchase the third module option, which includes the installation on organization's servers, the entire architecture will be deployed and configured on that servers, without interfacing with CLup ones.
 
-Otherwise, if the buyer intends to purchase only module 1 or module 2, the end user will interface with official CLup servers.
+Otherwise, if the buyer intends to purchase only module 1 (only the ASAP functionality) or module 2 (both ASAP and book a visit), the end user will interface with official CLup servers.
 
 \subsection{Component View}
 
@@ -201,8 +201,8 @@ The web server has the function to route the browser requests to the application
     \item \textbf{Reservation Handler}\\This is the second module of our S2B described in s. 1.1 of RASD document. Through this component, the registered and authenticated user can select a store and book a visit slot in the desired date and time (if available). The component can optionally receive from user an estimated duration of the visit and a shopping list, in order to optimize people flows in the structure. Once the computation has finished, the component returns to user a confirmation, together with a QRCode to check-in.
     \item \textbf{Notification Handler}\\The goal of this component is to handle notifications of imminent calling of a ticket. In fact, when a number is going to be called, a trigger is generated, which sends an instant notification to the user who retrieved that ticket.
     \item \textbf{Generate on spot}\\This module handles the manual procedure of generating a ticket on the spot. In fact, when a customer cannot sign up to CLup service, there is the possibility of going physically to the desired store and ask to an attendant to be queued up. The attendant, through this component, sends a request of retrieving a ticket, and the server returns the first slot available. This ticket is then printed, together with a QRCode generated from the system.
-    \item \textbf{QRCode Validation}\\The functionality carried out by this component is the \textit{check-in}. When a user arrives at the store, the attendant scans the QRCode generated from the application (or printed) and lets the user entering the structure. The attendant scans the ticket (through CLup mobile app) with the integrated camera of a smartphone. The application then sends a request of check-in to the server, which responds with a status of the request (which can be either valid or invalid).
-    \item \textbf{QRCode Generator}\\The goal of this module is to generate the QR Code of the ticket from a pre-defined string, which is the unique id of the ticket.
+    \item \textbf{QRCode Validation}\\The goal carried out by this component is the \textit{entrances monitoring} one. When a user arrives at the store, the attendant scans the QRCode generated from the application (or printed) and lets the user entering the structure. The attendant scans the ticket (through CLup mobile app) with the integrated camera of a smartphone. The application then sends a request of check-in to the server, which responds with a status of the request (which can be either valid or invalid).
+    \item \textbf{QRCode Generation}\\The goal of this module is to generate the QR Code of the ticket from a pre-defined string, which is the unique id of the ticket.
     \item \textbf{Alternative Slot Recommender}\\This component's aim is to suggest alternative slots to the end user, relying on people flows estimation which derives from an analysis of all bookings' time slot and duration time.
     \item \textbf{Store Management}\\This last module handles the store administrator's personal area. In fact, it permits editing store information, which includes opening hours, maximum slots capacity, booking management and so on.
 \end{itemize}
@@ -505,16 +505,19 @@ This section will shown the traceability between requirements and modules descri
           \end{itemize}
     \item \textbf{R6:} The system allows users to select a day/time slot from the available ones
           \begin{itemize}
-              \item \textbf{Reservation Handler}
+              \item \textbf{Reservation Handler:} this module allows to accomplish to book a visit functionality.
           \end{itemize}
     \item \textbf{R7:} The system allows users to add a list of products (categories) to purchase and the duration time of the visit
+          \begin{itemize}
+              \item \textbf{Reservation Handler}
+          \end{itemize}
     \item \textbf{R8:} The system computes a prediction of expected time duration of a customer's visit
           \begin{itemize}
-              \item \textbf{}
+              \item \textbf{AlternativeSlotRecommender} this component lets the system suggests alternative choices relying on people past bookings.
           \end{itemize}
     \item \textbf{R9:} The system recommends alternative day/time slots or store/chains to a user
           \begin{itemize}
-              \item \textbf{Alternative slot recommender:} this component lets the system suggests alternative visit slots relying on people flows parameters.
+              \item \textbf{Alternative slot recommender}
           \end{itemize}
     \item \textbf{R10:} The system takes note about the actual queue number
           \begin{itemize}
@@ -553,14 +556,14 @@ The following table presents the functionalities described in the RASD document 
 
 \begin{center}
     \begin{table}[H]
-        \begin{tabular}{ | c | c | c |}
+        \begin{tabular}{ | c |c | c | c |}
             \hline
-            \textbf{Functionality}        & \textbf{Importance for customer} & \textbf{Difficulty} \\ \hline
-            Sign Up and Login             & Low                              & Low                 \\ \hline
-            ASAP (MVP)                    & High                             & Medium              \\\hline
-            Make a reservation (module 2) & Medium                           & High                \\\hline
-            Hand out on spot              & High                             & Medium              \\\hline
-            Periodic notifications        & Low                              & High                \\
+            \textbf{Functionality} & \textbf{Module} & \textbf{Importance for customer} & \textbf{Difficulty} \\ \hline
+            Sign Up and Login      & 1 (MVP)         & Low                              & Low                 \\ \hline
+            ASAP                   & 1 (MVP)         & High                             & Medium              \\\hline
+            Make a reservation     & 2               & Medium                           & High                \\\hline
+            Hand out on spot       & 1 (MVP)         & High                             & Medium              \\\hline
+            Periodic notifications & 1 (MVP)         & Low                              & High                \\
             \hline
         \end{tabular}
         \caption{Implementation and Testing precedences}\label{implementation_precedences}
@@ -572,10 +575,10 @@ All the modules described in this document rely on DBMS of the internal database
 According to the table\ref{implementation_precedences} we decided to implement the functionalities relying on their importance.
 
 \begin{itemize}
-    \item \textbf{ASAP (MVP):} for this functionality it is necessary to implement and execute tests on the ASAPHandler and the QRCode Generation component. The ASAP handler is tested through an appropriate choice of store and through a check about the assigned time slot. The QRCode Generation is tested through a check on the content of it, which can also test the functionality of the QRCode Validation component.
+    \item \textbf{ASAP:} for this functionality it is necessary to implement and execute tests on the ASAPHandler and the QRCode Generation component. The ASAP handler is tested through an appropriate choice of store and through a check about the assigned time slot. The QRCode Generation is tested through a check on the content of it, which can also test the functionality of the QRCode Validation component.
     \item \textbf{Hand out on spot:} this functionality is managed by the GenerateOnSpot component, on which the unit tests will be made. They will check that the module manages in a correct way all the requests of ticket that are made on spot, by an attendant of the considered store. Finally, an integration test with the DBMS is made.
-    \item \textbf{Make a reservation (module 2):} this module is an extension of the MVP one. It exploits some components, which are the ReservationHandler, AlternativeSlotRecommender, QRCodeValidation and QRCodeGenerator ones. They will need some unit tests and, in particular, the ReservationHandler one also needs an integration test with the DBMS.
-    \item \textbf{SignUp and Login:} the two functionalities are strictly related, since the Login result is somehow affected by the Sign Up function. So it would be a good idea to implement the SignUpHandler first and then the LoginHandler and then execute a unit test. The test of the SignUpHandler requires a demo of the DBMS containing some accounts. In fact it’s necessary to test the correct call to the DBMS functions in order to retrieve the account already registered and then it is important to check the module recognize when a user is already registered or if the sent data presents some inconsistencies. Relying on the DBMS functions, an integration test is required to check the correct communication between the module and DBMS. These tests must also be executed for the LoginHandler because it retrieves data from the database to execute credentials check.
+    \item \textbf{Make a reservation:} this module is an extension of the MVP one. It exploits some components, which are the ReservationHandler, AlternativeSlotRecommender, QRCode Validation and QRCode Generation ones. They will need some unit tests and, in particular, the ReservationHandler one also needs an integration test with the DBMS.
+    \item \textbf{SignUp and Login:} the two functionalities are strictly related, since the Login result is somehow affected by the SignUp function. So it would be a good idea to implement the SignUpHandler first and then the LoginHandler and then execute a unit test. The test of the SignUpHandler requires a demo of the DBMS containing some accounts. In fact it’s necessary to test the correct call to the DBMS functions in order to retrieve the account already registered and then it is important to check the module recognize when a user is already registered or if the sent data presents some inconsistencies. Relying on the DBMS functions, an integration test is required to check the correct communication between the module and DBMS. These tests must also be executed for the LoginHandler because it retrieves data from the database to execute credentials check.
     \item \textbf{Periodic notifications:} this functionality is accomplished through the NotificationHandler, on which some unit tests are needed to be executed. To properly make this tests, a demo scenario is needed, in which a customer retrieves a ticket (through, for example, the ASAP functionality) and the system triggers because the ticket is going to be called.
 \end{itemize}
 
@@ -636,9 +639,9 @@ Together with this, as shown in figure\ref{maps_api}, the client will be integra
 \begin{tabular}{ | c || c | c | c | c| c|}
     \hline
     Student        & Time for S.1 & S.2 & Time for S.3 & Time for S.4 & Time for S.5 \\ \hline
-    Alice Piemonti &              &     &              &              &              \\ \hline
+    Alice Piemonti & 2h           & 3h  & 6h           & 1h           & 1h           \\ \hline
     Luca Pirovano  & 2h           & 7h  & 2h           & 2h           & 2h           \\ \hline
-    Nicolò Sonnino & 3h            & 7h  &   2h           &   2h           &   2h           \\
+    Nicolò Sonnino & 3h           & 7h  & 2h           & 2h           & 2h           \\
     \hline
 \end{tabular}
 

@@ -6,6 +6,7 @@ import it.polimi.se2.clupapplication.services.TicketService;
 import it.polimi.se2.clupapplication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,13 +27,18 @@ public class TicketController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/asap")
     public ResponseEntity<?> asapRetrieving(@RequestParam Long storeId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Calendar calendar = Calendar.getInstance();
-        System.out.println(calendar.get(Calendar.DAY_OF_WEEK));
         User user = userService.findOne(authentication.getName());
-        return ResponseEntity.ok(ticketService.createNewASAPTicket(storeId, user));
+        Ticket ticket = ticketService.createNewASAPTicket(storeId, user);
+        if(ticket!=null) {
+            return ResponseEntity.ok(ticket);
+        }
+        else {
+            return ResponseEntity.unprocessableEntity().body("There are no available slots today.");
+        }
     }
 
     @GetMapping("/voidTicket")
@@ -54,5 +60,12 @@ public class TicketController {
         } else {
             return ResponseEntity.status(400).body("Ticket not found or already used");
         }
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/getMyTickets")
+    public ResponseEntity<?> getMyTickets() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.ok(ticketService.getTicketByUser(userService.findOne(authentication.getName())));
     }
 }
