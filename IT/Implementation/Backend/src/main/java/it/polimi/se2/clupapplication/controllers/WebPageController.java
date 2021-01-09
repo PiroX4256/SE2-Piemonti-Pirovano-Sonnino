@@ -29,4 +29,9 @@ public class WebPageController {
     public String tickets() {
         return "tickets.html";
     }
+
+    @RequestMapping("/admin/home")
+    public String adminHome() {
+        return "/admin/home.html";
+    }
 }
