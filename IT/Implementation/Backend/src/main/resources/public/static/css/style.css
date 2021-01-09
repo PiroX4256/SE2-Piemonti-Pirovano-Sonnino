@@ -2,6 +2,8 @@
 
 body {
     font-family: 'Roboto', sans-serif !important;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
@@ -14,4 +16,79 @@ h1, h2, p {
 
 .typeCard:hover {
     cursor: pointer;
+}
+
+.bodyContent {
+    flex: 1 0 auto;
+}
+
+.footer {
+    margin-top: 1em;
+    flex-shrink: 0;
+    width: 100%;
+    padding: 2.7em;
+    height: auto;
+    background: #252730;
+    overflow: hidden;
+}
+
+.footer .wrapper {
+    color: #0d71bb;
+    width: 100%;
+    display: inline-block;
+}
+
+.footer .col {
+    font-size: 1.2em;
+    font-family: 'Barlow', sans-serif;
+    float: left;
+    padding: 2em;
+    color: white;
+    width: 25%;
+}
+
+.footer a {
+    color: #34a0e2;
+    font-size: 1.1em;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer .col h1 {
+    color: white !important;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.footer .col p {
+    color: white !important;
+}
+
+.footer .final {
+    display: block;
+}
+
+.footer .social {
+    font-size: 1.2em;
+    color: white;
+    float: right;
+}
+
+.footer .social a {
+    color: white;
+    padding: 0.3em;
+}
+
+.footer .social a:hover {
+    color: #0d71bb;
+    -moz-animation: ease-in-out 1s;
+}
+
+.footer .credits {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.15em;
+    float: left;
+    color: white;
 }

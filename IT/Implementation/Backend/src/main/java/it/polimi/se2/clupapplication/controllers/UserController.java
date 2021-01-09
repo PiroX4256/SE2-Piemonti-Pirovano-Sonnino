@@ -87,4 +87,11 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
+    @GetMapping(value = "/me")
+    public ResponseEntity<?> me() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findOne(authentication.getName());
+        return ResponseEntity.ok(user.getUsername());
+    }
 }

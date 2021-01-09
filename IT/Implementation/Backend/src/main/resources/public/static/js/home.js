@@ -6,5 +6,14 @@ function getCookie(name) {
 
 if(getCookie("social-authentication")!=null) {
     localStorage.setItem('token', getCookie("social-authentication"));
-    window.location.href = "/dashboard";
+    $.ajax({
+        url: '/api/auth/me',
+        method: 'GET',
+        headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+        success: function (data) {
+            console.log(data);
+            localStorage.setItem('username', data);
+            window.location.href = "/dashboard";
+        }
+    });
 }

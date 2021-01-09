@@ -24,7 +24,16 @@ $('#loginForm').on('submit', function () {
         data: JSON.stringify({username: username, password: password}),
         success: function (data) {
             localStorage.setItem('token', data.token);
-            window.location.href = "/";
+            $.ajax({
+                url: '/api/auth/me',
+                method: 'GET',
+                headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+                success: function (data) {
+                    console.log(data);
+                    localStorage.setItem('username', data);
+                    window.location.href = "/dashboard";
+                }
+            });
         },
         error: function (err) {
             if (err.status == 401) {
