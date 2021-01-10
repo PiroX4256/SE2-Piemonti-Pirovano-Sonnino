@@ -30,8 +30,8 @@ $('#loginForm').on('submit', function () {
                 headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
                 success: function (data) {
                     console.log(data);
-                    localStorage.setItem('username', data);
-                    window.location.href = "/dashboard";
+                    localStorage.setItem('username', data.username);
+                    window.location.href = data.redirectUrl;
                 }
             });
         },

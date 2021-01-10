@@ -1,8 +1,11 @@
 package it.polimi.se2.clupapplication.controllers;
 
+import it.polimi.se2.clupapplication.entities.Role;
 import it.polimi.se2.clupapplication.entities.User;
+import it.polimi.se2.clupapplication.model.AuthenticationResponseDTO;
 import it.polimi.se2.clupapplication.model.UserDTO;
 import it.polimi.se2.clupapplication.model.LoginUser;
+import it.polimi.se2.clupapplication.services.RoleService;
 import it.polimi.se2.clupapplication.services.UserService;
 import it.polimi.se2.clupapplication.model.AuthToken;
 import it.polimi.se2.clupapplication.security.TokenProvider;
@@ -37,6 +40,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     /**
      * This method generates a Json Web Token (JWT), according to the RestFUL paradigm.
@@ -92,6 +98,14 @@ public class UserController {
     public ResponseEntity<?> me() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findOne(authentication.getName());
-        return ResponseEntity.ok(user.getUsername());
+        Role userRole = roleService.findByName("USER");
+        Role managerRole = roleService.findByName("MANAGER");
+        if(user.getRoles().contains(userRole)) {
+            return ResponseEntity.ok(new AuthenticationResponseDTO(user.getUsername(), "/dashboard"));
+        }
+        else if(user.getRoles().contains(managerRole)) {
+            return ResponseEntity.ok(new AuthenticationResponseDTO(user.getUsername(), "/admin/dashboard"));
+        }
+        return ResponseEntity.notFound().build();
     }
 }

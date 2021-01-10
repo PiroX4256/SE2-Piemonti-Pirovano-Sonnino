@@ -6,6 +6,9 @@
     <link rel="stylesheet" type="text/css" href="/static/semantic/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
     <link rel="stylesheet" type="text/css" href="/static/css/home.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
 </head>
 <body>
 
@@ -23,27 +26,78 @@
         <a class="item" onclick="window.location.href = '/tickets'">
             My tickets
         </a>
+        <div class="right menu">
+            <a class="item">Bentornato,
+                <script>document.write(localStorage.getItem('username'))</script>
+                </span></a>
+            <a class="item" onclick="window.location.href = '/logout.html'">Logout</a>
+        </div>
     </div>
 
     <div class="ui cards" style="width: fit-content; width: -moz-fit-content; margin: auto;">
-        <div class="card">
+        <div class="card" style="width: fit-content; width: -moz-fit-content; padding: 5px">
             <div class="content">
                 <h2 class="ui icon header">
                     <i class="home icon"></i>
                     My Store
                 </h2>
-                <p></p>
+                <div id="storeContainerElement" class="ui list" style="font-size: 16px">
+                    <div class="item">
+                        <i class="building icon"></i>
+                        <div class="content">{{ data.name }}</div>
+                    </div>
+                    <div class="item">
+                        <i class="briefcase icon"></i>
+                        <div class="content" v-if="data.chain != null">{{ data.chain }}</div>
+                        <div class="content" v-else><i>No chain</i></div>
+                    </div>
+                    <div class="item">
+                        <i class="map marker alternate icon"></i>
+                        <div class="content">{{ data.address }}</div>
+                    </div>
+                    <div class="item">
+                        <i class="building outline icon"></i>
+                        <div class="content">{{ data.city }}</div>
+                    </div>
+                    <div class="item">
+                        <i class="envelope icon"></i>
+                        <div class="content">{{ data.cap }}</div>
+                    </div>
+                    <br>
+                    <button class="ui compact primary button" v-on:click="buildMap(data.longitude, data.latitude)"
+                            id="actionButton">Show Map
+                    </button>
+                </div>
+                <div id="mapContainer"></div>
             </div>
         </div>
-        <div class="card">
+        <div class="card" style="width: fit-content; width: -moz-fit-content">
             <div class="content">
                 <h2 class="ui icon header">
                     <i class="history icon"></i>
                     Upcoming Bookings
                 </h2>
+                <div id="ticketsContainer">
+                    <h3 v-if="data == ''" style="text-align: center">
+                        <i>No upcoming tickets</i>
+                    </h3>
+                    <table v-else class="ui basic table">
+                        <thead>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Date and Time</th>
+                        </thead>
+                        <tbody>
+                        <tr v-for="ticket in data" :key="ticket.id">
+                            <td>{{ ticket.user.username }}</td>
+                            <td>{{ substring(ticket.booking.visitDate) }} {{ ticket.booking.slot.startingHour }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button class="ui large compact primary button">Details</button>
+                </div>
             </div>
         </div>
-        <div class="card">
+        <div class="card" style="width: fit-content; width: -moz-fit-content">
             <div class="content">
                 <h2 class="ui icon header">
                     <i class="users icon"></i>
@@ -83,10 +137,13 @@
     </div>
 </div>
 
-
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script src="/static/js/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script src="/static/js/admin/home.js"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+<script src="/static/js/admin/map.js"></script>
 <script src="/static/semantic/semantic.min.js"></script>
 </body>
 </html>

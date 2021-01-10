@@ -1,7 +1,17 @@
 package it.polimi.se2.clupapplication.controllers;
 
+import it.polimi.se2.clupapplication.entities.Role;
+import it.polimi.se2.clupapplication.entities.User;
+import it.polimi.se2.clupapplication.services.RoleService;
+import it.polimi.se2.clupapplication.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class WebPageController {
@@ -20,7 +30,7 @@ public class WebPageController {
         return "logout.html";
     }
 
-    @RequestMapping("dashboard")
+    @RequestMapping("/dashboard")
     public String dashboard() {
         return "dashboard.html";
     }
@@ -30,7 +40,7 @@ public class WebPageController {
         return "tickets.html";
     }
 
-    @RequestMapping("/admin/home")
+    @RequestMapping("/admin/dashboard")
     public String adminHome() {
         return "/admin/home.html";
     }
