@@ -1,0 +1,27 @@
+$(document).ready(function () {
+    $.ajax({
+        url: '/api/ticket/getMyStoreUpcomingTickets',
+        method: 'GET',
+        headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+        success: function (data) {
+            buildBookings(data);
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+});
+
+function buildBookings(data) {
+    var bookingsContainer = new Vue({
+        el: '#bookingsContainer',
+        data: {
+            data
+        },
+        methods: {
+            substring: function (str) {
+                return str.substr(0, 10);
+            },
+        }
+    })
+}

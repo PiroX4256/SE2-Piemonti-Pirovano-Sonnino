@@ -64,4 +64,5 @@ public class StoreService {
     public Store getByManager(User user) {
         return storeRepository.findByManager(user);
     }
+
 }

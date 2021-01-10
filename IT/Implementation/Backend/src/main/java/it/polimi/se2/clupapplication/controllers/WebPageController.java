@@ -44,4 +44,14 @@ public class WebPageController {
     public String adminHome() {
         return "/admin/home.html";
     }
+
+    @RequestMapping("/admin/upcomingBookings")
+    public String upcomingBookings() {
+        return "/admin/upcomingBookings.html";
+    }
+
+    @RequestMapping("/admin/attendants")
+    public String attendants() {
+        return "/admin/attendants.html";
+    }
 }
