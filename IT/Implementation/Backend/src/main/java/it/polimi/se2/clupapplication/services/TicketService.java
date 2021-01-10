@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.TemporalType;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -83,5 +84,10 @@ public class TicketService {
 
     public List<Ticket> getTicketByUser(User user) {
         return ticketRepository.findByUser(user);
+    }
+
+    public List<Ticket> getUpcomingTicketByStore(Store store) {
+        LocalTime now = LocalTime.now();
+        return ticketRepository.findByStore(store, now, new Date());
     }
 }

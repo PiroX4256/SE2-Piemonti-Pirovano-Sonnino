@@ -10,7 +10,7 @@ body {
     font-family: 'Roboto', sans-serif !important;
 }
 
-h1, h2, p {
+h1, h2, h3, p {
     font-family: 'Roboto', sans-serif !important;
 }
 
@@ -20,6 +20,12 @@ h1, h2, p {
 
 .bodyContent {
     flex: 1 0 auto;
+}
+
+.map {
+    margin: auto auto 10px;
+    height: 300px;
+    width: 300px;
 }
 
 .footer {

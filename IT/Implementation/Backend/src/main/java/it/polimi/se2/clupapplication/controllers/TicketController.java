@@ -1,7 +1,9 @@
 package it.polimi.se2.clupapplication.controllers;
 
+import it.polimi.se2.clupapplication.entities.Store;
 import it.polimi.se2.clupapplication.entities.Ticket;
 import it.polimi.se2.clupapplication.entities.User;
+import it.polimi.se2.clupapplication.services.StoreService;
 import it.polimi.se2.clupapplication.services.TicketService;
 import it.polimi.se2.clupapplication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ public class TicketController {
     @Autowired
     private UserService userService;
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private StoreService storeService;
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/asap")
@@ -67,5 +69,13 @@ public class TicketController {
     public ResponseEntity<?> getMyTickets() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return ResponseEntity.ok(ticketService.getTicketByUser(userService.findOne(authentication.getName())));
+    }
+
+    @PreAuthorize("hasRole('MANAGER')")
+    @GetMapping("/getMyStoreUpcomingTickets")
+    public ResponseEntity<?> getMyStoreTickets() {
+        User user = userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
+        Store store = storeService.getByManager(user);
+        return ResponseEntity.ok(ticketService.getUpcomingTicketByStore(store));
     }
 }

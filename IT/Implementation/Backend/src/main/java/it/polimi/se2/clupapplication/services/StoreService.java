@@ -2,6 +2,7 @@ package it.polimi.se2.clupapplication.services;
 
 import it.polimi.se2.clupapplication.entities.Slot;
 import it.polimi.se2.clupapplication.entities.Store;
+import it.polimi.se2.clupapplication.entities.User;
 import it.polimi.se2.clupapplication.entities.WeekDay;
 import it.polimi.se2.clupapplication.model.SlotDTO;
 import it.polimi.se2.clupapplication.model.StoreDTO;
@@ -24,8 +25,9 @@ public class StoreService {
     @Autowired
     private WeekDayRepository weekDayRepository;
 
-    public Store save(StoreDTO storeDTO) {
+    public Store save(StoreDTO storeDTO, User manager) {
         Store store = new Store(storeDTO.getName(), storeDTO.getChain(), storeDTO.getCity(), storeDTO.getAddress(), storeDTO.getCap(), storeDTO.getLongitude(), storeDTO.getLatitude());
+        store.setManager(manager);
         storeRepository.save(store);
         return store;
     }
@@ -57,5 +59,9 @@ public class StoreService {
 
     public List<Store> getAllByCap(int cap) {
         return storeRepository.findByCap(cap);
+    }
+
+    public Store getByManager(User user) {
+        return storeRepository.findByManager(user);
     }
 }
