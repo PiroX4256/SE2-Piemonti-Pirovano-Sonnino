@@ -65,4 +65,7 @@ public class StoreService {
         return storeRepository.findByManager(user);
     }
 
+    public List<Slot> getSlotsByStore(Store store) {
+        return slotRepository.findByStoreOrderByWeekDay(store);
+    }
 }

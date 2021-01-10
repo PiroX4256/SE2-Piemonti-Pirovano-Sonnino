@@ -1,5 +1,6 @@
 package it.polimi.se2.clupapplication.controllers;
 
+import it.polimi.se2.clupapplication.entities.Slot;
 import it.polimi.se2.clupapplication.entities.Store;
 import it.polimi.se2.clupapplication.entities.User;
 import it.polimi.se2.clupapplication.model.SlotDTO;
@@ -12,6 +13,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/store")
@@ -66,9 +69,17 @@ public class StoreController {
     }
 
     @GetMapping("/getMyAttendants")
+    @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<?> getMyAttendants() {
         User user = userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
         Store store = storeService.getByManager(user);
         return ResponseEntity.ok(store.getAttendants());
+    }
+
+    @GetMapping("/getStoreSlots")
+    public ResponseEntity<?> getStoreSlots() {
+        User user = userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
+        Store store = storeService.getByManager(user);
+        return ResponseEntity.ok(storeService.getSlotsByStore(store));
     }
 }
