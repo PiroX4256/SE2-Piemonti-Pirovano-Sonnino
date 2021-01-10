@@ -29,6 +29,8 @@ class MainTheme {
               fontSize: 36, color: textMain, fontWeight: FontWeight.w700),
           headline5: TextStyle(
               fontSize: 24, fontWeight: FontWeight.w600, color: textMain),
+          headline6: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w400, color: textGray),
           caption: TextStyle(
               fontSize: 18, fontWeight: FontWeight.w400, color: textMain),
           button: TextStyle(
