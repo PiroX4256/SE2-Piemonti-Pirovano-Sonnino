@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-class FormCard extends StatelessWidget {
-  const FormCard({
-    Key key,
-  }) : super(key: key);
+class LoginCard extends StatelessWidget {
+  const LoginCard({Key key, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +15,7 @@ class FormCard extends StatelessWidget {
               decoration: InputDecoration(
                 focusColor: Theme.of(context).accentColor,
                 prefixIcon: Icon(Icons.person),
-                hintText: "Username or Email",
+                hintText: "Email",
                 hintStyle: Theme.of(context).textTheme.bodyText2,
               ),
             ),
