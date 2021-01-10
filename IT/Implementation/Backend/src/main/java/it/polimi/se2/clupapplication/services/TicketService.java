@@ -80,4 +80,8 @@ public class TicketService {
         }
         return false;
     }
+
+    public List<Ticket> getTicketByUser(User user) {
+        return ticketRepository.findByUser(user);
+    }
 }

@@ -19,6 +19,12 @@ public class Store {
     @Nullable
     private String chain;
     @NotNull
+    private String address;
+    @NotNull
+    private String city;
+    @NotNull
+    private int cap;
+    @NotNull
     private double longitude;
     @NotNull
     private double latitude;
@@ -35,10 +41,13 @@ public class Store {
 
     protected Store() {}
 
-    public Store(String name, String chain, double longitude, double latitude) {
+    public Store(String name, String chain, String city, String address, int cap, double longitude, double latitude) {
         this.name = name;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.city = city;
+        this.address = address;
+        this.cap = cap;
     }
 
     public Long getId() {
@@ -111,5 +120,17 @@ public class Store {
 
     public void addSlot(Slot openingHour) {
         this.slots.add(openingHour);
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public int getCap() {
+        return cap;
     }
 }

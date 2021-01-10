@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard &bull; CLup</title>
+    <link rel="stylesheet" href="/static/semantic/semantic.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<div class="bodyContent">
+    <div class="ui menu">
+        <div class="header item">
+            CLup
+        </div>
+        <a class="item active" onclick="window.location.href = '/dashboard'">
+            Home
+        </a>
+        <a class="item" onclick="window.location.href = '/asap'">
+            Get a ticket
+        </a>
+        <a class="item" onclick="window.location.href = '/tickets'">
+            My tickets
+        </a>
+        <div class="right menu">
+            <a class="item">Bentornato,
+                <script>document.write(localStorage.getItem('username'))</script></span></a>
+            <a class="item" onclick="window.location.href = '/logout.html'">Logout</a>
+        </div>
+    </div>
+
+    <div class="ui fluid center aligned container">
+        <h1 class="ui center aligned icon header">
+            <i class="circular users icon"></i>
+            User Dashboard
+        </h1>
+        <h2>Welcome to your CLup personal area!</h2>
+        <div class="ui text container">
+            <p>Here you can retrieve a new ticket or, if you forgot about your upcoming ones, see them in a proper
+                page.</p>
+        </div>
+
+        <div class="ui cards" style="width: fit-content; width: -moz-fit-content; margin: auto">
+            <div class="card typeCard" onclick="window.location.href = '/asap'">
+                <div class="content">
+                    <h2 class="ui icon header">
+                        <i class="ticket alternate icon"></i>
+                        <div class="content">
+                            Get a Ticket
+                            <div class="sub header">Request a new ticket in ASAP (As Soon As Possible) mode.</div>
+                        </div>
+                    </h2>
+                </div>
+            </div>
+            <div class="card typeCard" onclick="window.location.href = '/tickets'">
+                <div class="content">
+                    <h2 class="ui icon header">
+                        <i class="list icon"></i>
+                        <div class="content">
+                            See my tickets
+                            <div class="sub header">List all the tickets booked.</div>
+                        </div>
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui inverted vertical footer segment" style="flex-shrink: 0;">
+    <div class="ui container">
+        <div class="ui stackable inverted divided equal height stackable grid">
+            <div class="three wide column">
+                <h4 class="ui inverted header">About</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Sitemap</a>
+                    <a href="#" class="item">Contact Us</a>
+                    <a href="#" class="item">Religious Ceremonies</a>
+                    <a href="#" class="item">Gazebo Plans</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">Services</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Banana Pre-Order</a>
+                    <a href="#" class="item">DNA FAQ</a>
+                    <a href="#" class="item">How To Access</a>
+                    <a href="#" class="item">Favorite X-Men</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header">About Us</h4>
+                <p>We are a small team of the "Politecnico di Milano"</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

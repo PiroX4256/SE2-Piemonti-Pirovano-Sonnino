@@ -1,25 +1,22 @@
 package it.polimi.se2.clupapplication.model;
 
-import com.sun.istack.NotNull;
 import it.polimi.se2.clupapplication.entities.Ticket;
 import it.polimi.se2.clupapplication.entities.User;
 
-import javax.persistence.*;
 import java.util.List;
 
 public class StoreDTO {
     private Long id;
     private String name;
     private String chain;
+    private String address;
+    private String city;
+    private int cap;
     private double longitude;
     private double latitude;
     private User manager;
     private List<User> attendants;
     private List<Ticket> tickets;
-
-    public Long getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -35,6 +32,30 @@ public class StoreDTO {
 
     public void setChain(String chain) {
         this.chain = chain;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getCap() {
+        return cap;
+    }
+
+    public void setCap(int cap) {
+        this.cap = cap;
     }
 
     public double getLongitude() {
