@@ -9,6 +9,7 @@ public class UserDTO {
     private String name;
     private String surname;
     private String role;
+    private Long storeId;
 
     public User getUserFromDto(){
         User user = new User(username, password);
@@ -56,5 +57,9 @@ public class UserDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Long getStoreId() {
+        return storeId;
     }
 }

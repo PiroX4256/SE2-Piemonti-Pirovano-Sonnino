@@ -64,4 +64,11 @@ public class StoreController {
         User user = userService.findOne(authentication.getName());
         return ResponseEntity.ok(storeService.getByManager(user));
     }
+
+    @GetMapping("/getMyAttendants")
+    public ResponseEntity<?> getMyAttendants() {
+        User user = userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
+        Store store = storeService.getByManager(user);
+        return ResponseEntity.ok(store.getAttendants());
+    }
 }

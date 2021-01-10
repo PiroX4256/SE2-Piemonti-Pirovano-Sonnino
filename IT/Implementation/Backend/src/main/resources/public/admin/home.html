@@ -17,14 +17,14 @@
         <div class="header item">
             CLup
         </div>
-        <a class="item active" onclick="window.location.href = '/dashboard'">
+        <a class="item active" onclick="window.location.href = '/admin/dashboard'">
             Home
         </a>
-        <a class="item" onclick="window.location.href = '/asap'">
-            Get a ticket
+        <a class="item" onclick="window.location.href = '/admin/upcomingBookings'">
+            Upcoming bookings
         </a>
-        <a class="item" onclick="window.location.href = '/tickets'">
-            My tickets
+        <a class="item" onclick="window.location.href = '/admin/attendants'">
+            Attendants
         </a>
         <div class="right menu">
             <a class="item">Bentornato,
@@ -33,7 +33,13 @@
             <a class="item" onclick="window.location.href = '/logout.html'">Logout</a>
         </div>
     </div>
-
+    <h1 class="ui center aligned icon header">
+        <i class="circular users icon"></i>
+        Admin Dashboard
+    </h1>
+    <div class="ui text container">
+        <p>Here you can manage your store, see and manage your upcoming bookings and manage your attendants.</p>
+    </div>
     <div class="ui cards" style="width: fit-content; width: -moz-fit-content; margin: auto;">
         <div class="card" style="width: fit-content; width: -moz-fit-content; padding: 5px">
             <div class="content">
@@ -42,6 +48,10 @@
                     My Store
                 </h2>
                 <div id="storeContainerElement" class="ui list" style="font-size: 16px">
+                    <div class="item">
+                        <i class="id card icon"></i>
+                        <div class="content">{{ data.id }}</div>
+                    </div>
                     <div class="item">
                         <i class="building icon"></i>
                         <div class="content">{{ data.name }}</div>
@@ -67,6 +77,7 @@
                     <button class="ui compact primary button" v-on:click="buildMap(data.longitude, data.latitude)"
                             id="actionButton">Show Map
                     </button>
+                    <button class="ui compact primary button">Edit Store</button>
                 </div>
                 <div id="mapContainer"></div>
             </div>

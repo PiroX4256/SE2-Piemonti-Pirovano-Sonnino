@@ -133,4 +133,8 @@ public class Store {
     public int getCap() {
         return cap;
     }
+
+    public void addAttendant(User user) {
+        attendants.add(user);
+    }
 }

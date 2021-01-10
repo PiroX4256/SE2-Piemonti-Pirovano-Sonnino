@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Attendants &bull; CLup</title>
+    <link rel="stylesheet" type="text/css" href="/static/semantic/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/home.css">
+</head>
+<body>
+<div class="bodyContent">
+    <div class="ui menu">
+        <div class="header item">
+            CLup
+        </div>
+        <a class="item" onclick="window.location.href = '/admin/dashboard'">
+            Home
+        </a>
+        <a class="item" onclick="window.location.href = '/admin/upcomingBookings'">
+            Upcoming bookings
+        </a>
+        <a class="item active" onclick="window.location.href = '/admin/attendants'">
+            Attendants
+        </a>
+        <div class="right menu">
+            <a class="item">Bentornato,
+                <script>document.write(localStorage.getItem('username'))</script>
+                </span></a>
+            <a class="item" onclick="window.location.href = '/logout.html'">Logout</a>
+        </div>
+    </div>
+
+    <h1 class="ui center aligned icon header">
+        <i class="circular bars icon"></i>
+        Attendants
+    </h1>
+
+    <table class="ui black table" style="max-width: 60%; margin: auto">
+        <thead>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Username</th>
+        <th scope="col">Actions</th>
+        </thead>
+        <tbody id="bookingsContainer">
+        <tr v-for="ticket in data" :key="ticket.id">
+            <td>{{ ticket.user.username }}</td>
+            <td>{{ substring(ticket.booking.visitDate) }}</td>
+            <td>{{ ticket.booking.slot.startingHour }}</td>
+            <td v-if="ticket.status === 'SCHEDULED'">
+                <button class="ui compact red button">Cancel</button>
+            </td>
+            <td v-else><i>No actions</i></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

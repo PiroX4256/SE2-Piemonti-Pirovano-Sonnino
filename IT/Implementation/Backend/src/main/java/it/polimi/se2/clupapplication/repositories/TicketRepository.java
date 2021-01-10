@@ -5,7 +5,6 @@ import it.polimi.se2.clupapplication.entities.Ticket;
 import it.polimi.se2.clupapplication.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.time.LocalTime;
 import java.util.Date;
