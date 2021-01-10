@@ -1,6 +1,7 @@
 import 'package:c_lup/pages/ForgotPage.dart';
 import 'package:c_lup/pages/HomePage.dart';
 import 'package:c_lup/pages/LoginPage.dart';
+import 'package:c_lup/pages/SignUpIntermediatePage.dart';
 import 'package:c_lup/pages/SignUpPage.dart';
 import 'package:c_lup/theme/MainTheme.dart';
 import 'package:c_lup/utils/AuthService.dart';
@@ -20,6 +21,7 @@ void main() async {
     theme: MainTheme.getLightTheme(),
     routes: {
       '/forgot': (context) => ForgotPage(),
+      '/intermediate': (context) => SignUpIntermediatePage(),
       '/signup': (context) => SignUpPage(),
       '/home': (context) => HomePage(),
       '/login': (context) => LoginPage(),

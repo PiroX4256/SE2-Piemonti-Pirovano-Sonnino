@@ -12,9 +12,8 @@ class MainTheme {
   static const Color shadowColor = Color(0xffF85F6A);
   static const Color errorColor = Color(0xffD73E3D);
 
-
   static ThemeData getLightTheme() => ThemeData(
-    primaryColor: primaryColor,
+      primaryColor: primaryColor,
       fontFamily: 'Roboto',
       accentColor: accentColor,
       accentColorBrightness: Brightness.light,
@@ -24,17 +23,19 @@ class MainTheme {
       errorColor: errorColor,
       shadowColor: shadowColor,
       textTheme: GoogleFonts.robotoTextTheme(TextTheme(
-        bodyText1: TextStyle(fontSize: 18, color: textMain),
-        bodyText2: TextStyle(fontSize: 18, color: textGray),
-        headline4: TextStyle(
-            fontSize: 36, color: textMain, fontWeight: FontWeight.w700),
-        headline5: TextStyle(
-            fontSize: 24, fontWeight: FontWeight.w600, color: textMain),
-        caption: TextStyle(
-            fontSize: 22, fontWeight: FontWeight.w400, color: Colors.white),
-        button: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: textAlternative)
-      )));
+          bodyText1: TextStyle(fontSize: 18, color: textMain),
+          bodyText2: TextStyle(fontSize: 12, color: primaryColor),
+          headline4: TextStyle(
+              fontSize: 36, color: textMain, fontWeight: FontWeight.w700),
+          headline5: TextStyle(
+              fontSize: 24, fontWeight: FontWeight.w600, color: textMain),
+          caption: TextStyle(
+              fontSize: 18, fontWeight: FontWeight.w400, color: textMain),
+          button: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: textAlternative))));
 
-  //TODO  DART THEME NON SONO SICURO CHE RESETTANDO FUNZIONI
+//TODO  DART THEME NON SONO SICURO CHE RESETTANDO FUNZIONI
 
 }

@@ -1,4 +1,6 @@
-import 'package:c_lup/widgets/FormCard.dart';
+import 'package:c_lup/widgets/LoginCard.dart';
+import 'package:c_lup/widgets/MainAppbar.dart';
+import 'package:c_lup/widgets/SignUpButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
@@ -30,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      appBar: MainAppbar(title: Text("Login", style: TextStyle(color:Theme.of(context).accentColor),),),
       body: ListView(
         shrinkWrap: true,
         padding: EdgeInsets.all(15.0),
@@ -41,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: 250,
               )),
           Center(
-            child: FormCard()
+            child: LoginCard()
           ),
           SizedBox(
             height: 25.0,
@@ -59,18 +62,7 @@ class _LoginPageState extends State<LoginPage> {
             style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
-           RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, "/signup");
-            },
-            child: Text(
-              'CREATE A NEW ACCOUNT',
-              style: Theme.of(context).textTheme.button,
-            ),
-          )
+           SignUpButton()
         ],
       ),
     );
