@@ -6,4 +6,8 @@ class AuthService {
     return await new Future<bool>.delayed(
         new Duration(seconds: 2), () => new Random().nextBool());
   }
+  Future<bool> signUp() async {
+    return await new Future<bool>.delayed(
+        new Duration(seconds: 2), () => new Random().nextBool());
+  }
 }
