@@ -149,4 +149,8 @@ public class Store {
     public void addAttendant(User user) {
         attendants.add(user);
     }
+
+    public void removeAttendant(User user) {
+        attendants.remove(user);
+    }
 }

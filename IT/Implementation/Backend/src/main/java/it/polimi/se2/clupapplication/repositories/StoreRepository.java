@@ -9,4 +9,5 @@ import java.util.List;
 public interface StoreRepository extends JpaRepository<Store, Long> {
     List<Store> findByCap(int cap);
     Store findByManager(User user);
+    Store findByAttendantsContaining(User user);
 }

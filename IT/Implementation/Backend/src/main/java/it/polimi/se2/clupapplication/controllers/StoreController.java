@@ -106,4 +106,11 @@ public class StoreController {
             return ResponseEntity.status(403).body("The store does not belong to you!");
         }
     }
+
+    @GetMapping("/fireAttendant")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<?> fireAttendant(@RequestParam Long attendantId) {
+        userService.deleteUser(userService.getById(attendantId));
+        return ResponseEntity.ok().build();
+    }
 }

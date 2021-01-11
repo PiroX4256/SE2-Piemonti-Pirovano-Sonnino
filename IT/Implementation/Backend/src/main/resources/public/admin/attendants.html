@@ -47,7 +47,7 @@
             <td>{{ attendant.name }}</td>
             <td>{{ attendant.surname }}</td>
             <td>{{ attendant.username }}</td>
-            <td><button class="ui compact red button">Fire</button></td>
+            <td><button class="ui compact red button" v-on:click="fireAttendant(attendant.id)">Fire</button></td>
         </tr>
         </tbody>
     </table>

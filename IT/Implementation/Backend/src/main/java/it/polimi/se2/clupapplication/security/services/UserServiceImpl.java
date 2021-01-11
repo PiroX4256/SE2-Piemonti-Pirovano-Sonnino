@@ -75,4 +75,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         nUser.setRoles(roleSet);
         return userDao.save(nUser);
     }
+
+    public void deleteUser(User user) {
+        Store store = storeRepository.findByAttendantsContaining(user);
+        store.removeAttendant(user);
+        storeRepository.save(store);
+        userDao.delete(user);
+    }
+
+    public User getById(Long id) {
+        return userDao.findById(id).get();
+    }
 }
