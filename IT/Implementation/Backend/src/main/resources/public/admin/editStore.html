@@ -33,32 +33,44 @@
         <i class="circular bars icon"></i>
         Edit Store Information
     </h1>
-    <form class="ui form" id="storeContainer" style="max-width: 40%; margin: auto">
+    <form class="ui form" id="storeContainer" style="max-width: 40%; margin: auto" method="post"
+          onsubmit="return false;" name="storeForm">
         <h3 class="ui dividing header">General</h3>
+        <input type="hidden" name="id" :value="data.id">
         <div class="field">
             <label>Name</label>
-            <input type="text" name="name" :value="data.name">
+            <input type="text" name="name" :value="data.name" required>
         </div>
-        <div class="field">
-            <label>Chain</label>
-            <input type="text" name="chain" :value="data.chain">
+        <div class="fields">
+            <div class="eight wide field">
+                <label>Chain</label>
+                <input type="text" name="chain" :value="data.chain">
+            </div>
+            <div class="four wide field">
+                <label>Longitude</label>
+                <input type="number" step="any" name="longitude" :value="data.longitude" required>
+            </div>
+            <div class="four wide field">
+                <label>Latitude</label>
+                <input type="number" step="any" name="latitude" :value="data.latitude" required>
+            </div>
         </div>
         <div class="fields">
             <div class="seven wide field">
                 <label>Address</label>
-                <input type="text" name="address" :value="data.address">
+                <input type="text" name="address" :value="data.address" required>
             </div>
             <div class="six wide field">
                 <label>City</label>
-                <input type="text" name="city" :value="data.city">
+                <input type="text" name="city" :value="data.city" required>
             </div>
             <div class="three wide field">
                 <label>CAP</label>
-                <input type="number" name="cap" :value="data.cap">
+                <input type="number" name="cap" :value="data.cap" required>
             </div>
         </div>
         <div style="text-align: center;">
-            <button class="ui primary button">Save</button>
+            <button class="ui primary button" onclick="editStoreInformation()">Save</button>
         </div>
     </form>
     <br>
@@ -77,14 +89,14 @@
                 <td>{{ slot.startingHour }}</td>
                 <td>{{ slot.storeCapacity }}</td>
                 <td>
-                    <button class="ui compact red button">Delete</button>
+                    <button class="ui compact red button" v-on:click="deleteSlot(slot.id)">Delete</button>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
     <br>
-    <form class="ui form" style="max-width: 40%; margin: auto">
+    <form class="ui form" style="max-width: 40%; margin: auto" onsubmit="return false;" method="post" name="addSlotForm">
         <h3 class="ui dividing header">Add Slot</h3>
         <div class="field">
             <label>Day</label>
@@ -109,7 +121,7 @@
             </div>
         </div>
         <div style="text-align: center;">
-            <button class="ui primary button">Add</button>
+            <button class="ui primary button" onclick="addSlot()">Add</button>
         </div>
     </form>
 </div>
@@ -140,6 +152,36 @@
                 <h4 class="ui inverted header">About Us</h4>
                 <p>We are a small team of the "Politecnico di Milano"</p>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="ui modal" id="confirmationModal">
+    <i class="close icon"></i>
+    <div class="header">
+        Saved
+    </div>
+    <div class="content">
+        <p>The save process returned a successful status code!</p>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button" onclick="location.reload();">
+            Close
+        </div>
+    </div>
+</div>
+
+<div class="ui modal" id="errorModal">
+    <i class="close icon"></i>
+    <div class="header">
+        Error
+    </div>
+    <div class="content" id="errorModalContainer">
+        <p id="errorMessageContent"></p>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            Close
         </div>
     </div>
 </div>

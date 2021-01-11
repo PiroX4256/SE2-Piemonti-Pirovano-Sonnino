@@ -49,4 +49,9 @@ public class WebPageController {
     public String editStore() {
         return "/admin/editStore.html";
     }
+
+    @RequestMapping("/signin")
+    public String socialLogin() {
+        return "/dashboard";
+    }
 }

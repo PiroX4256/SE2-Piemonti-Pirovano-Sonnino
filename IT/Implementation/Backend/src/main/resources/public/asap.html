@@ -22,6 +22,11 @@
         <a class="item" onclick="window.location.href = '/tickets'">
             My tickets
         </a>
+        <div class="right menu">
+            <a class="item">Bentornato,
+                <script>document.write(localStorage.getItem('username'))</script></span></a>
+            <a class="item" onclick="window.location.href = '/logout.html'">Logout</a>
+        </div>
     </div>
     <div class="ui fluid center aligned container">
         <h1 class="ui center aligned icon header">
@@ -45,6 +50,7 @@
                 <th scope="col">City</th>
                 <th scope="col">CAP</th>
                 <th scope="col">Position</th>
+                <th scope="col">Next Available Slot</th>
                 <th scope="col">Actions</th>
                 </thead>
                 <tbody id="storeContainer">
@@ -55,6 +61,7 @@
                     <td>{{ store.city }}</td>
                     <td>{{ store.cap }}</td>
                     <td>{{ store.longitude }}, {{ store.latitude }}</td>
+                    <td :id="store.id"><button class="ui compact primary button" v-on:click="getFirstSlot(store.id)">Fetch</button></td>
                     <td>
                         <button class="ui blue button" v-on:click="asapCall(store.id)">Choose</button>
                     </td>

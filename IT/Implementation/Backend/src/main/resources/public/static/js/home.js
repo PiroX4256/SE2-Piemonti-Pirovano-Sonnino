@@ -12,7 +12,7 @@ if(getCookie("social-authentication")!=null) {
         headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
         success: function (data) {
             console.log(data);
-            localStorage.setItem('username', data);
+            localStorage.setItem('username', data.username);
             window.location.href = "/dashboard";
         }
     });

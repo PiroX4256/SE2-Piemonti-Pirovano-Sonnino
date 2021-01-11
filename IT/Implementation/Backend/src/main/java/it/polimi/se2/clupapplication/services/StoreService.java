@@ -1,11 +1,9 @@
 package it.polimi.se2.clupapplication.services;
 
-import it.polimi.se2.clupapplication.entities.Slot;
-import it.polimi.se2.clupapplication.entities.Store;
-import it.polimi.se2.clupapplication.entities.User;
-import it.polimi.se2.clupapplication.entities.WeekDay;
+import it.polimi.se2.clupapplication.entities.*;
 import it.polimi.se2.clupapplication.model.SlotDTO;
 import it.polimi.se2.clupapplication.model.StoreDTO;
+import it.polimi.se2.clupapplication.repositories.BookingRepository;
 import it.polimi.se2.clupapplication.repositories.SlotRepository;
 import it.polimi.se2.clupapplication.repositories.StoreRepository;
 import it.polimi.se2.clupapplication.repositories.WeekDayRepository;
@@ -13,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +23,8 @@ public class StoreService {
     private SlotRepository slotRepository;
     @Autowired
     private WeekDayRepository weekDayRepository;
+    @Autowired
+    private BookingRepository bookingRepository;
 
     public Store save(StoreDTO storeDTO, User manager) {
         Store store = new Store(storeDTO.getName(), storeDTO.getChain(), storeDTO.getCity(), storeDTO.getAddress(), storeDTO.getCap(), storeDTO.getLongitude(), storeDTO.getLatitude());
@@ -32,8 +33,8 @@ public class StoreService {
         return store;
     }
 
-    public void addSlot(SlotDTO slotDTO) {
-        Store store = storeRepository.getOne(slotDTO.getStoreId());
+    public void addSlot(SlotDTO slotDTO, User user) {
+        Store store = storeRepository.findByManager(user);
         Optional<WeekDay> weekDay = weekDayRepository.findById(slotDTO.getDayCode());
         if(weekDay.isPresent()) {
             Slot slot = new Slot(weekDay.get(), slotDTO.getStartingHour(), slotDTO.getStoreCapacity(), store);
@@ -67,5 +68,30 @@ public class StoreService {
 
     public List<Slot> getSlotsByStore(Store store) {
         return slotRepository.findByStoreOrderByWeekDay(store);
+    }
+
+    public Store editStore(StoreDTO storeDTO, User user) {
+        Store store = storeRepository.findByManager(user);
+        store.setName(storeDTO.getName());
+        store.setChain(storeDTO.getChain());
+        store.setAddress(storeDTO.getAddress());
+        store.setCap(storeDTO.getCap());
+        store.setCity(storeDTO.getCity());
+        storeRepository.save(store);
+        return store;
+    }
+
+    public boolean deleteSlot(Store store, Long slotId) throws IllegalAccessException {
+        Slot slot = slotRepository.findById(slotId).get();
+        List<Booking> bookings = bookingRepository.findAllBySlotAndVisitDate(slot, new Date());
+        if(!store.getSlots().contains(slot)) {
+            throw new IllegalAccessException();
+        } else if(bookings.size() > 0){
+            return false;
+
+        } else {
+            slotRepository.delete(slot);
+            return true;
+        }
     }
 }
