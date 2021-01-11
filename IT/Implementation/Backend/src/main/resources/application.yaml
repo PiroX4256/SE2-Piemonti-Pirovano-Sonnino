@@ -19,7 +19,7 @@ spring:
 
 jwt:
   token:
-    validity: 18000
+    validity: 594000
     prefix: Bearer
   signing:
     key: signingkey
