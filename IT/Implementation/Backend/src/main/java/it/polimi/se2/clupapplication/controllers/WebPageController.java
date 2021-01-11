@@ -15,6 +15,16 @@ public class WebPageController {
         return "login.html";
     }
 
+    @RequestMapping("/signin")
+    public String socialLogin() {
+        return "/dashboard";
+    }
+
+    @RequestMapping("/signup")
+    public String signup() {
+        return "signup.html";
+    }
+
     @RequestMapping("/logout")
     public String logout() {
         return "logout.html";
@@ -50,8 +60,8 @@ public class WebPageController {
         return "/admin/editStore.html";
     }
 
-    @RequestMapping("/signin")
-    public String socialLogin() {
-        return "/dashboard";
+    @RequestMapping("/admin/newStore")
+    public String newStore() {
+        return "/admin/newStore.html";
     }
 }

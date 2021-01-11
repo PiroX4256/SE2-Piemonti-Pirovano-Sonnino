@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//TODO set all permissions
 @RestController
 @RequestMapping("/api/store")
 public class StoreController {

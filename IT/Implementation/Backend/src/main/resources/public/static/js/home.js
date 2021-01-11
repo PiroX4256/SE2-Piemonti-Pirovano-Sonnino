@@ -14,6 +14,9 @@ if(getCookie("social-authentication")!=null) {
             console.log(data);
             localStorage.setItem('username', data.username);
             window.location.href = "/dashboard";
+        },
+        error: function (err) {
+            console.log(err);
         }
     });
 }
