@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EmailField extends StatefulWidget{
+  EmailField({this.controller});
+  final TextEditingController controller;
   @override
   _EmailFieldState createState() => _EmailFieldState();
 
@@ -10,6 +12,7 @@ class _EmailFieldState extends State<EmailField> {
   @override
   Widget build(BuildContext context) {
     return  TextFormField(
+      controller: widget.controller,
       validator: (value) {
         if (value.isEmpty) {
           return "Email mustn't be null";

@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PasswordField extends StatefulWidget {
+  PasswordField({this.controller});
   @override
   _PasswordFieldState createState() => _PasswordFieldState();
+  final TextEditingController controller;
 }
 
 class _PasswordFieldState extends State<PasswordField> {
@@ -13,6 +15,7 @@ class _PasswordFieldState extends State<PasswordField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       validator: (value) {
         if (value.isEmpty) {
           return "Password mustn't be null";
