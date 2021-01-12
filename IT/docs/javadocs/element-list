@@ -1,0 +1,11 @@
+it.polimi.se2.clupapplication
+it.polimi.se2.clupapplication.config
+it.polimi.se2.clupapplication.controllers
+it.polimi.se2.clupapplication.entities
+it.polimi.se2.clupapplication.jpa
+it.polimi.se2.clupapplication.model
+it.polimi.se2.clupapplication.repositories
+it.polimi.se2.clupapplication.security
+it.polimi.se2.clupapplication.security.services
+it.polimi.se2.clupapplication.security.services.socialAuth
+it.polimi.se2.clupapplication.services
