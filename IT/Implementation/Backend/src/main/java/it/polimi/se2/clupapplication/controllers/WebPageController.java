@@ -64,4 +64,9 @@ public class WebPageController {
     public String newStore() {
         return "/admin/newStore.html";
     }
+
+    @RequestMapping("/attendant/")
+    public String attendantHome() {
+        return "/attendant/index.html";
+    }
 }

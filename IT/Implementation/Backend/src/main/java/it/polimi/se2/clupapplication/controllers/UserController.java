@@ -1,11 +1,13 @@
 package it.polimi.se2.clupapplication.controllers;
 
 import it.polimi.se2.clupapplication.entities.Role;
+import it.polimi.se2.clupapplication.entities.Store;
 import it.polimi.se2.clupapplication.entities.User;
 import it.polimi.se2.clupapplication.model.AuthenticationResponseDTO;
 import it.polimi.se2.clupapplication.model.UserDTO;
 import it.polimi.se2.clupapplication.model.LoginUser;
 import it.polimi.se2.clupapplication.services.RoleService;
+import it.polimi.se2.clupapplication.services.StoreService;
 import it.polimi.se2.clupapplication.services.UserService;
 import it.polimi.se2.clupapplication.model.AuthToken;
 import it.polimi.se2.clupapplication.security.TokenProvider;
@@ -35,15 +37,14 @@ public class UserController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private TokenProvider jwtTokenUtil;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private StoreService storeService;
 
     /**
      * This method generates a Json Web Token (JWT), according to the RestFUL paradigm.
@@ -94,19 +95,29 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'USER', 'ATTENDANT')")
     @GetMapping(value = "/me")
     public ResponseEntity<?> me() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findOne(authentication.getName());
         Role userRole = roleService.findByName("USER");
         Role managerRole = roleService.findByName("MANAGER");
+        Role attendantRole = roleService.findByName("ATTENDANT");
         if(user.getRoles().contains(userRole)) {
             return ResponseEntity.ok(new AuthenticationResponseDTO(user.getUsername(), "/dashboard"));
         }
         else if(user.getRoles().contains(managerRole)) {
             return ResponseEntity.ok(new AuthenticationResponseDTO(user.getUsername(), "/admin/dashboard"));
+        } else if(user.getRoles().contains(attendantRole)) {
+            return ResponseEntity.ok(new AuthenticationResponseDTO(user.getUsername(), "/attendant/"));
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/getMyStore")
+    @PreAuthorize("hasRole('ATTENDANT')")
+    public ResponseEntity<?> getMyStore() {
+        User user = userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
+        return ResponseEntity.ok(storeService.getStoreByAttendant(user));
     }
 }

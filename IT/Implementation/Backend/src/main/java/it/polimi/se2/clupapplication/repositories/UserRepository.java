@@ -1,5 +1,6 @@
 package it.polimi.se2.clupapplication.repositories;
 
+import it.polimi.se2.clupapplication.entities.Store;
 import it.polimi.se2.clupapplication.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

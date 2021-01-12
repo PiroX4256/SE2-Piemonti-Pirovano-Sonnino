@@ -18,18 +18,15 @@ import java.util.*;
 public class TicketService {
     @Autowired
     private TicketRepository ticketRepository;
-
     @Autowired
     private StoreRepository storeRepository;
-
     @Autowired
     private SlotRepository slotRepository;
-
     @Autowired
     private WeekDayRepository weekDayRepository;
-
     @Autowired
     private BookingRepository bookingRepository;
+
 
     public Ticket createNewASAPTicket(Long storeId, User user) {
         Store store;
@@ -89,5 +86,10 @@ public class TicketService {
     public List<Ticket> getUpcomingTicketByStore(Store store) {
         LocalTime now = LocalTime.now();
         return ticketRepository.findByStore(store, now, new Date());
+    }
+
+    public Ticket handOutOnSpot(User user) {
+        Store store = storeRepository.findByAttendantsContaining(user);
+        return createNewASAPTicket(store.getId(), user);
     }
 }

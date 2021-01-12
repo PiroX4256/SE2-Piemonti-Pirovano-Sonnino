@@ -94,4 +94,8 @@ public class StoreService {
             return true;
         }
     }
+
+    public Store getStoreByAttendant(User user) {
+        return storeRepository.findByAttendantsContaining(user);
+    }
 }

@@ -78,4 +78,14 @@ public class TicketController {
         Store store = storeService.getByManager(user);
         return ResponseEntity.ok(ticketService.getUpcomingTicketByStore(store));
     }
+
+    @PreAuthorize("hasRole('ATTENDANT')")
+    @GetMapping("/handOutOnSpot")
+    public ResponseEntity<?> handOutOnSpot() {
+        Ticket ticket = ticketService.handOutOnSpot(userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName()));
+        if(ticket==null) {
+            return ResponseEntity.badRequest().body("Error creating your ticket.");
+        }
+        return ResponseEntity.ok(ticket);
+    }
 }

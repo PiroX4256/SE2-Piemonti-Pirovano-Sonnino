@@ -105,14 +105,14 @@
                         <th scope="col">Customer</th>
                         <th scope="col">Date and Time</th>
                         </thead>
-                        <tbody>
+                        <tbody style="height: 200px; overflow: scroll">
                         <tr v-for="ticket in data" :key="ticket.id">
                             <td>{{ ticket.user.username }}</td>
                             <td>{{ substring(ticket.booking.visitDate) }} {{ ticket.booking.slot.startingHour }}</td>
                         </tr>
                         </tbody>
                     </table>
-                    <button class="ui large compact primary button">Details</button>
+                    <button class="ui large compact primary button" onclick="window.location.href = 'upcomingBookings'">Details</button>
                 </div>
             </div>
         </div>
@@ -122,6 +122,7 @@
                     <i class="users icon"></i>
                     Attendants
                 </h2>
+                <button class="ui large compact primary button" onclick="window.location.href = 'attendants'">See All</button>
             </div>
         </div>
     </div>
