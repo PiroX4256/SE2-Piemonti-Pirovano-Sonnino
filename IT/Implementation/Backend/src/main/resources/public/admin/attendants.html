@@ -35,25 +35,56 @@
         Attendants
     </h1>
 
-    <table class="ui black table" style="max-width: 60%; margin: auto">
+    <table class="ui black table" style="max-width: 40%; margin: auto">
         <thead>
         <th scope="col">Name</th>
         <th scope="col">Surname</th>
         <th scope="col">Username</th>
         <th scope="col">Actions</th>
         </thead>
-        <tbody id="bookingsContainer">
-        <tr v-for="ticket in data" :key="ticket.id">
-            <td>{{ ticket.user.username }}</td>
-            <td>{{ substring(ticket.booking.visitDate) }}</td>
-            <td>{{ ticket.booking.slot.startingHour }}</td>
-            <td v-if="ticket.status === 'SCHEDULED'">
-                <button class="ui compact red button">Cancel</button>
-            </td>
-            <td v-else><i>No actions</i></td>
+        <tbody id="attendantsContainer">
+        <tr v-for="attendant in data" :key="attendant.id">
+            <td>{{ attendant.name }}</td>
+            <td>{{ attendant.surname }}</td>
+            <td>{{ attendant.username }}</td>
+            <td><button class="ui compact red button" v-on:click="fireAttendant(attendant.id)">Fire</button></td>
         </tr>
         </tbody>
     </table>
 </div>
+
+<div class="ui inverted vertical footer segment" style="flex-shrink: 0;">
+    <div class="ui container">
+        <div class="ui stackable inverted divided equal height stackable grid">
+            <div class="three wide column">
+                <h4 class="ui inverted header">About</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Sitemap</a>
+                    <a href="#" class="item">Contact Us</a>
+                    <a href="#" class="item">Religious Ceremonies</a>
+                    <a href="#" class="item">Gazebo Plans</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">Services</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Banana Pre-Order</a>
+                    <a href="#" class="item">DNA FAQ</a>
+                    <a href="#" class="item">How To Access</a>
+                    <a href="#" class="item">Favorite X-Men</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header">About Us</h4>
+                <p>We are a small team of the "Politecnico di Milano"</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="/static/js/admin/attendants.js"></script>
+<script src="/static/semantic/semantic.min.js"></script>
 </body>
 </html>

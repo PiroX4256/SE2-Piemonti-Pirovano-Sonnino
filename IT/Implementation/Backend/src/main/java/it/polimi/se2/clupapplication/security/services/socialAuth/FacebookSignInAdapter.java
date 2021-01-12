@@ -40,7 +40,7 @@ public class FacebookSignInAdapter implements SignInAdapter {
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         String token = jwtTokenUtil.generateToken(authenticationToken);
         ((ServletWebRequest) request).getResponse().addCookie(getSocialAuthenticationCookie(token));
-        return null;
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     private Cookie getSocialAuthenticationCookie(String token) {

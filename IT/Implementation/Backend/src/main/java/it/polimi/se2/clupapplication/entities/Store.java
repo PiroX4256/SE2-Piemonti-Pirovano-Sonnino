@@ -134,7 +134,23 @@ public class Store {
         return cap;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setCap(int cap) {
+        this.cap = cap;
+    }
+
     public void addAttendant(User user) {
         attendants.add(user);
+    }
+
+    public void removeAttendant(User user) {
+        attendants.remove(user);
     }
 }

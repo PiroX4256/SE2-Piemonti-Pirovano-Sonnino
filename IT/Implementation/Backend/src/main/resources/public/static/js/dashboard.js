@@ -4,7 +4,7 @@ function getCookie(name) {
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
-if(getCookie("social-authentication")!=null) {
+if(getCookie("social-authentication")!=null && localStorage.getItem('token') == null) {
     localStorage.setItem('token', getCookie("social-authentication"));
     $.ajax({
         url: '/api/auth/me',
@@ -14,9 +14,6 @@ if(getCookie("social-authentication")!=null) {
             console.log(data);
             localStorage.setItem('username', data.username);
             window.location.href = "/dashboard";
-        },
-        error: function (err) {
-            console.log(err);
         }
     });
 }

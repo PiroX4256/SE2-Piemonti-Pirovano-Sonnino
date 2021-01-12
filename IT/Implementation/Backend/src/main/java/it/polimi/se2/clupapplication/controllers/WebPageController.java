@@ -1,17 +1,7 @@
 package it.polimi.se2.clupapplication.controllers;
 
-import it.polimi.se2.clupapplication.entities.Role;
-import it.polimi.se2.clupapplication.entities.User;
-import it.polimi.se2.clupapplication.services.RoleService;
-import it.polimi.se2.clupapplication.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class WebPageController {
@@ -23,6 +13,16 @@ public class WebPageController {
     @RequestMapping("/login")
     public String login() {
         return "login.html";
+    }
+
+    @RequestMapping("/signin")
+    public String socialLogin() {
+        return "/dashboard";
+    }
+
+    @RequestMapping("/signup")
+    public String signup() {
+        return "signup.html";
     }
 
     @RequestMapping("/logout")
@@ -53,5 +53,15 @@ public class WebPageController {
     @RequestMapping("/admin/attendants")
     public String attendants() {
         return "/admin/attendants.html";
+    }
+
+    @RequestMapping("/admin/editStore")
+    public String editStore() {
+        return "/admin/editStore.html";
+    }
+
+    @RequestMapping("/admin/newStore")
+    public String newStore() {
+        return "/admin/newStore.html";
     }
 }

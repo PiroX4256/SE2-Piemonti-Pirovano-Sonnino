@@ -11,6 +11,7 @@ import it.polimi.se2.clupapplication.model.AuthToken;
 import it.polimi.se2.clupapplication.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -77,7 +78,7 @@ public class UserController {
             User userEntity = userService.save(user);
             return ResponseEntity.ok(userEntity);
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.status(400).body("The profile with the provided username already exists in our systems.");
+            return new ResponseEntity<String>("The profile with the provided username already exists in our systems.", HttpStatus.BAD_REQUEST);
         }
     }
 

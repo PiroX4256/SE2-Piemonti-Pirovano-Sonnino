@@ -50,7 +50,7 @@
             <td>{{ ticket.booking.slot.startingHour }}</td>
             <td>{{ ticket.status }}</td>
             <td v-if="ticket.status === 'SCHEDULED'">
-                <button class="ui compact red button">Cancel</button>
+                <button class="ui compact red button" v-on:click="voidBooking(ticket.id)">Cancel</button>
             </td>
             <td v-else><i>No actions</i></td>
         </tr>

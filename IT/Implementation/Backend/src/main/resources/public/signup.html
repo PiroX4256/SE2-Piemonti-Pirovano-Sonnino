@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login V9</title>
+    <title>Signup &bull; CLup</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -29,51 +29,68 @@
 
 
 <div class="container-login100" style="background-image: url('/static/img/queue.svg');">
-    <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
-        <form class="login100-form validate-form" id="loginForm" action="#" onsubmit="return false" method="post">
+    <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30" id="signupContainer">
+        <form class="login100-form validate-form" id="signupForm" action="#" onsubmit="return false" method="post" name="signUpForm">
 				<span class="login100-form-title p-b-37">
-					Sign In
+					Sign Up
 				</span>
 
-            <div class="wrap-input100 validate-input m-b-20" data-validate="Enter username or email">
-                <input class="input100" type="text" name="username" placeholder="username or email" id="username">
+            <div class="wrap-input100 validate-input m-b-20" data-validate="Enter email">
+                <input class="input100" type="text" name="username" placeholder="email" id="username">
                 <span class="focus-input100"></span>
             </div>
 
             <div class="wrap-input100 validate-input m-b-25" data-validate="Enter password">
-                <input class="input100" type="password" name="pass" placeholder="password" id="password">
+                <input class="input100" type="password" name="password" placeholder="password" id="password">
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input m-b-25" data-validate="Confirm password">
+                <input class="input100" type="password" name="confirmPassword" placeholder="password" id="confirmPassword">
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input m-b-25" data-validate="Enter your name" v-if="attendant===true || manager===true">
+                <input class="input100" type="text" name="name" placeholder="name" id="name">
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input m-b-25" data-validate="Enter your surname" v-if="attendant===true || manager===true">
+                <input class="input100" type="text" name="surname" placeholder="surname" id="surname">
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input m-b-25" data-validate="Enter your store unique id"
+                 v-if="attendant===true">
+                <input class="input100" type="number" name="storeId" placeholder="store id" id="storeId">
                 <span class="focus-input100"></span>
             </div>
 
             <div class="container-login100-form-btn">
-                <button class="login100-form-btn" type="submit">
-                    Sign In
+                <button class="login100-form-btn" type="submit" onclick="submitForm()">
+                    Sign Up
                 </button>
             </div>
-
-            <div class="text-center p-t-57 p-b-20">
-					<span class="txt1">
-						Or login with
-					</span>
-            </div>
         </form>
-            <div class="flex-c p-b-112">
-                <form action="/signin/facebook" id="facebookForm" name="facebookForm" method="post">
-                    <a href="#" class="login100-social-item" onclick="submitForm()">
-                        <i class="fa fa-facebook-f"></i>
-                    </a>
-                </form>
-
-                <a href="#" class="login100-social-item">
-                    <i class="fab fa-google"></i>
-                </a>
-            </div>
-
-            <div class="text-center">
-                <a href="/signup" class="txt2 hov1">
-                    Sign Up
-                </a>
-            </div>
+        <br>
+        <div class="text-center">
+            Already registered?
+            <a href="/login" class="txt2 hov1">
+                Sign In
+            </a>
+        </div>
+        <div class="text-center">
+            Store Manager?
+            <a href="#" class="txt2 hov1" v-on:click="toggleStoreManager();">
+                Click here
+            </a>
+        </div>
+        <div class="text-center">
+            Store Attendant?
+            <a href="#" class="txt2 hov1" v-on:click="toggleAttendant();">
+                Click here
+            </a>
+        </div>
     </div>
 </div>
 
@@ -95,8 +112,9 @@
 <!--===============================================================================================-->
 <script src="/static/vendor/login/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script src="/static/js/login/main.js"></script>
-<script src="/static/js/login/login.js"></script>
+<script src="/static/js/login/signup.js"></script>
 <script src="https://kit.fontawesome.com/6b07ac7208.js" crossorigin="anonymous"></script>
 
 </body>

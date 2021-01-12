@@ -1,5 +1,6 @@
 package it.polimi.se2.clupapplication.controllers;
 
+import it.polimi.se2.clupapplication.entities.Slot;
 import it.polimi.se2.clupapplication.entities.Store;
 import it.polimi.se2.clupapplication.entities.User;
 import it.polimi.se2.clupapplication.model.SlotDTO;
@@ -13,6 +14,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+//TODO set all permissions
 @RestController
 @RequestMapping("/api/store")
 public class StoreController {
@@ -32,7 +36,7 @@ public class StoreController {
     @PostMapping("/addSlot")
     @PreAuthorize("hasAnyRole('MANAGER')")
     public ResponseEntity<?> addHours(@RequestBody SlotDTO slotDTO) {
-        storeService.addSlot(slotDTO);
+        storeService.addSlot(slotDTO, userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName()));
         return null;
     }
 
@@ -66,9 +70,47 @@ public class StoreController {
     }
 
     @GetMapping("/getMyAttendants")
+    @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<?> getMyAttendants() {
         User user = userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
         Store store = storeService.getByManager(user);
         return ResponseEntity.ok(store.getAttendants());
+    }
+
+    @GetMapping("/getStoreSlots")
+    public ResponseEntity<?> getStoreSlots() {
+        User user = userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
+        Store store = storeService.getByManager(user);
+        return ResponseEntity.ok(storeService.getSlotsByStore(store));
+    }
+
+    @PostMapping("/editStore")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<?> editStore(@RequestBody StoreDTO storeDTO) {
+        if (storeDTO.getName().equals("") || storeDTO.getAddress().equals("") || storeDTO.getLongitude() == 0 || storeDTO.getLatitude() == 0 || storeDTO.getCity().equals("") || storeDTO.getCap() <= 0) {
+            return ResponseEntity.badRequest().body("Some required fields are missing, please check them and submit the form again.");
+        }
+        return ResponseEntity.ok(storeService.editStore(storeDTO, userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName())));
+    }
+
+    @GetMapping("/deleteSlot")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<?> deleteSlot(@RequestParam Long slotId) {
+        try {
+            if(storeService.deleteSlot(storeService.getByManager(userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName())), slotId)) {
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.unprocessableEntity().body("You cannot delete this slot, because there are active bookings!");
+            }
+        } catch (IllegalAccessException e) {
+            return ResponseEntity.status(403).body("The store does not belong to you!");
+        }
+    }
+
+    @GetMapping("/fireAttendant")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<?> fireAttendant(@RequestParam Long attendantId) {
+        userService.deleteUser(userService.getById(attendantId));
+        return ResponseEntity.ok().build();
     }
 }

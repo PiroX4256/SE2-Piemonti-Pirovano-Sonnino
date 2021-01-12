@@ -48,36 +48,44 @@
                     My Store
                 </h2>
                 <div id="storeContainerElement" class="ui list" style="font-size: 16px">
-                    <div class="item">
-                        <i class="id card icon"></i>
-                        <div class="content">{{ data.id }}</div>
+                    <div v-if="data != ''">
+                        <div class="item">
+                            <i class="id card icon"></i>
+                            <div class="content">{{ data.id }}</div>
+                        </div>
+                        <div class="item">
+                            <i class="building icon"></i>
+                            <div class="content">{{ data.name }}</div>
+                        </div>
+                        <div class="item">
+                            <i class="briefcase icon"></i>
+                            <div class="content" v-if="data.chain != null">{{ data.chain }}</div>
+                            <div class="content" v-else><i>No chain</i></div>
+                        </div>
+                        <div class="item">
+                            <i class="map marker alternate icon"></i>
+                            <div class="content">{{ data.address }}</div>
+                        </div>
+                        <div class="item">
+                            <i class="building outline icon"></i>
+                            <div class="content">{{ data.city }}</div>
+                        </div>
+                        <div class="item">
+                            <i class="envelope icon"></i>
+                            <div class="content">{{ data.cap }}</div>
+                        </div>
+                        <br>
+                        <button class="ui compact primary button" v-on:click="buildMap(data.longitude, data.latitude)"
+                                id="actionButton">Show Map
+                        </button>
+                        <button class="ui compact primary button" onclick="window.location.href = '/admin/editStore'">
+                            Edit Store
+                        </button>
                     </div>
-                    <div class="item">
-                        <i class="building icon"></i>
-                        <div class="content">{{ data.name }}</div>
+                    <div v-else>
+                        <h3><i>No store found</i></h3>
+                        <button class="ui large compact primary button" onclick="window.location.href = '/admin/newStore'">Create</button>
                     </div>
-                    <div class="item">
-                        <i class="briefcase icon"></i>
-                        <div class="content" v-if="data.chain != null">{{ data.chain }}</div>
-                        <div class="content" v-else><i>No chain</i></div>
-                    </div>
-                    <div class="item">
-                        <i class="map marker alternate icon"></i>
-                        <div class="content">{{ data.address }}</div>
-                    </div>
-                    <div class="item">
-                        <i class="building outline icon"></i>
-                        <div class="content">{{ data.city }}</div>
-                    </div>
-                    <div class="item">
-                        <i class="envelope icon"></i>
-                        <div class="content">{{ data.cap }}</div>
-                    </div>
-                    <br>
-                    <button class="ui compact primary button" v-on:click="buildMap(data.longitude, data.latitude)"
-                            id="actionButton">Show Map
-                    </button>
-                    <button class="ui compact primary button">Edit Store</button>
                 </div>
                 <div id="mapContainer"></div>
             </div>

@@ -23,6 +23,11 @@
         <a class="item active" onclick="window.location.href = '/tickets'">
             My tickets
         </a>
+        <div class="right menu">
+            <a class="item">Bentornato,
+                <script>document.write(localStorage.getItem('username'))</script></span></a>
+            <a class="item" onclick="window.location.href = '/logout.html'">Logout</a>
+        </div>
     </div>
 
     <div class="ui fluid center aligned container">
