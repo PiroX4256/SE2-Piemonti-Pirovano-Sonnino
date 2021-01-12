@@ -2,6 +2,10 @@ package it.polimi.se2.clupapplication.model;
 
 import it.polimi.se2.clupapplication.entities.User;
 
+/**
+ * Data Transfer Object representing the User object information, generally used during the sign up process.
+ * @see it.polimi.se2.clupapplication.entities.User for more details.
+ */
 public class UserDTO {
 
     private String username;

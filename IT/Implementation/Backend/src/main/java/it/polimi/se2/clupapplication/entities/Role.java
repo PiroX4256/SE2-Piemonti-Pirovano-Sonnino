@@ -2,6 +2,9 @@ package it.polimi.se2.clupapplication.entities;
 
 import javax.persistence.*;
 
+/**
+ * This class contains the roles defined by the application, in order to permit the JWT Authentication and authorize requests.
+ */
 @Entity
 public class Role {
     @Id

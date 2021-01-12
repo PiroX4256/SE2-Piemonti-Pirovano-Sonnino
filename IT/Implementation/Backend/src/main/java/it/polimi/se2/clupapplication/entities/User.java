@@ -10,6 +10,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This class is the representation of the User database entity.
+ * It contains a role which permits to identify him (her) as a customer, store administrator or store attendant.
+ * See the DD document for more details.
+ */
 @Entity
 public class User {
     @Id

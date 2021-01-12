@@ -15,6 +15,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class acts as an intermediate between the controllers and the Store entity.
+ * It's called from the controllers, it passes the request to the entities and return back the fetched objects.
+ */
 @Service
 public class StoreService {
     @Autowired
@@ -26,6 +30,12 @@ public class StoreService {
     @Autowired
     private BookingRepository bookingRepository;
 
+    /**
+     * Create a new instance of Store object and put it in the database.
+     * @param storeDTO the Data Transfer Object that represent the store entity.
+     * @param manager the manager who made the request.
+     * @return a new Store instance.
+     */
     public Store save(StoreDTO storeDTO, User manager) {
         Store store = new Store(storeDTO.getName(), storeDTO.getChain(), storeDTO.getCity(), storeDTO.getAddress(), storeDTO.getCap(), storeDTO.getLongitude(), storeDTO.getLatitude());
         store.setManager(manager);
@@ -33,8 +43,13 @@ public class StoreService {
         return store;
     }
 
-    public void addSlot(SlotDTO slotDTO, User user) {
-        Store store = storeRepository.findByManager(user);
+    /**
+     * This method permits adding a new time slot to an existent store.
+     * @param slotDTO the Data Transfer Object that represent the Slot entity.
+     * @param manager the store manager, who is expected to be the author of the request.
+     */
+    public void addSlot(SlotDTO slotDTO, User manager) {
+        Store store = storeRepository.findByManager(manager);
         Optional<WeekDay> weekDay = weekDayRepository.findById(slotDTO.getDayCode());
         if(weekDay.isPresent()) {
             Slot slot = new Slot(weekDay.get(), slotDTO.getStartingHour(), slotDTO.getStoreCapacity(), store);
@@ -44,34 +59,66 @@ public class StoreService {
         }
     }
 
+    /**
+     * @param storeId the id of the store to be fetched.
+     * @return the Store object if present, null otherwise.
+     */
     public Store getStoreById(Long storeId) {
-        Optional<Store> store = storeRepository.findById(storeId);
-        return store.orElse(null);
+        return storeRepository.findById(storeId).orElse(null);
     }
 
+    /**
+     * @return all the Store objects in the database.
+     */
     public List<Store> getAllStores() {
         return storeRepository.findAll();
     }
 
+    /**
+     * Get all the available slot for a specified store in the current day.
+     * @param storeId the store whose slots are searched.
+     * @return all the available slot of the current day.
+     */
     public List<Slot> getAvailableSlots(Long storeId) {
         Calendar calendar = Calendar.getInstance();
         return slotRepository.findByStoreAndWeekDayOrderByStartingHour(storeRepository.findById(storeId).get(), weekDayRepository.findById(calendar.get(Calendar.DAY_OF_WEEK)).get());
     }
 
+    /**
+     * Get all the available stores given a postcode.
+     * @param cap the postcode in which the store are searched.
+     * @return the list of the stores of that area.
+     */
     public List<Store> getAllByCap(int cap) {
         return storeRepository.findByCap(cap);
     }
 
-    public Store getByManager(User user) {
-        return storeRepository.findByManager(user);
+    /**
+     * Find a store given its manager.
+     * @param manager the manager.
+     * @return the manager's store.
+     */
+    public Store getByManager(User manager) {
+        return storeRepository.findByManager(manager);
     }
 
+    /**
+     * Find all the slots ordered by week days, given a store object.
+     * @param store the store whose slots are needed to be fetched.
+     * @return the list of slots ordered by week days (from 1 to 7)
+     */
     public List<Slot> getSlotsByStore(Store store) {
         return slotRepository.findByStoreOrderByWeekDay(store);
     }
 
-    public Store editStore(StoreDTO storeDTO, User user) {
-        Store store = storeRepository.findByManager(user);
+    /**
+     * Update the store object in the database.
+     * @param storeDTO the Data Transfer Object representing the store entity.
+     * @param manager the store manager
+     * @return the modified Store object.
+     */
+    public Store editStore(StoreDTO storeDTO, User manager) {
+        Store store = storeRepository.findByManager(manager);
         store.setName(storeDTO.getName());
         store.setChain(storeDTO.getChain());
         store.setAddress(storeDTO.getAddress());
@@ -81,6 +128,13 @@ public class StoreService {
         return store;
     }
 
+    /**
+     * Delete a certain slot of a specified store.
+     * @param store the store whose slot has to be deleted.
+     * @param slotId the slot id to be deleted.
+     * @return true if the process is successful, false otherwise.
+     * @throws IllegalAccessException if the request comes from a manager that is not the owner of the specified store.
+     */
     public boolean deleteSlot(Store store, Long slotId) throws IllegalAccessException {
         Slot slot = slotRepository.findById(slotId).get();
         List<Booking> bookings = bookingRepository.findAllBySlotAndVisitDate(slot, new Date());
@@ -95,7 +149,11 @@ public class StoreService {
         }
     }
 
-    public Store getStoreByAttendant(User user) {
-        return storeRepository.findByAttendantsContaining(user);
+    /**
+     * @param attendant the store attendant
+     * @return the store in which the specified attendant works.
+     */
+    public Store getStoreByAttendant(User attendant) {
+        return storeRepository.findByAttendantsContaining(attendant);
     }
 }

@@ -2,13 +2,10 @@ package it.polimi.se2.clupapplication.services;
 
 import it.polimi.se2.clupapplication.entities.*;
 import it.polimi.se2.clupapplication.model.Status;
-import it.polimi.se2.clupapplication.model.TicketDTO;
 import it.polimi.se2.clupapplication.repositories.*;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.TemporalType;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -27,7 +24,15 @@ public class TicketService {
     @Autowired
     private BookingRepository bookingRepository;
 
-
+    /**
+     * This method creates a new ASAP (As Soon As Possible) ticket.
+     * First of all, it queries the store, fetching all the available upcoming slots.
+     * Then, it checks if there are some bookings in the first slot and, in particular, if there is the possibility of
+     * retrieving other tickets. If true, it creates new Ticket and Booking instances.
+     * @param storeId the store in which the ASAP request has to be made.
+     * @param user the user who requested the slot.
+     * @return a new Ticket instance if the creation is successful, null otherwise.
+     */
     public Ticket createNewASAPTicket(Long storeId, User user) {
         Store store;
         Optional<Store> storeQuery = storeRepository.findById(storeId);
@@ -56,6 +61,10 @@ public class TicketService {
         return null;
     }
 
+    /**
+     * Void an existent ticket relying on its id.
+     * @param ticketId the id of the ticket to be voided.
+     */
     public void voidTicket(Long ticketId) {
         Optional<Ticket> optionalTicket = ticketRepository.findById(ticketId);
         if (optionalTicket.isPresent()) {
@@ -65,10 +74,20 @@ public class TicketService {
         }
     }
 
+    /**
+     * @param ticketId the id of the ticket to be retrieved.
+     * @return the Ticket object if present, null otherwise.
+     */
     public Ticket getTicketById(Long ticketId) {
-        return ticketRepository.findById(ticketId).get();
+        return ticketRepository.findById(ticketId).orElse(null);
     }
 
+    /**
+     * Validate a ticket through its unique id (uuid). This method is generally called from the attendants' smartphones,
+     * which read the users' tickets at the entrance of the supermarkets.
+     * @param uuid the unique id of the ticket to be validated.
+     * @return true if the validation is successful, false otherwise.
+     */
     public boolean validateTicket(String uuid) {
         Booking booking = bookingRepository.findByUuid(uuid);
         if (booking != null) {
@@ -79,15 +98,30 @@ public class TicketService {
         return false;
     }
 
+    /**
+     * @param user the user whose tickets has to be retrieved.
+     * @return his (her) tickets list.
+     */
     public List<Ticket> getTicketByUser(User user) {
         return ticketRepository.findByUser(user);
     }
 
+    /**
+     * Fetch all the upcoming tickets of a given store. It is generally used by store managers and attendants.
+     * @param store the store whose upcoming tickets have to be retrieved.
+     * @return the list of upcoming tickets.
+     */
     public List<Ticket> getUpcomingTicketByStore(Store store) {
         LocalTime now = LocalTime.now();
         return ticketRepository.findByStore(store, now, new Date());
     }
 
+    /**
+     * This methods takes care of the procedure of handing a ticket on the spot, which is managed by the store attendant, in a
+     * proper store area.
+     * @param user the store attendant who made the request.
+     * @return the generated ticket.
+     */
     public Ticket handOutOnSpot(User user) {
         Store store = storeRepository.findByAttendantsContaining(user);
         return createNewASAPTicket(store.getId(), user);

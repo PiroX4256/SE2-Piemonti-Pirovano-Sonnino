@@ -14,6 +14,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 //TODO set all permissions
+
+/**
+ * This controller handles the Store API, interfacing with the storeService and the userService.
+ */
 @RestController
 @RequestMapping("/api/store")
 public class StoreController {
@@ -22,6 +26,11 @@ public class StoreController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Create a new store starting from a user POST request.
+     * @param storeDTO the Data Transfer Object of the store to be created.
+     * @return status code 200 with a new instance of store if everything goes fine, 400 otherwise.
+     */
     @PostMapping("/create")
     @PreAuthorize("hasAnyRole('MANAGER')")
     public ResponseEntity<?> createNewStore(@RequestBody StoreDTO storeDTO) {
@@ -33,35 +42,60 @@ public class StoreController {
         return ResponseEntity.ok(store);
     }
 
+    /**
+     * Create a new time slot to be bound to a store.
+     * @param slotDTO the Data Transfer Object of the store to be created.
+     * @return status code 200.
+     */
     @PostMapping("/addSlot")
     @PreAuthorize("hasAnyRole('MANAGER')")
     public ResponseEntity<?> addHours(@RequestBody SlotDTO slotDTO) {
         storeService.addSlot(slotDTO, userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName()));
-        return null;
+        return ResponseEntity.ok().build();
     }
 
+    /**
+     * @param storeId the id of the store to be retrieved.
+     * @return the Store serialized instance.
+     */
     @GetMapping("/getStoreById")
     public ResponseEntity<?> getStore(@RequestParam Long storeId) {
         Store store = storeService.getStoreById(storeId);
         return ResponseEntity.ok(store);
     }
 
+    /**
+     * @return a list of all the existent stores.
+     */
     @PreAuthorize("hasAnyRole('USER', 'MANAGER')")
     @GetMapping("/getAllStores")
     public ResponseEntity<?> getAllStores() {
         return ResponseEntity.ok(storeService.getAllStores());
     }
 
+    /**
+     * Retrieve all the available slot given a certain store.
+     * @param storeId the id of the store which slots have to be retrieved.
+     * @return the list of all the slots.
+     */
     @GetMapping("/getAvailableSlots")
     public ResponseEntity<?> getAllSlots(@RequestParam Long storeId) {
         return ResponseEntity.ok(storeService.getAvailableSlots(storeId));
     }
 
+    /**
+     * @param cap the postcode of the stores to be retrieved.
+     * @return the stores in that area.
+     */
     @GetMapping("/getStoresByCap")
     public ResponseEntity<?> getStoresByCap(@RequestParam int cap) {
         return ResponseEntity.ok(storeService.getAllByCap(cap));
     }
 
+    /**
+     * @return the store of a given manager or attendant, properly identified through him (her) token, which is appended
+     * to the request.
+     */
     @PreAuthorize("hasAnyRole('MANAGER', 'ATTENDANT')")
     @GetMapping("/getMyStore")
     public ResponseEntity<?> getMyStore() {
@@ -70,6 +104,10 @@ public class StoreController {
         return ResponseEntity.ok(storeService.getByManager(user));
     }
 
+    /**
+     * @return a list of attendants of a store, given its manager. As before, the store manager is identified through
+     * the personal authorization token.
+     */
     @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/getMyAttendants")
     public ResponseEntity<?> getMyAttendants() {
@@ -78,6 +116,9 @@ public class StoreController {
         return ResponseEntity.ok(store.getAttendants());
     }
 
+    /**
+     * @return all the slots of a store, given its manager.
+     */
     @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/getStoreSlots")
     public ResponseEntity<?> getStoreSlots() {
@@ -86,6 +127,11 @@ public class StoreController {
         return ResponseEntity.ok(storeService.getSlotsByStore(store));
     }
 
+    /**
+     * Edit the store information. This procedure can only be made by the store manager.
+     * @param storeDTO the Data Transfer Object containing the updated information about the store object.
+     * @return the updated store object.
+     */
     @PreAuthorize("hasRole('MANAGER')")
     @PostMapping("/editStore")
     public ResponseEntity<?> editStore(@RequestBody StoreDTO storeDTO) {
@@ -95,6 +141,12 @@ public class StoreController {
         return ResponseEntity.ok(storeService.editStore(storeDTO, userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName())));
     }
 
+    /**
+     * Delete a slot given its id.
+     * @param slotId the id of the slot to be deleted.
+     * @return status code 200 if request is successful, status code 422 if there are active bookings in that slot,
+     * status code 403 if the store manager does not manage the store which the slot is bound to.
+     */
     @GetMapping("/deleteSlot")
     @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<?> deleteSlot(@RequestParam Long slotId) {
@@ -109,6 +161,11 @@ public class StoreController {
         }
     }
 
+    /**
+     * Fire an attendant of a store given its id.
+     * @param attendantId the id of the attendant to fire.
+     * @return status code 200 if request is successful, status code 403 if the manager does not manage the attendant's store.
+     */
     @GetMapping("/fireAttendant")
     @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<?> fireAttendant(@RequestParam Long attendantId) {

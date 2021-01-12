@@ -10,6 +10,10 @@ import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Date;
 
+/**
+ * This class is the representation of the Booking database entity.
+ * See the DD document for more details.
+ */
 @Entity
 public class Booking {
     @Id

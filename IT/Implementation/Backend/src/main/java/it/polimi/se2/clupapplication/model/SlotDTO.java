@@ -2,6 +2,10 @@ package it.polimi.se2.clupapplication.model;
 
 import java.time.LocalTime;
 
+/**
+ * Data Transfer Object representing the Slot information, which consists in a starting hour, a store capacity,
+ * a store id and a code of the specified day.
+ */
 public class SlotDTO {
     private LocalTime startingHour;
     private int storeCapacity;

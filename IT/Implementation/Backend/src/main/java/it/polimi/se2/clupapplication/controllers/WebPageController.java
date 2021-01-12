@@ -3,6 +3,10 @@ package it.polimi.se2.clupapplication.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * This controller handles the url dispatching process, binding the several web pages (contained is resources/public
+ * workspace) to the web application urls.
+ */
 @Controller
 public class WebPageController {
     @RequestMapping("/asap")

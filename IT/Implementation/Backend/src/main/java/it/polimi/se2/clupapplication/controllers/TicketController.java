@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Calendar;
 
+/**
+ * This controller handles the Ticket API, interfacing with the ticketService, the storeService and the userService.
+ */
 @RestController
 @RequestMapping("/api/ticket")
 public class TicketController {
@@ -29,6 +32,11 @@ public class TicketController {
     @Autowired
     private StoreService storeService;
 
+    /**
+     * Initiate an ASAP (As Soon As Possible) ticket request, given the id of the store in which the reservation would be made.
+     * @param storeId the id of the store in which the reservation would be made.
+     * @return status code 200 if request is successful, status code 422 if there are no available slots.
+     */
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/asap")
     public ResponseEntity<?> asapRetrieving(@RequestParam Long storeId) {
@@ -43,27 +51,46 @@ public class TicketController {
         }
     }
 
+    /**
+     * Void a ticket (and an associated booking) given its id.
+     * @param ticketId the id of the ticket to be voided.
+     * @return status code 200
+     */
     @GetMapping("/voidTicket")
     public ResponseEntity<?> voidTicket(@RequestParam Long ticketId) {
         ticketService.voidTicket(ticketId);
         return ResponseEntity.ok("Done!");
     }
 
+    /**
+     * Retrieve all the ticket information given its id.
+     * @param ticketId the id of the ticket whose information needs to be retrieved.
+     * @return 200 ok, with the ticket serialized object.
+     */
     @GetMapping("/getTicketInfo")
     public ResponseEntity<?> getTicketInfo(@RequestParam Long ticketId) {
         Ticket ticket = ticketService.getTicketById(ticketId);
         return ResponseEntity.ok(ticket);
     }
 
+    /**
+     * Validate a ticket when scanned through its QR Code. This operation is usually made by the store attendants present
+     * at the entrance of the supermarket.
+     * @param uuid the unique booking id of the ticket.
+     * @return status code 200 if request is successfull, status code 400 otherwise.
+     */
     @GetMapping("/validateTicket")
     public ResponseEntity<?> validateTicket(@RequestParam String uuid) {
         if(ticketService.validateTicket(uuid)) {
-            return ResponseEntity.status(200).body("");
+            return ResponseEntity.status(200).build();
         } else {
             return ResponseEntity.status(400).body("Ticket not found or already used");
         }
     }
 
+    /**
+     * @return the list of tickets of a user, identified through the personal token attached to the request.
+     */
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/getMyTickets")
     public ResponseEntity<?> getMyTickets() {
@@ -71,6 +98,10 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.getTicketByUser(userService.findOne(authentication.getName())));
     }
 
+    /**
+     * @return the list of upcoming tickets of a manager's store, identified through the personal
+     * token attached to the request.
+     */
     @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/getMyStoreUpcomingTickets")
     public ResponseEntity<?> getMyStoreTickets() {
@@ -79,6 +110,11 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.getUpcomingTicketByStore(store));
     }
 
+    /**
+     * Handles the procedure of "Hand Out on Spot" functionality. An attendant request a new ASAP ticket from its interface
+     * and the system returns him (her) a new ticket object.
+     * @return status code 200 (along with a ticket instance) if the request if successful, status code 400 otherwise.
+     */
     @PreAuthorize("hasRole('ATTENDANT')")
     @GetMapping("/handOutOnSpot")
     public ResponseEntity<?> handOutOnSpot() {

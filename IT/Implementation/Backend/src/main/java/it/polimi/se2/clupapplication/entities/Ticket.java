@@ -6,6 +6,10 @@ import it.polimi.se2.clupapplication.model.Status;
 
 import javax.persistence.*;
 
+/**
+ * This class is the representation of the Ticket database entity.
+ * See the DD document for more details.
+ */
 @Entity
 public class Ticket {
     @Id

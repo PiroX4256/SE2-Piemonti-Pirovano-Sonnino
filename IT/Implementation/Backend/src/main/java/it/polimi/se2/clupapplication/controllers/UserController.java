@@ -1,15 +1,14 @@
 package it.polimi.se2.clupapplication.controllers;
 
 import it.polimi.se2.clupapplication.entities.Role;
-import it.polimi.se2.clupapplication.entities.Store;
 import it.polimi.se2.clupapplication.entities.User;
 import it.polimi.se2.clupapplication.model.AuthenticationResponseDTO;
 import it.polimi.se2.clupapplication.model.UserDTO;
-import it.polimi.se2.clupapplication.model.LoginUser;
+import it.polimi.se2.clupapplication.model.LoginUserDTO;
 import it.polimi.se2.clupapplication.services.RoleService;
 import it.polimi.se2.clupapplication.services.StoreService;
 import it.polimi.se2.clupapplication.services.UserService;
-import it.polimi.se2.clupapplication.model.AuthToken;
+import it.polimi.se2.clupapplication.model.AuthTokenDTO;
 import it.polimi.se2.clupapplication.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,12 +22,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 /**
  * This class handles the authentication backend of CLup, which is composed by the sign up and login methods.
- *
- * @author Luca Pirovano
  */
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -49,22 +44,22 @@ public class UserController {
     /**
      * This method generates a Json Web Token (JWT), according to the RestFUL paradigm.
      *
-     * @param loginUser the user credentials (in a JSON Object form)
+     * @param loginUserDTO the user credentials (in a JSON Object form)
      * @return the authentication token to be stored on client side.
      * @throws AuthenticationException if there are some troubles with the login procedure.
      */
     @PostMapping(value = "/login")
-    public ResponseEntity<?> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
+    public ResponseEntity<?> generateToken(@RequestBody LoginUserDTO loginUserDTO) throws AuthenticationException {
 
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginUser.getUsername(),
-                        loginUser.getPassword()
+                        loginUserDTO.getUsername(),
+                        loginUserDTO.getPassword()
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = jwtTokenUtil.generateToken(authentication);
-        return ResponseEntity.ok(new AuthToken(token));
+        return ResponseEntity.ok(new AuthTokenDTO(token));
     }
 
     /**
@@ -83,18 +78,20 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
-    @RequestMapping(value = "/userping", method = RequestMethod.GET)
-    public String userPing() {
-        return "Any User Can Read This";
-    }
-
+    /**
+     * Check if a user is logged in.
+     * @return status code 200 if the authentication check is successful.
+     */
     @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
     @RequestMapping(value = "/checkLogin", method = RequestMethod.GET)
     public ResponseEntity<?> checkLogin() {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * @return all the information about the authenticated user, which is identified
+     * through the personal token attached to the request.
+     */
     @PreAuthorize("hasAnyRole('MANAGER', 'USER', 'ATTENDANT')")
     @GetMapping(value = "/me")
     public ResponseEntity<?> me() {
@@ -114,6 +111,9 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * @return the store in which the attendant that made the request works.
+     */
     @GetMapping("/getMyStore")
     @PreAuthorize("hasRole('ATTENDANT')")
     public ResponseEntity<?> getMyStore() {

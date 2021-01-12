@@ -9,6 +9,10 @@ import net.minidev.json.annotate.JsonIgnore;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * This class is the representation of the Store database entity.
+ * See the DD document for more details.
+ */
 @Entity
 public class Store {
     @Id

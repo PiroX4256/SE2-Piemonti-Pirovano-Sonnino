@@ -9,6 +9,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is the representation of the Slot database entity.
+ * See the DD document for more details.
+ */
 @Entity
 public class Slot {
     @Id

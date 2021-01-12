@@ -40,6 +40,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority(user));
     }
 
+    /**
+     * Return the role authority for a given user.
+     * @see org.springframework.security for more details
+     * @param user the user whose role has to be fetched.
+     * @return its authority.
+     */
     private Set<SimpleGrantedAuthority> getAuthority(User user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         user.getRoles().forEach(role -> {
