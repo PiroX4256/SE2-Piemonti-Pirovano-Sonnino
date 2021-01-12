@@ -14,10 +14,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Widget _defaultHome = new LoginPage();
   await Hive.initFlutter();
-  Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter<User>(UserAdapter());
   var box = await Hive.openBox('properties');
   User user = box.get('user');
-  if(user.token != null){
+  if(user != null && user.token != null){
     _defaultHome = new HomePage();
   }
   runApp(MyApp(home: _defaultHome));

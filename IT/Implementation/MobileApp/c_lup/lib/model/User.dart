@@ -1,21 +1,15 @@
 import 'package:hive/hive.dart';
-@HiveType()
+
+part 'User.g.dart';
+
+@HiveType(typeId: 0)
 class User extends HiveObject {
   @HiveField(0)
   String token;
-}
-class UserAdapter extends TypeAdapter<User>{
-  @override
-  final typeId = 0;
 
-  @override
-  User read(BinaryReader reader) {
-    return User()..token = reader.read();
-  }
+  User({this.token});
 
-  @override
-  void write(BinaryWriter writer, User obj) {
-    writer.write(obj.token);
+  void set(String token) {
+    this.token = token;
   }
 }
-

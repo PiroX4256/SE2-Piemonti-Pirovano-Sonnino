@@ -28,9 +28,8 @@ dependencies:
   google_fonts: ^1.1.1
   cupertino_icons: ^1.0.0
   url_launcher: ^5.7.10
-  checkbox_formfield: ^0.1.0+3
+  checkbox_formfield: ^0.1.0
   http: ^0.12.2
-  flutter_facebook_auth: ^2.0.0+1
   hive: ^1.4.4
   hive_flutter: ^0.3.1
 
@@ -42,10 +41,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+  # For information on the generic Dart part of this file, see the
+  # following page: https://dart.dev/tools/pub/pubspec
 
-# The following section is specific to Flutter.
+  # The following section is specific to Flutter.
 flutter:
   assets:
     - assets/images/

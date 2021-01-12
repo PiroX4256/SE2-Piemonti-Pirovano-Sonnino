@@ -11,8 +11,7 @@ class AuthService {
     var response = await request(email, password);
     if (response.statusCode == 200) {
       var box = Hive.box('properties');
-      User user = User()..token = jsonDecode(response.body).token;
-      user.save();
+      User user = User(token: jsonDecode(response.body)['token']);
       box.add(user);
       return await new Future<bool>.delayed(
           new Duration(seconds: 2), () => true);
