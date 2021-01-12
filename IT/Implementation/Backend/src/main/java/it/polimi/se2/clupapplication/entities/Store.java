@@ -28,15 +28,15 @@ public class Store {
     private double longitude;
     @NotNull
     private double latitude;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "store_manager")
     private User manager;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.DETACH, orphanRemoval = true)
     private List<User> attendants;
     @JsonBackReference
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", orphanRemoval = true)
     private List<Ticket> tickets;
-    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Slot> slots;
 
     protected Store() {}

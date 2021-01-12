@@ -45,6 +45,7 @@ var confirmationContainer = new Vue({
     methods: {
         generateQRCode() {
             this.$nextTick(() => {
+                document.getElementById("qrCodeContent").innerHTML = "";
                 new QRCode(document.getElementById("qrCodeContent"), {
                     text: this.ticket.booking.uuid,
                     width: 128,

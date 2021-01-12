@@ -37,7 +37,7 @@ public class User {
     private Set<Role> roles;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.DETACH)
     private List<Ticket> tickets;
 
     protected User() {}
