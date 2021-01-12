@@ -16,6 +16,16 @@ $(document).ready(function () {
                     },
                     voidTicket: function (ticketId) {
                         voidTicket(ticketId);
+                    },
+                    printQrCode: function (uuid, date, time) {
+                        document.getElementById('dateLabel').innerText = date;
+                        document.getElementById('timeLabel').innerText = time;
+                        var qrCode = new QRCode(document.getElementById('qrCode'), {
+                            text: uuid,
+                            width: 128,
+                            height: 128
+                        });
+                        document.getElementById('segmentContainer').style.visibility = "visible";
                     }
                 }
             });
