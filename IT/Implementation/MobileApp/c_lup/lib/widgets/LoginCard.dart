@@ -1,3 +1,5 @@
+
+import 'package:c_lup/utils/AuthService.dart';
 import 'package:c_lup/widgets/EmailField.dart';
 import 'package:c_lup/widgets/PasswordField.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,8 @@ class LoginCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController controller = new TextEditingController();
+    TextEditingController controller2 = new TextEditingController();
     final _formKey = GlobalKey<FormState>();
     return Card(
       elevation: 8.0,
@@ -20,11 +24,13 @@ class LoginCard extends StatelessWidget {
               key: _formKey,
               child: Column(
                 children: [
-                 EmailField(),
+                  EmailField(controller: controller),
                   SizedBox(
                     height: 15.0,
                   ),
-                  PasswordField(),
+                  PasswordField(
+                    controller: controller2,
+                  ),
                   SizedBox(
                     height: 1.0,
                   ),
@@ -41,9 +47,11 @@ class LoginCard extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       // Validate returns true if the form is valid, otherwise false.
                       if (_formKey.currentState.validate()) {
+                        await AuthService.login(
+                            email: controller.text, password: controller2.text);
                         Navigator.pushNamed(context, "/home");
                       }
                     },

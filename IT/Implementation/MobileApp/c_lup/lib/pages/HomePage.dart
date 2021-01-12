@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget{
+class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -9,6 +10,9 @@ class HomePage extends StatefulWidget{
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
-    }
+    return Scaffold(
+        body: Center(
+      child: Text('SONO UNA HOME'),
+    ));
+  }
 }
