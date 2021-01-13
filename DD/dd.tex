@@ -394,6 +394,16 @@ An useful property of this architecture is the \textit{code on demand} one, whic
 
 The application is then intended to be developed through \textit{client side scripting}, which means that all requests and update of the page are made on client side. This behavior also improves the user experience, and prevent refreshing the page each time an action is made.
 
+\subsubsection{Model View Controller (MVC)}
+Model–view–controller (usually known as MVC) is a software design pattern commonly used for developing user interfaces that divides the related program logic into three interconnected elements. This is done to separate internal representations of information from the ways information is presented to and accepted from the user.
+
+These three components are:
+\begin{itemize}
+    \item \textbf{Model:} the central component of the pattern. It is the application's dynamic data structure, independent of the user interface. It directly manages the data, logic and rules of the application.
+    \item \textbf{View:} any representation of information such as a chart, diagram or table. Multiple views of the same information are possible, such as a bar chart for management and a tabular view for accountants.
+    \item \textbf{Controller:} accepts input and converts it to commands for the model or view.
+\end{itemize}
+
 \subsection{Other Design Decision}
 \subsubsection{Scale-Out}
 This method consists of cloning the nodes in which we expect to have a bottleneck in order to increase the general system scalability.
