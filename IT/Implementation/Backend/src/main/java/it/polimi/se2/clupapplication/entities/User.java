@@ -45,7 +45,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.DETACH)
     private List<Ticket> tickets;
 
-    protected User() {}
+    public User() {}
 
     public User(String username, String password) {
         this.username = username;

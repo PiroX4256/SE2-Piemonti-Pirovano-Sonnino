@@ -18,6 +18,13 @@ public class WeekDay {
     @NotNull
     private String dayName;
 
+    public WeekDay() {}
+
+    public WeekDay(int dayCode, String dayName) {
+        this.dayCode = dayCode;
+        this.dayName = dayName;
+    }
+
     public int getDayCode() {
         return dayCode;
     }

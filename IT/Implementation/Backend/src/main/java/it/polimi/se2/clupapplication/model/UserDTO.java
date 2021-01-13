@@ -66,4 +66,8 @@ public class UserDTO {
     public Long getStoreId() {
         return storeId;
     }
+
+    public void setStoreId(Long storeId) {
+        this.storeId = storeId;
+    }
 }

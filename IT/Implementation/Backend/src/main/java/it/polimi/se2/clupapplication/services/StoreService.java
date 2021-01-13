@@ -48,7 +48,7 @@ public class StoreService {
      * @param slotDTO the Data Transfer Object that represent the Slot entity.
      * @param manager the store manager, who is expected to be the author of the request.
      */
-    public void addSlot(SlotDTO slotDTO, User manager) {
+    public Slot addSlot(SlotDTO slotDTO, User manager) {
         Store store = storeRepository.findByManager(manager);
         Optional<WeekDay> weekDay = weekDayRepository.findById(slotDTO.getDayCode());
         if(weekDay.isPresent()) {
@@ -56,7 +56,9 @@ public class StoreService {
             store.addSlot(slot);
             slotRepository.save(slot);
             storeRepository.save(store);
+            return slot;
         }
+        return null;
     }
 
     /**

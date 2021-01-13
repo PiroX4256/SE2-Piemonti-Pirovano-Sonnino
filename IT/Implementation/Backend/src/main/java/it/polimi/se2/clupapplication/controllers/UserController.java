@@ -69,7 +69,7 @@ public class UserController {
      * @return a fresh-new user object.
      */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseEntity<?> saveUser(@RequestBody UserDTO user) {
+    public ResponseEntity<?> signup(@RequestBody UserDTO user) {
         try {
             User userEntity = userService.save(user);
             return ResponseEntity.ok(userEntity);

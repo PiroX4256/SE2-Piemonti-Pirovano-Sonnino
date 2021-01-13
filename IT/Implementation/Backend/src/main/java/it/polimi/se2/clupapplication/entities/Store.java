@@ -7,6 +7,7 @@ import com.sun.istack.Nullable;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,12 +37,12 @@ public class Store {
     @JoinColumn(name = "store_manager")
     private User manager;
     @OneToMany(cascade = CascadeType.DETACH, orphanRemoval = true)
-    private List<User> attendants;
+    private List<User> attendants = new ArrayList<>();
     @JsonBackReference
     @OneToMany(mappedBy = "store", orphanRemoval = true)
-    private List<Ticket> tickets;
+    private List<Ticket> tickets = new ArrayList<>();
     @OneToMany(mappedBy = "store", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Slot> slots;
+    private List<Slot> slots = new ArrayList<>();
 
     protected Store() {}
 

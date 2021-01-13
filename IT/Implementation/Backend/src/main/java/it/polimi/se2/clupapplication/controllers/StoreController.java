@@ -1,5 +1,6 @@
 package it.polimi.se2.clupapplication.controllers;
 
+import it.polimi.se2.clupapplication.entities.Slot;
 import it.polimi.se2.clupapplication.entities.Store;
 import it.polimi.se2.clupapplication.entities.User;
 import it.polimi.se2.clupapplication.model.SlotDTO;
@@ -50,8 +51,8 @@ public class StoreController {
     @PostMapping("/addSlot")
     @PreAuthorize("hasAnyRole('MANAGER')")
     public ResponseEntity<?> addHours(@RequestBody SlotDTO slotDTO) {
-        storeService.addSlot(slotDTO, userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName()));
-        return ResponseEntity.ok().build();
+        Slot slot = storeService.addSlot(slotDTO, userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return (slot!=null ? ResponseEntity.ok().body(slot) : ResponseEntity.badRequest().build());
     }
 
     /**
