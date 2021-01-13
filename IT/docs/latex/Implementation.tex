@@ -76,6 +76,21 @@ The code and the releases can be find on the official CLup repository hosted on 
 \subsubsection{Abbreviations}
 \subsection{Revision history}
 
+\subsubsection{References}
+\begin{itemize}
+    \item \textbf{JavaScript: } \href{https://www.javascript.com}{https://www.javascript.com}
+    \item \textbf{Java: } \href{https://www.java.com/it}{https://www.java.com/it}
+    \item \textbf{Spring Framework: } \href{https://spring.io}{https://spring.io}
+    \item \textbf{Spring Security: } \href{https://spring.io/projects/spring-security}{https://spring.io/projects/spring-security}
+    \item \textbf{Spring Social: } \href{https://projects.spring.io/spring-social}{https://projects.spring.io/spring-social}
+    \item \textbf{Vue.js: } \href{https://vuejs.org}{https://vuejs.org}
+    \item \textbf{jQuery: } \href{https://jquery.com}{https://jquery.com}
+    \item \textbf{QRcode.js: } \href{https://jquery.com}{https://jquery.com}
+    \item \textbf{Semantic UI: } \href{https://semantic-ui.com}{https://semantic-ui.com}
+    \item \textbf{Leaflet.js} \href{https://leafletjs.com}{https://leafletjs.com}
+    \item \textbf{} \href{}{}
+\end{itemize}
+
 \newpage
 \section{Development}
 \subsection{Implemented Functionalities}
@@ -116,7 +131,7 @@ Of course, there are some pros and cons about using this type of language:
           \end{itemize}
 \end{itemize}
 
-For the client-side scripting, we decided to adopt JavaScript\texttrademark  for the web app, and Flutter with Dart\texttrademark  languages for the mobile app.
+For the client-side scripting, we decided to adopt JavaScript\texttrademark  for the web app, and Flutter with Dart\texttrademark  language for the mobile app.
 
 JavaScript is a text-based programming language used both on the client-side and server-side that allows to make web pages interactive. Where HTML and CSS are languages that give structure and style to web pages, JavaScript gives web pages interactive elements that engage a user.
 
@@ -160,19 +175,52 @@ In fact, it is composed by:
 \end{itemize}
 
 \subsubsection{Spring Data JPA}
-Spring Data JPA, part of the larger Spring Data family, makes it easy to easily implement JPA based repositories. This module deals with enhanced support for JPA based data access layers. It makes it easier to build Spring-powered applications that use data access technologies.
+Spring Data JPA, part of the larger Spring Data family, permits to easily implement JPA based repositories. This module deals with enhanced support for JPA based data access layers. It makes it easier to build Spring-powered applications that use data access technologies.
 
 Spring Data JPA aims to significantly improve the implementation of data access layers by reducing the effort to the amount that’s actually needed.
 
 In fact, through services and repositories, interfacing with the database becomes very simple. Useless to say that, furthermore, the security of the queries from SQL injection is high, because it is totally managed by Spring.
 
 \subsubsection{Spring Security}
+Spring Security is a plugin of the Spring Mvc suite, which manages the application security.
+
+In fact, it is role-based and permits, through several annotations, to grant access to controller only to authorized people.
+
+In CLup, Spring Security is also the responsible for the REST authentication, which is made through a pattern called JWT (Json Web Token).
+
+Practically, it is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object.
+In our case, there is an exchange of a token which authorizes each client request, so the client needs to attach it to request's headers each time it calls the server.
 \subsubsection{Spring Social}
+Spring Social is another plugin of the Spring family which permits the user authentication through several identity providers (IdPs).
+
+For sake of simplicity, we decided to start from the Facebook one, which is one of the most used social network nowadays. Once called, Facebook servers authenticate the user and return back to the CLup backend its information, which generally consists of name, surname and profile id.
+
+Obviously, the same can be done with the other identity providers, such as Google, Twitter, GitHub, etc.
 
 \subsection{Other Frameworks}
 \subsubsection{Vue.js}
+Vue is a progressive framework for building user interfaces. Unlike other monolithic frameworks, Vue is designed from the ground up to be incrementally adoptable. The core library is focused on the view layer only, and is easy to pick up and integrate with other libraries or existing projects. On the other hand, Vue is also perfectly capable of powering sophisticated Single-Page Applications when used in combination with modern tooling and supporting libraries.
+
+We used Vue.js to manage the client-side rendering of the pages on the web app. In fact, each page calls its scripts, which are responsible for the correct orchestration.
 \subsubsection{jQuery}
-\todo[]{Insert qr code library}
+jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers. With a combination of versatility and extensibility, jQuery has changed the way that millions of people write JavaScript.
+
+We used jQuery to implement the network layer of the client-side web application. In fact, it is responsible (through the Ajax plugin) of the communication with the server, managing all the requests and response.
+
+\subsubsection{QRcode.js}
+QRCode.js is javascript library for making QRCode. QRCode.js supports Cross-browser with HTML5 Canvas and table tag in DOM. QRCode.js has no dependencies.
+
+We used this library in order to generate a visual representation, through a Quick Response Code (also known as QRCode), of the ticket unique id, in order to easily permit its validation at the supermarket entrance.
+
+\subsubsection{Semantic UI}
+Semantic UI is a graphical framework which is useful to construct good-looking web interfaces with less effort than making them manually.
+
+It includes several css styles, together with a full JavaScript set of functionalities (such as dynamic management of the page).
+\subsection{API Integrations}
+\subsubsection{Leaflet.js}
+Leaflet is an open source JavaScript library used to build web mapping applications.
+
+We used it to render the maps containing stores position, in the user and manager private area.
 
 \newpage
 \section{Source Code}
@@ -182,4 +230,15 @@ In fact, through services and repositories, interfacing with the database become
 
 \newpage
 \section{Installation Instructions}
+
+\section{Effort spent}
+\begin{center}
+    \begin{tabular}{ | c || c | c | c | c| c|}
+        \hline
+        Student        & Time for Implementation Project \\ \hline
+        Luca Pirovano  & 50 hours                        \\ \hline
+        Nicolò Sonnino & 3h                              \\
+        \hline
+    \end{tabular}
+\end{center}
 \end{document}
