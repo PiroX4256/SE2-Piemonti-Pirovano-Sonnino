@@ -282,7 +282,31 @@ The application is configured to fetch data from a MySQL database, which credent
 \newpage
 \section{Testing}
 \label{testing}
+In this section we will briefly describe how we tested the application, following the general guidelines given in the Design Document.
+
+We decided to test only the backend and mobile app deployable, because the front-end can be easily tested "by seeing it working".
 \subsection{Backend}
+We wrote the test cases using the JUnit 5 suite and, for mocking the user in the requests, the Spring Security Testing Suite.
+
+Following the suggested Spring testing approach, we wrote the integration test cases for the controller classes, because of their primary role in request-response flow.
+
+In fact, testing a controller means test also all the other components (services, repositories, entities, etc.), because they are sequentially called from it.
+
+Up next you'll find a complete report on how we did the test cases, and also their results.
+
+\subsubsection*{Integration Tests}
+\begin{itemize}
+    \item \textbf{UserController:} we tested the Sign Up and login methods, as defined in the DD. In the sign up tests, we tried with both a Customer and a Store Manager profiles. Finally, we tested the correct exchange of the Json Web Token between the parties.
+    \item \textbf{StoreController:} we tested the store and slot creation functions. We defined a mock store manager, in order to correctly test that the permission based access would correctly handle the request.
+    \item \textbf{TicketController:} we tested the procedure of ASAP (As Soon As Possible) ticket retrieving functionality. Furthermore, we defined a mock store attendant, in order to test also the \textbf{Hand Out on Spot} function.
+\end{itemize}
+
+The above test, which were in total 13, were run all together, obtaining a percentage of success of 100\%.
+
+Thanks to the obtained result it is therefore possible to state that the backend is sturdy and built on solid source code.
+
+\subsubsection*{Unit Tests}
+Furthermore, we made some tests on the correct DBMS initialization, through a specific JPA Test construct. They all obtained a positive mark.
 
 \subsection{Mobile Application}
 

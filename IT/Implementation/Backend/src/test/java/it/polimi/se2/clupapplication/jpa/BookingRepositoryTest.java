@@ -1,5 +1,6 @@
 package it.polimi.se2.clupapplication.jpa;
 
+import it.polimi.se2.clupapplication.repositories.BookingRepository;
 import it.polimi.se2.clupapplication.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
 @DataJpaTest
-public class UserEntityRepositoryTest {
+public class BookingRepositoryTest {
     @Autowired
     private DataSource dataSource;
     @Autowired
@@ -19,13 +20,13 @@ public class UserEntityRepositoryTest {
     @Autowired
     private EntityManager entityManager;
     @Autowired
-    private UserRepository userRepository;
+    private BookingRepository bookingRepository;
 
     @Test
     void injectedComponentsAreNotNull(){
         Assertions.assertNotNull(dataSource);
         Assertions.assertNotNull(jdbcTemplate);
         Assertions.assertNotNull(entityManager);
-        Assertions.assertNotNull(userRepository);
+        Assertions.assertNotNull(bookingRepository);
     }
 }
