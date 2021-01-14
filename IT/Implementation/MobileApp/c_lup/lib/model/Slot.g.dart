@@ -1,34 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'User.dart';
+part of 'Slot.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class UserAdapter extends TypeAdapter<User> {
+class SlotAdapter extends TypeAdapter<Slot> {
   @override
-  final int typeId = 0;
+  final int typeId = 4;
 
   @override
-  User read(BinaryReader reader) {
+  Slot read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return User(
-      token: fields[0] as String,
-    )..reservations = (fields[1] as List)?.cast<Reservation>();
+    return Slot(
+      id: fields[0] as String,
+      startingHour: fields[1] as dynamic,
+      weekDay: fields[2] as String,
+    );
   }
 
   @override
-  void write(BinaryWriter writer, User obj) {
+  void write(BinaryWriter writer, Slot obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.token)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.reservations);
+      ..write(obj.startingHour)
+      ..writeByte(2)
+      ..write(obj.weekDay);
   }
 
   @override
@@ -37,7 +41,7 @@ class UserAdapter extends TypeAdapter<User> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UserAdapter &&
+      other is SlotAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

@@ -50,9 +50,10 @@ class LoginCard extends StatelessWidget {
                     onPressed: () async {
                       // Validate returns true if the form is valid, otherwise false.
                       if (_formKey.currentState.validate()) {
-                        await AuthService.login(
-                            email: controller.text, password: controller2.text);
-                        Navigator.pushNamed(context, "/home");
+                        if(await AuthService.login(
+                            email: controller.text, password: controller2.text)){
+                          Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+                        }
                       }
                     },
                     child: Text(

@@ -5,6 +5,7 @@ import 'package:c_lup/pages/LoginPage.dart';
 import 'package:c_lup/pages/SignUpIntermediatePage.dart';
 import 'package:c_lup/pages/SignUpPage.dart';
 import 'package:c_lup/theme/MainTheme.dart';
+import 'package:c_lup/utils/AuthService.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -18,7 +19,9 @@ void main() async {
   var box = await Hive.openBox('properties');
   User user = box.get('user');
   if(user != null && user.token != null){
-    _defaultHome = new HomePage();
+      if(await AuthService.auth(user.token)){
+        _defaultHome = new HomePage();
+      }
   }
   runApp(MyApp(home: _defaultHome));
 }

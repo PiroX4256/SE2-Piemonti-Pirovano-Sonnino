@@ -28,7 +28,7 @@ class AuthService {
 
   static Future<http.Response> request(String username, String password)  async{
     return await http.post(
-      'http://10.0.2.2:8080/api/auth/login',
+      'http://192.168.1.9:8084/api/auth/login',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -37,5 +37,19 @@ class AuthService {
         'password': password,
       }),
     );
+  }
+
+  static Future<bool> auth(String token) async{
+    var response = await http.post('http://192.168.1.9:8084/api/auth/me',
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'token': token,
+    }),);
+    if(response.statusCode == 200){
+      return true;
+    }
+    else return false;
   }
 }
