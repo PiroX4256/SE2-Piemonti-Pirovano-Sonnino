@@ -7,7 +7,9 @@ $(document).ready(function () {
             buildBookings(data);
         },
         error: function (err) {
-            console.log(err);
+            if(err.status == 403) {
+                window.location.href = '/';
+            }
         }
     });
 });

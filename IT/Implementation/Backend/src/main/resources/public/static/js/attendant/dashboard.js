@@ -28,11 +28,13 @@ $(document).ready(function () {
                             }
                         });
                     }
-                },
-                error: function (err) {
-                    console.log(err);
                 }
             });
+        },
+        error: function (err) {
+            if (err.status == 403) {
+                window.location.href = '/';
+            }
         }
     });
 });

@@ -1,3 +1,16 @@
+$(document).ready(function () {
+    $.ajax({
+        url: '/api/auth/managerPing',
+        method: 'GET',
+        headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+        error: function (err) {
+            if(err.status == 403) {
+                window.location.href = '/';
+            }
+        }
+    });
+})
+
 function editStoreInformation() {
     const form = document.storeForm;
     for (var i = 0; i < form.elements.length; i++) {

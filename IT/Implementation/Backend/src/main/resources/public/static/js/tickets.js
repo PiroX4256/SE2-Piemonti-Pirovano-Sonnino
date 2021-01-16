@@ -31,14 +31,16 @@ $(document).ready(function () {
             });
         },
         error: function (err) {
-            console.log(err);
+            if (err.status == 403) {
+                window.location.href = '/';
+            }
         }
     });
 });
 
 function voidTicket(ticketId) {
     var confirmation = confirm("Are you sure to void ticket number " + ticketId + "?");
-    if(confirmation) {
+    if (confirmation) {
         $.ajax({
             url: '/api/ticket/voidTicket?ticketId=' + ticketId,
             method: 'GET',
