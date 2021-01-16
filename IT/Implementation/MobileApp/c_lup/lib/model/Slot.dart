@@ -7,7 +7,7 @@ class Slot extends HiveObject {
   @HiveField(0)
   String id;
   @HiveField(1)
-  var startingHour;
+  String startingHour;
   @HiveField(2)
   String weekDay;
 

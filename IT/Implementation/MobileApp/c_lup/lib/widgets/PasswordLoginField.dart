@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PasswordField extends StatefulWidget {
-  PasswordField({this.controller});
+class PasswordLoginField extends StatefulWidget {
+  PasswordLoginField({this.controller});
   @override
-  _PasswordFieldState createState() => _PasswordFieldState();
+  _PasswordLoginFieldState createState() => _PasswordLoginFieldState();
   final TextEditingController controller;
 }
 
-class _PasswordFieldState extends State<PasswordField> {
+class _PasswordLoginFieldState extends State<PasswordLoginField> {
   bool _isHidden = true;
   Icon _visibility = Icon(Icons.visibility_off);
 
@@ -19,11 +19,8 @@ class _PasswordFieldState extends State<PasswordField> {
       validator: (value) {
         if (value.isEmpty) {
           return "Password cannot be null";
-        } else if (!RegExp(
-                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
-            .hasMatch(value)) {
-          return "Password must contain at least:\n• one lower case;\n• one upper case;\n• one digit;\n• one special character (!@#\\\$&*~)."; // should contain at least one Special character";
-        } else
+        }
+        else
           return null;
       },
       obscureText: _isHidden,

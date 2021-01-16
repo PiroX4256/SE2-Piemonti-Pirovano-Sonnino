@@ -1,68 +1,72 @@
+import 'dart:io';
+
 import 'package:c_lup/model/User.dart';
 import 'package:c_lup/utils/Generator.dart';
+import 'package:c_lup/widgets/MainAppbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive/hive.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   var box;
-  Future<ListView> _list;
+  User user;
+  Future<bool> _bookings;
+
+  @override
+  void initState() async {
+    super.initState();
+    box = await Hive.openBox('properties');
+    user = box.get('user');
+    _bookings = Generator.fetchBookings(user.token);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return new WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-          body: Center(
-              child: FutureBuilder<ListView>(
-                  future: _list,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<ListView> snapshot) {
-                    List<Widget> children;
-                    if (snapshot.hasData) {
-                      children = <Widget>[
-                      ];
-                    } else if (snapshot.hasError) {
-                      children = <Widget>[
-                        Icon(
-                          Icons.error_outline,
-                          color: Colors.red,
-                          size: 60,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16),
-                          child: Text('Error: ${snapshot.error}'),
-                        )
-                      ];
-                    } else {
-                      children = <Widget>[
-                        SizedBox(
-                          child: CircularProgressIndicator(),
-                          width: 60,
-                          height: 60,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 16),
-                          child: Text('Awaiting result...'),
-                        )
-                      ];
-                    }
-                    return ListView(
-                      children: children,
-                    );
+    EasyLoading.show();
+    return Scaffold(
+      appBar: MainAppbar(),
+      body: Center(
+        child: ListView(
+          children: <Widget>[
+            FutureBuilder<bool>(
+                future: _bookings,
+                builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                  if (snapshot.hasData) {
+                    return Table();
+                  } else {
+                    EasyLoading.show();
+                    return Container();
                   }
-              )
-          )
-        //     optionsMap.entries.map((entry) {
-        // var w = Text(entry.value);
-        // doSomething(entry.key);
-        // return w;
-        // }).toList());
+                }),
+            RaisedButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              onPressed: () {},
+              child: Text(
+                'RETRIEVE A TICKET',
+                style: Theme.of(context).textTheme.button,
+              ),
+            ),
+            RaisedButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              onPressed: () {},
+              child: Text(
+                'BOOK A TICKET',
+                style: Theme.of(context).textTheme.button,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

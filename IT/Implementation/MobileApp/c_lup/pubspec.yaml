@@ -32,6 +32,8 @@ dependencies:
   http: ^0.12.2
   hive: ^1.4.4
   hive_flutter: ^0.3.1
+  flutter_easyloading: ^2.2.2
+  enum_to_string: ^1.0.14
 
 
 

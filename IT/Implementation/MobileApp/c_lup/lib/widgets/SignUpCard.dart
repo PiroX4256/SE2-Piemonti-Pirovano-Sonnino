@@ -1,7 +1,10 @@
+import 'package:c_lup/utils/AuthService.dart';
+import 'package:c_lup/utils/Role.dart';
 import 'package:c_lup/widgets/EmailField.dart';
 import 'package:c_lup/widgets/PasswordField.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SignUpCard extends StatefulWidget {
@@ -16,6 +19,13 @@ class SignUpCard extends StatefulWidget {
 class _SignUpCardState extends State<SignUpCard> {
   bool attendant = false;
   bool value = false;
+  Role role = Role.USER;
+  Text alertTitle;
+  Text alertBody;
+  Text alertButtonText;
+  bool error;
+  TextEditingController controller = new TextEditingController();
+  TextEditingController controller2 = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,20 +40,27 @@ class _SignUpCardState extends State<SignUpCard> {
               key: _formKey,
               child: Column(
                 children: [
-                  EmailField(),
+                  EmailField(
+                    controller: controller,
+                  ),
                   SizedBox(
                     height: 15.0,
                   ),
-                  PasswordField(),
+                  PasswordField(
+                    controller: controller2,
+                  ),
                   SizedBox(
                     height: 1.0,
                   ),
                   ListTile(
-                    title: Text("Customer", style: Theme.of(context).textTheme.bodyText1,),
+                    title: Text(
+                      "Customer",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
                     leading: Radio(
                       value: false,
                       groupValue: attendant,
-                      onChanged: (value){
+                      onChanged: (value) {
                         setState(() {
                           attendant = value;
                         });
@@ -51,47 +68,25 @@ class _SignUpCardState extends State<SignUpCard> {
                     ),
                   ),
                   ListTile(
-                    title: Text("Store Attendant", style: Theme.of(context).textTheme.bodyText1,),
+                    title: Text(
+                      "Store Attendant",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
                     leading: Radio(
                       value: true,
                       groupValue: attendant,
-                      onChanged: (value){
+                      onChanged: (value) {
                         setState(() {
                           attendant = value;
                         });
                       },
                     ),
                   ),
-                  // DropdownButton<String>(
-                  //   isExpanded: true,
-                  //   value: _dropdownValue,
-                  //   iconSize: 50,
-                  //   elevation: 16,
-                  //   onChanged: (String newValue) {
-                  //     setState(() {
-                  //       _dropdownValue = newValue;
-                  //       if (newValue == 'Store Attendant') {
-                  //         attendant = true;
-                  //         print(attendant);
-                  //       } else {
-                  //         attendant = false;
-                  //         print(attendant);
-                  //       }
-                  //     });
-                  //   },
-                  //   items: <String>['Customer', 'Store Attendant']
-                  //       .map<DropdownMenuItem<String>>((String value) {
-                  //     return DropdownMenuItem<String>(
-                  //       value: value,
-                  //       child: Text(value),
-                  //     );
-                  //   }).toList(),
-                  // ),
                   (attendant == true)
                       ? TextFormField(
                           validator: (value) {
                             if (value.isEmpty) {
-                              return "Store ID mustn't be null";
+                              return "Store ID cannot be null";
                             } else
                               return null;
                           },
@@ -109,13 +104,12 @@ class _SignUpCardState extends State<SignUpCard> {
                   Row(
                     children: <Widget>[
                       Checkbox(
-                        value: value,
-                        onChanged: (bool value) {
-                          setState(() {
-                            this.value = value;
-                          });
-                        },
-                      ),
+                          value: value,
+                          onChanged: (bool value) {
+                            setState(() {
+                              this.value = !this.value;
+                            });
+                          }),
                       Expanded(
                           child: RichText(
                         text: TextSpan(
@@ -123,7 +117,7 @@ class _SignUpCardState extends State<SignUpCard> {
                           style: Theme.of(context).textTheme.bodyText2,
                           children: <TextSpan>[
                             TextSpan(
-                                text: 'privacy policy',
+                                text: 'Privacy Policy',
                                 style: TextStyle(
                                   decoration: TextDecoration.underline,
                                 ),
@@ -139,7 +133,7 @@ class _SignUpCardState extends State<SignUpCard> {
                                   }),
                             TextSpan(text: ', '),
                             TextSpan(
-                                text: 'terms & conditions',
+                                text: 'Terms & Conditions',
                                 style: TextStyle(
                                   decoration: TextDecoration.underline,
                                 ),
@@ -163,10 +157,59 @@ class _SignUpCardState extends State<SignUpCard> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    onPressed: () {
-                      // Validate returns true if the form is valid, otherwise false.
+                    onPressed: () async {
+                      EasyLoading.show();
                       if (_formKey.currentState.validate() && this.value) {
-                        Navigator.pushNamed(context, "/home");
+                        if (attendant == true) {
+                          role = Role.ATTENDANT;
+                        }
+                        if (await AuthService.signUp(
+                            email: controller.text,
+                            password: controller2.text,
+                            role: role)) {
+                          EasyLoading.dismiss();
+                          setState(() {
+                            alertTitle = Text('Registration Completed');
+                            alertBody = Text(
+                                'The registration was successful, you will shortly receive a verification link via email');
+                            error = false;
+                            alertButtonText = Text('Home');
+                          });
+                        } else {
+                          EasyLoading.dismiss();
+                          setState(() {
+                            alertTitle = Text('Error');
+                            alertBody =
+                                Text('Registration invalid, please retry!');
+                            error = true;
+                            alertButtonText = Text('Ok');
+                          });
+                        }
+                        showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: alertTitle,
+                                content: SingleChildScrollView(
+                                    child: ListBody(
+                                        children: <Widget>[alertBody])),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: alertButtonText,
+                                    onPressed: () {
+                                      if (error) {
+                                        Navigator.popAndPushNamed(
+                                            context, "/signup");
+                                      } else {
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context, "/home", (r) => false);
+                                      }
+                                    },
+                                  )
+                                ],
+                              );
+                            });
                       }
                     },
                     child: Text(

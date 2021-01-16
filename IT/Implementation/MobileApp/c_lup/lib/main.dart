@@ -7,6 +7,7 @@ import 'package:c_lup/pages/SignUpPage.dart';
 import 'package:c_lup/theme/MainTheme.dart';
 import 'package:c_lup/utils/AuthService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -19,7 +20,8 @@ void main() async {
   var box = await Hive.openBox('properties');
   User user = box.get('user');
   if(user != null && user.token != null){
-      if(await AuthService.auth(user.token)){
+    bool auth = await AuthService.auth(user.token);
+    if(auth){
         _defaultHome = new HomePage();
       }
   }
@@ -43,6 +45,7 @@ class MyApp extends StatelessWidget{
         '/home': (context) => HomePage(),
         '/login': (context) => LoginPage(),
       },
+      builder: EasyLoading.init(),
     );
   }
 }

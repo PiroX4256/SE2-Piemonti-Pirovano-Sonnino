@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 
 import 'Booking.dart';
-import 'Status.dart';
+import '../utils/Status.dart';
 import 'Store.dart';
 
 part 'Reservation.g.dart';
@@ -18,11 +18,4 @@ class Reservation extends HiveObject {
   Booking booking;
 
   Reservation({this.id, this.store, this.status, this.booking});
-
-  void set(String id, Store store, Status status, Booking booking) {
-    this.id = id;
-    this.store = store;
-    this.status = status;
-    this.booking = booking;
-  }
 }

@@ -9,13 +9,13 @@ class Booking extends HiveObject {
   @HiveField(0)
   String id;
   @HiveField(1)
-  var date;
+  String date;
   @HiveField(2)
   Slot slot;
   @HiveField(3)
   String uuid;
   @HiveField(4)
-  int visitDuration;
+  String visitDuration;
 
   Booking({this.id, this.date, this.slot, this.uuid, this.visitDuration});
 }
