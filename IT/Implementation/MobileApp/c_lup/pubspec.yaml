@@ -32,15 +32,19 @@ dependencies:
   http: ^0.12.2
   hive: ^1.4.4
   hive_flutter: ^0.3.1
+  flutter_easyloading: ^2.2.2
+  enum_to_string: ^1.0.14
 
 
 
 dev_dependencies:
   hive_generator: ^0.8.2
   build_runner: ^1.10.12
+  integration_test: ^1.0.0
   flutter_test:
     sdk: flutter
-
+  flutter_driver:
+    sdk: flutter
   # For information on the generic Dart part of this file, see the
   # following page: https://dart.dev/tools/pub/pubspec
 

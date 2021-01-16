@@ -69,4 +69,3 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-//TODO merge login card with signupcard
