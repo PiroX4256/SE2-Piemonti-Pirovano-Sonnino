@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/se2
+    url: jdbc:mysql://localhost:3306/clup
     username: root
     password: Gugghi98
   jpa:
@@ -28,3 +28,6 @@ jwt:
   header:
     string: Authorization
   secret: signinkey
+
+server:
+  port: 8084
