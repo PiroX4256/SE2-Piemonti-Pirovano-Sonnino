@@ -101,12 +101,12 @@ public class UserController {
         Role managerRole = roleService.findByName("MANAGER");
         Role attendantRole = roleService.findByName("ATTENDANT");
         if(user.getRoles().contains(userRole)) {
-            return ResponseEntity.ok(new AuthenticationResponseDTO(user.getUsername(), "/dashboard"));
+            return ResponseEntity.ok(new AuthenticationResponseDTO(user.getUsername(), "/dashboard", userRole.getName()));
         }
         else if(user.getRoles().contains(managerRole)) {
-            return ResponseEntity.ok(new AuthenticationResponseDTO(user.getUsername(), "/admin/dashboard"));
+            return ResponseEntity.ok(new AuthenticationResponseDTO(user.getUsername(), "/admin/dashboard", managerRole.getName()));
         } else if(user.getRoles().contains(attendantRole)) {
-            return ResponseEntity.ok(new AuthenticationResponseDTO(user.getUsername(), "/attendant/"));
+            return ResponseEntity.ok(new AuthenticationResponseDTO(user.getUsername(), "/attendant/", attendantRole.getName()));
         }
         return ResponseEntity.notFound().build();
     }

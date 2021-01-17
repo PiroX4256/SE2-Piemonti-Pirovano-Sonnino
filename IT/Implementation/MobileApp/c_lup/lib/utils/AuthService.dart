@@ -5,6 +5,8 @@ import 'package:c_lup/model/User.dart';
 import 'package:c_lup/utils/Role.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
+import 'package:enum_to_string/enum_to_string.dart';
+
 
 class AuthService {
 
@@ -16,7 +18,15 @@ class AuthService {
       if (user == null){
         user = new User();
       }
-      user.setToken(jsonDecode(response.body)['token']);
+      String token = jsonDecode(response.body)['token'];
+      user.setToken(token);
+      var response2 = await http.get('http://192.168.1.9:8084/api/auth/me',
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ' + token
+          });
+      final role = EnumToString.fromString(Role.values, jsonDecode(response2.body)['role']);
+      user.setRole(role);
       box.put('user', user);
       return true;
     }
@@ -29,7 +39,7 @@ class AuthService {
     var response = await request(email, password, 'signup', role: role);
     if (response.statusCode == 200) {
       var box = Hive.box('properties');
-      User user = User(token: jsonDecode(response.body)['token']);
+      User user = User(token: jsonDecode(response.body)['token'], role: role);
       box.put('user', user);
       return true;
     }
@@ -63,6 +73,18 @@ class AuthService {
 
   static Future<bool> auth(String token) async{
     var response = await http.get('http://192.168.1.9:8084/api/auth/me',
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' + token
+    });
+    if(response.statusCode == 200){
+      return true;
+    }
+    else return false;
+  }
+
+  static Future<bool> codeValidation(String uuid, String token) async{
+    var response = await http.get('http://192.168.1.9:8084/api/ticket/validateTicket?uuid=' + uuid,
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer ' + token
