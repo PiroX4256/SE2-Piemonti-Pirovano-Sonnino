@@ -1,4 +1,4 @@
-import 'package:c_lup/model/QrCodeArguments.dart';
+import 'file:///D:/projects/SE2-Piemonti-Pirovano-Sonnino/IT/Implementation/MobileApp/c_lup/lib/utils/QrCodeArguments.dart';
 import 'package:c_lup/widgets/MainAppbar.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';

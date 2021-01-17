@@ -27,7 +27,7 @@ void main() async {
   Hive.registerAdapter<Store>(StoreAdapter());
   var box = await Hive.openBox<User>('properties');
   User user = box.get('user');
-  if (user != null && user.token != null) {
+  if (user != null && user.token != null && user.role != null) {
     bool auth = await AuthService.auth(user.token);
     if (auth) {
       _defaultHome = new HomePage();

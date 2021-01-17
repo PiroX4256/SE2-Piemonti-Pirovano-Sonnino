@@ -45,6 +45,8 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                                     var box = Hive.box<User>('properties');
                                     User user = box.get('user');
                                     user.setToken(null);
+                                    user.setReservation(null);
+                                    user.setRole(null);
                                     box.put('user', user);
                                     Navigator.pushNamedAndRemoveUntil(
                                         context, '/login', (route) => false);

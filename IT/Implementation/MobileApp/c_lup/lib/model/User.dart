@@ -1,5 +1,4 @@
 import 'package:c_lup/model/Reservation.dart';
-import 'package:c_lup/utils/Role.dart';
 import 'package:hive/hive.dart';
 
 part 'User.g.dart';
@@ -12,7 +11,7 @@ class User extends HiveObject {
   List<Reservation> reservations;
 
   @HiveField(2)
-  Role role;
+  String role;
 
   User({this.token, this.role});
 
@@ -22,8 +21,8 @@ class User extends HiveObject {
   void setToken(String token) {
     this.token = token;
   }
-  void setRole(Role role) {
-    this.token = token;
+  void setRole(String role) {
+    this.role = role;
   }
 }
 

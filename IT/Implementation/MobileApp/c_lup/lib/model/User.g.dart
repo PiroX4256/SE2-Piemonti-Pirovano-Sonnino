@@ -18,17 +18,20 @@ class UserAdapter extends TypeAdapter<User> {
     };
     return User(
       token: fields[0] as String,
+      role: fields[2] as String,
     )..reservations = (fields[1] as List)?.cast<Reservation>();
   }
 
   @override
   void write(BinaryWriter writer, User obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.token)
       ..writeByte(1)
-      ..write(obj.reservations);
+      ..write(obj.reservations)
+      ..writeByte(2)
+      ..write(obj.role);
   }
 
   @override

@@ -1,5 +1,4 @@
 import 'package:c_lup/utils/AuthService.dart';
-import 'package:c_lup/utils/Role.dart';
 import 'package:c_lup/widgets/EmailField.dart';
 import 'package:c_lup/widgets/PasswordField.dart';
 import 'package:flutter/gestures.dart';
@@ -17,15 +16,17 @@ class SignUpCard extends StatefulWidget {
 }
 
 class _SignUpCardState extends State<SignUpCard> {
+  String storeId;
   bool attendant = false;
   bool value = false;
-  Role role = Role.USER;
+  String role = "USER";
   Text alertTitle;
   Text alertBody;
   Text alertButtonText;
   bool error;
   TextEditingController controller = new TextEditingController();
   TextEditingController controller2 = new TextEditingController();
+  TextEditingController controller3 = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -84,13 +85,13 @@ class _SignUpCardState extends State<SignUpCard> {
                   ),
                   (attendant == true)
                       ? TextFormField(
+                          controller: controller3,
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Store ID cannot be null";
                             } else
                               return null;
                           },
-                          obscureText: true,
                           decoration: InputDecoration(
                             focusColor: Theme.of(context).accentColor,
                             prefixIcon: Icon(Icons.local_grocery_store),
@@ -158,15 +159,17 @@ class _SignUpCardState extends State<SignUpCard> {
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     onPressed: () async {
-                      EasyLoading.show();
                       if (_formKey.currentState.validate() && this.value) {
+                        EasyLoading.show();
                         if (attendant == true) {
-                          role = Role.ATTENDANT;
+                          role = "ATTENDANT";
+                          storeId = controller3.text;
                         }
                         if (await AuthService.signUp(
                             email: controller.text,
                             password: controller2.text,
-                            role: role)) {
+                            role: role,
+                            storeId: storeId)) {
                           EasyLoading.dismiss();
                           setState(() {
                             alertTitle = Text('Registration Completed');
