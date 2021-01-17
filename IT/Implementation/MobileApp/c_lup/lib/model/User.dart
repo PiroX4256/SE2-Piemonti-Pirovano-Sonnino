@@ -12,9 +12,11 @@ class User extends HiveObject {
 
   User({this.token});
 
-  void set(String token, List<Reservation> reservations) {
-    this.token = token;
+  void setReservation(List<Reservation> reservations) {
     this.reservations = reservations;
+  }
+  void setToken(String token) {
+    this.token = token;
   }
 }
 

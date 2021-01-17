@@ -18,7 +18,7 @@ class SlotAdapter extends TypeAdapter<Slot> {
     };
     return Slot(
       id: fields[0] as String,
-      startingHour: fields[1] as dynamic,
+      startingHour: fields[1] as String,
       weekDay: fields[2] as String,
     );
   }

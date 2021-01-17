@@ -19,7 +19,7 @@ class ReservationAdapter extends TypeAdapter<Reservation> {
     return Reservation(
       id: fields[0] as String,
       store: fields[1] as Store,
-      status: fields[2] as Status,
+      status: fields[2] as String,
       booking: fields[3] as Booking,
     );
   }

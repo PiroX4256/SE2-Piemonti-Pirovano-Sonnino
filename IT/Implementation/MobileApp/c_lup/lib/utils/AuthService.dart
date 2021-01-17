@@ -11,8 +11,12 @@ class AuthService {
   static Future<bool> login({String email, String password}) async {
     var response = await request(email, password, 'login');
     if (response.statusCode == 200) {
-      var box = await Hive.openBox('properties');
-      User user = User(token: jsonDecode(response.body)['token']);
+      var box = Hive.box<User>('properties');
+      User user = box.get('user');
+      if (user == null){
+        user = new User();
+      }
+      user.setToken(jsonDecode(response.body)['token']);
       box.put('user', user);
       return true;
     }
@@ -27,8 +31,7 @@ class AuthService {
       var box = Hive.box('properties');
       User user = User(token: jsonDecode(response.body)['token']);
       box.put('user', user);
-      return await new Future<bool>.delayed(
-          new Duration(seconds: 2), () => true);
+      return true;
     }
     else {
       return false;

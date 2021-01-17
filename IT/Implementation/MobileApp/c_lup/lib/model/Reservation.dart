@@ -1,7 +1,6 @@
 import 'package:hive/hive.dart';
 
 import 'Booking.dart';
-import '../utils/Status.dart';
 import 'Store.dart';
 
 part 'Reservation.g.dart';
@@ -13,7 +12,7 @@ class Reservation extends HiveObject {
   @HiveField(1)
   Store store;
   @HiveField(2)
-  Status status;
+  String status;
   @HiveField(3)
   Booking booking;
 

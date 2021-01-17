@@ -18,10 +18,10 @@ class BookingAdapter extends TypeAdapter<Booking> {
     };
     return Booking(
       id: fields[0] as String,
-      date: fields[1] as dynamic,
+      date: fields[1] as String,
       slot: fields[2] as Slot,
       uuid: fields[3] as String,
-      visitDuration: fields[4] as int,
+      visitDuration: fields[4] as String,
     );
   }
 

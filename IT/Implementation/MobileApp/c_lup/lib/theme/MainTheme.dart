@@ -30,7 +30,7 @@ class MainTheme {
           headline5: TextStyle(
               fontSize: 24, fontWeight: FontWeight.w600, color: textMain),
           headline6: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w400, color: textGray),
+              fontSize: 16, fontWeight: FontWeight.w600, color: textGray),
           caption: TextStyle(
               fontSize: 18, fontWeight: FontWeight.w400, color: textMain),
           button: TextStyle(

@@ -21,6 +21,7 @@ class Store extends HiveObject {
   @HiveField(7)
   String latitude;
 
-  Store({this.id, this.name, this.chain, this. address, this.city, this.cap, this.longitude, this.latitude});
+  Store({this.id, this.name, this.chain, this.address, this.city, this.cap, this.longitude, this.latitude});
+
 
 }

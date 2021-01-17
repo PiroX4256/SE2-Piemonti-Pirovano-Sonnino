@@ -1,3 +1,5 @@
+import 'package:c_lup/model/Booking.dart';
+import 'package:c_lup/model/Slot.dart';
 import 'package:c_lup/model/User.dart';
 import 'package:c_lup/pages/ForgotPage.dart';
 import 'package:c_lup/pages/HomePage.dart';
@@ -10,28 +12,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
+import 'model/Reservation.dart';
+import 'model/Store.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Widget _defaultHome = new LoginPage();
   await Hive.initFlutter();
   Hive.registerAdapter<User>(UserAdapter());
-  var box = await Hive.openBox('properties');
+  Hive.registerAdapter<Booking>(BookingAdapter());
+  Hive.registerAdapter<Reservation>(ReservationAdapter());
+  Hive.registerAdapter<Slot>(SlotAdapter());
+  Hive.registerAdapter<Store>(StoreAdapter());
+  var box = await Hive.openBox<User>('properties');
   User user = box.get('user');
-  if(user != null && user.token != null){
+  if (user != null && user.token != null) {
     bool auth = await AuthService.auth(user.token);
-    if(auth){
-        _defaultHome = new HomePage();
-      }
+    if (auth) {
+      _defaultHome = new HomePage();
+    }
   }
   runApp(MyApp(home: _defaultHome));
 }
-class MyApp extends StatelessWidget{
+
+class MyApp extends StatelessWidget {
   final Widget home;
+
   MyApp({
     @required this.home,
   });
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

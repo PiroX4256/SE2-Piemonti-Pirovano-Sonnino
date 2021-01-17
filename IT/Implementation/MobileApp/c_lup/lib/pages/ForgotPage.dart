@@ -73,7 +73,7 @@ class _ForgotPageState extends State<ForgotPage> {
                                       // user must tap button!
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                          title: Text('Email sent'),
+                                          title: Text('Email sent', style: TextStyle(fontWeight: FontWeight.w600, color: Theme.of(context).accentColor),),
                                           content: SingleChildScrollView(
                                             child: ListBody(
                                               children: <Widget>[
@@ -84,7 +84,7 @@ class _ForgotPageState extends State<ForgotPage> {
                                           ),
                                           actions: <Widget>[
                                             TextButton(
-                                                child: Text('Ok'),
+                                                child: Text('Ok', style: Theme.of(context).textTheme.bodyText1,),
                                                 onPressed: () {
                                                   Navigator.pushNamedAndRemoveUntil(context, "/login", (r) => false);
                                                 })
