@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.Calendar;
 
 /**
@@ -34,6 +35,7 @@ public class TicketController {
 
     /**
      * Initiate an ASAP (As Soon As Possible) ticket request, given the id of the store in which the reservation would be made.
+     *
      * @param storeId the id of the store in which the reservation would be made.
      * @return status code 200 if request is successful, status code 422 if there are no available slots.
      */
@@ -43,27 +45,47 @@ public class TicketController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findOne(authentication.getName());
         Ticket ticket = ticketService.createNewASAPTicket(storeId, user);
-        if(ticket!=null) {
+        if (ticket != null) {
             return ResponseEntity.ok(ticket);
-        }
-        else {
+        } else {
             return ResponseEntity.unprocessableEntity().body("There are no available slots today.");
         }
     }
 
     /**
      * Void a ticket (and an associated booking) given its id.
+     *
      * @param ticketId the id of the ticket to be voided.
      * @return status code 200
      */
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/voidTicket")
     public ResponseEntity<?> voidTicket(@RequestParam Long ticketId) {
+        Ticket ticket = ticketService.getTicketById(ticketId);
+        if (ticket.getUser() == userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName())) {
+            ticketService.voidTicket(ticketId);
+            return ResponseEntity.ok("Done!");
+        } else {
+            return ResponseEntity.status(403).build();
+        }
+    }
+
+    /**
+     * Void a ticket (and an associated booking) given its id.
+     *
+     * @param ticketId the id of the ticket to be voided.
+     * @return status code 200
+     */
+    @PreAuthorize("hasAnyRole('MANAGER', 'ATTENDANT')")
+    @GetMapping("/voidUserTicket")
+    public ResponseEntity<?> voidUserTicket(@RequestParam Long ticketId) {
         ticketService.voidTicket(ticketId);
         return ResponseEntity.ok("Done!");
     }
 
     /**
      * Retrieve all the ticket information given its id.
+     *
      * @param ticketId the id of the ticket whose information needs to be retrieved.
      * @return 200 ok, with the ticket serialized object.
      */
@@ -76,12 +98,14 @@ public class TicketController {
     /**
      * Validate a ticket when scanned through its QR Code. This operation is usually made by the store attendants present
      * at the entrance of the supermarket.
+     *
      * @param uuid the unique booking id of the ticket.
      * @return status code 200 if request is successfull, status code 400 otherwise.
      */
+    @PreAuthorize("hasRole('ATTENDANT')")
     @GetMapping("/validateTicket")
-    public ResponseEntity<?> validateTicket(@RequestParam String uuid) {
-        if(ticketService.validateTicket(uuid)) {
+    public ResponseEntity<?> validateTicket(@RequestParam String uuid) throws ParseException {
+        if (ticketService.validateTicket(uuid)) {
             return ResponseEntity.status(200).build();
         } else {
             return ResponseEntity.status(400).body("Ticket not found or already used");
@@ -113,13 +137,14 @@ public class TicketController {
     /**
      * Handles the procedure of "Hand Out on Spot" functionality. An attendant request a new ASAP ticket from its interface
      * and the system returns him (her) a new ticket object.
+     *
      * @return status code 200 (along with a ticket instance) if the request if successful, status code 400 otherwise.
      */
     @PreAuthorize("hasRole('ATTENDANT')")
     @GetMapping("/handOutOnSpot")
     public ResponseEntity<?> handOutOnSpot() {
         Ticket ticket = ticketService.handOutOnSpot(userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName()));
-        if(ticket==null) {
+        if (ticket == null) {
             return ResponseEntity.badRequest().body("Error creating your ticket.");
         }
         return ResponseEntity.ok(ticket);

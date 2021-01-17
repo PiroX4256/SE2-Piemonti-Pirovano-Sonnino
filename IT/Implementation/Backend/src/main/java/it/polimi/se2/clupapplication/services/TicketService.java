@@ -3,13 +3,17 @@ package it.polimi.se2.clupapplication.services;
 import it.polimi.se2.clupapplication.entities.*;
 import it.polimi.se2.clupapplication.model.Status;
 import it.polimi.se2.clupapplication.repositories.*;
+import it.polimi.se2.clupapplication.utils.DateComparison;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class TicketService {
@@ -88,9 +92,14 @@ public class TicketService {
      * @param uuid the unique id of the ticket to be validated.
      * @return true if the validation is successful, false otherwise.
      */
-    public boolean validateTicket(String uuid) {
+    public boolean validateTicket(String uuid) throws ParseException {
         Booking booking = bookingRepository.findByUuid(uuid);
         if (booking != null) {
+            LocalTime localTime = LocalTime.now();
+            if(!DateComparison.compareDates(booking.getVisitDate(), new Date())
+                    || localTime.compareTo(booking.getSlot().getStartingHour().plusHours(1)) > 0 || localTime.compareTo(booking.getSlot().getStartingHour()) < 0) {
+                return false;
+            }
             booking.getTicket().setStatus(Status.USED);
             ticketRepository.save(booking.getTicket());
             return true;

@@ -18,6 +18,9 @@ $(document).ready(function () {
                         voidTicket(ticketId);
                     },
                     printQrCode: function (uuid, date, time) {
+                        if(document.getElementById('qrCode')!=null) {
+                            document.getElementById('qrCode').innerHTML = "";
+                        }
                         document.getElementById('dateLabel').innerText = date;
                         document.getElementById('timeLabel').innerText = time;
                         var qrCode = new QRCode(document.getElementById('qrCode'), {
