@@ -102,7 +102,12 @@ public class StoreController {
     public ResponseEntity<?> getMyStore() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findOne(authentication.getName());
-        return ResponseEntity.ok(storeService.getByManager(user));
+        if(user.getRoles().iterator().next().getName().equals("MANAGER")) {
+            return ResponseEntity.ok(storeService.getStoreByAttendant(user));
+        }
+        else {
+            return ResponseEntity.ok(storeService.getByManager(user));
+        }
     }
 
     /**
