@@ -18,6 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.time.LocalTime;
 import java.util.Calendar;
 
@@ -90,7 +91,7 @@ public class TicketControllerTest {
 
     @Test
     @WithMockUser(username = "user", roles = {"USER", "MANAGER"})
-    public void getAndValidateTicket() {
+    public void getAndValidateTicket() throws ParseException {
         addHours();
         Ticket ticket = (Ticket)ticketController.asapRetrieving(storeId).getBody();
         ticketController.validateTicket(ticket.getBooking().getUuid());
