@@ -1,3 +1,16 @@
+$(document).ready(function () {
+    $.ajax({
+        url: '/api/auth/userPing',
+        method: 'GET',
+        headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+        error: function (err) {
+            if(err.status == 403) {
+                window.location.href = '/';
+            }
+        }
+    });
+})
+
 var headers;
 if (localStorage.getItem('token') != null) {
     headers = {'Authorization': 'Bearer ' + localStorage.getItem('token')};

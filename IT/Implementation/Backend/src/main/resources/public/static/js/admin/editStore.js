@@ -5,6 +5,11 @@ $(document).ready(function () {
         headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
         success: function (data) {
             buildStoreInformation(data);
+        },
+        error: function (err) {
+            if(err.status == 403) {
+                window.location.href = '/';
+            }
         }
     });
 

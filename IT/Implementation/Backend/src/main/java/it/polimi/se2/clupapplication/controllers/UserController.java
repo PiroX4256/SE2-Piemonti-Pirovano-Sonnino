@@ -120,4 +120,22 @@ public class UserController {
         User user = userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
         return ResponseEntity.ok(storeService.getStoreByAttendant(user));
     }
+
+    @GetMapping("/userPing")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> userPing() {
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/managerPing")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<?> managerPing() {
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/attendantPing")
+    @PreAuthorize("hasRole('ATTENDANT')")
+    public ResponseEntity<?> attendantPing() {
+        return ResponseEntity.ok().build();
+    }
 }

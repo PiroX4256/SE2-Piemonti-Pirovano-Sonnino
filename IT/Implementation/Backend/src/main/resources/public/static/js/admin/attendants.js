@@ -5,6 +5,15 @@ $(document).ready(function () {
         headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
         success: function (data) {
             buildAttendantsContainer(data);
+        },
+        error: function (err) {
+            if(err.status == 403) {
+                window.location.href = '/';
+            }
+            else {
+                alert("You have not created a store yet. Please proceed with a new store creation.");
+                window.location.href = '/admin/dashboard';
+            }
         }
     });
 });

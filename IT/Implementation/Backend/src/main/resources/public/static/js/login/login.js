@@ -1,14 +1,13 @@
 $(document).ready(function () {
-    if(localStorage.getItem("token") != null) {
+    if (localStorage.getItem("token") != null) {
         $.ajax({
-            url: '/api/auth/checkLogin',
-            type: 'GET',
-            headers: {'Authorization': 'Bearer ' + localStorage.getItem("token")},
+            url: '/api/auth/me',
+            method: 'GET',
+            headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
             success: function (data) {
-                window.location.href = '/dashboard';
-            },
-            error: function (err) {
-                console.log(err);
+                console.log(data);
+                localStorage.setItem('username', data.username);
+                window.location.href = data.redirectUrl;
             }
         });
     }
