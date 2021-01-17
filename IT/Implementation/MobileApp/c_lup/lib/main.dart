@@ -4,6 +4,7 @@ import 'package:c_lup/model/User.dart';
 import 'package:c_lup/pages/ForgotPage.dart';
 import 'package:c_lup/pages/HomePage.dart';
 import 'package:c_lup/pages/LoginPage.dart';
+import 'package:c_lup/pages/QrCodePage.dart';
 import 'package:c_lup/pages/SignUpIntermediatePage.dart';
 import 'package:c_lup/pages/SignUpPage.dart';
 import 'package:c_lup/theme/MainTheme.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignUpPage(),
         '/home': (context) => HomePage(),
         '/login': (context) => LoginPage(),
+        '/qrcode': (context) => QrCodePage(),
       },
       builder: EasyLoading.init(),
     );

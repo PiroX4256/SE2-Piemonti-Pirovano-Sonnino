@@ -38,6 +38,7 @@ class Generator {
           booking: new Booking(
             id: reservation['booking']['id'].toString(),
             date: reservation['booking']['visitDate'].toString(),
+            uuid: reservation['booking']['uuid'],
             slot: new Slot(
                 id: reservation['booking']['slot']['id'].toString(),
                 startingHour: reservation['booking']['slot']['startingHour'].toString(),
