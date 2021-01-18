@@ -35,7 +35,7 @@ function voidTicket(ticketId) {
     var confirmation = confirm("Are you sure to void ticket number " + ticketId + "?");
     if(confirmation) {
         $.ajax({
-            url: '/api/ticket/voidTicket?ticketId=' + ticketId,
+            url: '/api/ticket/voidUserTicket?ticketId=' + ticketId,
             method: 'GET',
             headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
             success: function (data) {

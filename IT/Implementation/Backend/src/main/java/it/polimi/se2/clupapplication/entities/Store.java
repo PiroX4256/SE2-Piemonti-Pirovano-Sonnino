@@ -48,6 +48,9 @@ public class Store {
 
     public Store(String name, String chain, String city, String address, int cap, double longitude, double latitude) {
         this.name = name;
+        if(chain!=null) {
+            this.chain = chain;
+        }
         this.longitude = longitude;
         this.latitude = latitude;
         this.city = city;
