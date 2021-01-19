@@ -110,4 +110,12 @@ class AuthService {
     }
     else return false;
   }
+  static void voidTicket(String ticketId, String token) async {
+    var response = await http.get(
+        'http://192.168.1.9:8084/api/ticket/voidTicket?ticketId=' + ticketId,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        });
+  }
 }

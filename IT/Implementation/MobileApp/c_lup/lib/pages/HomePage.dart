@@ -376,16 +376,16 @@ class _HomePageState extends State<HomePage> {
                                                             ),
                                                             onPressed:
                                                                 () {
-                                                              
+                                                              AuthService.voidTicket(reservation.id, user.token);
                                                               Navigator
-                                                                  .popAndPushNamed(
+                                                                  .pushNamedAndRemoveUntil(
                                                                   context,
-                                                                  "/home");
+                                                                  "/home", (r)=>false);
                                                             }),
                                                       ],
                                                     ));
                                               }))
-                                        ]))
+                                         ])).where((row) => (row.cells.first.child as Text).data != "VOID")
                                         .toList())
                               ],
                             );
