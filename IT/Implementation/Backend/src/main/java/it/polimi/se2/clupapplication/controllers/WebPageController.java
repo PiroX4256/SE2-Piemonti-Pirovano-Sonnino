@@ -73,4 +73,9 @@ public class WebPageController {
     public String attendantHome() {
         return "/attendant/index.html";
     }
+
+    @RequestMapping("/attendant/tickets")
+    public String attendantTickets() {
+        return "/attendant/tickets.html";
+    }
 }

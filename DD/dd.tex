@@ -75,27 +75,27 @@ Finally, \textbf{Store Attendants} can sign up with their personal store code in
 \subsection{Definitions, Acronyms, Abbreviations}
 \subsubsection{Definitions}
 \begin{itemize}
-    \item \textbf{Visit:} it refers to the customers entering the shop, and also to their staying time. It is associated to both a certain store and a visit slot.
-    \item \textbf{Slot:} it is a day/time range. It can be reserved by a limit number of users in order to guarantee a maximum number of people who are inside a store in every time of the day.
-    \item \textbf{Tier:} it is a row or layer in a series of similarly arranged objects. In computer programming, the parts of a program can be distributed among several tiers, each located in a different computer in a network.
-    \item \textbf{Web Interface:} it permits to use a service only through the web browser.
+    \item \textbf{Client-side scripting:} it is performed to generate a code that can run on the client end (browser) without needing the server side processing.
+    \item \textbf{Code On Demand:} in distributed computing, it is any technology that sends executable software code from a server computer to a client computer upon request from the client's software.
     \item \textbf{Middleware:} in distributed applications, it represents the software that enables communication and management of data.
     \item \textbf{RESTful:} it s a software architectural style that defines a set of constraints to be used for creating Web services.
-    \item \textbf{Code On Demand:} in distributed computing, it is any technology that sends executable software code from a server computer to a client computer upon request from the client's software.
-    \item \textbf{Client-side scripting:} it is performed to generate a code that can run on the client end (browser) without needing the server side processing.
+    \item \textbf{Slot:} it is a day/time range. It can be reserved by a limit number of users in order to guarantee a maximum number of people who are inside a store in every time of the day.
+    \item \textbf{Tier:} it is a row or layer in a series of similarly arranged objects. In computer programming, the parts of a program can be distributed among several tiers, each located in a different computer in a network.
+    \item \textbf{Visit:} it refers to the customers entering the shop, and also to their staying time. It is associated to both a certain store and a visit slot.
+    \item \textbf{Web Interface:} it permits to use a service only through the web browser.
 \end{itemize}
 
 \subsubsection{Acronyms}
 \begin{itemize}
-    \item \textbf{RASD:} Requirements Analysis and Specification Document
-    \item \textbf{DD:} Design Document
-    \item \textbf{S2B:} Software to Be, it is the one designed in this document and not yet implemented.
-    \item \textbf{ASAP:} As Soon As Possible. It refers to the possibility of getting an appointment on the first available slot.
-    \item \textbf{MVP:} Minimum Viable Product, it is a version of a product with just enough features to be usable by early customers who can then provide feedback for future product development.
     \item \textbf{API:} Application Programming Interface, it indicates on demand procedure which supply a specific task.
-    \item \textbf{ER:} Entity-Relationship model, it describes interrelated things of interest in a specific domain of knowledge.
+    \item \textbf{ASAP:} As Soon As Possible. It refers to the possibility of getting an appointment on the first available slot.
     \item \textbf{DBMS:} DataBase Management System.
+    \item \textbf{DD:} Design Document
+    \item \textbf{ER:} Entity-Relationship model, it describes interrelated things of interest in a specific domain of knowledge.
     \item \textbf{HTTPS:} Hypertext Transfer Protocol Secure (HTTPS) is an extension of the Hypertext Transfer Protocol (HTTP). It is used for secure communication over a computer network, and is widely adopted on the Internet.
+    \item \textbf{MVP:} Minimum Viable Product, it is a version of a product with just enough features to be usable by early customers who can then provide feedback for future product development.
+    \item \textbf{RASD:} Requirements Analysis and Specification Document
+    \item \textbf{S2B:} Software to Be, it is the one designed in this document and not yet implemented.
     \item \textbf{TLS:} Transport Layer Security, it is a protocol which aims primarily to provide privacy and data integrity between two or more communicating computer applications
 \end{itemize}
 
@@ -107,6 +107,10 @@ Finally, \textbf{Store Attendants} can sign up with their personal store code in
 \end{itemize}
 
 \subsection{Revision History}
+\begin{itemize}
+    \item January 9, 2021: version 1.0 (first release)
+    \item
+\end{itemize}
 
 \subsection{Reference Documents}
 \begin{itemize}
@@ -117,10 +121,10 @@ Finally, \textbf{Store Attendants} can sign up with their personal store code in
 \subsection{Document Structure}
 \begin{itemize}
     \item \textbf{Section 1: Introduction}\\This section offers a brief description of the document that will be presented, with all the definitions, acryonyms and abbreviations that will be found reading it.
-    \item \textbf{Section 2: Architectural Design}\\This section offers a more detailed description of the architecture of the system. The first part describes the chosen paradigm and the overall split of the system into several layers. Furthermore, an high-level description of the system is provided, together with a presentation of the modules composing its nodes. Finally, there is a concrete description of the tiers forming the S2B.
-    \item \textbf{Section 3: User Interface Design}\\This section contains several mockups of the application, together with some charts useful to understand the correct flow of execution of it. The presented mockups refers to the client-side experience.
+    \item \textbf{Section 2: Architectural Design}\\This section is addressed to the developer team and offers a more detailed description of the architecture of the system. The first part describes the chosen paradigm and the overall split of the system into several layers. Furthermore, an high-level description of the system is provided, together with a presentation of the modules composing its nodes. Finally, there is a concrete description of the tiers forming the S2B.
+    \item \textbf{Section 3: User Interface Design}\\This section is useful for graphical designers of the S2B and contains several mockups of the application, together with some charts useful to understand the correct flow of execution of it. The presented mockups refers to the client-side experience.
     \item \textbf{Section 4: Requirements Traceability}\\This section acts as a bridge between the RASD and DD document, providing a complete mapping of the requirements and goals described in the RASD to the logical modules presented in this document.
-    \item \textbf{Section 5: Implementation, Integration and Test Plan}\\The last section describes the procedures followed for implementing, testing and integrating the components of our S2B. There will be a detailed description of the core functionalities of it, together with a complete report about how to implement and test them.
+    \item \textbf{Section 5: Implementation, Integration and Test Plan}\\The last section is again addressed to the developer team and describes the procedures followed for implementing, testing and integrating the components of our S2B. There will be a detailed description of the core functionalities of it, together with a complete report about how to implement and test them.
 \end{itemize}
 
 \newpage
@@ -134,9 +138,16 @@ Finally, \textbf{Store Attendants} can sign up with their personal store code in
     \end{center}
 \end{figure}
 
-As figure\ref{client_server_par} represents, the system is a distributed application which follows the common known client-server paradigm.
+As figure \ref{client_server_par} represents, the system is a distributed application which follows the common known client-server paradigm.
 
-In particular, the client is \textit{thin}, which means that it does not contain the application business logic, but only the presentation layer. The server, instead, is \textit{fat} and contains all the data management and business logic.
+In particular, there are two different types of client, which makes it either thin and fat at the same time.
+
+The first one is a RIA \textit{Web Application}, which is by definition a thin client, because of its total dependency from the server.
+This type of client does not contain the application business logic, but only the presentation layer.
+
+The second one, instead, is a mobile application, which contains an internal database in order to make it less dependent from the server. This aspect makes it a more thick client.
+
+In both cases the server is \textit{fat} and contains all the data management and business logic.
 
 In this section the architecture will be described in an easy way, justifying all the choices for adopted patterns.
 
@@ -154,7 +165,7 @@ In figure\ref{three_tier_desc} the three S2B layers are shown, which respectivel
     \item \textbf{Data Layer:} it manages the safe storage and the relative access to data.
 \end{itemize}
 
-As shown in the high level representation of figure\ref{three_tier_application} the S2B is divided into three layers that are physically separated by installing them on different tiers. A tier is a physical (or a set of) machine, each of them with its own computational power.
+As shown in the high level representation of figure \ref{three_tier_application} the S2B is divided into three layers that are physically separated by installing them on different tiers. A tier is a physical (or a set of) machine, each of them with its own computational power.
 
 The application described in this document is composed by four tiers.
 
@@ -167,18 +178,19 @@ The service is supposed to be accessed through both a web interface and a mobile
 
 To make possible the construction of the web application, a client-side scripting paradigm will be adopted; this one will be described in detail in the final section of this document.
 
-The architectural figure divides the application in the layers described above, and contains a Web Server, which act as a middleware between the user's browser and the application servers.
+The architectural figure divides the application in the layers described above, and contains some replicated Web Servers, which act as a middleware between the user's browser and the application servers.
 In case of using the mobile application, instead, the core of the software installed on user's device will interfaces with the business layer's APIs, which send and receive all the information in order to work properly directly to the application servers.
 
 Finally, the application servers interfaces with the DBMS APIs, in order to retrieve and store the data required for the considered computation.
+
+The applications servers are expected to be stateless, according to the REST standard definitions (more details in section \ref{REST}).
+For accessing the data, they will use an ORM programming technique in order to interface with the DBMS exploiting the advantages of the object-oriented paradigm.
 
 The nodes are separated by firewalls to guarantee a higher level of security of the whole system.
 
 All the component will be described in depth in the following sections.
 
-According to RASD specifications, if a buyer decides to purchase the third module option, which includes the installation on organization's servers, the entire architecture will be deployed and configured on that servers, without interfacing with CLup ones.
-
-Otherwise, if the buyer intends to purchase only module 1 (only the ASAP functionality) or module 2 (both ASAP and book a visit), the end user will interface with official CLup servers.
+In case of third module development, which permits a custom deploy on buyer organization's servers, the entire architecture will be deployed and then configure on that servers, without interfacing with CLup ones.
 
 \subsection{Component View}
 
@@ -221,9 +233,9 @@ The deployment diagram in figure\ref{deployment_diagram} shows the needed compon
 Each device has its own Operating System where the software runs. The tiers in the image are the following:
 \begin{itemize}
     \item \textbf{Tier 1:} it is the client machine, which can be a computer with a web browser (running, for example, on Windows 10 OS) or the downloadable mobile application (available on both Apple's store and Google's Store).
-    \item \textbf{Tier 2:} it is the web server, which does not execute any business logic, but it simply receives requests from the client, routes them to the server and wraps the application server's response into an HTML file, sending it back to the client. It also appends the styling logic of the page (CSS sheets, JS sheets, etc.).
-    \item \textbf{Tier 3:} it is the application server, which runs the core functionalities of the S2B. The whole application layer is mapped into this tier, which communicates to the client tier through the web server and to the data tier through the DBMS gateway.
-    \item \textbf{Tier 4:} it is composed by the database servers (DBMS, database). They store the data and execute actions on it, according to the instruction given by the application servers.
+    \item \textbf{Tier 2:} it includes the replicated web servers, which do not execute any business logic, but simply receive requests from the client, route them to the application servers and serve an HTML file fo the client, which will build the page thanks to client-side scripting. They also append the styling logic of the page (CSS sheets, JS sheets, etc.).
+    \item \textbf{Tier 3:} it contains the application servers, which run the core functionalities of the S2B. The whole application layer is mapped into this tier, which communicates to the client tier through APIs, which will be used from the web servers (in case of webapp) and the native application (in case of mobile app download). Furthermore, it communicates to the data tier through the DBMS gateway.
+    \item \textbf{Tier 4:} it is composed by the DBMS servers. They store the data and execute actions on it, according to the instruction given by the application servers.
 \end{itemize}
 
 \subsection{Runtime View}
@@ -388,6 +400,7 @@ We chose this architecture for many reasons:
 \end{itemize}
 
 \subsubsection{RESTful Architecture}
+\label{REST}
 The restful application will be adopted both on web and mobile side. This architecture is based on the stateless principle, in which the server does not contain any information about the state of client, that is managed directly on client side.
 
 An useful property of this architecture is the \textit{code on demand} one, which permits sending some code snippets from the server to the client, and then make the client executing them locally (usually in the web browser). This behavior guarantees less computational load on the server and also a dynamic attitude of the service.
@@ -544,7 +557,7 @@ Also the system attributes are guaranteed by the design choices explained in thi
     \item \textbf{Easy usability}: guaranteed through a very simple, minimal and intuitive user interface. Since the main target of the application is the customer-side, the experience is designed to be very simple. In fact, there are only a few buttons with clear and precise functionalities. The aim is to complete the \textit{ASAP} ticket retrieval in no more than five taps (or clicks).
     \item \textbf{Reliability and Availability}: accomplished through a replication of the running application in different clones, following the \textit{scale-out} method. The physical nodes of the system would then work in parallel, avoiding system downtimes due to a failure. In fact, when a clone breaks down, there are others in parallel which can supply the requested service, but with some performance issues. The scope is to obtain at least 97\% of availability for each tier (the total system would then have 97\% of availability).
     \item \textbf{Security}: guaranteed through an encrypted communication between client and server. If the client is connecting through the web interface, connection moves on HTTPS protocol. Otherwise, connection goes on TLS protocol.
-    \item \textbf{Cross Platform}: firstly obtained through a development of a web interface, which can be accessed from any type of connected device. The mobile application, instead, will be available only for iOS and Android users.
+    \item \textbf{Cross Platform}: firstly obtained through a development of a web interface, which can be accessed from any type of connected device with a browser installed. The native mobile application, instead, will be available only for iOS and Android users and will be downloadable from App Store and Google Play.
     \item \textbf{Maintainability and Modularity:} the first is accomplished through the second, because the application will be divided in some small parts (called modules) which interacts each other to provide the requested service.
 \end{itemize}
 

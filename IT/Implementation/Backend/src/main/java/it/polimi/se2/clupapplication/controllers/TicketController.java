@@ -126,12 +126,15 @@ public class TicketController {
      * @return the list of upcoming tickets of a manager's store, identified through the personal
      * token attached to the request.
      */
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ATTENDANT')")
     @GetMapping("/getMyStoreUpcomingTickets")
     public ResponseEntity<?> getMyStoreTickets() {
         User user = userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName());
-        Store store = storeService.getByManager(user);
-        return ResponseEntity.ok(ticketService.getUpcomingTicketByStore(store));
+        if(user.getRoles().iterator().next().getName().equals("ATTENDANT")) {
+            return ResponseEntity.ok(ticketService.getUpcomingTicketByStore(storeService.getStoreByAttendant(user)));
+        } else {
+            return ResponseEntity.ok(ticketService.getUpcomingTicketByStore(storeService.getByManager(user)));
+        }
     }
 
     /**
