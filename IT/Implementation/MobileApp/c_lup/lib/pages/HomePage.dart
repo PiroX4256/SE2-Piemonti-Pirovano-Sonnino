@@ -1,7 +1,10 @@
 import 'dart:collection';
 
 import 'file:///D:/projects/SE2-Piemonti-Pirovano-Sonnino/IT/Implementation/MobileApp/c_lup/lib/utils/QrCodeArguments.dart';
+import 'package:c_lup/model/Store.dart';
 import 'package:c_lup/utils/AuthService.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:c_lup/model/User.dart';
 import 'package:c_lup/utils/Generator.dart';
@@ -19,501 +22,558 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String alertTitle = "";
+  String body = "";
   User user = Hive.box<User>('properties').get('user');
   Set<Marker> _markers = HashSet<Marker>();
   GoogleMapController _mapController;
+  String title;
 
   @override
   Widget build(BuildContext context) {
     user.role == "USER" ? EasyLoading.show() : EasyLoading.dismiss();
+    user.role == "USER" ? title = "User Home" : title = "Attendant Home";
     return Scaffold(
-        appBar: HomeAppbar(),
+        appBar: HomeAppbar(
+          title: Text(title,
+              style: TextStyle(color: Theme.of(context).accentColor)),
+        ),
         body: user.role == "USER"
-            ? Center(
-            child: Padding(
+            ? Padding(
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ListView(
-                  children: <Widget>[
-                    FutureBuilder<bool>(
-                        future: fetchBookings(user),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<bool> snapshot) {
-                          if (snapshot.hasData) {
-                            EasyLoading.dismiss();
-                            return ListView(
-                              shrinkWrap: true,
-                              children: [
-                                Text(
-                                  "Tickets",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: Theme
-                                          .of(context)
-                                          .accentColor,
-                                      fontSize: 24),
-                                ),
-                                DataTable(
-                                    columnSpacing: 30,
-                                    columns: [
-                                      DataColumn(
-                                          label: Text(
-                                            "Type",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18),
-                                          )),
-                                      DataColumn(
-                                          label: Text(
-                                            "Date",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18),
-                                          )),
-                                      DataColumn(
-                                          label: Text(
-                                            "Time",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18),
-                                          )),
-                                      DataColumn(label: Text(''))
-                                    ],
-                                    rows: user.reservations
-                                        .map((reservation) =>
-                                        DataRow(cells: [
-                                          DataCell(
-                                            Text(reservation.status,
-                                                style: Theme
-                                                    .of(context)
-                                                    .textTheme
-                                                    .headline6),
-                                          ),
-                                          DataCell(
-                                            Text(
-                                                DateTime
-                                                    .parse(reservation
-                                                    .booking.date)
-                                                    .day
-                                                    .toString()
-                                                    .padLeft(2, '0') +
-                                                    "/" +
-                                                    DateTime
-                                                        .parse(
-                                                        reservation
-                                                            .booking
-                                                            .date)
-                                                        .month
-                                                        .toString()
-                                                        .padLeft(2, '0') +
-                                                    "/" +
-                                                    DateTime
-                                                        .parse(
-                                                        reservation
-                                                            .booking
-                                                            .date)
-                                                        .year
-                                                        .toString(),
-                                                style: Theme
-                                                    .of(context)
-                                                    .textTheme
-                                                    .headline6),
-                                          ),
-                                          DataCell(
-                                            Text(
-                                                reservation.booking.slot
-                                                    .startingHour
-                                                    .split(':')
-                                                    .getRange(0, 2)
-                                                    .join(':'),
-                                                style: Theme
-                                                    .of(context)
-                                                    .textTheme
-                                                    .headline6),
-                                          ),
-                                          DataCell(GestureDetector(
-                                              child: Icon(
-                                                  Icons.info_outline),
-                                              onTap: () async {
-                                                setState(() {
-                                                  _markers.add(Marker(
-                                                      markerId:
-                                                      MarkerId("0"),
-                                                      position: LatLng(
-                                                          double.parse(
-                                                              reservation
-                                                                  .store
-                                                                  .longitude +
-                                                                  "00"),
-                                                          double.parse(
-                                                              reservation
-                                                                  .store
-                                                                  .latitude +
-                                                                  "00")),
-                                                      infoWindow: InfoWindow(
-                                                          title:
-                                                          reservation
-                                                              .store
-                                                              .name)));
-                                                });
-                                                showDialog(
-                                                    context: context,
-                                                    barrierDismissible:
-                                                    false,
-                                                    builder: (_) =>
-                                                    new AlertDialog(
-                                                      title: Row(
-                                                        children: [
-                                                          Expanded(
-                                                            flex: 10,
-                                                            child: Text(
-                                                                'Details',
-                                                                style: TextStyle(
-                                                                    fontWeight: FontWeight
-                                                                        .w600,
-                                                                    color: Theme
-                                                                        .of(
-                                                                        context)
-                                                                        .accentColor,
-                                                                    fontSize: 24)),
-                                                          ),
-                                                          Expanded(
-                                                              flex: 1,
-                                                              child:
-                                                              GestureDetector(
-                                                                onTap:
-                                                                    () {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                                child:
-                                                                Icon(
-                                                                  Icons.close,
-                                                                ),
-                                                              ))
-                                                        ],
-                                                      ),
-                                                      content:
-                                                      SingleChildScrollView(
-                                                        child:
-                                                        ListBody(
-                                                          children: <
-                                                              Widget>[
-                                                            DataTable(
-                                                                headingRowHeight:
-                                                                0,
-                                                                columns: [
-                                                                  DataColumn(
-                                                                      label: Text(
-                                                                          "")),
-                                                                  DataColumn(
-                                                                      label: Text(
-                                                                          "")),
-                                                                ],
-                                                                rows: [
-                                                                  DataRow(
-                                                                      cells: [
-                                                                        DataCell(
-                                                                            Text(
-                                                                                'QR Code',
-                                                                                style: TextStyle(
-                                                                                    color: Colors
-                                                                                        .black,
-                                                                                    fontWeight: FontWeight
-                                                                                        .bold))),
-                                                                        DataCell(
-                                                                            GestureDetector(
-                                                                                onTap: () {
-                                                                                  Navigator
-                                                                                      .pushNamed(
-                                                                                      context,
-                                                                                      "/qrcode",
-                                                                                      arguments: QrCodeArguments(
-                                                                                          reservation
-                                                                                              .booking
-                                                                                              .uuid));
-                                                                                },
-                                                                                child: Icon(
-                                                                                    Icons
-                                                                                        .qr_code_outlined)))
-                                                                      ]),
-                                                                  DataRow(
-                                                                      cells: [
-                                                                        DataCell(
-                                                                            Text(
-                                                                                'Store',
-                                                                                style: TextStyle(
-                                                                                    color: Colors
-                                                                                        .black,
-                                                                                    fontWeight: FontWeight
-                                                                                        .bold))),
-                                                                        DataCell(
-                                                                            Text(
-                                                                                reservation
-                                                                                    .store
-                                                                                    .name,
-                                                                                style: TextStyle(
-                                                                                    color: Color(
-                                                                                        0xff8A888A),
-                                                                                    fontWeight: FontWeight
-                                                                                        .w600))),
-                                                                      ]),
-                                                                  DataRow(
-                                                                      cells: [
-                                                                        DataCell(
-                                                                            Text(
-                                                                                'Chain',
-                                                                                style: TextStyle(
-                                                                                    color: Colors
-                                                                                        .black,
-                                                                                    fontWeight: FontWeight
-                                                                                        .bold))),
-                                                                        DataCell(
-                                                                            Text(
-                                                                                reservation
-                                                                                    .store
-                                                                                    .chain ==
-                                                                                    null
-                                                                                    ? "-"
-                                                                                    : reservation
-                                                                                    .store
-                                                                                    .chain,
-                                                                                style: TextStyle(
-                                                                                    color: Color(
-                                                                                        0xff8A888A),
-                                                                                    fontWeight: FontWeight
-                                                                                        .w600))),
-                                                                      ]),
-                                                                  DataRow(
-                                                                      cells: [
-                                                                        DataCell(
-                                                                            Text(
-                                                                                'Address',
-                                                                                style: TextStyle(
-                                                                                    color: Colors
-                                                                                        .black,
-                                                                                    fontWeight: FontWeight
-                                                                                        .bold))),
-                                                                        DataCell(
-                                                                            Text(
-                                                                                reservation
-                                                                                    .store
-                                                                                    .address,
-                                                                                style: TextStyle(
-                                                                                    color: Color(
-                                                                                        0xff8A888A),
-                                                                                    fontWeight: FontWeight
-                                                                                        .w600))),
-                                                                      ]),
-                                                                  DataRow(
-                                                                      cells: [
-                                                                        DataCell(
-                                                                            Text(
-                                                                                'City',
-                                                                                style: TextStyle(
-                                                                                    color: Colors
-                                                                                        .black,
-                                                                                    fontWeight: FontWeight
-                                                                                        .bold))),
-                                                                        DataCell(
-                                                                            Text(
-                                                                                reservation
-                                                                                    .store
-                                                                                    .city,
-                                                                                style: TextStyle(
-                                                                                    color: Color(
-                                                                                        0xff8A888A),
-                                                                                    fontWeight: FontWeight
-                                                                                        .w600))),
-                                                                      ]),
-                                                                ]),
-                                                            SizedBox(
-                                                              height:
-                                                              300,
-                                                              width:
-                                                              200,
-                                                              child: GoogleMap(
-                                                                // onMapCreated:
-                                                                //     (GoogleMapController
-                                                                //         controller) {
-                                                                //   _mapController =
-                                                                //       controller;
-                                                                //   Marker marker = Marker(
-                                                                //       markerId:
-                                                                //       MarkerId("0"),
-                                                                //       position: LatLng(double.parse(reservation.store.longitude + "00"), double.parse(reservation.store.latitude + "00")),
-                                                                //       infoWindow: InfoWindow(title: reservation.store.name));
-                                                                //   setState(() {_markers.add(marker);});},
-                                                                  markers: _markers,
-                                                                  initialCameraPosition: CameraPosition(
-                                                                      target: LatLng(
-                                                                          double
-                                                                              .parse(
-                                                                              reservation
-                                                                                  .store
-                                                                                  .longitude +
-                                                                                  "00"),
-                                                                          double
-                                                                              .parse(
-                                                                              reservation
-                                                                                  .store
-                                                                                  .latitude +
-                                                                                  "00")),
-                                                                      zoom: 12)),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      actions: <
-                                                          Widget>[
-                                                        RaisedButton(
-                                                            textColor:
-                                                            Colors
-                                                                .white,
-                                                            child:
-                                                            Container(
-                                                              child: Text(
-                                                                  'Delete'),
-                                                            ),
-                                                            onPressed:
-                                                                () {
-                                                              AuthService.voidTicket(reservation.id, user.token);
-                                                              Navigator
-                                                                  .pushNamedAndRemoveUntil(
-                                                                  context,
-                                                                  "/home", (r)=>false);
-                                                            }),
-                                                      ],
-                                                    ));
-                                              }))
-                                         ])).where((row) => (row.cells.first.child as Text).data != "VOID")
-                                        .toList())
-                              ],
-                            );
-                          } else if (snapshot.hasError) {
-                            EasyLoading.showError('kek');
-                            return Container();
-                          } else {
-                            EasyLoading.dismiss();
-                            return Container();
-                          }
-                        }),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        'RETRIEVE A TICKET',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .button,
-                      ),
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        'BOOK A TICKET',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .button,
-                      ),
-                    ),
-                  ],
-                )))
-            : (user.role == "ATTENDANT" ? Center(
-            child: Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: ListView(
-                  shrinkWrap: true,
                   children: [
-                    RaisedButton(
+                    Card(
+                        elevation: 8.0,
+                        child: Container(
+                            padding: EdgeInsets.all(10.0),
+                            child: Column(
+                              children: <Widget>[
+                                FutureBuilder<bool>(
+                                    future: fetchBookings(user),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<bool> snapshot) {
+                                      if (snapshot.hasData) {
+                                        EasyLoading.dismiss();
+                                        return ListView(
+                                          shrinkWrap: true,
+                                          children: [
+                                            Text(
+                                              "Tickets",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  fontSize: 24),
+                                            ),
+                                            DataTable(
+                                                columnSpacing: 30,
+                                                columns: [
+                                                  DataColumn(
+                                                      label: Text(
+                                                    "Type",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                                  DataColumn(
+                                                      label: Text(
+                                                    "Date",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                                  DataColumn(
+                                                      label: Text(
+                                                    "Time",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                                  DataColumn(label: Text(''))
+                                                ],
+                                                rows: user.reservations
+                                                    .map((reservation) {
+                                                      return DataRow(cells: [
+                                                        DataCell(displayStatus(
+                                                            reservation
+                                                                .status)),
+                                                        DataCell(
+                                                          Text(
+                                                              DateTime.parse(reservation
+                                                                          .booking
+                                                                          .date)
+                                                                      .day
+                                                                      .toString()
+                                                                      .padLeft(
+                                                                          2,
+                                                                          '0') +
+                                                                  "/" +
+                                                                  DateTime.parse(reservation
+                                                                          .booking
+                                                                          .date)
+                                                                      .month
+                                                                      .toString()
+                                                                      .padLeft(
+                                                                          2, '0') +
+                                                                  "/" +
+                                                                  DateTime.parse(reservation
+                                                                          .booking
+                                                                          .date)
+                                                                      .year
+                                                                      .toString(),
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headline6),
+                                                        ),
+                                                        DataCell(
+                                                          Text(
+                                                              reservation
+                                                                  .booking
+                                                                  .slot
+                                                                  .startingHour
+                                                                  .split(':')
+                                                                  .getRange(
+                                                                      0, 2)
+                                                                  .join(':'),
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headline6),
+                                                        ),
+                                                        DataCell(
+                                                            GestureDetector(
+                                                                child: Icon(Icons
+                                                                    .info_outline),
+                                                                onTap:
+                                                                    () async {
+                                                                  setState(() {
+                                                                    _markers.add(Marker(
+                                                                        markerId:
+                                                                            MarkerId(
+                                                                                "0"),
+                                                                        position: LatLng(
+                                                                            double.parse(reservation
+                                                                                .store.longitude),
+                                                                            double.parse(reservation
+                                                                                .store.latitude)),
+                                                                        infoWindow:
+                                                                            InfoWindow(title: reservation.store.name)));
+                                                                  });
+                                                                  showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      barrierDismissible:
+                                                                          false,
+                                                                      builder:
+                                                                          (_) =>
+                                                                              new AlertDialog(
+                                                                                title: Row(
+                                                                                  children: [
+                                                                                    Expanded(
+                                                                                      flex: 10,
+                                                                                      child: Text('Details', style: TextStyle(fontWeight: FontWeight.w600, color: Theme.of(context).accentColor, fontSize: 24)),
+                                                                                    ),
+                                                                                    Expanded(
+                                                                                        flex: 1,
+                                                                                        child: GestureDetector(
+                                                                                          onTap: () {
+                                                                                            Navigator.pop(context);
+                                                                                          },
+                                                                                          child: Icon(
+                                                                                            Icons.close,
+                                                                                          ),
+                                                                                        ))
+                                                                                  ],
+                                                                                ),
+                                                                                content: SingleChildScrollView(
+                                                                                  child: ListBody(
+                                                                                    children: <Widget>[
+                                                                                      DataTable(headingRowHeight: 0, columns: [
+                                                                                        DataColumn(label: Text("")),
+                                                                                        DataColumn(label: Text("")),
+                                                                                      ], rows: [
+                                                                                        DataRow(cells: [
+                                                                                          DataCell(Text('QR Code', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
+                                                                                          DataCell(GestureDetector(
+                                                                                              onTap: () {
+                                                                                                Navigator.pushNamed(context, "/qr-code", arguments: QrCodeArguments(reservation.booking.uuid));
+                                                                                              },
+                                                                                              child: Icon(Icons.qr_code_outlined)))
+                                                                                        ]),
+                                                                                        DataRow(cells: [
+                                                                                          DataCell(Text('Store', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
+                                                                                          DataCell(Text(reservation.store.name, style: TextStyle(color: Color(0xff8A888A), fontWeight: FontWeight.w600))),
+                                                                                        ]),
+                                                                                        DataRow(cells: [
+                                                                                          DataCell(Text('Chain', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
+                                                                                          DataCell(Text(reservation.store.chain == null ? "-" : reservation.store.chain, style: TextStyle(color: Color(0xff8A888A), fontWeight: FontWeight.w600))),
+                                                                                        ]),
+                                                                                        DataRow(cells: [
+                                                                                          DataCell(Text('Address', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
+                                                                                          DataCell(Text(reservation.store.address, style: TextStyle(color: Color(0xff8A888A), fontWeight: FontWeight.w600))),
+                                                                                        ]),
+                                                                                        DataRow(cells: [
+                                                                                          DataCell(Text('City', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
+                                                                                          DataCell(Text(reservation.store.city, style: TextStyle(color: Color(0xff8A888A), fontWeight: FontWeight.w600))),
+                                                                                        ]),
+                                                                                      ]),
+                                                                                      SizedBox(
+                                                                                        height: 300,
+                                                                                        width: 200,
+                                                                                        child: GoogleMap(markers: _markers, initialCameraPosition: CameraPosition(target: LatLng(double.parse(reservation.store.longitude), double.parse(reservation.store.latitude)), zoom: 10)),
+                                                                                      )
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                                actions: <Widget>[
+                                                                                  RaisedButton(
+                                                                                      textColor: Colors.white,
+                                                                                      child: Container(
+                                                                                        child: Text('Delete'),
+                                                                                      ),
+                                                                                      onPressed: () {
+                                                                                        AuthService.voidTicket(reservation.id, user.token);
+                                                                                        Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
+                                                                                      }),
+                                                                                ],
+                                                                              ));
+                                                                }))
+                                                      ]);
+                                                    })
+                                                    .where((row) =>
+                                                        (row.cells.first.child
+                                                                    as Text)
+                                                                .data !=
+                                                            "VOID" ||
+                                                        (row.cells.first.child
+                                                                    as Text)
+                                                                .data !=
+                                                            "USED")
+                                                    .toList())
+                                          ],
+                                        );
+                                      } else if (snapshot.hasError) {
+                                        EasyLoading.showError(
+                                            'No Tickets Found');
+                                        return ListView(
+                                            shrinkWrap: true,
+                                            children: [
+                                              Text(
+                                                "Tickets",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Theme.of(context)
+                                                        .accentColor,
+                                                    fontSize: 24),
+                                              ),
+                                              DataTable(
+                                                columnSpacing: 30,
+                                                columns: [
+                                                  DataColumn(
+                                                      label: Text(
+                                                    "Type",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                                  DataColumn(
+                                                      label: Text(
+                                                    "Date",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                                  DataColumn(
+                                                      label: Text(
+                                                    "Time",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                                  DataColumn(label: Text(''))
+                                                ],
+                                                rows: [],
+                                              )
+                                            ]);
+                                      } else {
+                                        EasyLoading.dismiss();
+                                        return Container();
+                                      }
+                                    }),
+                              ],
+                            ))),
+                    RaisedButton.icon(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       onPressed: () async {
-                        String barcode =
-                        await FlutterBarcodeScanner.scanBarcode(
-                            "#ff6666", "Cancel", false, ScanMode.DEFAULT);
-                        if (await AuthService.codeValidation(
-                            barcode, user.token)) {
-                          showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (_) =>
-                              new AlertDialog(
-                                title: Text('Valid'),
-                                actions: <Widget>[
-                                  TextButton(
-                                      child: Text(
-                                        'Ok',
-                                        style: Theme
-                                            .of(context)
-                                            .textTheme
-                                            .bodyText1,
-                                      ),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      })
-                                ],
-                              ));
-                        } else
-                          showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (_) =>
-                              new AlertDialog(
-                                  title: Text('Invalid'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                        child: Text(
-                                          'Ok',
-                                          style: Theme
-                                              .of(context)
-                                              .textTheme
-                                              .bodyText1,
+                        if (user.stores == null) {
+                          await Generator.fetchStores(user.token);
+                          setState(() {
+                            user = Hive.box<User>('properties').get('user');
+                          });
+                        }
+                        else{
+                          setState(() {
+                            user = Hive.box<User>('properties').get('user');
+                          });
+                        }
+                        user.storeId != null
+                            ? showDialog(
+                                context: context,
+                                builder: (_) => new AlertDialog(
+                                      title: Text('Are you sure?',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: Theme.of(context)
+                                                  .accentColor)),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: <Widget>[
+                                            Text(
+                                                "Pressing \"Confirm\" will queue and generate a ticket in the selected store:"),
+                                            fetchStore(),
+                                          ],
                                         ),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        })
-                                  ]));
+                                      ),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                            child: Text('Cancel',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            }),
+                                        FlatButton(
+                                            child: Text('Confirm',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1),
+                                            onPressed: () async {
+                                              if (await AuthService.asap(
+                                                  user.storeId, user.token)) {
+                                                alertTitle = "Ticket Created";
+                                              } else {
+                                                alertTitle = "Error";
+                                                body = "No slots available!";
+                                              }
+                                              showDialog(
+                                                  context: context,
+                                                  barrierDismissible: false,
+                                                  builder: (_) =>
+                                                      new AlertDialog(
+                                                          title: Text(
+                                                              alertTitle,
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .accentColor)),
+                                                          content:
+                                                              SingleChildScrollView(
+                                                                  child:
+                                                                      ListBody(
+                                                            children: <Widget>[
+                                                              Text(body)
+                                                            ],
+                                                          )),
+                                                          actions: [
+                                                            FlatButton(
+                                                                child: Text(
+                                                                    'Ok',
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .bodyText1),
+                                                                onPressed: () {
+                                                                  Navigator.popAndPushNamed(
+                                                                      context,
+                                                                      "/home");
+                                                                })
+                                                          ]));
+                                            })
+                                      ],
+                                    ))
+                            : Navigator.pushNamed(context, "/edit-store");
                       },
-                      child: Text(
-                        'QR CODE SCANNER',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .button,
+                      label: Text(
+                        'LINE-UP',
+                        style: Theme.of(context).textTheme.button,
+                      ),
+                      icon: FaIcon(
+                        FontAwesomeIcons.ticketAlt,
+                        color: Colors.white,
                       ),
                     ),
-                    SizedBox(
-                      width: 20,
-                      height: 20,
-                    ),
-                    RaisedButton(
+                    RaisedButton.icon(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       onPressed: () {},
-                      child: Text(
-                        'DELETE BOOKING',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .button,
+                      label: Text(
+                        'BOOK A TICKET',
+                        style: Theme.of(context).textTheme.button,
+                      ),
+                      icon: FaIcon(
+                        FontAwesomeIcons.calendar,
+                        color: Colors.white,
+                      ),
+                    ),
+                    RaisedButton.icon(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/edit-store");
+                      },
+                      label: Text(
+                        'SELECT STORE',
+                        style: Theme.of(context).textTheme.button,
+                      ),
+                      icon: FaIcon(
+                        FontAwesomeIcons.store,
+                        color: Colors.white,
                       ),
                     ),
                   ],
-                ))) : Navigator.pushNamedAndRemoveUntil(
-            context, '/login', (route) => false))
-    );
+                ))
+            : (user.role == "ATTENDANT"
+                ? Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        RaisedButton.icon(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          onPressed: () async {
+                            String barcode =
+                                await FlutterBarcodeScanner.scanBarcode(
+                                    "#ff6666",
+                                    "Cancel",
+                                    false,
+                                    ScanMode.DEFAULT);
+                            if (await AuthService.codeValidation(
+                                barcode, user.token)) {
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (_) => new AlertDialog(
+                                        title: Text('Valid'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                              child: Text(
+                                                'Ok',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1,
+                                              ),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              })
+                                        ],
+                                      ));
+                            } else
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (_) => new AlertDialog(
+                                          title: Text('Invalid'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                                child: Text(
+                                                  'Ok',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1,
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                })
+                                          ]));
+                          },
+                          label: Text(
+                            'SCAN QR CODE',
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                          icon: FaIcon(
+                            FontAwesomeIcons.qrcode,
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                          height: 10,
+                        ),
+                        RaisedButton.icon(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          onPressed: () {},
+                          label: Text(
+                            'GENERATE TICKET',
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                          icon: FaIcon(
+                            FontAwesomeIcons.ticketAlt,
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                          height: 10,
+                        ),
+                        RaisedButton.icon(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/delete-booking");
+                          },
+                          label: Text(
+                            'DELETE BOOKING',
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                          icon: FaIcon(
+                            FontAwesomeIcons.minusCircle,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ))
+                : Navigator.pushNamedAndRemoveUntil(
+                    context, '/login', (route) => false)));
   }
 
   Future<bool> fetchBookings(User user) async {
     return Generator.fetchBookings(user.token);
+  }
+
+  Text fetchStore() {
+    List<Store> retrievedStores =
+        user.stores.where((store) => store.id == user.storeId).toList();
+    return Text(retrievedStores.elementAt(0).name);
+  }
+
+  Text displayStatus(String status) {
+    String displayedStatus;
+    if (status == "SCHEDULED") {
+      displayedStatus = "Queue";
+    } else if (status == "BOOKED") {
+      displayedStatus = "Booking";
+    }
+    return Text(displayedStatus, style: Theme.of(context).textTheme.headline6);
   }
 }

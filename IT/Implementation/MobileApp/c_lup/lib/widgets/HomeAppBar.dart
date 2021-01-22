@@ -43,10 +43,7 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                                   child: Text('Confirm', style: Theme.of(context).textTheme.bodyText1),
                                   onPressed: () async {
                                     var box = Hive.box<User>('properties');
-                                    User user = box.get('user');
-                                    user.setToken(null);
-                                    user.setReservation(null);
-                                    user.setRole(null);
+                                    User user;
                                     box.put('user', user);
                                     Navigator.pushNamedAndRemoveUntil(
                                         context, '/login', (route) => false);

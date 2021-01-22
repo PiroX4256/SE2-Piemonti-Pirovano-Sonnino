@@ -203,7 +203,7 @@ class _SignUpCardState extends State<SignUpCard> {
                                     onPressed: () {
                                       if (error) {
                                         Navigator.popAndPushNamed(
-                                            context, "/signup");
+                                            context, "/sign-up");
                                       } else {
                                         Navigator.pushNamedAndRemoveUntil(
                                             context, "/home", (r) => false);

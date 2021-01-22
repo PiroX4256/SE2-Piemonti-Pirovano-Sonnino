@@ -7,6 +7,8 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:enum_to_string/enum_to_string.dart';
 
+import 'Globals.dart';
+
 
 class AuthService {
 
@@ -20,7 +22,7 @@ class AuthService {
       }
       String token = jsonDecode(response.body)['token'];
       user.setToken(token);
-      var response2 = await http.get('http://192.168.1.9:8084/api/auth/me',
+      var response2 = await http.get('http://' + Globals.ip + '/api/auth/me',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'Bearer ' + token
@@ -45,15 +47,13 @@ class AuthService {
     }
     if (response.statusCode == 200) {
       var box = Hive.box<User>('properties');
-      User user = User(token: jsonDecode(response.body)['token'], role: role);
+      User user = new User(token: jsonDecode(response.body)['token'], role: role); //TODO RETURN TOKEN ON SIGNUP
       box.put('user', user);
       return true;
     }
     else {
       return false;
     }
-    return await new Future<bool>.delayed(
-        new Duration(seconds: 2), () => new Random().nextBool());
   }
 
   static Future<http.Response> request(String username, String password, String type, {String role, String storeId})  async{
@@ -79,7 +79,7 @@ class AuthService {
       }
     }
     return await http.post(
-      'http://192.168.1.9:8084/api/auth/' + type,
+      'http://' + Globals.ip + '/api/auth/' + type,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -88,7 +88,7 @@ class AuthService {
   }
 
   static Future<bool> auth(String token) async{
-    var response = await http.get('http://192.168.1.9:8084/api/auth/me',
+    var response = await http.get('http://' + Globals.ip + '/api/auth/me',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer ' + token
@@ -100,7 +100,7 @@ class AuthService {
   }
 
   static Future<bool> codeValidation(String uuid, String token) async{
-    var response = await http.get('http://192.168.1.9:8084/api/ticket/validateTicket?uuid=' + uuid,
+    var response = await http.get('http://' + Globals.ip + '/api/ticket/validateTicket?uuid=' + uuid,
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer ' + token
@@ -112,10 +112,23 @@ class AuthService {
   }
   static void voidTicket(String ticketId, String token) async {
     var response = await http.get(
-        'http://192.168.1.9:8084/api/ticket/voidTicket?ticketId=' + ticketId,
+        'http://' + Globals.ip + '/api/ticket/voidTicket?ticketId=' + ticketId,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token
         });
+  }
+
+  static Future<bool> asap(String storeId, String token) async {
+    var response = await http.get(
+        'http://' + Globals.ip + '/api/ticket/asap?storeId=' + storeId,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        });
+    if(response.statusCode == 200){
+      return true;
+    }
+    else return false;
   }
 }

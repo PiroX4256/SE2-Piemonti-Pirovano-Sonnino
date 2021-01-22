@@ -53,8 +53,8 @@ class _LoginCardState extends State<LoginCard> {
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     onPressed: () async {
-                      EasyLoading.show();
                       if (_formKey.currentState.validate()) {
+                        EasyLoading.show();
                         if (await AuthService.login(
                             email: controller.text,
                             password: controller2.text)) {
