@@ -52,7 +52,7 @@ class _EditStorePageState extends State<EditStorePage> {
       return Marker(
           markerId: MarkerId(store.id.toString()),
           position: LatLng(
-              double.parse(store.longitude), double.parse(store.latitude)),
+              double.parse(store.latitude), double.parse(store.longitude)),
           infoWindow: InfoWindow(title: store.name));
     }).toList());
     setState(() {});
@@ -105,9 +105,9 @@ class _EditStorePageState extends State<EditStorePage> {
                                         _controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
                                             target: LatLng(
                                                 double.parse(selectedStore
-                                                    .longitude),
+                                                    .latitude),
                                                 double.parse(selectedStore
-                                                    .latitude)),
+                                                    .longitude)),
                                             zoom: 10)),);
                                       });
                                     },
@@ -133,10 +133,10 @@ class _EditStorePageState extends State<EditStorePage> {
                                                     target: LatLng(
                                                         double.parse(stores
                                                             .elementAt(0)
-                                                            .longitude),
+                                                            .latitude),
                                                         double.parse(stores
                                                             .elementAt(0)
-                                                            .latitude)),
+                                                            .longitude)),
                                                     zoom: 10)),
                                       )
                                     : Container()

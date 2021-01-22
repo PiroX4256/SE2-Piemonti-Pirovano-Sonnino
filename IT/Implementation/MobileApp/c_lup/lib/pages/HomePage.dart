@@ -158,9 +158,9 @@ class _HomePageState extends State<HomePage> {
                                                                                 "0"),
                                                                         position: LatLng(
                                                                             double.parse(reservation
-                                                                                .store.longitude),
+                                                                                .store.latitude),
                                                                             double.parse(reservation
-                                                                                .store.latitude)),
+                                                                                .store.longitude)),
                                                                         infoWindow:
                                                                             InfoWindow(title: reservation.store.name)));
                                                                   });
@@ -225,7 +225,7 @@ class _HomePageState extends State<HomePage> {
                                                                                       SizedBox(
                                                                                         height: 300,
                                                                                         width: 200,
-                                                                                        child: GoogleMap(markers: _markers, initialCameraPosition: CameraPosition(target: LatLng(double.parse(reservation.store.longitude), double.parse(reservation.store.latitude)), zoom: 10)),
+                                                                                        child: GoogleMap(markers: _markers, initialCameraPosition: CameraPosition(target: LatLng(double.parse(reservation.store.latitude), double.parse(reservation.store.longitude)), zoom: 10)),
                                                                                       )
                                                                                     ],
                                                                                   ),
