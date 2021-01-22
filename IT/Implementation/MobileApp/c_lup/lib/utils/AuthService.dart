@@ -110,6 +110,7 @@ class AuthService {
     }
     else return false;
   }
+
   static void voidTicket(String ticketId, String token) async {
     var response = await http.get(
         'http://' + Globals.ip + '/api/ticket/voidTicket?ticketId=' + ticketId,
@@ -131,4 +132,6 @@ class AuthService {
     }
     else return false;
   }
+
+
 }

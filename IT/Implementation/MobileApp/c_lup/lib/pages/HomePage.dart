@@ -249,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                                                         (row.cells.first.child
                                                                     as Text)
                                                                 .data !=
-                                                            "VOID" ||
+                                                            "VOID" &&
                                                         (row.cells.first.child
                                                                     as Text)
                                                                 .data !=
@@ -568,7 +568,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Text displayStatus(String status) {
-    String displayedStatus;
+    String displayedStatus = status;
     if (status == "SCHEDULED") {
       displayedStatus = "Queue";
     } else if (status == "BOOKED") {

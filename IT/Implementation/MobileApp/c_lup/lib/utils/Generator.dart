@@ -4,6 +4,7 @@ import 'package:c_lup/model/Booking.dart';
 import 'package:c_lup/model/Reservation.dart';
 import 'package:c_lup/model/Slot.dart';
 import 'package:c_lup/model/Store.dart';
+import 'package:c_lup/model/Ticket.dart';
 import 'package:c_lup/model/User.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
@@ -91,5 +92,27 @@ class Generator {
       return true;
     } else
       return false;
+  }
+
+  static Future<List<Ticket>> fetchStoreTickets(String token) async {
+    List<Ticket> tickets = new List<Ticket>();
+    var response = await http.get(
+        'http://' + Globals.ip + '/api/ticket/getMyStoreUpcomingTickets',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        });
+    if (response.statusCode == 200) {
+      jsonDecode(response.body).forEach((ticket) {
+        tickets.add(Ticket(
+            id: ticket['id'].toString(),
+            user: ticket['user']['username'],
+            status: ticket['status'],
+            startingHour: ticket['booking']['slot']['startingHour'].toString(),
+            date: ticket['booking']['visitDate'].toString()));
+      });
+      return tickets;
+    } else
+      return null;
   }
 }
