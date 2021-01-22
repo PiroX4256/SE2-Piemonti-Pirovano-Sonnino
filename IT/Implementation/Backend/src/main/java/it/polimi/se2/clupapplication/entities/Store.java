@@ -7,6 +7,7 @@ import com.sun.istack.Nullable;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class Store {
     @NotNull
     private String city;
     @NotNull
+    @Positive(message = "Value must be positive")
     private int cap;
     @NotNull
     private double longitude;

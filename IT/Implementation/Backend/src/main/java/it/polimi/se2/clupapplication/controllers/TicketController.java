@@ -48,7 +48,7 @@ public class TicketController {
         if (ticket != null) {
             return ResponseEntity.ok(ticket);
         } else {
-            return ResponseEntity.unprocessableEntity().body("There are no available slots today.");
+            return ResponseEntity.unprocessableEntity().body("There are no available slots today or you already have a ticket in the selected store.");
         }
     }
 

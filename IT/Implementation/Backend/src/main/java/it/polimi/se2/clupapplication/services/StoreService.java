@@ -126,6 +126,8 @@ public class StoreService {
         store.setAddress(storeDTO.getAddress());
         store.setCap(storeDTO.getCap());
         store.setCity(storeDTO.getCity());
+        store.setLongitude(storeDTO.getLongitude());
+        store.setLatitude(storeDTO.getLatitude());
         storeRepository.save(store);
         return store;
     }
