@@ -66,5 +66,7 @@ function submitForm() {
                 console.log(err);
             }
         });
+    } else {
+        alert("You are pleased to insert a valid email");
     }
 }
