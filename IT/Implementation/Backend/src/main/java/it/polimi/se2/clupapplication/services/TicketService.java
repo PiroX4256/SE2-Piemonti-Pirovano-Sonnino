@@ -40,6 +40,10 @@ public class TicketService {
     public Ticket createNewASAPTicket(Long storeId, User user) {
         Store store;
         Optional<Store> storeQuery = storeRepository.findById(storeId);
+        List<Ticket> tickets = ticketRepository.findByUserAndStatus(user, Status.SCHEDULED);
+        if(tickets.size()>0) {
+            return null;
+        }
         if (storeQuery.isPresent()) {
             store = storeQuery.get();
             Ticket ticket = new Ticket(user, store, Status.SCHEDULED);

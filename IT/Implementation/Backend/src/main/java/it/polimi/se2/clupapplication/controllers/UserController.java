@@ -72,7 +72,8 @@ public class UserController {
     public ResponseEntity<?> signup(@RequestBody UserDTO user) {
         try {
             User userEntity = userService.save(user);
-            return ResponseEntity.ok(userEntity);
+            ResponseEntity<?> responseEntity = generateToken(new LoginUserDTO(userEntity.getUsername(), user.getPassword()));
+            return responseEntity;
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<String>("The profile with the provided username already exists in our systems.", HttpStatus.BAD_REQUEST);
         }

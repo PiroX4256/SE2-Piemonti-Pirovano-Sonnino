@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ public class Slot {
     @NotNull
     private LocalTime startingHour;
     @NotNull
+    @Positive(message = "Value must be positive")
     private int storeCapacity;
     @ManyToOne
     WeekDay weekDay;

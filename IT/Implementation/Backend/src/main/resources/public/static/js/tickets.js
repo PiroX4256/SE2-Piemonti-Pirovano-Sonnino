@@ -28,7 +28,10 @@ $(document).ready(function () {
                             width: 128,
                             height: 128
                         });
-                        document.getElementById('segmentContainer').style.visibility = "visible";
+                        $('.ui.modal')
+                            .modal('show')
+                        ;
+                        //document.getElementById('segmentContainer').style.visibility = "visible";
                     }
                 }
             });

@@ -56,7 +56,9 @@
                             <div class="content"><i class="building icon"></i> {{ data.name }}</div>
                         </div>
                         <div class="item">
-                            <div class="content" v-if="data.chain != null"><i class="briefcase icon"></i> {{ data.chain }}</div>
+                            <div class="content" v-if="data.chain != null"><i class="briefcase icon"></i> {{ data.chain
+                                }}
+                            </div>
                             <div class="content" v-else><i>No chain</i></div>
                         </div>
                         <div class="item">
@@ -69,16 +71,22 @@
                             <div class="content"><i class="envelope icon"></i> {{ data.cap }}</div>
                         </div>
                         <br>
-                        <button class="ui compact primary button" v-on:click="buildMap(data.longitude, data.latitude)"
-                                id="actionButton">Show Map
-                        </button>
-                        <button class="ui compact primary button" onclick="window.location.href = '/admin/editStore'">
-                            Edit Store
-                        </button>
+                        <div style="text-align: center;">
+                            <button class="ui compact primary button"
+                                    v-on:click="buildMap(data.longitude, data.latitude)"
+                                    id="actionButton">Show Map
+                            </button>
+                            <button class="ui compact primary button"
+                                    onclick="window.location.href = '/admin/editStore'">
+                                Edit Store
+                            </button>
+                        </div>
                     </div>
                     <div v-else>
                         <h3><i>No store found</i></h3>
-                        <button class="ui large compact primary button" onclick="window.location.href = '/admin/newStore'">Create</button>
+                        <button class="ui large compact primary button"
+                                onclick="window.location.href = '/admin/newStore'">Create
+                        </button>
                     </div>
                 </div>
                 <div id="mapContainer"></div>
@@ -106,7 +114,11 @@
                         </tr>
                         </tbody>
                     </table>
-                    <button class="ui large compact primary button" onclick="window.location.href = 'upcomingBookings'">Details</button>
+                    <div style="text-align: center;">
+                        <button class="ui large compact primary button"
+                                onclick="window.location.href = 'upcomingBookings'">Details
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -116,7 +128,11 @@
                     <i class="users icon"></i>
                     Attendants
                 </h2>
-                <button class="ui large compact primary button" onclick="window.location.href = 'attendants'">See All</button>
+                <div style="text-align: center;">
+                    <button class="ui large compact primary button" onclick="window.location.href = 'attendants'">See
+                        All
+                    </button>
+                </div>
             </div>
         </div>
     </div>
