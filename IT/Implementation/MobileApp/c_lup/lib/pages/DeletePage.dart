@@ -181,7 +181,7 @@ class _DeletePageState extends State<DeletePage> {
                                                                           () {
                                                                         AuthService.voidTicket(
                                                                             ticket.id,
-                                                                            user.token);
+                                                                            user.token, true);
                                                                         Navigator.pushNamedAndRemoveUntil(
                                                                             context,
                                                                             "/home",
@@ -194,10 +194,10 @@ class _DeletePageState extends State<DeletePage> {
                                           ]);
                                         })
                                         .where((row) =>
-                                            (row.cells.first.child as Text)
+                                            (row.cells.elementAt(1).child as Text)
                                                     .data !=
                                                 "VOID" &&
-                                            (row.cells.first.child as Text)
+                                            (row.cells.elementAt(1).child as Text)
                                                     .data !=
                                                 "USED")
                                         .toList());

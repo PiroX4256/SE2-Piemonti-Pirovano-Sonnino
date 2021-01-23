@@ -111,9 +111,9 @@ class AuthService {
     else return false;
   }
 
-  static void voidTicket(String ticketId, String token) async {
+  static void voidTicket(String ticketId, String token, bool isAttendant) async {
     var response = await http.get(
-        'http://' + Globals.ip + '/api/ticket/voidTicket?ticketId=' + ticketId,
+        'http://' + Globals.ip + '/api/ticket/void' + (isAttendant==true ? 'User': '') + 'Ticket?ticketId=' + ticketId,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token
@@ -132,6 +132,5 @@ class AuthService {
     }
     else return false;
   }
-
 
 }

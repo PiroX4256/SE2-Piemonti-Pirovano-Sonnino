@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'file:///D:/projects/SE2-Piemonti-Pirovano-Sonnino/IT/Implementation/MobileApp/c_lup/lib/utils/QrCodeArguments.dart';
 import 'package:c_lup/model/Store.dart';
+import 'package:c_lup/model/TicketQueue.dart';
 import 'package:c_lup/utils/AuthService.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -237,7 +238,7 @@ class _HomePageState extends State<HomePage> {
                                                                                         child: Text('Delete'),
                                                                                       ),
                                                                                       onPressed: () {
-                                                                                        AuthService.voidTicket(reservation.id, user.token);
+                                                                                        AuthService.voidTicket(reservation.id, user.token, false);
                                                                                         Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
                                                                                       }),
                                                                                 ],
@@ -320,8 +321,7 @@ class _HomePageState extends State<HomePage> {
                           setState(() {
                             user = Hive.box<User>('properties').get('user');
                           });
-                        }
-                        else{
+                        } else {
                           setState(() {
                             user = Hive.box<User>('properties').get('user');
                           });
@@ -521,7 +521,134 @@ class _HomePageState extends State<HomePage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            TicketQueue retrievedTicket =
+                                await Generator.retrieve(user.token);
+                            if (retrievedTicket != null) {
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (_) => new AlertDialog(
+                                      title: Row(
+                                        children: [
+                                          Expanded(
+                                            flex: 10,
+                                            child: Text('Ticket',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Theme.of(context)
+                                                        .accentColor,
+                                                    fontSize: 24)),
+                                          ),
+                                          Expanded(
+                                              flex: 1,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  setState(() {});
+                                                  Navigator.popAndPushNamed(
+                                                      context, "/home");
+                                                },
+                                                child: Icon(
+                                                  Icons.close,
+                                                ),
+                                              ))
+                                        ],
+                                      ),
+                                      content: SingleChildScrollView(
+                                          child: ListBody(children: <Widget>[
+                                        DataTable(
+                                            headingRowHeight: 0,
+                                            columns: [
+                                              DataColumn(label: Text("")),
+                                              DataColumn(label: Text("")),
+                                            ],
+                                            rows: [
+                                              DataRow(cells: [
+                                                DataCell(Text('QR Code',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold))),
+                                                DataCell(GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.pushNamed(
+                                                          context, "/qr-code",
+                                                          arguments:
+                                                              QrCodeArguments(
+                                                                  retrievedTicket
+                                                                      .uuid));
+                                                    },
+                                                    child: Icon(Icons
+                                                        .qr_code_outlined)))
+                                              ]),
+                                              DataRow(cells: [
+                                                DataCell(Text('Store',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold))),
+                                                DataCell(Text(
+                                                    retrievedTicket.store,
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff8A888A),
+                                                        fontWeight:
+                                                            FontWeight.w600)))
+                                              ]),
+                                              DataRow(cells: [
+                                                DataCell(Text('Date',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold))),
+                                                DataCell(Text(
+                                                    DateTime.parse(
+                                                                retrievedTicket
+                                                                    .date)
+                                                            .day
+                                                            .toString()
+                                                            .padLeft(2, '0') +
+                                                        "/" +
+                                                        DateTime.parse(
+                                                                retrievedTicket
+                                                                    .date)
+                                                            .month
+                                                            .toString()
+                                                            .padLeft(2, '0') +
+                                                        "/" +
+                                                        DateTime.parse(
+                                                                retrievedTicket
+                                                                    .date)
+                                                            .year
+                                                            .toString(),
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff8A888A),
+                                                        fontWeight:
+                                                            FontWeight.w600)))
+                                              ]),
+                                              DataRow(cells: [
+                                                DataCell(Text('Time',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold))),
+                                                DataCell(
+                                                  Text(
+                                                      retrievedTicket
+                                                          .startingHour
+                                                          .split(':')
+                                                          .getRange(0, 2)
+                                                          .join(':'),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline6),
+                                                ),
+                                              ])
+                                            ])
+                                      ]))));
+                            } else {}
+                          },
                           label: Text(
                             'GENERATE TICKET',
                             style: Theme.of(context).textTheme.button,

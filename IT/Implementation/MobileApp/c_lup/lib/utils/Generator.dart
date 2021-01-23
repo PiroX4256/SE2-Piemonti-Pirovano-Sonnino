@@ -5,6 +5,7 @@ import 'package:c_lup/model/Reservation.dart';
 import 'package:c_lup/model/Slot.dart';
 import 'package:c_lup/model/Store.dart';
 import 'package:c_lup/model/Ticket.dart';
+import 'package:c_lup/model/TicketQueue.dart';
 import 'package:c_lup/model/User.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
@@ -112,6 +113,25 @@ class Generator {
             date: ticket['booking']['visitDate'].toString()));
       });
       return tickets;
+    } else
+      return null;
+  }
+
+  static Future<TicketQueue> retrieve(String token) async {
+    var response = await http.get(
+        'http://' + Globals.ip + '/api/store/handOutOnSpot',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        });
+    if (response.statusCode == 200) {
+      Map<String, dynamic> json = jsonDecode(response.body);
+      return TicketQueue(
+        uuid: json['booking']['uuid'],
+        store: json['store']['name'],
+        startingHour: json['booking']['slot']['startingHour'].toString(),
+        date: json['booking']['visitDate'].toString(),
+      );
     } else
       return null;
   }
