@@ -119,7 +119,7 @@ class Generator {
 
   static Future<TicketQueue> retrieve(String token) async {
     var response = await http.get(
-        'http://' + Globals.ip + '/api/store/handOutOnSpot',
+        'http://' + Globals.ip + '/api/ticket/handOutOnSpot',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token
