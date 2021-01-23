@@ -1,10 +1,13 @@
 import 'package:c_lup/model/Booking.dart';
 import 'package:c_lup/model/Slot.dart';
 import 'package:c_lup/model/User.dart';
+import 'package:c_lup/pages/DeletePage.dart';
+import 'package:c_lup/pages/EditStorePage.dart';
 import 'package:c_lup/pages/ForgotPage.dart';
 import 'package:c_lup/pages/HomePage.dart';
 import 'package:c_lup/pages/LoginPage.dart';
 import 'package:c_lup/pages/QrCodePage.dart';
+import 'package:c_lup/pages/RetrievePage.dart';
 import 'package:c_lup/pages/SignUpIntermediatePage.dart';
 import 'package:c_lup/pages/SignUpPage.dart';
 import 'package:c_lup/theme/MainTheme.dart';
@@ -52,10 +55,13 @@ class MyApp extends StatelessWidget {
       routes: {
         '/forgot': (context) => ForgotPage(),
         '/intermediate': (context) => SignUpIntermediatePage(),
-        '/signup': (context) => SignUpPage(),
+        '/sign-up': (context) => SignUpPage(),
         '/home': (context) => HomePage(),
         '/login': (context) => LoginPage(),
-        '/qrcode': (context) => QrCodePage(),
+        '/qr-code': (context) => QrCodePage(),
+        '/delete-booking': (context) => DeletePage(),
+        '/retrieve': (context) => RetrievePage(),
+        '/edit-store': (context) => EditStorePage(),
       },
       builder: EasyLoading.init(),
     );

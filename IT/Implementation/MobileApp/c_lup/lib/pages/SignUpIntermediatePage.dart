@@ -30,7 +30,7 @@ class _SignUpIntermediatePageState extends State<SignUpIntermediatePage> {
                 borderRadius: BorderRadius.circular(12.0),
               ),
               onPressed: () {
-                Navigator.pushNamed(context, "/signup");
+                Navigator.pushNamed(context, "/sign-up");
               },
               child: Text(
                 'REGISTER WITH EMAIL',

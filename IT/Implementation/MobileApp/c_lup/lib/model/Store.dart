@@ -1,5 +1,7 @@
 import 'package:hive/hive.dart';
 
+import 'Slot.dart';
+
 part 'Store.g.dart';
 
 @HiveType(typeId: 2)
@@ -20,8 +22,10 @@ class Store extends HiveObject {
   String longitude;
   @HiveField(7)
   String latitude;
+  @HiveField(7)
+  List<Slot> slots;
 
-  Store({this.id, this.name, this.chain, this.address, this.city, this.cap, this.longitude, this.latitude});
+  Store({this.id, this.name, this.chain, this.address, this.city, this.cap, this.longitude, this.latitude, this.slots});
 
 
 }
