@@ -11,6 +11,17 @@ $(document).ready(function () {
                     tickets,
                 },
                 methods: {
+                    getTicketType(type) {
+                        if(type=="SCHEDULED") {
+                            return "ui green label";
+                        }
+                        else if(type=="USED") {
+                            return "ui label";
+                        }
+                        else if(type=="VOID") {
+                            return "ui red label"
+                        }
+                    },
                     substring: function (str) {
                         return str.substr(0, 10);
                     },

@@ -24,6 +24,8 @@ public class TicketService {
     @Autowired
     private SlotRepository slotRepository;
     @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
     private WeekDayRepository weekDayRepository;
     @Autowired
     private BookingRepository bookingRepository;
@@ -41,7 +43,7 @@ public class TicketService {
         Store store;
         Optional<Store> storeQuery = storeRepository.findById(storeId);
         List<Ticket> tickets = ticketRepository.findByUserAndStatus(user, Status.SCHEDULED);
-        if(tickets.size()>0) {
+        if(tickets.size()>0 && user.getRoles().contains(roleRepository.findByName("USER"))) {
             return null;
         }
         if (storeQuery.isPresent()) {
