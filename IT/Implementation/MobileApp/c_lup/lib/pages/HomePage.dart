@@ -34,6 +34,15 @@ class _HomePageState extends State<HomePage> {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
+  Text displayStatus(String status) {
+    String displayedStatus = status;
+    if (status == "SCHEDULED") {
+      displayedStatus = "Queue";
+    } else if (status == "BOOKED") {
+      displayedStatus = "Booking";
+    }
+    return Text(displayedStatus, style: Theme.of(context).textTheme.headline6);
+  }
   void _onRefresh() async {
     // monitor network fetch
     await fetchBookings(user);
@@ -377,7 +386,7 @@ class _HomePageState extends State<HomePage> {
                                               children: <Widget>[
                                                 Text(
                                                     "Pressing \"Confirm\" will queue and generate a ticket in the selected store:"),
-                                                fetchStore(),
+                                            fetchStore()
                                               ],
                                             ),
                                           ),
@@ -774,13 +783,4 @@ class _HomePageState extends State<HomePage> {
     return Text(retrievedStores.elementAt(0).name);
   }
 
-  Text displayStatus(String status) {
-    String displayedStatus = status;
-    if (status == "SCHEDULED") {
-      displayedStatus = "Queue";
-    } else if (status == "BOOKED") {
-      displayedStatus = "Booking";
-    }
-    return Text(displayedStatus, style: Theme.of(context).textTheme.headline6);
-  }
 }
