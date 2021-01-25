@@ -50,6 +50,7 @@ function buildStoreSlot(data) {
                     },
                     error: function (err) {
                         console.log(err);
+                        alert("Error: " + err.responseText);
                     }
                 })
             }

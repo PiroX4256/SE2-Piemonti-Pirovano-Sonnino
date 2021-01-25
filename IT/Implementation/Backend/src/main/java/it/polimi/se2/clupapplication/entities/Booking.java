@@ -24,7 +24,7 @@ public class Booking {
     private Ticket ticket;
     @NotNull
     private Date visitDate;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Slot slot;
     @NotNull
