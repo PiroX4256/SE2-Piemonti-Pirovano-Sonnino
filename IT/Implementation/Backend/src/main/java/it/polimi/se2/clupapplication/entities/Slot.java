@@ -1,6 +1,7 @@
 package it.polimi.se2.clupapplication.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
@@ -30,6 +31,10 @@ public class Slot {
     @JsonBackReference
     @ManyToOne
     Store store;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "slot")
+    private List<Booking> bookings;
+
 
 
     protected Slot() {}
@@ -75,5 +80,13 @@ public class Slot {
 
     public void setStore(Store store) {
         this.store = store;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }
