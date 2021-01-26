@@ -41,7 +41,7 @@
     {\large Professor\par
         Matteo \textsc{Rossi}}
     \vfill
-    {\large \textbf{Version 1.0} \\ \today \par}
+    {\large \textbf{Version 1.1} \\ \today \par}
 \end{titlepage}
 \hypersetup{%
     pdfborder = {0 0 0}
@@ -109,7 +109,14 @@ Finally, \textbf{Store Attendants} can sign up with their personal store code in
 \subsection{Revision History}
 \begin{itemize}
     \item January 9, 2021: version 1.0 (first release)
-    \item
+    \item \today: version 1.1: \begin{enumerate}
+        \item Fixed typos;
+        \item Updated Sequence Diagram and related descriptions;
+        \item Updated Interface Diagram;
+        \item Updated Component Diagram;
+        \item Updated ER Diagram;
+        \item Detailed description ORM, document's scope, components.
+    \end{enumerate}
 \end{itemize}
 
 \subsection{Reference Documents}
@@ -201,7 +208,7 @@ In case of third module development, which permits a custom deploy on buyer orga
     \end{center}
 \end{figure}
 
-In figure\ref{component_diagram} we can see a more detailed diagram representing the layers described before.
+In figure \ref{component_diagram} we can see a more detailed diagram representing the layers described before.
 
 The web server has the function to route the browser requests to the application server and send back its responses.
 
@@ -239,10 +246,12 @@ Each device has its own Operating System where the software runs. The tiers in t
 \end{itemize}
 
 \subsection{Runtime View}
+All the following diagrams represent the runtime view from the mobile app's perspective, in order to increase readability, the web app's perspective isn't shown as it only differs from the other one by using the web server's module before calling the Application Server.\\
+Every interface use REST API through HTTP GET or/and POST calls using urls, where the " \textbf{..} " before every path it's to be intended as the IP address + port of the server or the domain. 
 \subsubsection{Sign Up}
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/signup.png}
+        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/SignUpSequence.png}
     \end{center}
 \end{figure}
 The diagram above represents the process of signing up a user (store attendant and administrator  registration are omitted in order to avoid unnecessary repetitions).\\
@@ -252,19 +261,17 @@ There two possible situations:
     \item User isn't already registered.
 \end{itemize}
 The two situations differ only after submitting the user's data to the database and are analyzed below.\\
-The user is presented with two choices: registering via social network or with an email and password; if the user chooses the first one, they click on their preferred social network displayed in the mobile/webapp.\\
-Afterwards the app sends the request to the Client Manager, which is responsible for all client's app interactions, and it forwards the request to the SignupHandler.\\
-First, this component requests the social's login through dedicated APIs to the IdentityProvider and then sends the login page information to the App in order to be displayed to the user.\\
-After the user inserts their social's credentials and the IdentityProvider validates them (otherwise the App displays an error and the user is redirected to the sign up page), the SignupHandler generates a query and sends it to the DBMS; this last component communicates with the database and searches for an account with the provided credentials.\\
-If an entry is found and the DBMS returns it, the SignupHandler interprets that the user is already registered in the system; then it generates an error and sends it to the ClientManager and ultimately to the App where it's displayed.\\
-If the returned entry is null, instead, the SignupHandler updates the database with the account's data and generates a JSON token associated with the user.\\
-After that, a successful status message is sent to the ClientManager and then to the App, which redirects the User to their home page.\\
-If the user decides to insert an email and password and they are already registered, the SignupHandler updates the database and then the ClientManager sends a verification email to the provided one.\\
-When the user clicks the link provided in the email it's correctly registered.
+The user is presented with two choices: registering via social network or with an email and password; if the user chooses the first one, they click on their preferred social network displayed in the Mobile App.\\
+Afterwards the app sends the request to the ClientManager through the LoginInterface (url "../api/social/signUp"), accessing later the IdentityProvider.\\
+The IdentityProvider returns user's info to the ClientManager which generates a userDTO, passing to the ORM and ultimately to the DMBS.\\
+Based on the returned value of the DBMS the ClientManager inserts the User into the database or returns 200 response's status code (as shown above).\\
+If the user decides the login via email, the path from the Mobile App to the ClientManager remains unchanged but this last one component delegates the database's query to the UserController (via ORM and DBMS).\\
+If the returned value isn't null the UserController sends a 500 response's status code, warning the User that a previous registration exists.\\
+If, instead, the DBMS returned null then the Uses is inserted to the database and lately the UserController via an EmailController sends an email to the provided one and displays to the user the instructions for the verification.\\
 \subsubsection{Login}
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/login.png}
+        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/LoginSequence.png}
     \end{center}
 \end{figure}
 The process of logging in is similar to the sign up process (store attendant and administrator  registration are omitted in order to avoid unnecessary repetitions).\\
@@ -275,7 +282,7 @@ Otherwise the user is redirected to their home page.
 \subsubsection{Retrieve a ticket}
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/retrieve-a-ticket.png}
+        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/RetrieveSequence.png}
     \end{center}
 \end{figure}
 The process of retrieving a ticket is used by any User in order to generate and queue a ticket for the current day. \\
@@ -288,7 +295,7 @@ If the query returns no values, then the RetrieveHandler warns the ClientManager
 \subsubsection{Make a reservation}
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/make-a-reservation.png}
+        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/ReservationSequence.png}
     \end{center}
 \end{figure}
 Booking a visit is a process which involves the ClientManager, the ReservationHandler and the QRCodeGenerator.\\
@@ -301,7 +308,7 @@ Both of the previous actions are optional and at the User's discretion.
 \subsubsection{Remove a reservation}
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/remove-a-booking.png}
+        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/RemoveSequence.png}
     \end{center}
 \end{figure}
 The above diagram describes the process of removing a reservation.\\
@@ -310,7 +317,7 @@ The handler updates the database by removing the selected slots from the user's 
 \subsubsection{Release a ticket}
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/release-a-ticket.png}
+        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/ReleaseSequence.png}
     \end{center}
 \end{figure}
 If a customer can't install the app, they can still ask the staff to generate a ticket directly on the spot as shown above.\\
@@ -319,7 +326,7 @@ The handler checks the database for the closest free slot of the current day: if
 \subsubsection{Scan QR code}
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/scan-QR-code.png}
+        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/ScanSequence.png}
     \end{center}
 \end{figure}
 The diagram above describes the process of scanning a customer's QR code.\\
@@ -330,7 +337,7 @@ If the validation is successful, the QRCodeValidation handler reports it to the 
 \subsubsection{Modify time slots}
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/edit-time-slots.png}
+        \includegraphics[width=\textwidth]{assets/Sequence-Diagram/EditSlotsSequence.png}
         \caption{Modify time slots sequence diagram}
     \end{center}
 \end{figure}
@@ -340,7 +347,7 @@ The App then displays a confirmation.
 \subsection{Component Interfaces}
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=0.35]{assets/Interfaces/Interface-Diagram.png}
+        \includegraphics[scale=0.35]{assets/Interfaces/InterfacesDiagramUpdated.png}
         \caption{Interfaces Diagram}\label{interfaces_diagram}
     \end{center}
 \end{figure}
