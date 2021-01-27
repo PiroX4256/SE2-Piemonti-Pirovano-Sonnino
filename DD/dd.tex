@@ -110,13 +110,13 @@ Finally, \textbf{Store Attendants} can sign up with their personal store code in
 \begin{itemize}
     \item January 9, 2021: version 1.0 (first release)
     \item \today: version 1.1: \begin{enumerate}
-        \item Fixed typos;
-        \item Updated Sequence Diagram and related descriptions;
-        \item Updated Interface Diagram;
-        \item Updated Component Diagram;
-        \item Updated ER Diagram;
-        \item Detailed description ORM, document's scope, components.
-    \end{enumerate}
+              \item Fixed typos;
+              \item Updated Sequence Diagram and related descriptions;
+              \item Updated Interface Diagram;
+              \item Updated Component Diagram;
+              \item Updated ER Diagram;
+              \item Detailed description ORM, document's scope, components.
+          \end{enumerate}
 \end{itemize}
 
 \subsection{Reference Documents}
@@ -615,9 +615,9 @@ According to the table\ref{implementation_precedences} we decided to implement t
 \end{itemize}
 
 \subsection{Clarification on component integration}
-In this section there will be a brief description about how the components are integrated and communicate, in order to build the entire S2B.
+In this section there is be a description about how the components are integrated and communicate, in order to build the entire S2B.
 
-First of all, in figure\ref{components_integration} it is clear that the first component to build is the DBMS, followed by the application components that exploit it.
+First of all, in figure\ref{components_integration} it is clear that the first component to build is the DBMS, followed by the main application components that exploit it.
 
 \begin{center}
     \begin{figure}[H]
@@ -625,6 +625,7 @@ First of all, in figure\ref{components_integration} it is clear that the first c
         \caption{Components Integration}\label{components_integration}
     \end{figure}
 \end{center}
+
 
 After this, we have to integrate the API communication between the S2B and the external services that will be used, which are some \textit{IdP} providers, as explained in figure\ref{external_services}.
 
