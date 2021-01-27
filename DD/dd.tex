@@ -247,7 +247,8 @@ Each device has its own Operating System where the software runs. The tiers in t
 
 \subsection{Runtime View}
 All the following diagrams represent the runtime view from the mobile app's perspective, in order to increase readability, the web app's perspective isn't shown as it only differs from the other one by using the web server's module before calling the Application Server.\\
-Every interface use REST API through HTTP GET or/and POST calls using urls, where the " \textbf{..} " before every path it's to be intended as the IP address + port of the server or the domain. 
+Every interface use REST API through HTTP GET or/and POST calls using urls, where the " \textbf{..} " before every path it's to be intended as the IP address + port of the server or the domain.\\
+The login and registration on the mobile app is only permitted for store attendants or customers, managers need to use the web app interface.
 \subsubsection{Sign Up}
 \begin{figure}[H]
     \begin{center}
@@ -274,9 +275,10 @@ If, instead, the DBMS returned null then the Uses is inserted to the database an
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/LoginSequence.png}
     \end{center}
 \end{figure}
-The process of logging in is similar to the sign up process (store attendant and administrator  registration are omitted in order to avoid unnecessary repetitions).\\
-The User chooses their preferred login method, whether it's social network or email and password.\\
-If the first one is chosen, then the App sends the request, through the ClientManager, to the LoginHandler which requests the login page to the IdentityProvider.\\
+The user chooses their preferred login method, whether it's social network or email and password.\\
+If the first one is chosen, then the MobileApp sends the request, through the LoginInterface ("../api/social/login") to the ClientManager.\\
+After requesting user credentials to the IdentityProvider, the ClientManager interrogates the DBMS (via ORM) and searches for the credentials retrieved.\\
+If the returned value is null
 After the user inserted their social account credentials or CLup's credentials, they are checked by the LoginHandler through a query; if this one returns no values then a status error message is sent to the App, stating that the user isn't registered.\\
 Otherwise the user is redirected to their home page.
 \subsubsection{Retrieve a ticket}
