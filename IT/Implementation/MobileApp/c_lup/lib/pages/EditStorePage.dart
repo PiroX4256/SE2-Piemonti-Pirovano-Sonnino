@@ -21,7 +21,7 @@ class _EditStorePageState extends State<EditStorePage> {
   Store selectedStore= new Store();
   Set<Marker> _markers = HashSet<Marker>();
   GoogleMapController _controller;
-  List<Store> stores = new List<Store>();
+  List<Store> stores = [];
 
   bool _showGoogleMaps = false;
 
@@ -37,7 +37,7 @@ class _EditStorePageState extends State<EditStorePage> {
   }
 
   void fetchCose() async {
-    bool kek = await Generator.fetchStores(
+    await Generator.fetchStores(
         (Hive.box<User>('properties')).get('user').token);
     setState(() {
       stores = Hive.box<User>('properties').get('user').stores;
