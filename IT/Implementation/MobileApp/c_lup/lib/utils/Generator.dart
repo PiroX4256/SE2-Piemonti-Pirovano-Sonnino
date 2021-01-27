@@ -23,7 +23,7 @@ class Generator {
     if (response.statusCode == 200) {
       var box = Hive.box<User>('properties');
       User user = box.get('user');
-      List<Reservation> reservations = new List<Reservation>();
+      List<Reservation> reservations = [];
       jsonDecode(response.body).forEach((reservation) {
         reservations.add(new Reservation(
           id: reservation['id'].toString(),
@@ -68,7 +68,7 @@ class Generator {
     if (response.statusCode == 200) {
       var box = Hive.box<User>('properties');
       User user = box.get('user');
-      List<Store> stores = new List<Store>();
+      List<Store> stores = [];
       jsonDecode(response.body).forEach((store) {
         stores.add(new Store(
             id: store['id'].toString(),
@@ -96,7 +96,7 @@ class Generator {
   }
 
   static Future<List<Ticket>> fetchStoreTickets(String token) async {
-    List<Ticket> tickets = new List<Ticket>();
+    List<Ticket> tickets = [];
     var response = await http.get(
         'http://' + Globals.ip + '/api/ticket/getMyStoreUpcomingTickets',
         headers: <String, String>{

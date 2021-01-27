@@ -1,6 +1,3 @@
-import 'dart:collection';
-
-import 'package:c_lup/model/Store.dart';
 import 'package:c_lup/model/Ticket.dart';
 import 'package:c_lup/model/User.dart';
 import 'package:c_lup/utils/AuthService.dart';

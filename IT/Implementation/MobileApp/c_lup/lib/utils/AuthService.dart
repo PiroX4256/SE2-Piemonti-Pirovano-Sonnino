@@ -1,11 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 import 'package:c_lup/model/User.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
-import 'package:enum_to_string/enum_to_string.dart';
 
 import 'Globals.dart';
 
@@ -112,7 +109,7 @@ class AuthService {
   }
 
   static void voidTicket(String ticketId, String token, bool isAttendant) async {
-    var response = await http.get(
+    await http.get(
         'http://' + Globals.ip + '/api/ticket/void' + (isAttendant==true ? 'User': '') + 'Ticket?ticketId=' + ticketId,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
