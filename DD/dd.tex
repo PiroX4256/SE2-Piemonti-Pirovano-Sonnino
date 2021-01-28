@@ -214,16 +214,11 @@ The web server has the function to route the browser requests to the application
 
 \begin{itemize}
     \item \textbf{Client Manager}\\This module handles all the requests made by the client. At the beginning, when the client is not logged in, the module offers a \textit{loginInterface} which permits to execute a sign up or sign in operation. Once the client has logged in, the module shows only the other types of interfaces relying on the type of log in: a client logged as a user will exploit the \textit{UserInterface}, a store attendant an \textit{AttendantInterface} and a store administrator an \textit{Administrator Interface}.
-    \item \textbf{Login Handler}\\This component handles the process of sign in. It receives the credentials inserted by the user (which are username and password) and checks for a correspondence in the database. If it found something, the user becomes authenticated and can continue to the correct private area.
-    \item \textbf{SignUp Handler}\\This module's goal is to permit a user registration to the CLup service. There are three different sign up processes, one for each account type. The default registration flow firstly allows to register as a general user, since the application is intended to be used mostly by customers. However, at the beginning of the process, a prompt permits to switch the type of sign up from \textit{User} to \textit{Attendant} or \textit{Administrator}. Some data will be asked to the registering client, such as an email and a password.
-    \item \textbf{ASAP Handler}\\This component handles the process of the MVP (see RASD section 1.1), which is the \textit{Retrieve a ticket} functionality. A registered and authenticated user selects the desired grocery store and requests, through a button, a new ticket. The S2B then provides an unique queue number, an estimated waiting time and a QRCode which will be user to check-in at the entrances of the store.
-    \item \textbf{Reservation Handler}\\This is the second module of our S2B described in s. 1.1 of RASD document. Through this component, the registered and authenticated user can select a store and book a visit slot in the desired date and time (if available). The component can optionally receive from user an estimated duration of the visit and a shopping list, in order to optimize people flows in the structure. Once the computation has finished, the component returns to user a confirmation, together with a QRCode to check-in.
-    \item \textbf{Notification Handler}\\The goal of this component is to handle notifications of imminent calling of a ticket. In fact, when a number is going to be called, a trigger is generated, which sends an instant notification to the user who retrieved that ticket.
-    \item \textbf{Generate on spot}\\This module handles the manual procedure of generating a ticket on the spot. In fact, when a customer cannot sign up to CLup service, there is the possibility of going physically to the desired store and ask to an attendant to be queued up. The attendant, through this component, sends a request of retrieving a ticket, and the server returns the first slot available. This ticket is then printed, together with a QRCode generated from the system.
-    \item \textbf{QRCode Validation}\\The goal carried out by this component is the \textit{entrances monitoring} one. When a user arrives at the store, the attendant scans the QRCode generated from the application (or printed) and lets the user entering the structure. The attendant scans the ticket (through CLup mobile app) with the integrated camera of a smartphone. The application then sends a request of check-in to the server, which responds with a status of the request (which can be either valid or invalid).
-    \item \textbf{QRCode Generation}\\The goal of this module is to generate the QR Code of the ticket from a pre-defined string, which is the unique id of the ticket.
-    \item \textbf{Alternative Slot Recommender}\\This component's aim is to suggest alternative slots to the end user, relying on people flows estimation which derives from an analysis of all bookings' time slot and duration time.
-    \item \textbf{Store Management}\\This last module handles the store administrator's personal area. In fact, it permits editing store information, which includes opening hours, maximum slots capacity, booking management and so on.
+    \item \textbf{Security Manager}\\This component handles the process of authentication token generation and all the security functions of the S2B. Its goal is to provide authentication and authorization management.
+    \item \textbf{Ticket Manager}\\This component manages all the operations in the Ticket entity context. In fact, it exploits the other interfaces in order to retrieve, delete and edit ticket information. It also handles the QRCode validation process.
+    \item \textbf{Email Manager}\\The goal of this component is to handle all the notifications in the S2B (such as imminent calling of a ticket, credentials reset, etc).
+    \item \textbf{Store Manager}\\This component manages all the operations in the Store entity context. It permits the creation (or editing) of a store, the attendant sign up, the retrieval of available slots and so on. It exploits the ORM DBMS interfaces.
+    \item \textbf{User Manager}\\This component manages all the operations in the User entity context. In fact, it permits the sign up and log in of users, store managers and store attendants. It then contains some useful methods in order to check the status of the user's authentication (ping methods).
 \end{itemize}
 
 \subsection{Deployment View}
@@ -360,25 +355,23 @@ Starting from the beginning, the \textbf{AccessInterface} is needed in order to 
 
 Then we can see the \textbf{UserInterface}, which main goal is to achieve user functionalities, such as the ASAP or the Reservation ones. It is realized by five different controllers, one for each functionality.
 \begin{itemize}
-    \item \textbf{ASAPController}: it manages the ASAP request sent by the user and returns a valid response with the booked slot or an error.
-    \item \textbf{ReservationController}: same as above, but specifically designed for the \textit{Book a visit} functionality.
-    \item \textbf{AlternativeSlotRecommender}: it calculates the best alternative slot and returns them back to the user.
-    \item \textbf{QRCodeGenerator}: it manages the creation of the QRCode, when the user confirm the given (or chosen) slot.
-    \item \textbf{Notification}: it manages the feature of periodic notification, sending to the user a message when it is almost time to go.
+    \item \textbf{TicketController}: it manages the ticket context. Its methods permits retrieving a new ticket (either through ASAP and book a visit functions), void an existent one, get all ticket given a user and so on.
+    \item \textbf{UserController}: it manages the user context, which methods permits the sign up, log in and the ping for user information.
 \end{itemize}
 
 Then we have a store attendant interface, which main features are realized through different controllers.
 \begin{itemize}
-    \item \textbf{QRCodeValidationController}: it manages the process of QRCode validation at the entrances of the store. It receives the data sent from the attendant's mobile device and processes them in order to send him a response, which can be valid (so the customer can enter the store) or not.
-    \item \textbf{GenerateOnSpot}: it manages the creation of a booking, held by the attendant from a proper desk. It simply receives the request from the attendant's device and computes a valid booking slot, sending it back to the attendant.
+    \item \textbf{UserController}: it manages the user context (on attendant side), which methods permits the sign up, log in and the ping for attendant information.
+    \item \textbf{TicketController}: it manages the ticket context, providing methods for voiding or validating (through the unique id given in form of QR Code) the existent tickets.
 \end{itemize}
 
-Finally, we have the \textbf{StoreAdminInterface}, which permits to each store manager to edit all the information about the shop. This job is done through different methods:
+Finally, we have the \textbf{StoreAdminInterface}, which permits to each store manager to edit all the information about the shop. This job is done through different controllers:
 \begin{itemize}
-    \item \underline{editStoreInfo}: this method receives as input some new store information (which are basically String objects) and a StoreAdministrator object. It edits the Store object in the database if only the manager is its administrator.
-    \item \underline{editTimeslots}: this method receives as input the new timeslot information and, as before, a StoreAdministrator object. It edits the information in the database.
-    \item \underline{editAttendants}: this last method receives some information about an attendant to be edited, and makes the change in the database.
+    \item \textbf{StoreController}: it manages the store context described in interfaces component. Through several methods, in fact, it is possible to create or edit a store, add timeslots to it, get all available slots, get all attendants and so on.
+    \item \textbf{UserController}: it manages the user context (on manager side), which methods permits the sign up, log in and the ping for manager information.
 \end{itemize}
+
+Finally, in each of them there are the Security Controller, which manages the security context of the application, the Email Controller, which manages the sending of email notifications, and the ORM objects, which manage the operations with the DBMS.
 
 \subsection{Logical Description of Data}
 \begin{figure}[H]
