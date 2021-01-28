@@ -42,12 +42,12 @@ public class TicketService {
     public Ticket createNewASAPTicket(Long storeId, User user) {
         Store store;
         Optional<Store> storeQuery = storeRepository.findById(storeId);
-        List<Ticket> tickets = ticketRepository.findByUserAndStatus(user, Status.SCHEDULED);
-        if(tickets.size()>0 && user.getRoles().contains(roleRepository.findByName("USER"))) {
-            return null;
-        }
         if (storeQuery.isPresent()) {
             store = storeQuery.get();
+            List<Ticket> tickets = ticketRepository.findByUserAndStatusAndStore(user, Status.SCHEDULED, store);
+            if(tickets.size()>0 && user.getRoles().contains(roleRepository.findByName("USER"))) {
+                return null;
+            }
             Ticket ticket = new Ticket(user, store, Status.SCHEDULED);
             Calendar calendar = Calendar.getInstance();
             List<Slot> slots = slotRepository.findByStoreAndWeekDayOrderByStartingHour(store, weekDayRepository.findById(calendar.get(Calendar.DAY_OF_WEEK)).get());

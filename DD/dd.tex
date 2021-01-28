@@ -127,7 +127,7 @@ Finally, \textbf{Store Attendants} can sign up with their personal store code in
 
 \subsection{Document Structure}
 \begin{itemize}
-    \item \textbf{Section 1: Introduction}\\This section offers a brief description of the document that will be presented, with all the definitions, acryonyms and abbreviations that will be found reading it.
+    \item \textbf{Section 1: Introduction}\\This section offers a brief description of the document that will be presented, with all the definitions, acronyms and abbreviations that will be found reading it.
     \item \textbf{Section 2: Architectural Design}\\This section is addressed to the developer team and offers a more detailed description of the architecture of the system. The first part describes the chosen paradigm and the overall split of the system into several layers. Furthermore, an high-level description of the system is provided, together with a presentation of the modules composing its nodes. Finally, there is a concrete description of the tiers forming the S2B.
     \item \textbf{Section 3: User Interface Design}\\This section is useful for graphical designers of the S2B and contains several mockups of the application, together with some charts useful to understand the correct flow of execution of it. The presented mockups refers to the client-side experience.
     \item \textbf{Section 4: Requirements Traceability}\\This section acts as a bridge between the RASD and DD document, providing a complete mapping of the requirements and goals described in the RASD to the logical modules presented in this document.
@@ -264,7 +264,7 @@ There two possible situations:
 The two situations differ only after submitting the user's data to the database and are analyzed below.\\
 The user is presented with two choices: registering via social network or with an email and password; if the user chooses the first one, they click on their preferred social network displayed in the Mobile App.\\
 Afterwards the app sends the request to the ClientManager through the LoginInterface (url "../api/social/signUp"), accessing later the IdentityProvider.\\
-The IdentityProvider returns user's info to the ClientManager which generates a userDTO, passing to the ORM and ultimately to the DMBS.\\
+The IdentityProvider returns user's info to the ClientManager which generates a userDTO, passing to the ORM and ultimately to the DBMS.\\
 Based on the returned value of the DBMS the ClientManager inserts the User into the database or returns 200 response's status code (as shown above).\\
 If the user decides the login via email, the path from the Mobile App to the ClientManager remains unchanged but this last one component delegates the database's query to the UserController (via ORM and DBMS).\\
 If the returned value isn't null the UserController sends a 500 response's status code, warning the User that a previous registration exists.\\
@@ -278,7 +278,7 @@ If, instead, the DBMS returned null then the Uses is inserted to the database an
 The user chooses their preferred login method, whether it's social network or email and password.\\
 If the first one is chosen, then the MobileApp sends the request, through the LoginInterface ("../api/social/login") to the ClientManager.\\
 After requesting user credentials to the IdentityProvider, the ClientManager interrogates the DBMS (via ORM) and searches for the credentials retrieved.\\
-If the returned value is null the ClientManager proceeds with the creation of an User (as explained in signup phase), otherwise a 200 response status code is sent to the MobileApp. 
+If the returned value is null the ClientManager proceeds with the creation of an User (as explained in sign up phase), otherwise a 200 response status code is sent to the MobileApp. 
 \subsubsection{Retrieve a ticket}
 \begin{figure}[H]
     \begin{center}\
@@ -286,7 +286,7 @@ If the returned value is null the ClientManager proceeds with the creation of an
     \end{center}
 \end{figure}
 The user clicks on the 'LINE-UP' button and the MobileApp contacts the ClientManager via the UserInterface ("../api/ticket/asap").\\
-The ClientManager then calls the TicketController which cretes a ticketDTO and, using the ORM, queries the DBMS.\\
+The ClientManager then calls the TicketController which creates a ticketDTO and, using the ORM, queries the DBMS.\\
 Afterwards, if a ticket is available, it is sent via a HTTP Response to the MobileApp using the previous path, otherwise an error is propagated up to the MobileApp.
 
 \subsubsection{Make a reservation}
@@ -319,7 +319,7 @@ The MobileApp calls the ClientManager, via the UserInterface ("../api/ticket/voi
 This functionality is only available to the Store Attendant, if a customer can't install the app, they can still ask the staff to generate a ticket directly on the spot as shown above.\\
 The Store Attendant navigates to the right page and requests a new ticket from the MobileApp to the ClientManager through the AttendantInterface ("../api/ticket/handOutOnSpot").\\
 The remaining path is the same as the \textbf{Retrieve a ticket} functionality: the ClientManager requests the ticket to the TicketController, then the ORM and finally the DBMS.\\
-The response's status codes are analogous to the metioned sequence, the only difference is that the attendant, once received the ticket, can use the printer in order to give the ticket to the customer.
+The response's status codes are analogous to the mentioned sequence, the only difference is that the attendant, once received the ticket, can use the printer in order to give the ticket to the customer.
 \subsubsection{Scan QR code}
 \begin{figure}[H]
     \begin{center}
@@ -372,7 +372,7 @@ Then we have a store attendant interface, which main features are realized throu
 Finally, we have the \textbf{StoreAdminInterface}, which permits to each store manager to edit all the information about the shop. This job is done through different methods:
 \begin{itemize}
     \item \underline{editStoreInfo}: this method receives as input some new store information (which are basically String objects) and a StoreAdministrator object. It edits the Store object in the database if only the manager is its administrator.
-    \item \underline{editTimeslots}: this method receives as input the new timeslot information and, as before, a StoreAdministrator object. It edits the information in the database.
+    \item \underline{editTimeslots}: this method receives as input the new time slot information and, as before, a StoreAdministrator object. It edits the information in the database.
     \item \underline{editAttendants}: this last method receives some information about an attendant to be edited, and makes the change in the database.
 \end{itemize}
 
