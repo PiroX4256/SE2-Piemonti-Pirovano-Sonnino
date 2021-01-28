@@ -278,21 +278,16 @@ If, instead, the DBMS returned null then the Uses is inserted to the database an
 The user chooses their preferred login method, whether it's social network or email and password.\\
 If the first one is chosen, then the MobileApp sends the request, through the LoginInterface ("../api/social/login") to the ClientManager.\\
 After requesting user credentials to the IdentityProvider, the ClientManager interrogates the DBMS (via ORM) and searches for the credentials retrieved.\\
-If the returned value is null
-After the user inserted their social account credentials or CLup's credentials, they are checked by the LoginHandler through a query; if this one returns no values then a status error message is sent to the App, stating that the user isn't registered.\\
-Otherwise the user is redirected to their home page.
+If the returned value is null the ClientManager proceeds with the creation of an User (as explained in signup phase), otherwise a 200 response status code is sent to the MobileApp. 
 \subsubsection{Retrieve a ticket}
 \begin{figure}[H]
-    \begin{center}
+    \begin{center}\
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/RetrieveSequence.png}
     \end{center}
 \end{figure}
-The process of retrieving a ticket is used by any User in order to generate and queue a ticket for the current day. \\
-The User navigates to their home page and presses the button assigned to this function.\\
-Afterwards the App sends the request to the ClientManager, which routes it to the RetrieveHandler. \\
-The component checks the database to see if there is an available slot.\\
-If the query is successful, the RetrieveHandler generates a unique QR code by transferring the data to the QRCodeGenerator; right after this step, the RetrieveHandler sends the ticket info to the ClientManager and finally to the app.\\
-If the query returns no values, then the RetrieveHandler warns the ClientManager which sends an error message to the App.
+The user clicks on the 'LINE-UP' button and the MobileApp contacts the ClientManager via the UserInterface ("../api/ticket/asap").\\
+The ClientManager then calls the TicketController which cretes a ticketDTO and, using the ORM, queries the DBMS.\\
+Afterwards, if a ticket is available, it is sent via a HTTP Response to the MobileApp using the previous path, otherwise an error is propagated up to the MobileApp.
 
 \subsubsection{Make a reservation}
 \begin{figure}[H]
@@ -300,31 +295,31 @@ If the query returns no values, then the RetrieveHandler warns the ClientManager
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/ReservationSequence.png}
     \end{center}
 \end{figure}
-Booking a visit is a process which involves the ClientManager, the ReservationHandler and the QRCodeGenerator.\\
-It starts with the User pressing the dedicated button and requesting a reservation, then the App forwards their request to the ClientManager which sends it to the ReservationHandler.\\
-This handler checks the database for all available slots and, after receiving the results, generates alternatives for the most popular slots based on a different schedule or store.\\
-The User chooses their preferred slot by pressing it, this action triggers the request from the App to ClientManager and to the ReservationHandler, which checks again if the slot is valid (otherwise it returns an error leading to the start of the reservation process) and claims it in the database.\\
-Afterwards the ReservationHandler checks the database for previous bookings; if the search is successful, the handler proceeds to generate a visit duration based on the collected data, otherwise the visit's duration request is transferred to the ClientManager and App so the user can specify it.\\
-Then it generates the ticket with the help of the QRCodeGenerator and requests the filling of the shopping list, then sends it to the Database.\\
-Both of the previous actions are optional and at the User's discretion.
+In addition to the 'Retrieve a Ticket' function, the user can book tickets.\\
+After pressing the "BOOK" button, the MobileApp requests all possible slots for the next weeks (T.B.D), to the ClientManager via the UserInterface ("../api/ticket/getSlots").\\
+The ClientManager retrieves them by calling the TicketController, which queries the DBMS via ORM.\\
+The data is sent to the MobileApp where it is displayed; the user then chooses a slot and confirms it by sending its data to the ClientManager, via UserInterface ("../api/ticket/bookAVisit").\\
+The TicketController inserts the visit into the database while checking for previous bookings; if the DBMS finds any entries, it returns it to the ORM and than to the TicketController, which generates the estimated visit duration.\\
+Based on the returned value the TicketController sends a 200 response's status code with the previous estimated visit duration (without it otherwise) and the MobileApp displays the shopping list's form.\\
+The User fills it with the products and sends it to the Database.\\
 \subsubsection{Remove a reservation}
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/RemoveSequence.png}
     \end{center}
 \end{figure}
-The above diagram describes the process of removing a reservation.\\
-The user accesses the specific page and selects the slot to be removed, this sends the request to the ClientManager and to the ReservationHandler.\\
-The handler updates the database by removing the selected slots from the user's data and returns the confirmation. \\
+The user selects a slot and clicks on the "Remove" button.\\
+The MobileApp calls the ClientManager, via the UserInterface ("../api/ticket/voidTicket"); then the ClientManager requests the removal to the TicketController (calling the ORM and the DBMS).\\
 \subsubsection{Release a ticket}
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/ReleaseSequence.png}
     \end{center}
 \end{figure}
-If a customer can't install the app, they can still ask the staff to generate a ticket directly on the spot as shown above.\\
-The Store Attendant navigates to the right page and requests a new ticket from the App to the ClientManager, which forwards it to the GenerateOnSpot handler.\\
-The handler checks the database for the closest free slot of the current day: if successful it generates a ticket with its own QR code (using the QRCodeGenerator component) and sends it to the App; it sends an error otherwise.\\
+This functionality is only available to the Store Attendant, if a customer can't install the app, they can still ask the staff to generate a ticket directly on the spot as shown above.\\
+The Store Attendant navigates to the right page and requests a new ticket from the MobileApp to the ClientManager through the AttendantInterface ("../api/ticket/handOutOnSpot").\\
+The remaining path is the same as the \textbf{Retrieve a ticket} functionality: the ClientManager requests the ticket to the TicketController, then the ORM and finally the DBMS.\\
+The response's status codes are analogous to the metioned sequence, the only difference is that the attendant, once received the ticket, can use the printer in order to give the ticket to the customer.
 \subsubsection{Scan QR code}
 \begin{figure}[H]
     \begin{center}
@@ -332,10 +327,10 @@ The handler checks the database for the closest free slot of the current day: if
     \end{center}
 \end{figure}
 The diagram above describes the process of scanning a customer's QR code.\\
-The store attendant greets the customer, asking for the ticket's QR code, and opens the specific page.\\
-After that they press the "scan" button and, using the webcam on the phone, scan the code; at this point the App sends the data to the ClientManager which forwards it to the QRCodeValidation component.\\
-This last one interrogates the database to validate the code: if the query returns a value it means the code is valid, otherwise it sends an error.\\
-If the validation is successful, the QRCodeValidation handler reports it to the ClientManager and to the App, where a message status is displayed.
+The Store Attendant greets the customer, asking for the ticket's QR code, and opens the specific page.\\
+After that they press the "SCAN" button and, using the webcam on the phone, scan the code; at this point the MobileApp sends the data to the ClientManager through the AttendantInterface ("../api/ticket/validate").\\
+The ClientManager interfaces with the TicketController which sends the data to the ORM and ultimately to the DBMS.\\
+If the ticket scanned is either INVALID, USED or VOID the returned response's status code is 400, 400 otherwise.
 \subsubsection{Modify time slots}
 \begin{figure}[H]
     \begin{center}
@@ -343,9 +338,10 @@ If the validation is successful, the QRCodeValidation handler reports it to the 
         \caption{Modify time slots sequence diagram}
     \end{center}
 \end{figure}
-This process is only available for the Store Administrator  and lets them edit the time slots of their store.\\
-Through the appropriate page the Store Administrator edits the time slots of the store, this triggers a request from the App to the ClientManager and to the StoreManagement handler, which is responsible for updating the database with the new time slots and then reporting back to the ClientManager.\\
-The App then displays a confirmation.
+This sequence is the only one available in the WebApp and not in the MobileApp.\\
+The Store Administrator change a selected slot and clicks on the button in order to confirm.\\
+The WebApp calls the ClientManager via the StoreManagerInterface ("../api/store/addSlot").\\
+This component sends the request to the StoreController which modify the database using the ORM; later a 200 response's status code is sent back to the WebApp.
 \subsection{Component Interfaces}
 \begin{figure}[H]
     \begin{center}
