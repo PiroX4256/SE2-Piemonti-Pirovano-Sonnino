@@ -13,7 +13,7 @@ import 'package:http/http.dart' as http;
 import 'Globals.dart';
 
 class Generator {
-  static Future<bool> fetchBookings(String token) async {
+  static Future<bool> fetchBookings(String token) async{
     var response = await http.get(
         'http://' + Globals.ip + '/api/ticket/getMyTickets',
         headers: <String, String>{

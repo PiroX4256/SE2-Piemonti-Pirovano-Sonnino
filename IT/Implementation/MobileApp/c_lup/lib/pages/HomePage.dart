@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:c_lup/utils/QrCodeArguments.dart';
@@ -67,6 +68,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    new Timer.periodic(Duration(minutes: 30), (timer) async {
+      await fetchBookings(user);
+      setState(() {
+      });
+    });
     user.role == "USER" ? EasyLoading.show() : EasyLoading.dismiss();
     user.role == "USER" ? title = "User Home" : title = "Attendant Home";
     return Scaffold(
