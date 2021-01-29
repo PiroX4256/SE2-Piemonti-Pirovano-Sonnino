@@ -40,7 +40,8 @@ dependencies:
   printing: ^4.0.0
   path_provider: ^1.6.27
   pull_to_refresh: 1.6.3
-
+  flutter_local_notifications: ^3.0.3
+  location: ^3.2.4
 
 dev_dependencies:
   hive_generator: ^0.8.2
