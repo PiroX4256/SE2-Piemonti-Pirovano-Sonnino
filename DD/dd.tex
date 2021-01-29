@@ -127,7 +127,7 @@ Finally, \textbf{Store Attendants} can sign up with their personal store code in
 
 \subsection{Document Structure}
 \begin{itemize}
-    \item \textbf{Section 1: Introduction}\\This section offers a brief description of the document that will be presented, with all the definitions, acryonyms and abbreviations that will be found reading it.
+    \item \textbf{Section 1: Introduction}\\This section offers a brief description of the document that will be presented, with all the definitions, acronyms and abbreviations that will be found reading it.
     \item \textbf{Section 2: Architectural Design}\\This section is addressed to the developer team and offers a more detailed description of the architecture of the system. The first part describes the chosen paradigm and the overall split of the system into several layers. Furthermore, an high-level description of the system is provided, together with a presentation of the modules composing its nodes. Finally, there is a concrete description of the tiers forming the S2B.
     \item \textbf{Section 3: User Interface Design}\\This section is useful for graphical designers of the S2B and contains several mockups of the application, together with some charts useful to understand the correct flow of execution of it. The presented mockups refers to the client-side experience.
     \item \textbf{Section 4: Requirements Traceability}\\This section acts as a bridge between the RASD and DD document, providing a complete mapping of the requirements and goals described in the RASD to the logical modules presented in this document.
@@ -213,12 +213,17 @@ In figure \ref{component_diagram} we can see a more detailed diagram representin
 The web server has the function to route the browser requests to the application server and send back its responses.
 
 \begin{itemize}
-    \item \textbf{Client Manager}\\This module handles all the requests made by the client. At the beginning, when the client is not logged in, the module offers a \textit{loginInterface} which permits to execute a sign up or sign in operation. Once the client has logged in, the module shows only the other types of interfaces relying on the type of log in: a client logged as a user will exploit the \textit{UserInterface}, a store attendant an \textit{AttendantInterface} and a store administrator an \textit{Administrator Interface}. Information is exchanged through some API interfaces, which will return a response after the computation following the JSON standard. Each request will invoke methods in components following the Model View Controller architectural pattern.
-    \item \textbf{Security Manager}\\This component handles the process of authentication token generation and all the security functions of the S2B. Its goal is to provide authentication and authorization management.
-    \item \textbf{Ticket Manager}\\This component manages all the operations in the Ticket entity context. In fact, it exploits the other interfaces in order to retrieve, delete and edit ticket information. It also handles the QRCode validation process.
-    \item \textbf{Email Manager}\\The goal of this component is to handle all the notifications in the S2B (such as imminent calling of a ticket, credentials reset, etc).
-    \item \textbf{Store Manager}\\This component manages all the operations in the Store entity context. It permits the creation (or editing) of a store, the attendant sign up, the retrieval of available slots and so on. It exploits the ORM DBMS interfaces.
-    \item \textbf{User Manager}\\This component manages all the operations in the User entity context. In fact, it permits the sign up and log in of users, store managers and store attendants. It then contains some useful methods in order to check the status of the user's authentication (ping methods).
+    \item \textbf{Client Manager}\\This module handles all the requests made by the client. At the beginning, when the client is not logged in, the module offers a \textit{loginInterface} which permits to execute a sign up or sign in operation. Once the client has logged in, the module shows only the other types of interfaces relying on the type of log in: a client logged as a user will exploit the \textit{UserInterface}, a store attendant an \textit{AttendantInterface} and a store administrator an \textit{Administrator Interface}.
+    \item \textbf{Login Handler}\\This component handles the process of sign in. It receives the credentials inserted by the user (which are username and password) and checks for a correspondence in the database. If it found something, the user becomes authenticated and can continue to the correct private area.
+    \item \textbf{SignUp Handler}\\This module's goal is to permit a user registration to the CLup service. There are three different sign up processes, one for each account type. The default registration flow firstly allows to register as a general user, since the application is intended to be used mostly by customers. However, at the beginning of the process, a prompt permits to switch the type of sign up from \textit{User} to \textit{Attendant} or \textit{Administrator}. Some data will be asked to the registering client, such as an email and a password.
+    \item \textbf{ASAP Handler}\\This component handles the process of the MVP (see RASD section 1.1), which is the \textit{Retrieve a ticket} functionality. A registered and authenticated user selects the desired grocery store and requests, through a button, a new ticket. The S2B then provides an unique queue number, an estimated waiting time and a QRCode which will be user to check-in at the entrances of the store.
+    \item \textbf{Reservation Handler}\\This is the second module of our S2B described in s. 1.1 of RASD document. Through this component, the registered and authenticated user can select a store and book a visit slot in the desired date and time (if available). The component can optionally receive from user an estimated duration of the visit and a shopping list, in order to optimize people flows in the structure. Once the computation has finished, the component returns to user a confirmation, together with a QRCode to check-in.
+    \item \textbf{Notification Handler}\\The goal of this component is to handle notifications of imminent calling of a ticket. In fact, when a number is going to be called, a trigger is generated, which sends an instant notification to the user who retrieved that ticket.
+    \item \textbf{Generate on spot}\\This module handles the manual procedure of generating a ticket on the spot. In fact, when a customer cannot sign up to CLup service, there is the possibility of going physically to the desired store and ask to an attendant to be queued up. The attendant, through this component, sends a request of retrieving a ticket, and the server returns the first slot available. This ticket is then printed, together with a QRCode generated from the system.
+    \item \textbf{QRCode Validation}\\The goal carried out by this component is the \textit{entrances monitoring} one. When a user arrives at the store, the attendant scans the QRCode generated from the application (or printed) and lets the user entering the structure. The attendant scans the ticket (through CLup mobile app) with the integrated camera of a smartphone. The application then sends a request of check-in to the server, which responds with a status of the request (which can be either valid or invalid).
+    \item \textbf{QRCode Generation}\\The goal of this module is to generate the QR Code of the ticket from a pre-defined string, which is the unique id of the ticket.
+    \item \textbf{Alternative Slot Recommender}\\This component's aim is to suggest alternative slots to the end user, relying on people flows estimation which derives from an analysis of all bookings' time slot and duration time.
+    \item \textbf{Store Management}\\This last module handles the store administrator's personal area. In fact, it permits editing store information, which includes opening hours, maximum slots capacity, booking management and so on.
 \end{itemize}
 
 \subsection{Deployment View}
@@ -259,7 +264,7 @@ There two possible situations:
 The two situations differ only after submitting the user's data to the database and are analyzed below.\\
 The user is presented with two choices: registering via social network or with an email and password; if the user chooses the first one, they click on their preferred social network displayed in the Mobile App.\\
 Afterwards the app sends the request to the ClientManager through the LoginInterface (url "../api/social/signUp"), accessing later the IdentityProvider.\\
-The IdentityProvider returns user's info to the ClientManager which generates a userDTO, passing to the ORM and ultimately to the DMBS.\\
+The IdentityProvider returns user's info to the ClientManager which generates a userDTO, passing to the ORM and ultimately to the DBMS.\\
 Based on the returned value of the DBMS the ClientManager inserts the User into the database or returns 200 response's status code (as shown above).\\
 If the user decides the login via email, the path from the Mobile App to the ClientManager remains unchanged but this last one component delegates the database's query to the UserController (via ORM and DBMS).\\
 If the returned value isn't null the UserController sends a 500 response's status code, warning the User that a previous registration exists.\\
@@ -273,21 +278,16 @@ If, instead, the DBMS returned null then the Uses is inserted to the database an
 The user chooses their preferred login method, whether it's social network or email and password.\\
 If the first one is chosen, then the MobileApp sends the request, through the LoginInterface ("../api/social/login") to the ClientManager.\\
 After requesting user credentials to the IdentityProvider, the ClientManager interrogates the DBMS (via ORM) and searches for the credentials retrieved.\\
-If the returned value is null
-After the user inserted their social account credentials or CLup's credentials, they are checked by the LoginHandler through a query; if this one returns no values then a status error message is sent to the App, stating that the user isn't registered.\\
-Otherwise the user is redirected to their home page.
+If the returned value is null the ClientManager proceeds with the creation of an User (as explained in sign up phase), otherwise a 200 response status code is sent to the MobileApp. 
 \subsubsection{Retrieve a ticket}
 \begin{figure}[H]
-    \begin{center}
+    \begin{center}\
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/RetrieveSequence.png}
     \end{center}
 \end{figure}
-The process of retrieving a ticket is used by any User in order to generate and queue a ticket for the current day. \\
-The User navigates to their home page and presses the button assigned to this function.\\
-Afterwards the App sends the request to the ClientManager, which routes it to the RetrieveHandler. \\
-The component checks the database to see if there is an available slot.\\
-If the query is successful, the RetrieveHandler generates a unique QR code by transferring the data to the QRCodeGenerator; right after this step, the RetrieveHandler sends the ticket info to the ClientManager and finally to the app.\\
-If the query returns no values, then the RetrieveHandler warns the ClientManager which sends an error message to the App.
+The user clicks on the 'LINE-UP' button and the MobileApp contacts the ClientManager via the UserInterface ("../api/ticket/asap").\\
+The ClientManager then calls the TicketController which creates a ticketDTO and, using the ORM, queries the DBMS.\\
+Afterwards, if a ticket is available, it is sent via a HTTP Response to the MobileApp using the previous path, otherwise an error is propagated up to the MobileApp.
 
 \subsubsection{Make a reservation}
 \begin{figure}[H]
@@ -295,31 +295,31 @@ If the query returns no values, then the RetrieveHandler warns the ClientManager
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/ReservationSequence.png}
     \end{center}
 \end{figure}
-Booking a visit is a process which involves the ClientManager, the ReservationHandler and the QRCodeGenerator.\\
-It starts with the User pressing the dedicated button and requesting a reservation, then the App forwards their request to the ClientManager which sends it to the ReservationHandler.\\
-This handler checks the database for all available slots and, after receiving the results, generates alternatives for the most popular slots based on a different schedule or store.\\
-The User chooses their preferred slot by pressing it, this action triggers the request from the App to ClientManager and to the ReservationHandler, which checks again if the slot is valid (otherwise it returns an error leading to the start of the reservation process) and claims it in the database.\\
-Afterwards the ReservationHandler checks the database for previous bookings; if the search is successful, the handler proceeds to generate a visit duration based on the collected data, otherwise the visit's duration request is transferred to the ClientManager and App so the user can specify it.\\
-Then it generates the ticket with the help of the QRCodeGenerator and requests the filling of the shopping list, then sends it to the Database.\\
-Both of the previous actions are optional and at the User's discretion.
+In addition to the 'Retrieve a Ticket' function, the user can book tickets.\\
+After pressing the "BOOK" button, the MobileApp requests all possible slots for the next weeks (T.B.D), to the ClientManager via the UserInterface ("../api/ticket/getSlots").\\
+The ClientManager retrieves them by calling the TicketController, which queries the DBMS via ORM.\\
+The data is sent to the MobileApp where it is displayed; the user then chooses a slot and confirms it by sending its data to the ClientManager, via UserInterface ("../api/ticket/bookAVisit").\\
+The TicketController inserts the visit into the database while checking for previous bookings; if the DBMS finds any entries, it returns it to the ORM and than to the TicketController, which generates the estimated visit duration.\\
+Based on the returned value the TicketController sends a 200 response's status code with the previous estimated visit duration (without it otherwise) and the MobileApp displays the shopping list's form.\\
+The User fills it with the products and sends it to the Database.\\
 \subsubsection{Remove a reservation}
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/RemoveSequence.png}
     \end{center}
 \end{figure}
-The above diagram describes the process of removing a reservation.\\
-The user accesses the specific page and selects the slot to be removed, this sends the request to the ClientManager and to the ReservationHandler.\\
-The handler updates the database by removing the selected slots from the user's data and returns the confirmation. \\
+The user selects a slot and clicks on the "Remove" button.\\
+The MobileApp calls the ClientManager, via the UserInterface ("../api/ticket/voidTicket"); then the ClientManager requests the removal to the TicketController (calling the ORM and the DBMS).\\
 \subsubsection{Release a ticket}
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=\textwidth]{assets/Sequence-Diagram/ReleaseSequence.png}
     \end{center}
 \end{figure}
-If a customer can't install the app, they can still ask the staff to generate a ticket directly on the spot as shown above.\\
-The Store Attendant navigates to the right page and requests a new ticket from the App to the ClientManager, which forwards it to the GenerateOnSpot handler.\\
-The handler checks the database for the closest free slot of the current day: if successful it generates a ticket with its own QR code (using the QRCodeGenerator component) and sends it to the App; it sends an error otherwise.\\
+This functionality is only available to the Store Attendant, if a customer can't install the app, they can still ask the staff to generate a ticket directly on the spot as shown above.\\
+The Store Attendant navigates to the right page and requests a new ticket from the MobileApp to the ClientManager through the AttendantInterface ("../api/ticket/handOutOnSpot").\\
+The remaining path is the same as the \textbf{Retrieve a ticket} functionality: the ClientManager requests the ticket to the TicketController, then the ORM and finally the DBMS.\\
+The response's status codes are analogous to the mentioned sequence, the only difference is that the attendant, once received the ticket, can use the printer in order to give the ticket to the customer.
 \subsubsection{Scan QR code}
 \begin{figure}[H]
     \begin{center}
@@ -327,10 +327,10 @@ The handler checks the database for the closest free slot of the current day: if
     \end{center}
 \end{figure}
 The diagram above describes the process of scanning a customer's QR code.\\
-The store attendant greets the customer, asking for the ticket's QR code, and opens the specific page.\\
-After that they press the "scan" button and, using the webcam on the phone, scan the code; at this point the App sends the data to the ClientManager which forwards it to the QRCodeValidation component.\\
-This last one interrogates the database to validate the code: if the query returns a value it means the code is valid, otherwise it sends an error.\\
-If the validation is successful, the QRCodeValidation handler reports it to the ClientManager and to the App, where a message status is displayed.
+The Store Attendant greets the customer, asking for the ticket's QR code, and opens the specific page.\\
+After that they press the "SCAN" button and, using the webcam on the phone, scan the code; at this point the MobileApp sends the data to the ClientManager through the AttendantInterface ("../api/ticket/validate").\\
+The ClientManager interfaces with the TicketController which sends the data to the ORM and ultimately to the DBMS.\\
+If the ticket scanned is either INVALID, USED or VOID the returned response's status code is 400, 400 otherwise.
 \subsubsection{Modify time slots}
 \begin{figure}[H]
     \begin{center}
@@ -338,9 +338,10 @@ If the validation is successful, the QRCodeValidation handler reports it to the 
         \caption{Modify time slots sequence diagram}
     \end{center}
 \end{figure}
-This process is only available for the Store Administrator  and lets them edit the time slots of their store.\\
-Through the appropriate page the Store Administrator edits the time slots of the store, this triggers a request from the App to the ClientManager and to the StoreManagement handler, which is responsible for updating the database with the new time slots and then reporting back to the ClientManager.\\
-The App then displays a confirmation.
+This sequence is the only one available in the WebApp and not in the MobileApp.\\
+The Store Administrator change a selected slot and clicks on the button in order to confirm.\\
+The WebApp calls the ClientManager via the StoreManagerInterface ("../api/store/addSlot").\\
+This component sends the request to the StoreController which modify the database using the ORM; later a 200 response's status code is sent back to the WebApp.
 \subsection{Component Interfaces}
 \begin{figure}[H]
     \begin{center}
@@ -355,23 +356,25 @@ Starting from the beginning, the \textbf{AccessInterface} is needed in order to 
 
 Then we can see the \textbf{UserInterface}, which main goal is to achieve user functionalities, such as the ASAP or the Reservation ones. It is realized by five different controllers, one for each functionality.
 \begin{itemize}
-    \item \textbf{TicketController}: it manages the ticket context. Its methods permits retrieving a new ticket (either through ASAP and book a visit functions), void an existent one, get all ticket given a user and so on.
-    \item \textbf{UserController}: it manages the user context, which methods permits the sign up, log in and the ping for user information.
+    \item \textbf{ASAPController}: it manages the ASAP request sent by the user and returns a valid response with the booked slot or an error.
+    \item \textbf{ReservationController}: same as above, but specifically designed for the \textit{Book a visit} functionality.
+    \item \textbf{AlternativeSlotRecommender}: it calculates the best alternative slot and returns them back to the user.
+    \item \textbf{QRCodeGenerator}: it manages the creation of the QRCode, when the user confirm the given (or chosen) slot.
+    \item \textbf{Notification}: it manages the feature of periodic notification, sending to the user a message when it is almost time to go.
 \end{itemize}
 
 Then we have a store attendant interface, which main features are realized through different controllers.
 \begin{itemize}
-    \item \textbf{UserController}: it manages the user context (on attendant side), which methods permits the sign up, log in and the ping for attendant information.
-    \item \textbf{TicketController}: it manages the ticket context, providing methods for voiding or validating (through the unique id given in form of QR Code) the existent tickets.
+    \item \textbf{QRCodeValidationController}: it manages the process of QRCode validation at the entrances of the store. It receives the data sent from the attendant's mobile device and processes them in order to send him a response, which can be valid (so the customer can enter the store) or not.
+    \item \textbf{GenerateOnSpot}: it manages the creation of a booking, held by the attendant from a proper desk. It simply receives the request from the attendant's device and computes a valid booking slot, sending it back to the attendant.
 \end{itemize}
 
-Finally, we have the \textbf{StoreAdminInterface}, which permits to each store manager to edit all the information about the shop. This job is done through different controllers:
+Finally, we have the \textbf{StoreAdminInterface}, which permits to each store manager to edit all the information about the shop. This job is done through different methods:
 \begin{itemize}
-    \item \textbf{StoreController}: it manages the store context described in interfaces component. Through several methods, in fact, it is possible to create or edit a store, add timeslots to it, get all available slots, get all attendants and so on.
-    \item \textbf{UserController}: it manages the user context (on manager side), which methods permits the sign up, log in and the ping for manager information.
+    \item \underline{editStoreInfo}: this method receives as input some new store information (which are basically String objects) and a StoreAdministrator object. It edits the Store object in the database if only the manager is its administrator.
+    \item \underline{editTimeslots}: this method receives as input the new time slot information and, as before, a StoreAdministrator object. It edits the information in the database.
+    \item \underline{editAttendants}: this last method receives some information about an attendant to be edited, and makes the change in the database.
 \end{itemize}
-
-Finally, in each of them there are the Security Controller, which manages the security context of the application, the Email Controller, which manages the sending of email notifications, and the ORM objects, which manage the operations with the DBMS.
 
 \subsection{Logical Description of Data}
 \begin{figure}[H]

@@ -240,7 +240,7 @@ As previously said, the application backend is built on top of the Spring Framew
     \item \textbf{Entities:} this package contains all the relational database objects, which are properly mapped to a SQL server through the JPA APIs. Each table has its own entity class, with the exception of the bridge (OneToOne, OneToMany, ManyToMany) relations.
     \item \textbf{Model:} following Spring standard, this package includes all the DTO (Data Transfer Objects) for data exchange between client and server.
     \item \textbf{Repositories:} it contains the Spring repositories, which are the interfaces required in order to query the DBMS and the related entities.
-    \item \textbf{Security:} part of the Spring plugins, this package includes the security classes of CLup application. In fact, these classes manages the process of login and signup through the exchange of the JWT (Json Web Token). Furthermore, they also implement the IdP sign in feature with social networks (such as Facebook).
+    \item \textbf{Security:} part of the Spring plugins, this package includes the security classes of CLup application. In fact, these classes manages the process of login and sign up through the exchange of the JWT (Json Web Token). Furthermore, they also implement the IdP sign in feature with social networks (such as Facebook).
     \item \textbf{Services:} this last package contains the service classes, which are the intermediates between controllers and repositories, following the Spring approach described in section \ref{spring_architecture}.
 \end{itemize}
 
