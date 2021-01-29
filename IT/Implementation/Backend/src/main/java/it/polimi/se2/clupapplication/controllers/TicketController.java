@@ -8,6 +8,7 @@ import it.polimi.se2.clupapplication.services.TicketService;
 import it.polimi.se2.clupapplication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -151,5 +152,14 @@ public class TicketController {
             return ResponseEntity.badRequest().body("Error creating your ticket.");
         }
         return ResponseEntity.ok(ticket);
+    }
+
+    /**
+     * This method is scheduled in order to regularly delete the expired tickets. An expired ticket is a non-used ticket.
+     * The time tolerance is about 1 hour.
+     */
+    @Scheduled(fixedDelay = 1800000)
+    public void voidExpiredTickets() {
+        ticketService.voidExpiredTicket();
     }
 }
