@@ -5,6 +5,8 @@ import 'package:c_lup/model/Store.dart';
 import 'package:c_lup/model/User.dart';
 import 'package:c_lup/utils/Generator.dart';
 import 'package:c_lup/widgets/MainAppbar.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,7 +20,7 @@ class EditStorePage extends StatefulWidget {
 }
 
 class _EditStorePageState extends State<EditStorePage> {
-  Store selectedStore= new Store();
+  Store selectedStore = new Store();
   Set<Marker> _markers = HashSet<Marker>();
   GoogleMapController _controller;
   List<Store> stores = [];
@@ -62,7 +64,12 @@ class _EditStorePageState extends State<EditStorePage> {
   Widget build(BuildContext context) {
     EasyLoading.show();
     return Scaffold(
-        appBar: MainAppbar(title: Text("Edit Store", style: TextStyle(color:Theme.of(context).accentColor),),),
+        appBar: MainAppbar(
+          title: Text(
+            "Edit Store",
+            style: TextStyle(color: Theme.of(context).accentColor),
+          ),
+        ),
         body: FutureBuilder<bool>(
             future: Generator.fetchStores(
                 (Hive.box<User>('properties')).get('user').token),
@@ -88,51 +95,60 @@ class _EditStorePageState extends State<EditStorePage> {
                                       color: Theme.of(context).accentColor,
                                       fontSize: 20),
                                 ),
-                                Row(
-                                  children: [
-                                    Expanded( flex: 2, child: StatefulBuilder(
-                                        builder: (BuildContext context, StateSetter setState) {
-                                          return  DropdownButton<Store>(
-                                            value: selectedStore,
-                                            onChanged: ( Store value) {
-                                              setState(() {
-                                                selectedStore = value;
-                                                _controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-                                                    target: LatLng(
-                                                        double.parse(selectedStore
-                                                            .latitude),
-                                                        double.parse(selectedStore
-                                                            .longitude)),
-                                                    zoom: 10)),);
-                                              });
-                                            },
-                                            items: stores
-                                                .map<DropdownMenuItem<Store>>((Store store) {
-                                              return DropdownMenuItem(
-                                                child: Text(store.name),
-                                                value: store,
-                                              );
-                                            }).toList(),
+                                Row(children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: StatefulBuilder(builder:
+                                        (BuildContext context,
+                                            StateSetter setState) {
+                                      return DropdownButton<Store>(
+                                        value: selectedStore,
+                                        onChanged: (Store value) {
+                                          setState(() {
+                                            selectedStore = value;
+                                            _controller.animateCamera(
+                                              CameraUpdate.newCameraPosition(
+                                                  CameraPosition(
+                                                      target: LatLng(
+                                                          double.parse(
+                                                              selectedStore
+                                                                  .latitude),
+                                                          double.parse(
+                                                              selectedStore
+                                                                  .longitude)),
+                                                      zoom: 13)),
+                                            );
+                                          });
+                                        },
+                                        items: stores
+                                            .map<DropdownMenuItem<Store>>(
+                                                (Store store) {
+                                          return DropdownMenuItem(
+                                            child: Text(store.name),
+                                            value: store,
                                           );
-                                        }
-                                    ),),
-                                    RaisedButton(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12.0),
-                                      ),
-                                      onPressed: () {
-                                        var box = Hive.box<User>('properties');
-                                        User user = box.get('user');
-                                        user.setStoreId(selectedStore.id);
-                                        box.put('user', user);
-                                        Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
-                                      },
-                                      child: Text(
-                                        'Confirm',
-                                        style: Theme.of(context).textTheme.button,
-                                      ),
-                                    ),                                  ]
-                                ),
+                                        }).toList(),
+                                      );
+                                    }),
+                                  ),
+                                  RaisedButton(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    onPressed: () {
+                                      var box = Hive.box<User>('properties');
+                                      User user = box.get('user');
+                                      user.setStoreId(selectedStore.id);
+                                      box.put('user', user);
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context, "/home", (route) => false);
+                                    },
+                                    child: Text(
+                                      'Confirm',
+                                      style: Theme.of(context).textTheme.button,
+                                    ),
+                                  ),
+                                ]),
                                 _showGoogleMaps
                                     ? SizedBox(
                                         height: 400,
@@ -149,7 +165,12 @@ class _EditStorePageState extends State<EditStorePage> {
                                                         double.parse(stores
                                                             .elementAt(0)
                                                             .longitude)),
-                                                    zoom: 10)),
+                                                    zoom: 13),
+                                            gestureRecognizers: < Factory < OneSequenceGestureRecognizer >> [
+                                              new Factory < OneSequenceGestureRecognizer > (
+                                                    () => new EagerGestureRecognizer(),
+                                              ),
+                                            ].toSet()),
                                       )
                                     : Container()
                               ],

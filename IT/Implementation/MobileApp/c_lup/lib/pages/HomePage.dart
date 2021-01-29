@@ -5,6 +5,8 @@ import 'package:c_lup/model/Store.dart';
 import 'package:c_lup/model/TicketQueue.dart';
 import 'package:c_lup/utils/AuthService.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:c_lup/model/User.dart';
@@ -269,7 +271,16 @@ class _HomePageState extends State<HomePage> {
                                                                                           SizedBox(
                                                                                             height: 300,
                                                                                             width: 200,
-                                                                                            child: GoogleMap(markers: _markers, initialCameraPosition: CameraPosition(target: LatLng(double.parse(reservation.store.latitude), double.parse(reservation.store.longitude)), zoom: 10)),
+                                                                                            child: GoogleMap(
+                                                                                                markers: _markers,
+                                                                                                initialCameraPosition: CameraPosition(
+                                                                                                    target: LatLng(double.parse(reservation.store.latitude), double.parse(reservation.store.longitude)),
+                                                                                                    zoom: 13),
+                                                                                                gestureRecognizers: < Factory < OneSequenceGestureRecognizer >> [
+                                                                                                  new Factory < OneSequenceGestureRecognizer > (
+                                                                                                        () => new EagerGestureRecognizer(),
+                                                                                                  ),
+                                                                                                ].toSet()),
                                                                                           )
                                                                                         ],
                                                                                       ),
