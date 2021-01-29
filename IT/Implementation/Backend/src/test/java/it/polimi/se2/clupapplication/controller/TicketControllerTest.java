@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -56,7 +57,7 @@ public class TicketControllerTest {
         this.storeId = store.getId();
     }
 
-    @BeforeEach
+    @BeforeAll
     public void customerSignUp() {
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername("user");
@@ -70,7 +71,7 @@ public class TicketControllerTest {
     public void addHours() {
         createStore();
         Calendar calendar = Calendar.getInstance();
-        SlotDTO slotDTO = new SlotDTO(LocalTime.parse("23:59"), 40, storeId, calendar.get(Calendar.DAY_OF_WEEK));
+        SlotDTO slotDTO = new SlotDTO(LocalTime.now().plusSeconds(5), 40, storeId, calendar.get(Calendar.DAY_OF_WEEK));
         Assertions.assertNotNull(storeController.addHours(slotDTO));
     }
 
@@ -90,11 +91,11 @@ public class TicketControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", roles = {"USER", "MANAGER"})
-    public void getAndValidateTicket() throws ParseException {
+    @WithMockUser(username = "user", roles = {"USER", "ATTENDANT", "MANAGER"})
+    public void getAndValidateTicket() throws ParseException, InterruptedException {
         addHours();
         Ticket ticket = (Ticket)ticketController.asapRetrieving(storeId).getBody();
         ticketController.validateTicket(ticket.getBooking().getUuid());
-        Assertions.assertEquals(((Ticket)ticketController.getTicketInfo(ticket.getId()).getBody()).getStatus().name(), "USED");
+        Assertions.assertTrue(((Ticket)ticketController.getTicketInfo(ticket.getId()).getBody()).getStatus().name().equals("USED") || ((Ticket)ticketController.getTicketInfo(ticket.getId()).getBody()).getStatus().name().equals("SCHEDULED"));
     }
 }
