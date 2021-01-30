@@ -149,7 +149,7 @@ public class TicketService {
      * If true, it simply voids them.
      */
     public void voidExpiredTicket() {
-        List<Ticket> tickets = ticketRepository.findByDateAndTimeAndStatus(Status.SCHEDULED, LocalTime.now(), new Date());
+        List<Ticket> tickets = ticketRepository.findByDateAndTimeAndStatus(Status.SCHEDULED, LocalTime.now().minusHours(2), new Date());
         for(Ticket ticket: tickets) {
             if(LocalTime.now().compareTo(ticket.getBooking().getSlot().getStartingHour().plusHours(1)) > 0) {
                 ticket.setStatus(Status.VOID);

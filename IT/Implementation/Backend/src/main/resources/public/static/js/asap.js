@@ -4,7 +4,7 @@ $(document).ready(function () {
         method: 'GET',
         headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
         error: function (err) {
-            if(err.status == 403) {
+            if (err.status == 403) {
                 window.location.href = '/';
             }
         }
@@ -34,11 +34,31 @@ $('#searchByCap').on('click', function () {
 });
 
 function storeCall(stores) {
+    document.getElementById('storeContainer').innerHTML =
+        "                <tr v-for=\"store in stores\" :key=\"store.id\" style=\"visibility: hidden\" id=\"tableRows\">\n" +
+        "                    <td>{{ store.name }}</td>\n" +
+        "                    <td>{{ store.chain }}</td>\n" +
+        "                    <td>{{ store.address }}</td>\n" +
+        "                    <td>{{ store.city }}</td>\n" +
+        "                    <td>{{ store.cap }}</td>\n" +
+        "                    <td>{{ store.longitude }}, {{ store.latitude }}</td>\n" +
+        "                    <td :id=\"store.id\"><button class=\"ui compact primary button\" v-on:click=\"getFirstSlot(store.id)\">Fetch</button></td>\n" +
+        "                    <td>\n" +
+        "                        <button class=\"ui blue button\" v-on:click=\"asapCall(store.id)\">Choose</button>\n" +
+        "                    </td>\n" +
+        "                </tr>" +
+        "<td v-if='err != \"\"'>{{ err }}</td>";
+    if (stores.length == 0) {
+        err = "No store found for the specified CAP";
+    } else {
+        err = "";
+    }
     document.getElementById('tableRows').style.visibility = "visible";
-    var storeContainer = new Vue({
+    let storeContainer = new Vue({
         el: "#storeContainer",
         data: {
-            stores
+            stores: stores,
+            err: err,
         },
         methods: {
             getFirstSlot(storeId) {
@@ -50,20 +70,23 @@ function storeCall(stores) {
                         console.log(slots);
                         const date = new Date();
                         const dateTime = '01/01/2021 ' + date.getHours() + ':' + date.getMinutes();
-                        if(slots.length === 0) {
+                        if (slots.length === 0) {
                             document.getElementById(storeId).innerHTML = "";
                             document.getElementById(storeId).innerText = "No slots available today";
                         } else {
-                            slots.forEach(function (slot, index) {
+                            slots.forEach(function (slot) {
+                                console.log(slot.startingHour);
                                 if (Date.parse('01/01/2021 ' + slot.startingHour) > Date.parse(dateTime)) {
-                                    document.getElementById(storeId).innerHTML = "";
-                                    document.getElementById(storeId).innerText = slot.startingHour;
-                                    return;
-                                } else if (index === (slots.length - 1)) {
+                                    if (Date.parse('01/01/2021 ' + slot.startingHour) > Date.parse('01/01/2021 ' + document.getElementById(storeId).innerText)) {}
+                                    else {
+                                        document.getElementById(storeId).innerHTML = "";
+                                        document.getElementById(storeId).innerText = slot.startingHour;
+                                    }
+                                } else {
                                     document.getElementById(storeId).innerHTML = "";
                                     document.getElementById(storeId).innerText = "No slots available today";
                                 }
-                            });
+                            })
                         }
 
                     }
@@ -71,9 +94,13 @@ function storeCall(stores) {
             },
             asapCall(storeId) {
                 asap(storeId);
+            },
+            forceRender() {
+                this.componentKey += 1;
             }
         }
     });
+    console.log(storeContainer.stores);
 }
 
 function asap(storeId) {
