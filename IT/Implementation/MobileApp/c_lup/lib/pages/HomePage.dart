@@ -1,10 +1,15 @@
+import 'dart:async';
 import 'dart:collection';
 
+import 'package:c_lup/model/Reservation.dart';
 import 'package:c_lup/utils/QrCodeArguments.dart';
 import 'package:c_lup/model/Store.dart';
 import 'package:c_lup/model/TicketQueue.dart';
 import 'package:c_lup/utils/AuthService.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:c_lup/model/User.dart';
@@ -15,6 +20,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive/hive.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -24,6 +31,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  FlutterLocalNotificationsPlugin plugin;
   String alertTitle = "";
   String body = "";
   User user = Hive.box<User>('properties').get('user');
@@ -42,14 +50,17 @@ class _HomePageState extends State<HomePage> {
     }
     return Text(displayedStatus, style: Theme.of(context).textTheme.headline6);
   }
+
   void _onRefresh() async {
     // monitor network fetch
     await fetchBookings(user);
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
-    if (mounted) setState(() {
-      user.reservations = Hive.box<User>('properties').get('user').reservations;
-    });
+    if (mounted)
+      setState(() {
+        user.reservations =
+            Hive.box<User>('properties').get('user').reservations;
+      });
     _refreshController.refreshCompleted();
   }
 
@@ -58,13 +69,90 @@ class _HomePageState extends State<HomePage> {
     await fetchBookings(user);
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
-    if (mounted) setState(() async {
-    });
+    if (mounted) setState(() async {});
     _refreshController.loadComplete();
   }
 
   @override
+  void initState() {
+    super.initState();
+    var androidInitializer = new AndroidInitializationSettings('ic_launcher');
+    var iOSInitializer = new IOSInitializationSettings();
+    var initSettings = new InitializationSettings(
+        android: androidInitializer, iOS: iOSInitializer);
+    plugin = new FlutterLocalNotificationsPlugin();
+    plugin.initialize(initSettings, onSelectNotification: _onSelected);
+  }
+
+  Future _onSelected(String payload) async {
+    Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
+  }
+
+  Future _showNotification(bool longDuration, String storeName) async {
+    String body;
+    var androidDetails = new AndroidNotificationDetails(
+      "1",
+      "clup",
+      "notification",
+      importance: Importance.max,
+    );
+    var iOSDetails = new IOSNotificationDetails();
+    var generalNotificationDetails = new NotificationDetails(
+      android: androidDetails,
+      iOS: iOSDetails,
+    );
+    // await plugin.show(0, "Reminder",  "vai a cagare", generalNotificationDetails);
+    if (longDuration) {
+      body = "Visit in 45 minutes";
+    } else {
+      body = "Reach the store";
+    }
+    await plugin.zonedSchedule(
+        0,
+        storeName,
+        body,
+        tz.TZDateTime.now(tz.local).add(Duration(seconds: 1)),
+        generalNotificationDetails,
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    new Timer.periodic(Duration(minutes: 30), (timer) async {
+      await fetchBookings(user);
+      setState(() {});
+    });
+    new Timer.periodic(
+        Duration(seconds: 30), (timer) async {
+      print("kek");
+      List<Reservation> longWaitStores = user.reservations.where((element) {
+        DateTime ticketMinus30 = DateTime.parse(element.booking.date).subtract(
+            Duration(minutes: 45, seconds: 30));
+        DateTime ticketPlus30 = DateTime.parse(element.booking.date).add(
+            Duration(minutes: 45, seconds: 30));
+        DateTime now = DateTime.now();
+        return now.isAfter(ticketMinus30) && now.isBefore(ticketPlus30);
+      }).toList();
+      List<Reservation> shortWaitStores = user.reservations.where((element) {
+        DateTime ticketMinus30 = DateTime.parse(element.booking.date).subtract(
+            Duration(minutes: 15, seconds: 30));
+        DateTime ticketPlus30 = DateTime.parse(element.booking.date).add(
+            Duration(minutes: 15, seconds: 30));
+        DateTime now = DateTime.now();
+        return now.isAfter(ticketMinus30) && now.isBefore(ticketPlus30);
+      }).toList();
+      if (longWaitStores != null) {
+        longWaitStores.forEach((store) {
+          _showNotification(true, store.store.name);
+        });
+      } else if (shortWaitStores != null) {
+        shortWaitStores.forEach((store) {
+          _showNotification(false, store.store.name);
+        });
+      }
+    });
     user.role == "USER" ? EasyLoading.show() : EasyLoading.dismiss();
     user.role == "USER" ? title = "User Home" : title = "Attendant Home";
     return Scaffold(
@@ -269,7 +357,14 @@ class _HomePageState extends State<HomePage> {
                                                                                           SizedBox(
                                                                                             height: 300,
                                                                                             width: 200,
-                                                                                            child: GoogleMap(markers: _markers, initialCameraPosition: CameraPosition(target: LatLng(double.parse(reservation.store.latitude), double.parse(reservation.store.longitude)), zoom: 10)),
+                                                                                            child: GoogleMap(
+                                                                                                markers: _markers,
+                                                                                                initialCameraPosition: CameraPosition(target: LatLng(double.parse(reservation.store.latitude), double.parse(reservation.store.longitude)), zoom: 13),
+                                                                                                gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+                                                                                                  new Factory<OneSequenceGestureRecognizer>(
+                                                                                                    () => new EagerGestureRecognizer(),
+                                                                                                  ),
+                                                                                                ].toSet()),
                                                                                           )
                                                                                         ],
                                                                                       ),
@@ -385,7 +480,7 @@ class _HomePageState extends State<HomePage> {
                                               children: <Widget>[
                                                 Text(
                                                     "Pressing \"Confirm\" will queue and generate a ticket in the selected store:"),
-                                            fetchStore()
+                                                fetchStore()
                                               ],
                                             ),
                                           ),
@@ -781,5 +876,4 @@ class _HomePageState extends State<HomePage> {
         user.stores.where((store) => store.id == user.storeId).toList();
     return Text(retrievedStores.elementAt(0).name);
   }
-
 }

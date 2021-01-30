@@ -18,8 +18,12 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'model/Reservation.dart';
 import 'model/Store.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 void main() async {
+  tz.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation("Europe/Rome"));
   WidgetsFlutterBinding.ensureInitialized();
   Widget _defaultHome = new LoginPage();
   await Hive.initFlutter();

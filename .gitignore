@@ -299,6 +299,7 @@ TSWLatexianTemp*
 .idea/
 RASD/*.pdf
 DD/*.pdf
+IT/docs/latex/Implementation.pdf
 __latexindent_temp.tex
 *.png:Zone.Identifier
 *.DS_Store

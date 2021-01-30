@@ -167,7 +167,7 @@ As shown in figure \ref{spring_architecture}, the architecture of Spring is very
 
 In fact, it is composed by:
 \begin{itemize}
-    \item \textbf{Dispatcher Servlet:} its job is to route all the incoming requests to the correct Spring controller, which is properly mapped with an appropriate annotation. This is done through the severals components of Spring, which are HandlerMapping, HandlerAdapter and ViewResorver.
+    \item \textbf{Dispatcher Servlet:} its job is to route all the incoming requests to the correct Spring controller, which is properly mapped with an appropriate annotation. This is done through the severals components of Spring, which are HandlerMapping, HandlerAdapter and ViewResolver.
     \item \textbf{Controller:} the controller acts as an interface between the user and the services. It catches the requests coming from the dispatcher and makes actions relying on what user passed to it.
     \item \textbf{Model:} it contains the application logic about the transfer objects (also called DTO) which maps a user input (which is encoded in JSON format) and a Java object. The DTOs can also be used in the opposite direction (server to client), so they are encoded in JSON format and then sent to the client.
     \item \textbf{Services:} they act as an intermediate between the entities (database objects) and the controller, containing some useful methods in order to manipulate data sent by controllers.
