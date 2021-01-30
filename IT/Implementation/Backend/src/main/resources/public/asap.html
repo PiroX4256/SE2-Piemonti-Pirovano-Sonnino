@@ -54,18 +54,7 @@
                 <th scope="col">Actions</th>
                 </thead>
                 <tbody id="storeContainer">
-                <tr v-for="store in stores" :key="store.id" style="visibility: hidden" id="tableRows">
-                    <td>{{ store.name }}</td>
-                    <td>{{ store.chain }}</td>
-                    <td>{{ store.address }}</td>
-                    <td>{{ store.city }}</td>
-                    <td>{{ store.cap }}</td>
-                    <td>{{ store.longitude }}, {{ store.latitude }}</td>
-                    <td :id="store.id"><button class="ui compact primary button" v-on:click="getFirstSlot(store.id)">Fetch</button></td>
-                    <td>
-                        <button class="ui blue button" v-on:click="asapCall(store.id)">Choose</button>
-                    </td>
-                </tr>
+
                 </tbody>
             </table>
         </div>

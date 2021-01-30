@@ -162,7 +162,7 @@ public class TicketController {
      * This method is scheduled in order to regularly delete the expired tickets. An expired ticket is a non-used ticket.
      * The time tolerance is about 1 hour.
      */
-    @Scheduled(fixedDelay = 1800000)
+    @Scheduled(fixedDelay = 2700000)
     public void voidExpiredTickets() {
         LOG.info("Starting expired tickets check");
         ticketService.voidExpiredTicket();

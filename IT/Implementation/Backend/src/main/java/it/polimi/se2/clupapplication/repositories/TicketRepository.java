@@ -16,6 +16,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> findByUserAndStatusAndStore(User user, Status status, Store store);
     @Query("SELECT t FROM Ticket t WHERE t.store = ?1 AND t.booking.slot.startingHour >= ?2 AND DATE(t.booking.visitDate) = DATE(?3)")
     List<Ticket> findByStore(Store store, LocalTime time, Date date);
-    @Query("SELECT t FROM Ticket t WHERE t.status = ?1 AND t.booking.slot.startingHour <= ?2 AND DATE(t.booking.visitDate) = DATE(?3)")
+    @Query("SELECT t FROM Ticket t WHERE t.status = ?1 AND t.booking.slot.startingHour >= ?2 AND DATE(t.booking.visitDate) = DATE(?3)")
     List<Ticket> findByDateAndTimeAndStatus(Status status, LocalTime time, Date date);
 }
