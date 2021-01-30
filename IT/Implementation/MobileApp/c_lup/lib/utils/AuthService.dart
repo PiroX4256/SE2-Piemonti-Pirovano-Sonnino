@@ -5,7 +5,6 @@ import 'package:c_lup/model/User.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
-import 'package:enum_to_string/enum_to_string.dart';
 
 import 'Globals.dart';
 
