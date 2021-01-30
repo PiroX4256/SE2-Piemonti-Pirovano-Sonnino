@@ -77,6 +77,7 @@ The code and the releases can be find on the official CLup repository hosted on 
 \subsection{Revision history}
 
 \subsubsection{References}
+\label{references}
 \begin{itemize}
     \item \textbf{JavaScript: } \href{https://www.javascript.com}{https://www.javascript.com}
     \item \textbf{Java: } \href{https://www.java.com/it}{https://www.java.com/it}
@@ -88,7 +89,21 @@ The code and the releases can be find on the official CLup repository hosted on 
     \item \textbf{QRcode.js: } \href{https://jquery.com}{https://jquery.com}
     \item \textbf{Semantic UI: } \href{https://semantic-ui.com}{https://semantic-ui.com}
     \item \textbf{Leaflet.js} \href{https://leafletjs.com}{https://leafletjs.com}
-    \item \textbf{} \href{}{}
+    \item \textbf{Flutter} \href{https://flutter.dev/}{https://flutter.dev/}
+    \item \textbf{Swift} \href{https://www.apple.com/it/swift/}{https://www.apple.com/it/swift/}
+    \item \textbf{Kotlin} \href{https://kotlinlang.org/}{https://kotlinlang.org/}
+    \item \textbf{Dart} \href{https://dart.dev/}{https://dart.dev/}
+    \item \textbf{Font Awesome} \href{https://fontawesome.com/}{https://fontawesome.com/}
+    \item \textbf{Google Fonts} \href{https://fonts.google.com/}{https://fonts.google.com/}
+    \item \textbf{Hive} \href{https://pub.dev/packages/hive}{https://pub.dev/packages/hive}
+    \item \textbf{Url Launcher} \href{https://pub.dev/packages/url_launcher}{https://pub.dev/packages/url\_launcher}
+    \item \textbf{Easy Loading} \href{https://pub.dev/packages/easy_loading}{https://pub.dev/packages/easy\_loading}
+    \item \textbf{Flutter Barcode Scanner} \href{https://pub.dev/packages/flutter_barcode_scanner}{https://pub.dev/packages/flutter\_barcode\_scanner}
+    \item \textbf{QR Flutter} \href{https://pub.dev/packages/qr_flutter}{https://pub.dev/packages/qr\_flutter}
+    \item \textbf{Google Maps Flutter} \href{https://pub.dev/packages/google_maps}{https://pub.dev/packages/google\_maps}
+    \item \textbf{Flutter Printing} \href{https://pub.dev/packages/printing}{https://pub.dev/packages/printing}
+    \item \textbf{Pull to refresh} \href{https://pub.dev/packages/pull_to_refresh}{https://pub.dev/packages/pull\_to\_refresh}
+    \item \textbf{Flutter Local Notification} \href{https://pub.dev/packages/flutter_local_notifications}{https://pub.dev/packages/flutter\_local\_notifications}
 \end{itemize}
 
 \newpage
@@ -135,7 +150,8 @@ For the client-side scripting, we decided to adopt JavaScript\texttrademark  for
 
 JavaScript is a text-based programming language used both on the client-side and server-side that allows to make web pages interactive. Where HTML and CSS are languages that give structure and style to web pages, JavaScript gives web pages interactive elements that engage a user.
 
-Flutter, instead, is an open-source UI software development kit created by Google. It is mostly used to develop applications for Android and iOS.
+Flutter, instead, is an open-source UI software development kit created by Google. It is mostly used to develop applications for Android and iOS.\\
+The main functionality of this framework is the versatility of the Dart programming language, which lets compile application both in Swift (iOS) and Kotlin (Android).  
 
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{assets/graph-18-19-languages.jpg}
@@ -223,8 +239,42 @@ It includes several css styles, together with a full JavaScript set of functiona
 Leaflet is an open source JavaScript library used to build web mapping applications.
 
 We used it to render the maps containing stores position, in the user and manager private area.
-
 \newpage
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{assets/FlutterArchitecture.png}
+    \caption{Flutter Framework architecture}
+    \label{spring_architecture}
+\end{figure}
+\section{Mobile Frameworks}
+\subsection{Flutter}
+Flutter is designed as an extensible, layered system. It exists as a series of independent libraries that each depend on the underlying layer. No layer has privileged access to the layer below, and every part of the framework level is designed to be optional and replaceable.\\
+At the core of Flutter is the Flutter engine, which is mostly written in C++ and supports the primitives necessary to support all Flutter applications.\\
+It includes a rich set of platform, layout, and foundational libraries, composed of a series of layers. Working from the bottom to the top, we have:
+
+\begin{itemize}
+    \item Basic \textbf{foundational classes}, and building block services such as animation, painting, and gestures that offer commonly used abstractions over the underlying foundation.
+    \item The \textbf{rendering layer} provides an abstraction for dealing with layout. With this layer, you can build a tree of renderable objects. You can manipulate these objects dynamically, with the tree automatically updating the layout to reflect your changes.
+    \item The \textbf{widgets layer} is a composition abstraction. Each render object in the rendering layer has a corresponding class in the widgets layer. In addition, the widgets layer allows you to define combinations of classes that you can reuse. This is the layer at which the reactive programming model is introduced.
+    \item The \textbf{Material} and \textbf{Cupertino} libraries offer comprehensive sets of controls that use the widget layer’s composition primitives to implement the Material or iOS design languages.
+\end{itemize}
+\subsection{Hive}
+Hive is a lightweight and blazing fast key-value database written in pure Dart.\\
+It has the of Model in the MVC pattern used in the Mobile App as some information are stored on the client in order to improve performance.\\
+It uses HiveObjects as basic structure which are then implemented or extended through TypeAdapters.
+\subsection{QR Flutter}
+QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter.\\
+It implements QrImage and QrPainter widgets which are responsible for the correct realization of QR codes.
+\subsection{Flutter Barcode Scanner}
+Flutter Barcode Scanner is a plugin for Flutter apps that adds barcode scanning support on both Android and iOS.\\
+It's especially useful because it interfaces with the mobile's cameras and implements QR code's scanning out of the box.
+\subsection{Google Maps Flutter}
+It's a Flutter plugin that provides a Google Maps widget and easy interface with Google API.\\
+\subsection{Path Provider}
+A Flutter plugin for finding commonly used locations on the filesystem. Supports iOS, Android, Linux and MacOS (vital for the correct model managing).
+\subsection{Printing \& Http}
+The first plugin provides easy API for accessing native Android printing services, instead the second one lets access HTTP GET/POST requests which are a core functionality in our implementation.\\\\
+
+The remaining frameworks helps with minor functionalities and can be found in the References section[\ref{references}].\newpage
 \section{Source Code}
 \subsection{Backend}
 The backend is packaged through the Maven framework, which gives also a standard for organizing the code. Of course, we followed this standard, merged with the Spring Framework one.
@@ -275,8 +325,25 @@ The structure of the web app is the following:
     \item \textbf{static:} this last folder contains all the static files of the web application, which consists of CSS stylesheets, JS scripts, fonts, images and client-side frameworks adopted (see section \ref{client_side_frameworks});
     \item all the other HTML files in \textit{public} directory refer to the customer web interface, which will be of course the most used pages.
 \end{itemize}
-\subsubsection{Mobile App}
-
+\subsection{Mobile App}
+The mobile code implemented follow the MVC pattern with minor differences.\\
+In addition to the architecture, Flutter creates different directories and files:
+ \begin{itemize}
+     \item \textbf{android}, containing native Kotlin code; 
+     \item \textbf{ios}, containing native Swift code;
+     \item \textbf{lib}, the folder where your app is placed (Dart);
+     \item \textbf{pubspec.yaml}, file specifying your app's version, plugin imported and assets used.
+ \end{itemize}
+ 
+ \subsubsection*{Package it.polimi.clup}
+ In the \underline{lib} folder, our mobile app is organized with the MVC pattern as follows:
+\begin{itemize}
+    \item \textbf{model}: it contains all HiveObject used to store information on the client.
+    \item \textbf{pages}: package containing all mobile app's screens, divided in \textbf{StatefulWidgets} or \textbf{StatelessWidget} (the first one only if minor data it's stored directly on the Widget). It represents the View in the MVC pattern.
+    \item \textbf{widgets}: analogous to the above package, it contains individual widgets (used in pages) in order to increase readability and reuse components multiple times in the mobile app (FormFields, AppBars etc.).
+    \item \textbf{utils}: this package contains the controller component specified in the MVC pattern; it contains the following components which sends REST API to the Application Server: \textbf{AuthService} (authentication), \textbf{Generator} (booking/ticket manager) and minor utility classes.
+    \item \textbf{theme}: folder containing files for theming.
+\end{itemize}
 \subsection{Other Useful Information}
 The application is configured to fetch data from a MySQL database, which credentials must be specified in the application.yaml properties file. This configuration file can be found in \textit{resources} folder and contains also all the other static configurations of the application, such as jpa configurations, social login credentials, jwt token settings, etc.
 \newpage
