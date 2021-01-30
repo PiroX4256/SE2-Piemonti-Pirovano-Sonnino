@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 import 'package:c_lup/model/User.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,7 +19,7 @@ class AuthService {
       }
       String token = jsonDecode(response.body)['token'];
       user.setToken(token);
-      var response2 = await http.get('http://' + Globals.ip + '/api/auth/me',
+      var response2 = await http.get('https://' + Globals.ip + '/api/auth/me',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'Bearer ' + token
@@ -78,7 +76,7 @@ class AuthService {
       }
     }
     return await http.post(
-      'http://' + Globals.ip + '/api/auth/' + type,
+      'https://' + Globals.ip + '/api/auth/' + type,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -87,7 +85,7 @@ class AuthService {
   }
 
   static Future<bool> auth(String token) async{
-    var response = await http.get('http://' + Globals.ip + '/api/auth/me',
+    var response = await http.get('https://' + Globals.ip + '/api/auth/me',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer ' + token
@@ -99,7 +97,7 @@ class AuthService {
   }
 
   static Future<bool> codeValidation(String uuid, String token) async{
-    var response = await http.get('http://' + Globals.ip + '/api/ticket/validateTicket?uuid=' + uuid,
+    var response = await http.get('https://' + Globals.ip + '/api/ticket/validateTicket?uuid=' + uuid,
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer ' + token
@@ -111,8 +109,8 @@ class AuthService {
   }
 
   static void voidTicket(String ticketId, String token, bool isAttendant) async {
-    var response = await http.get(
-        'http://' + Globals.ip + '/api/ticket/void' + (isAttendant==true ? 'User': '') + 'Ticket?ticketId=' + ticketId,
+    await http.get(
+        'https://' + Globals.ip + '/api/ticket/void' + (isAttendant==true ? 'User': '') + 'Ticket?ticketId=' + ticketId,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token
@@ -121,7 +119,7 @@ class AuthService {
 
   static Future<bool> asap(String storeId, String token) async {
     var response = await http.get(
-        'http://' + Globals.ip + '/api/ticket/asap?storeId=' + storeId,
+        'https://' + Globals.ip + '/api/ticket/asap?storeId=' + storeId,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token

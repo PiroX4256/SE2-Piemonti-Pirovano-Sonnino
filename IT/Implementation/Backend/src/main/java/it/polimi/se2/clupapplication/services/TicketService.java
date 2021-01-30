@@ -4,7 +4,9 @@ import it.polimi.se2.clupapplication.entities.*;
 import it.polimi.se2.clupapplication.model.Status;
 import it.polimi.se2.clupapplication.repositories.*;
 import it.polimi.se2.clupapplication.utils.DateComparison;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -42,12 +44,12 @@ public class TicketService {
     public Ticket createNewASAPTicket(Long storeId, User user) {
         Store store;
         Optional<Store> storeQuery = storeRepository.findById(storeId);
-        List<Ticket> tickets = ticketRepository.findByUserAndStatus(user, Status.SCHEDULED);
-        if(tickets.size()>0 && user.getRoles().contains(roleRepository.findByName("USER"))) {
-            return null;
-        }
         if (storeQuery.isPresent()) {
             store = storeQuery.get();
+            List<Ticket> tickets = ticketRepository.findByUserAndStatusAndStore(user, Status.SCHEDULED, store);
+            if(tickets.size()>0 && user.getRoles().contains(roleRepository.findByName("USER"))) {
+                return null;
+            }
             Ticket ticket = new Ticket(user, store, Status.SCHEDULED);
             Calendar calendar = Calendar.getInstance();
             List<Slot> slots = slotRepository.findByStoreAndWeekDayOrderByStartingHour(store, weekDayRepository.findById(calendar.get(Calendar.DAY_OF_WEEK)).get());
@@ -140,5 +142,19 @@ public class TicketService {
     public Ticket handOutOnSpot(User user) {
         Store store = storeRepository.findByAttendantsContaining(user);
         return createNewASAPTicket(store.getId(), user);
+    }
+
+    /**
+     * This method retrieves the list of the last tickets and check if they are still in schedule status.
+     * If true, it simply voids them.
+     */
+    public void voidExpiredTicket() {
+        List<Ticket> tickets = ticketRepository.findByDateAndTimeAndStatus(Status.SCHEDULED, LocalTime.now().minusHours(2), new Date());
+        for(Ticket ticket: tickets) {
+            if(LocalTime.now().compareTo(ticket.getBooking().getSlot().getStartingHour().plusHours(1)) > 0) {
+                ticket.setStatus(Status.VOID);
+                ticketRepository.save(ticket);
+            }
+        }
     }
 }

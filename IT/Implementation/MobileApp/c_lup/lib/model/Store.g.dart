@@ -25,13 +25,14 @@ class StoreAdapter extends TypeAdapter<Store> {
       cap: fields[5] as String,
       longitude: fields[6] as String,
       latitude: fields[7] as String,
+      slots: (fields[8] as List)?.cast<Slot>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Store obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class StoreAdapter extends TypeAdapter<Store> {
       ..writeByte(6)
       ..write(obj.longitude)
       ..writeByte(7)
-      ..write(obj.latitude);
+      ..write(obj.latitude)
+      ..writeByte(8)
+      ..write(obj.slots);
   }
 
   @override

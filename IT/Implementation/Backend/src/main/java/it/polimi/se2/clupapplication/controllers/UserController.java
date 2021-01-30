@@ -5,6 +5,7 @@ import it.polimi.se2.clupapplication.entities.User;
 import it.polimi.se2.clupapplication.model.AuthenticationResponseDTO;
 import it.polimi.se2.clupapplication.model.UserDTO;
 import it.polimi.se2.clupapplication.model.LoginUserDTO;
+import it.polimi.se2.clupapplication.services.EmailService;
 import it.polimi.se2.clupapplication.services.RoleService;
 import it.polimi.se2.clupapplication.services.StoreService;
 import it.polimi.se2.clupapplication.services.UserService;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,6 +42,8 @@ public class UserController {
     private RoleService roleService;
     @Autowired
     private StoreService storeService;
+    @Autowired
+    private EmailService emailService;
 
     /**
      * This method generates a Json Web Token (JWT), according to the RestFUL paradigm.
@@ -73,6 +77,8 @@ public class UserController {
         try {
             User userEntity = userService.save(user);
             ResponseEntity<?> responseEntity = generateToken(new LoginUserDTO(userEntity.getUsername(), user.getPassword()));
+            Runnable myrunnable = () -> sendEmail(user.getUsername(), "Account Creation @CLup", "Your account has been created!\nLog in to www.clup.cf .\n\n-The CLup Team");
+            new Thread(myrunnable).start();
             return responseEntity;
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<String>("The profile with the provided username already exists in our systems.", HttpStatus.BAD_REQUEST);
@@ -138,5 +144,10 @@ public class UserController {
     @PreAuthorize("hasRole('ATTENDANT')")
     public ResponseEntity<?> attendantPing() {
         return ResponseEntity.ok().build();
+    }
+
+    @Async
+    public void sendEmail(String to, String subject, String msg) {
+        emailService.sendSimpleMessage(to, subject, msg);
     }
 }

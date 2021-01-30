@@ -13,9 +13,9 @@ import 'package:http/http.dart' as http;
 import 'Globals.dart';
 
 class Generator {
-  static Future<bool> fetchBookings(String token) async {
+  static Future<bool> fetchBookings(String token) async{
     var response = await http.get(
-        'http://' + Globals.ip + '/api/ticket/getMyTickets',
+        'https://' + Globals.ip + '/api/ticket/getMyTickets',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token
@@ -23,7 +23,7 @@ class Generator {
     if (response.statusCode == 200) {
       var box = Hive.box<User>('properties');
       User user = box.get('user');
-      List<Reservation> reservations = new List<Reservation>();
+      List<Reservation> reservations = [];
       jsonDecode(response.body).forEach((reservation) {
         reservations.add(new Reservation(
           id: reservation['id'].toString(),
@@ -60,7 +60,7 @@ class Generator {
 
   static Future<bool> fetchStores(String token) async {
     var response = await http.get(
-        'http://' + Globals.ip + '/api/store/getAllStores',
+        'https://' + Globals.ip + '/api/store/getAllStores',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token
@@ -68,7 +68,7 @@ class Generator {
     if (response.statusCode == 200) {
       var box = Hive.box<User>('properties');
       User user = box.get('user');
-      List<Store> stores = new List<Store>();
+      List<Store> stores = [];
       jsonDecode(response.body).forEach((store) {
         stores.add(new Store(
             id: store['id'].toString(),
@@ -96,9 +96,9 @@ class Generator {
   }
 
   static Future<List<Ticket>> fetchStoreTickets(String token) async {
-    List<Ticket> tickets = new List<Ticket>();
+    List<Ticket> tickets = [];
     var response = await http.get(
-        'http://' + Globals.ip + '/api/ticket/getMyStoreUpcomingTickets',
+        'https://' + Globals.ip + '/api/ticket/getMyStoreUpcomingTickets',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token
@@ -119,7 +119,7 @@ class Generator {
 
   static Future<TicketQueue> retrieve(String token) async {
     var response = await http.get(
-        'http://' + Globals.ip + '/api/ticket/handOutOnSpot',
+        'https://' + Globals.ip + '/api/ticket/handOutOnSpot',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token

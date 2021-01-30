@@ -44,9 +44,9 @@ public class UserControllerTest {
         userDTO.setPassword("testPassword");
         userDTO.setRole("USER");
         ResponseEntity response = userController.signup(userDTO);
-        User user = (User)response.getBody();
-        Assertions.assertEquals(userDTO.getUsername(), user.getUsername());
-        Assertions.assertEquals(userDTO.getRole(), user.getRoles().iterator().next().getName());
+        AuthTokenDTO token = (AuthTokenDTO) response.getBody();
+        Assertions.assertNotNull(token);
+        LOG.info("Token generation successful! Token: " + token.getToken());
     }
 
     @Test

@@ -83,7 +83,8 @@ public class StoreService {
      */
     public List<Slot> getAvailableSlots(Long storeId) {
         Calendar calendar = Calendar.getInstance();
-        return slotRepository.findByStoreAndWeekDayOrderByStartingHour(storeRepository.findById(storeId).get(), weekDayRepository.findById(calendar.get(Calendar.DAY_OF_WEEK)).get());
+        List<Slot> slots = slotRepository.findByStoreAndWeekDayOrderByStartingHour(storeRepository.findById(storeId).get(), weekDayRepository.findById(calendar.get(Calendar.DAY_OF_WEEK)).get());
+        return slots;
     }
 
     /**
