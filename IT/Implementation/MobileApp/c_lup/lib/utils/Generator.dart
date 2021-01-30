@@ -15,7 +15,7 @@ import 'Globals.dart';
 class Generator {
   static Future<bool> fetchBookings(String token) async{
     var response = await http.get(
-        'http://' + Globals.ip + '/api/ticket/getMyTickets',
+        'https://' + Globals.ip + '/api/ticket/getMyTickets',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token
@@ -60,7 +60,7 @@ class Generator {
 
   static Future<bool> fetchStores(String token) async {
     var response = await http.get(
-        'http://' + Globals.ip + '/api/store/getAllStores',
+        'https://' + Globals.ip + '/api/store/getAllStores',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token
@@ -98,7 +98,7 @@ class Generator {
   static Future<List<Ticket>> fetchStoreTickets(String token) async {
     List<Ticket> tickets = [];
     var response = await http.get(
-        'http://' + Globals.ip + '/api/ticket/getMyStoreUpcomingTickets',
+        'https://' + Globals.ip + '/api/ticket/getMyStoreUpcomingTickets',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token
@@ -119,7 +119,7 @@ class Generator {
 
   static Future<TicketQueue> retrieve(String token) async {
     var response = await http.get(
-        'http://' + Globals.ip + '/api/ticket/handOutOnSpot',
+        'https://' + Globals.ip + '/api/ticket/handOutOnSpot',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ' + token

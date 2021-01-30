@@ -6,6 +6,7 @@ import 'package:c_lup/utils/QrCodeArguments.dart';
 import 'package:c_lup/model/Store.dart';
 import 'package:c_lup/model/TicketQueue.dart';
 import 'package:c_lup/utils/AuthService.dart';
+import 'package:cron/cron.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive/hive.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -31,6 +33,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final cron = Cron();
+  final cron2 = Cron();
   FlutterLocalNotificationsPlugin plugin;
   String alertTitle = "";
   String body = "";
@@ -89,6 +93,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future _showNotification(bool longDuration, String storeName) async {
+    print("kek");
     String body;
     var androidDetails = new AndroidNotificationDetails(
       "1",
@@ -120,34 +125,28 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    new Timer.periodic(Duration(minutes: 30), (timer) async {
+     cron.schedule(Schedule.parse("*/30 * * * *"), () async {
       await fetchBookings(user);
       setState(() {});
     });
-    new Timer.periodic(
-        Duration(seconds: 30), (timer) async {
-      print("kek");
+     cron2.schedule(Schedule.parse("*/1 * * * *"), () async {
       List<Reservation> longWaitStores = user.reservations.where((element) {
-        DateTime ticketMinus30 = DateTime.parse(element.booking.date).subtract(
-            Duration(minutes: 45, seconds: 30));
-        DateTime ticketPlus30 = DateTime.parse(element.booking.date).add(
-            Duration(minutes: 45, seconds: 30));
+        var formatter = new DateFormat("yyyy-MM-dd");
+        DateTime ticket = DateTime.parse(formatter.format(DateTime.parse(element.booking.date)) + " " + element.booking.slot.startingHour) ;
         DateTime now = DateTime.now();
-        return now.isAfter(ticketMinus30) && now.isBefore(ticketPlus30);
+        return  ticket.subtract(Duration(minutes: 44)).isAfter(now) && ticket.subtract(Duration(minutes: 45, seconds: 10)).isBefore(now);
       }).toList();
       List<Reservation> shortWaitStores = user.reservations.where((element) {
-        DateTime ticketMinus30 = DateTime.parse(element.booking.date).subtract(
-            Duration(minutes: 15, seconds: 30));
-        DateTime ticketPlus30 = DateTime.parse(element.booking.date).add(
-            Duration(minutes: 15, seconds: 30));
+        var formatter = new DateFormat("yyyy-MM-dd");
+        DateTime ticket = DateTime.parse(formatter.format(DateTime.parse(element.booking.date)) + " " + element.booking.slot.startingHour) ;
         DateTime now = DateTime.now();
-        return now.isAfter(ticketMinus30) && now.isBefore(ticketPlus30);
+        return  ticket.subtract(Duration(minutes: 14)).isAfter(now) && ticket.subtract(Duration(minutes: 15, seconds: 10)).isBefore(now);
       }).toList();
-      if (longWaitStores != null) {
+      if (longWaitStores.length >0) {
         longWaitStores.forEach((store) {
           _showNotification(true, store.store.name);
         });
-      } else if (shortWaitStores != null) {
+      } else if (shortWaitStores.length >0) {
         shortWaitStores.forEach((store) {
           _showNotification(false, store.store.name);
         });
@@ -377,6 +376,8 @@ class _HomePageState extends State<HomePage> {
                                                                                           ),
                                                                                           onPressed: () {
                                                                                             AuthService.voidTicket(reservation.id, user.token, false);
+                                                                                            setState(() {
+                                                                                            });
                                                                                             Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
                                                                                           }),
                                                                                     ],
