@@ -114,6 +114,7 @@ With respect to the RASD and DD documents, we decided to implement the following
     \item \textbf{Sign Up}
     \item \textbf{ASAP: As Soon As Possible}
     \item \textbf{Hand out tickets on spot}
+    \item \textbf{Periodic notifications}
 \end{itemize}
 For more details regarding the specific functionalities, you are invited to read the RASD document, which contains a very detailed description of them.
 
@@ -328,15 +329,15 @@ The structure of the web app is the following:
 \subsection{Mobile App}
 The mobile code implemented follow the MVC pattern with minor differences.\\
 In addition to the architecture, Flutter creates different directories and files:
- \begin{itemize}
-     \item \textbf{android}, containing native Kotlin code; 
-     \item \textbf{ios}, containing native Swift code;
-     \item \textbf{lib}, the folder where your app is placed (Dart);
-     \item \textbf{pubspec.yaml}, file specifying your app's version, plugin imported and assets used.
- \end{itemize}
- 
- \subsubsection*{Package it.polimi.clup}
- In the \underline{lib} folder, our mobile app is organized with the MVC pattern as follows:
+\begin{itemize}
+    \item \textbf{android}, containing native Kotlin code;
+    \item \textbf{ios}, containing native Swift code;
+    \item \textbf{lib}, the folder where your app is placed (Dart);
+    \item \textbf{pubspec.yaml}, file specifying your app's version, plugin imported and assets used.
+\end{itemize}
+
+\subsubsection*{Package it.polimi.clup}
+In the \underline{lib} folder, our mobile app is organized with the MVC pattern as follows:
 \begin{itemize}
     \item \textbf{model}: it contains all HiveObject used to store information on the client.
     \item \textbf{pages}: package containing all mobile app's screens, divided in \textbf{StatefulWidgets} or \textbf{StatelessWidget} (the first one only if minor data it's stored directly on the Widget). It represents the View in the MVC pattern.
@@ -386,7 +387,7 @@ Furthermore, we made some tests on the correct DBMS initialization, through a sp
         \hline
         Student        & Time for Implementation Project \\ \hline
         Luca Pirovano  & 60 hours                        \\ \hline
-        Nicolò Sonnino & 60 hours                              \\
+        Nicolò Sonnino & 60 hours                        \\
         \hline
     \end{tabular}
 \end{center}
