@@ -1,5 +1,8 @@
 let storeId;
 $(document).ready(function () {
+    if (localStorage.getItem('token') == null) {
+        window.location.href = '/';
+    }
     $.ajax({
         url: '/api/auth/getMyStore',
         method: 'GET',
