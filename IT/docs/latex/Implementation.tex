@@ -326,6 +326,7 @@ The structure of the web app is the following:
     \item \textbf{static:} this last folder contains all the static files of the web application, which consists of CSS stylesheets, JS scripts, fonts, images and client-side frameworks adopted (see section \ref{client_side_frameworks});
     \item all the other HTML files in \textit{public} directory refer to the customer web interface, which will be of course the most used pages.
 \end{itemize}
+\newpage
 \subsection{Mobile App}
 The mobile code implemented follow the MVC pattern with minor differences.\\
 In addition to the architecture, Flutter creates different directories and files:
@@ -336,7 +337,7 @@ In addition to the architecture, Flutter creates different directories and files
     \item \textbf{pubspec.yaml}, file specifying your app's version, plugin imported and assets used.
 \end{itemize}
 
-\subsubsection*{Package it.polimi.clup}
+\subsubsection{Package it.polimi.clup}
 In the \underline{lib} folder, our mobile app is organized with the MVC pattern as follows:
 \begin{itemize}
     \item \textbf{model}: it contains all HiveObject used to store information on the client.
@@ -345,6 +346,7 @@ In the \underline{lib} folder, our mobile app is organized with the MVC pattern 
     \item \textbf{utils}: this package contains the controller component specified in the MVC pattern; it contains the following components which sends REST API to the Application Server: \textbf{AuthService} (authentication), \textbf{Generator} (booking/ticket manager) and minor utility classes.
     \item \textbf{theme}: folder containing files for theming.
 \end{itemize}
+
 \subsection{Other Useful Information}
 The application is configured to fetch data from a MySQL database, which credentials must be specified in the application.yaml properties file. This configuration file can be found in \textit{resources} folder and contains also all the other static configurations of the application, such as jpa configurations, social login credentials, jwt token settings, etc.
 \newpage
