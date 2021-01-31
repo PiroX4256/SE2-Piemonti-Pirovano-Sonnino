@@ -174,7 +174,7 @@ class _SignUpCardState extends State<SignUpCard> {
                           setState(() {
                             alertTitle = Text('Registration Completed');
                             alertBody = Text(
-                                'The registration was successful, you will shortly receive a verification link via email');
+                                'The registration was successful, you will shortly receive a email confirming it');
                             error = false;
                             alertButtonText = Text('Home');
                           });

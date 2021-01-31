@@ -85,11 +85,7 @@ class _HomePageState extends State<HomePage> {
     var initSettings = new InitializationSettings(
         android: androidInitializer, iOS: iOSInitializer);
     plugin = new FlutterLocalNotificationsPlugin();
-    plugin.initialize(initSettings, onSelectNotification: _onSelected);
-  }
-
-  Future _onSelected(String payload) async {
-    Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
+    plugin.initialize(initSettings);
   }
 
   Future _showNotification(bool longDuration, String storeName) async {
