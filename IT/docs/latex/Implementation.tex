@@ -246,8 +246,8 @@ We used it to render the maps containing stores position, in the user and manage
     \caption{Flutter Framework architecture}
     \label{spring_architecture}
 \end{figure}
-\section{Mobile Frameworks}
-\subsection{Flutter}
+\subsection{Mobile Frameworks}
+\subsubsection{Flutter}
 Flutter is designed as an extensible, layered system. It exists as a series of independent libraries that each depend on the underlying layer. No layer has privileged access to the layer below, and every part of the framework level is designed to be optional and replaceable.\\
 At the core of Flutter is the Flutter engine, which is mostly written in C++ and supports the primitives necessary to support all Flutter applications.\\
 It includes a rich set of platform, layout, and foundational libraries, composed of a series of layers. Working from the bottom to the top, we have:
@@ -258,24 +258,24 @@ It includes a rich set of platform, layout, and foundational libraries, composed
     \item The \textbf{widgets layer} is a composition abstraction. Each render object in the rendering layer has a corresponding class in the widgets layer. In addition, the widgets layer allows you to define combinations of classes that you can reuse. This is the layer at which the reactive programming model is introduced.
     \item The \textbf{Material} and \textbf{Cupertino} libraries offer comprehensive sets of controls that use the widget layer’s composition primitives to implement the Material or iOS design languages.
 \end{itemize}
-\subsection{Hive}
+\subsubsection{Hive}
 Hive is a lightweight and blazing fast key-value database written in pure Dart.\\
 It has the of Model in the MVC pattern used in the Mobile App as some information are stored on the client in order to improve performance.\\
 It uses HiveObjects as basic structure which are then implemented or extended through TypeAdapters.
-\subsection{QR Flutter}
+\subsubsection{QR Flutter}
 QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter.\\
 It implements QrImage and QrPainter widgets which are responsible for the correct realization of QR codes.
-\subsection{Flutter Barcode Scanner}
+\subsubsection{Flutter Barcode Scanner}
 Flutter Barcode Scanner is a plugin for Flutter apps that adds barcode scanning support on both Android and iOS.\\
 It's especially useful because it interfaces with the mobile's cameras and implements QR code's scanning out of the box.
-\subsection{Google Maps Flutter}
+\subsubsection{Google Maps Flutter}
 It's a Flutter plugin that provides a Google Maps widget and easy interface with Google API.\\
-\subsection{Path Provider}
+\subsubsection{Path Provider}
 A Flutter plugin for finding commonly used locations on the filesystem. Supports iOS, Android, Linux and MacOS (vital for the correct model managing).
-\subsection{Printing \& Http}
+\subsubsection{Printing \& Http}
 The first plugin provides easy API for accessing native Android printing services, instead the second one lets access HTTP GET/POST requests which are a core functionality in our implementation.\\\\
 
-The remaining frameworks helps with minor functionalities and can be found in the References section[\ref{references}].\newpage
+The remaining frameworks help with minor functionalities and can be found in the References section[\ref{references}].\newpage
 \section{Source Code}
 \subsection{Backend}
 The backend is packaged through the Maven framework, which gives also a standard for organizing the code. Of course, we followed this standard, merged with the Spring Framework one.
