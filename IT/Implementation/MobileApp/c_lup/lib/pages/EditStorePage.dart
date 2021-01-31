@@ -56,7 +56,9 @@ class _EditStorePageState extends State<EditStorePage> {
               double.parse(store.latitude), double.parse(store.longitude)),
           infoWindow: InfoWindow(title: store.name));
     }).toList());
-    setState(() {});
+    setState(() {
+      _markers = _markers;
+    });
     print(_markers);
   }
 

@@ -73,7 +73,10 @@ class _HomePageState extends State<HomePage> {
     await fetchBookings(user);
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
-    if (mounted) setState(() async {});
+    if (mounted) setState(() async {
+      user.reservations =
+          Hive.box<User>('properties').get('user').reservations;
+    });
     _refreshController.loadComplete();
   }
 
@@ -89,7 +92,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future _showNotification(bool longDuration, String storeName) async {
-    print("kek");
     String body;
     var androidDetails = new AndroidNotificationDetails(
       "1",
@@ -102,12 +104,12 @@ class _HomePageState extends State<HomePage> {
       android: androidDetails,
       iOS: iOSDetails,
     );
+      if (longDuration) {
+        body = "Visit in 45 minutes";
+      } else {
+        body = "Reach the store";
+      }
     // await plugin.show(0, "Reminder",  "vai a cagare", generalNotificationDetails);
-    if (longDuration) {
-      body = "Visit in 45 minutes";
-    } else {
-      body = "Reach the store";
-    }
     await plugin.zonedSchedule(
         0,
         storeName,
@@ -122,9 +124,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
      cron.schedule(Schedule.parse("*/30 * * * *"), () async {
-      await fetchBookings(user);
-      setState(() {});
-    });
+       await fetchBookings(user);
+       setState(() {
+         user.reservations =
+             Hive.box<User>('properties').get('user').reservations;
+       });
+     });
      cron2.schedule(Schedule.parse("*/1 * * * *"), () async {
       List<Reservation> longWaitStores = user.reservations.where((element) {
         var formatter = new DateFormat("yyyy-MM-dd");
@@ -373,6 +378,8 @@ class _HomePageState extends State<HomePage> {
                                                                                           onPressed: () {
                                                                                             AuthService.voidTicket(reservation.id, user.token, false);
                                                                                             setState(() {
+                                                                                              user.reservations =
+                                                                                                  Hive.box<User>('properties').get('user').reservations;
                                                                                             });
                                                                                             Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
                                                                                           }),
@@ -686,7 +693,10 @@ class _HomePageState extends State<HomePage> {
                                               flex: 1,
                                               child: GestureDetector(
                                                 onTap: () {
-                                                  setState(() {});
+                                                  setState(() {
+                                                    user.reservations =
+                                                        Hive.box<User>('properties').get('user').reservations;
+                                                  });
                                                   Navigator.popAndPushNamed(
                                                       context, "/home");
                                                 },
@@ -809,7 +819,10 @@ class _HomePageState extends State<HomePage> {
                                               flex: 1,
                                               child: GestureDetector(
                                                 onTap: () {
-                                                  setState(() {});
+                                                  setState(() {
+                                                    user.reservations =
+                                                        Hive.box<User>('properties').get('user').reservations;
+                                                  });
                                                   Navigator.popAndPushNamed(
                                                       context, "/home");
                                                 },
