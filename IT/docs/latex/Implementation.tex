@@ -20,6 +20,7 @@
 \usepackage{titlesec}
 \usepackage{listing}
 \usepackage{graphicx}
+\usepackage{subcaption}
 
 
 \titleformat{\paragraph}
@@ -341,11 +342,32 @@ In addition to the architecture, Flutter creates different directories and files
 In the \underline{lib} folder, our mobile app is organized with the MVC pattern as follows:
 \begin{itemize}
     \item \textbf{model}: it contains all HiveObject used to store information on the client.
-    \item \textbf{pages}: package containing all mobile app's screens, divided in \textbf{StatefulWidgets} or \textbf{StatelessWidget} (the first one only if minor data it's stored directly on the Widget). It represents the View in the MVC pattern.
+    \item \textbf{pages}: package containing all mobile app's screens, divided in \textbf{StatefulWidgets} or \textbf{StatelessWidget}. It represents the View in the MVC pattern.
     \item \textbf{widgets}: analogous to the above package, it contains individual widgets (used in pages) in order to increase readability and reuse components multiple times in the mobile app (FormFields, AppBars etc.).
     \item \textbf{utils}: this package contains the controller component specified in the MVC pattern; it contains the following components which sends REST API to the Application Server: \textbf{AuthService} (authentication), \textbf{Generator} (booking/ticket manager) and minor utility classes.
     \item \textbf{theme}: folder containing files for theming.
 \end{itemize}
+
+\subsubsection{Platform channels}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{assets/FlutterFlow.png}
+    \caption{Platform channels}
+    \label{spring_mvc_request}
+\end{figure}
+For mobile and desktop apps, Flutter allows you to call into custom code through a platform channel, which is a simple mechanism for communicating between your Dart code and the platform-specific code of your host app.\\
+By creating a common channel (encapsulating a name and a codec), you can send and receive messages between Dart and a platform component written in a language like Kotlin or Swift.\\
+Data is serialized from a Dart type like Map into a standard format, and then deserialized into an equivalent representation in Kotlin (such as HashMap) or Swift (such as Dictionary).
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{assets/inherited-widget.png}
+    \caption{Platform channels}
+    \label{spring_mvc_request}
+\end{figure}
+The framework introduces two major classes of widget: \textit{stateful} and \textit{stateless widgets}.\\
+Many widgets have no mutable state: they don’t have any properties that change over time (for example, an icon or a label). These widgets subclass \textbf{StatelessWidget}.\\
+However, if the unique characteristics of a widget need to change based on user interaction or other factors, that widget is \textit{stateful}. For example, if a widget has a counter that increments whenever the user taps a button, then the value of the counter is the state for that widget. When that value changes, the widget needs to be rebuilt to update its part of the UI. These widgets subclass \textbf{StatefulWidget}, and (because the widget itself is immutable) they store mutable state in a separate class that subclasses \textbf{State. StatefulWidgets} don’t have a build method; instead, their user interface is built through their \textbf{State} object.\\
+Whenever you mutate a State object (for example, by incrementing the counter), you must call \textbf{setState()} to signal the framework to update the user interface by calling the State’s build method again.\\
+Having separate state and widget objects lets other widgets treat both stateless and stateful widgets in exactly the same way, without being concerned about losing state. Instead of needing to hold on to a child to preserve its state, the parent can create a new instance of the child at any time without losing the child’s persistent state. The framework does all the work of finding and reusing existing state objects when appropriate.
+
 
 \subsection{Other Useful Information}
 The application is configured to fetch data from a MySQL database, which credentials must be specified in the application.yaml properties file. This configuration file can be found in \textit{resources} folder and contains also all the other static configurations of the application, such as jpa configurations, social login credentials, jwt token settings, etc.
@@ -377,19 +399,260 @@ Thanks to the obtained result it is therefore possible to state that the backend
 
 \subsubsection*{Unit Tests}
 Furthermore, we made some tests on the correct DBMS initialization, through a specific JPA Test construct. They all obtained a positive mark.
-
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{assets/mvn.png}
+    \caption{Maven test report}
+\end{figure}
 \subsection{Mobile Application}
+Integration testing is possible in Flutter, but Widgets have very strict assertions on input data; another very useful functionality of this framework is \textit{hot reload} and \textit{hot restart} which let runtime testing while coding it and without rebuilding it.\\
+We decided that integration on widgets was very time consuming and not worth it compared to the effort spent.\\
+Instead we tested our application on daily basis but more importantly we deployed our application \textit{APK} and \textit{IPA} on \textbf{TestFlight} (Apple's App Store for beta builds) and \textbf{Google Play Store}.\\
+Once the builds were approved by Google/Apple we invited about 20 testers in order to stress the app and receive constant feedbacks, using them as the baseline for each new update. 
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{assets/console.png}
+    \caption{Google Play build report}
+\end{figure}
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{assets/testflight.png}
+    \caption{Apple's TestFlight report}
+\end{figure}
 
-\newpage
-\section{Installation Instructions}
+\section{Build}
 
+\subsubsection{Requirements}
+\begin{itemize}
+    \item Java SE JDK 15 (\textbf{\href{https://jdk.java.net/15/}{OracleJDK}}, \textbf{\href{https://openjdk.java.net/projects/jdk/15/}{OpenJDK}})
+    \item \textbf{\href{https://maven.apache.org/}{Maven}} framework version 3.0 (or newer)
+\end{itemize}
+
+\subsection{Windows}\label{windows}
+
+
+If you use
+\textbf{\href{https://docs.microsoft.com/en-us/windows/wsl/install-win10}{Windows
+Subsystem for Linux (WSL)}} or \textbf{\href{http://mingw-w64.org/doku.php}{MinGW}} you
+can skip to Linux installation steps.
+
+\subsubsection{Installing Java}\label{installing-java}
+
+Download \textbf{\href{https://jdk.java.net/15/}{OracleJDK}} or \textbf{\href{https://openjdk.java.net/projects/jdk/15/}{OpenJDK}}.
+
+Extract content from the zip folder to your preferred location, then go
+to
+\texttt{Start\textgreater{}Edit the system environment variables\textgreater{}Environment Variables ...}
+
+In the User Section select \texttt{Path} variable and click on
+\texttt{Edit}; select \texttt{New} and type
+\texttt{C:\textbackslash{}Users\textbackslash{}\textless{}your-user\textgreater{}\textbackslash{}\textless{}path-to-extracted-folder\textgreater{}\textbackslash{}bin},
+then save and exit.
+
+Open \texttt{Start\textgreater{}cmd.exe} and verify your Java version by
+typing the following command:
+
+\begin{verbatim}
+java -version
+\end{verbatim}
+
+\subsubsection{Installing Maven}\label{installing-maven}
+
+Download
+\textbf{\href{https://mirror.nohup.it/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip}{Maven}}.
+
+Extract to preferred location and repeat above steps.
+
+Verify your Maven version by typing the following command:
+
+\begin{verbatim}
+mvn --version
+\end{verbatim}
+
+\subsection{Linux}\label{linux}
+
+If you want to download Maven and JavaJDK with your package manager be
+sure to fulfill the system requirements otherwise follow the next
+steps.
+
+\subsubsection{Installing Java}\label{installing-java-1}
+
+Download JavaJDK based on your
+\href{https://www.oracle.com/java/technologies/javase-jdk15-downloads.html}{distro}
+or OpenJDK 15
+\href{https://download.java.net/java/GA/jdk15.0.1/664493ef4a6946b186ff29eb326336a2/7/GPL/openjdk-15.0.1_linux-x64_bin.tar.gz}{here}.
+
+\textbf{Linux Platforms}
+
+Navigate to your preferred install location and extract the .tar.gz
+archive file using:
+
+\begin{verbatim}
+tar zxvf jdk-15.<version-number>-x64_bin.tar.gz
+\end{verbatim}
+
+Now let's set the \texttt{PATH} variable by typing the following code:
+
+\begin{verbatim}
+cd $HOME 
+nano .bashrc
+\end{verbatim}
+
+Add the following line to the end of \texttt{.bashrc}:
+
+\begin{verbatim}
+export PATH=/<path-to-extracted-folder/bin:$PATH
+\end{verbatim}
+
+Verify your Java version by typing the following command:
+
+\begin{verbatim}
+java -version
+\end{verbatim}
+
+\textbf{Debian-Based Linux Platforms}
+
+Type:
+
+\texttt{sudo apt install /path/to/package/name.deb}
+
+Verify your Java version by typing the following command:
+
+\begin{verbatim}
+java -version
+\end{verbatim}
+
+\textbf{RPM-Based Linux Platforms}
+
+Type the following command to install the package:
+
+\begin{verbatim}
+rpm -ivh jdk-15.<version-number>-x64_bin.rpm
+\end{verbatim}
+
+Upgrade the package using the following command:
+
+\begin{verbatim}
+rpm -Uvh jdk-15.<version-number>-x64_bin.rpm 
+\end{verbatim}
+
+You can now delete the \texttt{.rpm} file and verify your installation
+by typing:
+
+\begin{verbatim}
+java -version
+\end{verbatim}
+
+\subsubsection{Installing Maven}\label{installing-maven-1}
+
+Download
+\textbf{\href{https://mirror.nohup.it/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz}{Maven}},
+extract it with:
+
+\begin{verbatim}
+tar zxvf maven.<version-number>-x64_bin.tar.gz
+\end{verbatim}
+
+Set \texttt{PATH} variable by appending this command to \texttt{.bashrc}
+as previous steps:
+
+\begin{verbatim}
+cd $HOME 
+nano .bashrc
+export PATH=/<path-to-extracted-folder/bin:$PATH
+\end{verbatim}
+
+\subsection{MacOS}\label{macos}
+
+\subsubsection{Installing Java}\label{installing-java-2}
+
+Download
+\href{https://www.oracle.com/java/technologies/javase/jdk15-archive-downloads.html}{JavaJDK
+15}, double-click on \texttt{.dmg} file and \textbf{Install} it.
+
+Verify your Java version by typing the following command:
+
+\begin{verbatim}
+java -version
+\end{verbatim}
+
+\subsubsection{Installing Maven}\label{installing-maven-2}
+
+Follow Linux installation steps.
+
+
+\subsection{Compiling the source files}
+\begin{enumerate}
+    \item Open the terminal and navigate to the root application folder (containing pom.xml).
+    \item Type \texttt{mvn package -Dmaven.test.skip=true} and hit \texttt{Enter}.
+\end{enumerate}
+\paragraph{Why am I skipping maven test phase?}
+Because since there is no data source connected, it cannot perform tests on it.\\
+If you want to include the test phase, you will need to edit the \textit{application.yaml} file located under \texttt{src/main/resources} as specified in the Installation section. 
+
+
+
+\section{Installation}\label{using-the-self-contained-installer-recommended}
+Follow compiling installation steps without \textbf{Maven} section.
+\subsubsection{Requirements}
+\begin{itemize}
+    \item Java SE JDK 15 (\textbf{\href{https://jdk.java.net/15/}{OracleJDK}}, \textbf{\href{https://openjdk.java.net/projects/jdk/15/}{OpenJDK}})
+\end{itemize}
+\subsection{Backend}
+\subsubsection{Windows self contained installer}
+\begin{enumerate}
+    \item Download the executable file from \textbf{\href{https://github.com/PiroX4256/SE2-Piemonti-Pirovano-Sonnino/releases}{Release page}} on our Github repo.
+    \item Install it following the wizard installation tool.
+    \item Navigate to installation directory (usually \texttt{C:\textbackslash{}Program Files\textbackslash{}clupServer}).
+    \item Edit the \textit{application.yaml} file under \textbf{app} folder:\\
+     \paragraph{Spring.datasource}
+    \begin{itemize}
+        \item \textbf{url}: replace <url> with your database domain address and \textless{}db\_name\textgreater{} with the database's name.
+        \item \textbf{username}: your database's administrator username.
+        \item \textbf{password}: your database's administrator password.
+    \end{itemize}
+    \paragraph{Spring.mail}
+    \begin{itemize}
+        \item \textbf{host}: your SMTP server hostname.
+        \item \textbf{username}: your SMTP sender username.
+        \item \textbf{password}: your SMTP sender password.
+    \end{itemize}
+    \paragraph{Server.port}
+    \begin{itemize}
+        \item \textbf{port}: application server port.
+    \end{itemize}
+    \item Save and exit.
+    \item Launch clupServer shortcut from your Desktop.
+\end{enumerate}
+\subsubsection{Cross-platform JAR Package}
+\begin{enumerate}
+    \item Download the zip archive from \textbf{\href{https://github.com/PiroX4256/SE2-Piemonti-Pirovano-Sonnino/releases}{Release page}} on our Github repo.
+    \item Extract the two files in the same folder.
+    \item Edit the \textit{application.yaml} as stated in the Windows self contained installer section.
+    \item Launch it from your terminal with the following command:\\ \texttt{java -jar clup<version>.jar --spring.config.location=application.yaml}
+\end{enumerate}
+\subsection{Mobile Application}
+\subsubsection{Store Builds}
+Download the application based on your platform following the provided links:
+\begin{figure}[H]
+    \centering
+        \href{https://play.google.com/store/apps/details?id=it.polimi.c_lup}{    
+            \begin{subfigure}{.4\textwidth}
+                \includegraphics{assets/google.png}
+        \end{subfigure}%
+            }
+            \href{https://testflight.apple.com/join/LPYEOhGr}{    
+                \begin{subfigure}{.4\textwidth}
+                    \includegraphics[scale=0.25]{assets/apple.png}
+            \end{subfigure}%
+                }
+\end{figure}
+\subsubsection{Github Builds (Android only)}
+Download the application by accessing the Release page on our Github repo or by clicking the link \textbf{\href{https://github.com/PiroX4256/SE2-Piemonti-Pirovano-Sonnino/releases}{here}}. 
 \section{Effort spent}
 \begin{center}
     \begin{tabular}{ | c || c | c | c | c| c|}
         \hline
         Student        & Time for Implementation Project \\ \hline
-        Luca Pirovano  & 60 hours                        \\ \hline
-        Nicolò Sonnino & 60 hours                        \\
+        Luca Pirovano  & 70 hours                        \\ \hline
+        Nicolò Sonnino & 70 hours                        \\
         \hline
     \end{tabular}
 \end{center}
