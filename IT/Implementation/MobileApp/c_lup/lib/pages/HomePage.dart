@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
     await fetchBookings(user);
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
-    if (mounted) setState(() async {
+    if (mounted) setState(() {
       user.reservations =
           Hive.box<User>('properties').get('user').reservations;
     });
@@ -545,9 +545,9 @@ class _HomePageState extends State<HomePage> {
                                                                             .bodyText1),
                                                                     onPressed:
                                                                         () {
-                                                                      Navigator.popAndPushNamed(
+                                                                      Navigator.pushNamedAndRemoveUntil(
                                                                           context,
-                                                                          "/home");
+                                                                          "/home", (r)=>false);
                                                                     })
                                                               ]));
                                                 })
