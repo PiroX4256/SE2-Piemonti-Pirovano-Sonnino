@@ -18,7 +18,7 @@ class _PasswordFieldState extends State<PasswordField> {
       controller: widget.controller,
       validator: (value) {
         if (value.isEmpty) {
-          return "Password cannot be null";
+          return "Password field cannot be empty";
         } else if (!RegExp(
                 r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
             .hasMatch(value)) {
@@ -29,7 +29,7 @@ class _PasswordFieldState extends State<PasswordField> {
       obscureText: _isHidden,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.lock),
-        hintText: "Password",
+        hintText: "Password*",
         hintStyle: Theme.of(context).textTheme.bodyText1,
         suffix: InkWell(onTap: _togglePasswordView, child: _visibility),
       ),

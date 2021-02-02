@@ -15,7 +15,7 @@ class _EmailFieldState extends State<EmailField> {
       controller: widget.controller,
       validator: (value) {
         if (value.isEmpty) {
-          return "Email cannot be null";
+          return "Email field cannot be empty";
         } else if (!RegExp(
             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
             .hasMatch(value)) {
@@ -27,7 +27,7 @@ class _EmailFieldState extends State<EmailField> {
       decoration: InputDecoration(
         focusColor: Theme.of(context).accentColor,
         prefixIcon: Icon(Icons.person),
-        hintText: "Email",
+        hintText: "Email*",
         hintStyle: Theme.of(context).textTheme.bodyText1,
       ),
     );

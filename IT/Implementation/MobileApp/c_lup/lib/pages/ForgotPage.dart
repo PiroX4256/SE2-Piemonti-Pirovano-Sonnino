@@ -42,12 +42,12 @@ class _ForgotPageState extends State<ForgotPage> {
                               decoration: const InputDecoration(
                                 icon: Icon(Icons.email),
                                 hintText: 'Registered email',
-                                labelText: 'Email',
+                                labelText: 'Email*',
                               ),
                               onSaved: (String value) {},
                               validator: (String value) {
                                 if (value.isEmpty) {
-                                  return "Email mustn't be empty";
+                                  return "Email field cannot be empty";
                                 } else if (!RegExp(
                                     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
                                     .hasMatch(value)) {
