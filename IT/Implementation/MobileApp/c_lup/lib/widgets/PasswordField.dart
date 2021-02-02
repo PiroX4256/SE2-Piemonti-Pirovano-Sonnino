@@ -22,7 +22,7 @@ class _PasswordFieldState extends State<PasswordField> {
         } else if (!RegExp(
                 r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
             .hasMatch(value)) {
-          return "Password must be 8 characters long and contain at least:\n• one lower case;\n• one upper case;\n• one digit;\n• one special character (!@#\\\$&*~)."; // should contain at least one Special character";
+          return "Password must be 8 characters long\n and contain at least:\n• one lower case;\n• one upper case;\n• one digit;\n• one special character (!@#\\\$&*~)."; // should contain at least one Special character";
         } else
           return null;
       },
