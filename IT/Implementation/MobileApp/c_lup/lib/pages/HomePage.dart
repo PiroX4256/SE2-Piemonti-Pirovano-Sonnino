@@ -73,10 +73,11 @@ class _HomePageState extends State<HomePage> {
     await fetchBookings(user);
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
-    if (mounted) setState(() async {
-      user.reservations =
-          Hive.box<User>('properties').get('user').reservations;
-    });
+    if (mounted)
+      setState(() {
+        user.reservations =
+            Hive.box<User>('properties').get('user').reservations;
+      });
     _refreshController.loadComplete();
   }
 
@@ -104,11 +105,11 @@ class _HomePageState extends State<HomePage> {
       android: androidDetails,
       iOS: iOSDetails,
     );
-      if (longDuration) {
-        body = "Visit in 45 minutes";
-      } else {
-        body = "Reach the store";
-      }
+    if (longDuration) {
+      body = "Visit in 45 minutes";
+    } else {
+      body = "Reach the store";
+    }
     // await plugin.show(0, "Reminder",  "vai a cagare", generalNotificationDetails);
     await plugin.zonedSchedule(
         0,
@@ -123,31 +124,39 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-     cron.schedule(Schedule.parse("*/30 * * * *"), () async {
-       await fetchBookings(user);
-       setState(() {
-         user.reservations =
-             Hive.box<User>('properties').get('user').reservations;
-       });
-     });
-     cron2.schedule(Schedule.parse("*/1 * * * *"), () async {
+    cron.schedule(Schedule.parse("*/30 * * * *"), () async {
+      await fetchBookings(user);
+      setState(() {
+        user.reservations =
+            Hive.box<User>('properties').get('user').reservations;
+      });
+    });
+    cron2.schedule(Schedule.parse("*/1 * * * *"), () async {
       List<Reservation> longWaitStores = user.reservations.where((element) {
         var formatter = new DateFormat("yyyy-MM-dd");
-        DateTime ticket = DateTime.parse(formatter.format(DateTime.parse(element.booking.date)) + " " + element.booking.slot.startingHour) ;
+        DateTime ticket = DateTime.parse(
+            formatter.format(DateTime.parse(element.booking.date)) +
+                " " +
+                element.booking.slot.startingHour);
         DateTime now = DateTime.now();
-        return  ticket.subtract(Duration(minutes: 44)).isAfter(now) && ticket.subtract(Duration(minutes: 45, seconds: 10)).isBefore(now);
+        return ticket.subtract(Duration(minutes: 44)).isAfter(now) &&
+            ticket.subtract(Duration(minutes: 45, seconds: 10)).isBefore(now);
       }).toList();
       List<Reservation> shortWaitStores = user.reservations.where((element) {
         var formatter = new DateFormat("yyyy-MM-dd");
-        DateTime ticket = DateTime.parse(formatter.format(DateTime.parse(element.booking.date)) + " " + element.booking.slot.startingHour) ;
+        DateTime ticket = DateTime.parse(
+            formatter.format(DateTime.parse(element.booking.date)) +
+                " " +
+                element.booking.slot.startingHour);
         DateTime now = DateTime.now();
-        return  ticket.subtract(Duration(minutes: 14)).isAfter(now) && ticket.subtract(Duration(minutes: 15, seconds: 10)).isBefore(now);
+        return ticket.subtract(Duration(minutes: 14)).isAfter(now) &&
+            ticket.subtract(Duration(minutes: 15, seconds: 10)).isBefore(now);
       }).toList();
-      if (longWaitStores.length >0) {
+      if (longWaitStores.length > 0) {
         longWaitStores.forEach((store) {
           _showNotification(true, store.store.name);
         });
-      } else if (shortWaitStores.length >0) {
+      } else if (shortWaitStores.length > 0) {
         shortWaitStores.forEach((store) {
           _showNotification(false, store.store.name);
         });
@@ -192,6 +201,27 @@ class _HomePageState extends State<HomePage> {
                     onLoading: _onLoading,
                     child: ListView(
                       children: [
+                        user.storeId !=null ? Card(
+                            elevation: 8.0,
+                            child: Container(
+                                padding: EdgeInsets.all(10.0),
+                                child: ListView(
+                                  shrinkWrap: true,
+                                    children: <Widget>[
+                                      Text(
+                                        "Selected Store",
+                                        style: TextStyle(
+                                            fontWeight:
+                                            FontWeight.w600,
+                                            color: Theme.of(context)
+                                                .accentColor,
+                                            fontSize: 24),
+                                      ),
+                                      SizedBox(
+                                        height: 15,
+                                        width: 100,
+                                      ),
+                                      fetchStore() ]))): Container(),
                         Card(
                             elevation: 8.0,
                             child: Container(
@@ -225,7 +255,7 @@ class _HomePageState extends State<HomePage> {
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
-                                                            fontSize: 18),
+                                                            fontSize: 18, color: Color(0xff8A888A)),
                                                       )),
                                                       DataColumn(
                                                           label: Text(
@@ -233,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
-                                                            fontSize: 18),
+                                                            fontSize: 18, color: Color(0xff8A888A)),
                                                       )),
                                                       DataColumn(
                                                           label: Text(
@@ -241,7 +271,7 @@ class _HomePageState extends State<HomePage> {
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
-                                                            fontSize: 18),
+                                                            fontSize: 18, color: Color(0xff8A888A)),
                                                       )),
                                                       DataColumn(
                                                           label: Text(''))
@@ -378,8 +408,7 @@ class _HomePageState extends State<HomePage> {
                                                                                           onPressed: () {
                                                                                             AuthService.voidTicket(reservation.id, user.token, false);
                                                                                             setState(() {
-                                                                                              user.reservations =
-                                                                                                  Hive.box<User>('properties').get('user').reservations;
+                                                                                              user.reservations = Hive.box<User>('properties').get('user').reservations;
                                                                                             });
                                                                                             Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
                                                                                           }),
@@ -545,9 +574,11 @@ class _HomePageState extends State<HomePage> {
                                                                             .bodyText1),
                                                                     onPressed:
                                                                         () {
-                                                                      Navigator.popAndPushNamed(
+                                                                      Navigator.pushNamedAndRemoveUntil(
                                                                           context,
-                                                                          "/home");
+                                                                          "/home",
+                                                                          (r) =>
+                                                                              false);
                                                                     })
                                                               ]));
                                                 })
@@ -695,7 +726,10 @@ class _HomePageState extends State<HomePage> {
                                                 onTap: () {
                                                   setState(() {
                                                     user.reservations =
-                                                        Hive.box<User>('properties').get('user').reservations;
+                                                        Hive.box<User>(
+                                                                'properties')
+                                                            .get('user')
+                                                            .reservations;
                                                   });
                                                   Navigator.popAndPushNamed(
                                                       context, "/home");
@@ -821,7 +855,10 @@ class _HomePageState extends State<HomePage> {
                                                 onTap: () {
                                                   setState(() {
                                                     user.reservations =
-                                                        Hive.box<User>('properties').get('user').reservations;
+                                                        Hive.box<User>(
+                                                                'properties')
+                                                            .get('user')
+                                                            .reservations;
                                                   });
                                                   Navigator.popAndPushNamed(
                                                       context, "/home");
@@ -884,6 +921,6 @@ class _HomePageState extends State<HomePage> {
   Text fetchStore() {
     List<Store> retrievedStores =
         user.stores.where((store) => store.id == user.storeId).toList();
-    return Text(retrievedStores.elementAt(0).name);
+    return Text(retrievedStores.elementAt(0).name, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff8A888A), fontSize: 16),);
   }
 }

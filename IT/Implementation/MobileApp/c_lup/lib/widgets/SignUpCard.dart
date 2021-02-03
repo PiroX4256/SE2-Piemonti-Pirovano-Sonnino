@@ -88,14 +88,14 @@ class _SignUpCardState extends State<SignUpCard> {
                           controller: controller3,
                           validator: (value) {
                             if (value.isEmpty) {
-                              return "Store ID cannot be null";
+                              return "Store ID field cannot be empty";
                             } else
                               return null;
                           },
                           decoration: InputDecoration(
                             focusColor: Theme.of(context).accentColor,
                             prefixIcon: Icon(Icons.local_grocery_store),
-                            hintText: "Store ID",
+                            hintText: "Store ID*",
                             hintStyle: Theme.of(context).textTheme.bodyText1,
                           ))
                       : Container(),

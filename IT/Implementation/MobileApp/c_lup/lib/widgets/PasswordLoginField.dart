@@ -18,7 +18,7 @@ class _PasswordLoginFieldState extends State<PasswordLoginField> {
       controller: widget.controller,
       validator: (value) {
         if (value.isEmpty) {
-          return "Password cannot be null";
+          return "Password field cannot be empty";
         }
         else
           return null;
@@ -26,7 +26,7 @@ class _PasswordLoginFieldState extends State<PasswordLoginField> {
       obscureText: _isHidden,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.lock),
-        hintText: "Password",
+        hintText: "Password*",
         hintStyle: Theme.of(context).textTheme.bodyText1,
         suffix: InkWell(onTap: _togglePasswordView, child: _visibility),
       ),
