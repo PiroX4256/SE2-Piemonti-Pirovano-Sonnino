@@ -8,7 +8,6 @@ import it.polimi.se2.clupapplication.entities.Role;
  */
 public interface RoleService {
     /**
-     *
      * @param name the role name to be searched in the database.
      * @return the role object fetched from the database, null if not present.
      */

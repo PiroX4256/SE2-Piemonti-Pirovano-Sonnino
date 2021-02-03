@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Data Transfer Object representing the Store information.
+ *
  * @see it.polimi.se2.clupapplication.entities.Store for more details.
  */
 public class StoreDTO {

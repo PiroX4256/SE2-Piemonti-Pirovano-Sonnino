@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
     UserRepository userRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         it.polimi.se2.clupapplication.entities.User user = userRepository.findByUsername(username);

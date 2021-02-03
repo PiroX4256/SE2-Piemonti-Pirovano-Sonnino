@@ -7,11 +7,11 @@ public class AuthTokenDTO {
 
     private String token;
 
-    public AuthTokenDTO(){
+    public AuthTokenDTO() {
 
     }
 
-    public AuthTokenDTO(String token){
+    public AuthTokenDTO(String token) {
         this.token = token;
     }
 

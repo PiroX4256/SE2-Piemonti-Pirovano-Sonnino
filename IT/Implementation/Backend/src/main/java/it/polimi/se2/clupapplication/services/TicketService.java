@@ -4,18 +4,14 @@ import it.polimi.se2.clupapplication.entities.*;
 import it.polimi.se2.clupapplication.model.Status;
 import it.polimi.se2.clupapplication.repositories.*;
 import it.polimi.se2.clupapplication.utils.DateComparison;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class TicketService {
@@ -37,8 +33,9 @@ public class TicketService {
      * First of all, it queries the store, fetching all the available upcoming slots.
      * Then, it checks if there are some bookings in the first slot and, in particular, if there is the possibility of
      * retrieving other tickets. If true, it creates new Ticket and Booking instances.
+     *
      * @param storeId the store in which the ASAP request has to be made.
-     * @param user the user who requested the slot.
+     * @param user    the user who requested the slot.
      * @return a new Ticket instance if the creation is successful, null otherwise.
      */
     public Ticket createNewASAPTicket(Long storeId, User user) {
@@ -47,7 +44,7 @@ public class TicketService {
         if (storeQuery.isPresent()) {
             store = storeQuery.get();
             List<Ticket> tickets = ticketRepository.findByUserAndStatusAndStore(user, Status.SCHEDULED, store);
-            if(tickets.size()>0 && user.getRoles().contains(roleRepository.findByName("USER"))) {
+            if (tickets.size() > 0 && user.getRoles().contains(roleRepository.findByName("USER"))) {
                 return null;
             }
             Ticket ticket = new Ticket(user, store, Status.SCHEDULED);
@@ -75,6 +72,7 @@ public class TicketService {
 
     /**
      * Void an existent ticket relying on its id.
+     *
      * @param ticketId the id of the ticket to be voided.
      */
     public void voidTicket(Long ticketId) {
@@ -97,6 +95,7 @@ public class TicketService {
     /**
      * Validate a ticket through its unique id (uuid). This method is generally called from the attendants' smartphones,
      * which read the users' tickets at the entrance of the supermarkets.
+     *
      * @param uuid the unique id of the ticket to be validated.
      * @return true if the validation is successful, false otherwise.
      */
@@ -104,7 +103,7 @@ public class TicketService {
         Booking booking = bookingRepository.findByUuid(uuid);
         if (booking != null) {
             LocalTime localTime = LocalTime.now();
-            if(!DateComparison.compareDates(booking.getVisitDate(), new Date())
+            if (!DateComparison.compareDates(booking.getVisitDate(), new Date())
                     || localTime.compareTo(booking.getSlot().getStartingHour().plusHours(1)) > 0 || localTime.compareTo(booking.getSlot().getStartingHour()) < 0) {
                 return false;
             }
@@ -125,6 +124,7 @@ public class TicketService {
 
     /**
      * Fetch all the upcoming tickets of a given store. It is generally used by store managers and attendants.
+     *
      * @param store the store whose upcoming tickets have to be retrieved.
      * @return the list of upcoming tickets.
      */
@@ -136,6 +136,7 @@ public class TicketService {
     /**
      * This methods takes care of the procedure of handing a ticket on the spot, which is managed by the store attendant, in a
      * proper store area.
+     *
      * @param user the store attendant who made the request.
      * @return the generated ticket.
      */
@@ -150,8 +151,8 @@ public class TicketService {
      */
     public void voidExpiredTicket() {
         List<Ticket> tickets = ticketRepository.findByDateAndTimeAndStatus(Status.SCHEDULED, LocalTime.now().minusHours(2), new Date());
-        for(Ticket ticket: tickets) {
-            if(LocalTime.now().compareTo(ticket.getBooking().getSlot().getStartingHour().plusHours(1)) > 0) {
+        for (Ticket ticket : tickets) {
+            if (LocalTime.now().compareTo(ticket.getBooking().getSlot().getStartingHour().plusHours(1)) > 0) {
                 ticket.setStatus(Status.VOID);
                 ticketRepository.save(ticket);
             }

@@ -24,7 +24,8 @@
         </a>
         <div class="right menu">
             <a class="item">Bentornato,
-                <script>document.write(localStorage.getItem('username'))</script></span></a>
+                <script>document.write(localStorage.getItem('username'))</script>
+                </span></a>
             <a class="item" onclick="window.location.href = '/logout.html'">Logout</a>
         </div>
     </div>
@@ -34,13 +35,22 @@
             ASAP Ticket
         </h1>
         <h2>As Soon As Possible</h2>
-        <p>Insert a CAP and choose a store!</p>
-        <div class="text container">
-            <div class="ui input">
-                <input type="text" placeholder="Search..." id="capContainer">
+        <p>Insert a CAP...</p>
+        <div class="text container" style="width: fit-content; width: -moz-fit-content; margin: auto auto 10px !important;">
+            <div style="float: left">
+                <div class="ui input">
+                    <input type="text" placeholder="Search by CAP..." id="capContainer">
+                </div>
+                <button class="ui button" id="searchByCap">Search</button>
             </div>
-            <button class="ui button" id="searchByCap">Search</button>
+            <div style="float: right">
+                <div class="ui input">
+                    <input type="text" placeholder="Search by city..." id="cityContainer">
+                </div>
+                <button class="ui button" id="searchByCity">Search</button>
+            </div>
         </div>
+
         <div class="container" style="margin-top: 10px">
             <table class="ui celled table" style="max-width: 50%; margin: auto">
                 <thead>
@@ -103,12 +113,14 @@
                 <div class="ui inverted link list">
                     <a href="/" class="item">Discover CLup</a>
                     <a href="https://testflight.apple.com/join/LPYEOhGr" class="item">CLup on App Store</a>
-                    <a href="https://play.google.com/store/apps/details?id=it.polimi.c_lup" class="item">CLup on Google Play</a>
+                    <a href="https://play.google.com/store/apps/details?id=it.polimi.c_lup" class="item">CLup on Google
+                        Play</a>
                 </div>
             </div>
             <div class="seven wide column">
                 <h4 class="ui inverted header">About Us</h4>
-                <p>With CLup, which is the acronym of "Customers Line Up", going to your favorite grocery shopping in this period of social distancing could not be even simpler.</p>
+                <p>With CLup, which is the acronym of "Customers Line Up", going to your favorite grocery shopping in
+                    this period of social distancing could not be even simpler.</p>
             </div>
         </div>
     </div>

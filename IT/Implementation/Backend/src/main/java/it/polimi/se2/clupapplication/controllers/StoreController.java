@@ -29,6 +29,7 @@ public class StoreController {
 
     /**
      * Create a new store starting from a user POST request.
+     *
      * @param storeDTO the Data Transfer Object of the store to be created.
      * @return status code 200 with a new instance of store if everything goes fine, 400 otherwise.
      */
@@ -45,6 +46,7 @@ public class StoreController {
 
     /**
      * Create a new time slot to be bound to a store.
+     *
      * @param slotDTO the Data Transfer Object of the store to be created.
      * @return status code 200.
      */
@@ -52,7 +54,7 @@ public class StoreController {
     @PreAuthorize("hasAnyRole('MANAGER')")
     public ResponseEntity<?> addHours(@RequestBody SlotDTO slotDTO) {
         Slot slot = storeService.addSlot(slotDTO, userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName()));
-        return (slot!=null ? ResponseEntity.ok().body(slot) : ResponseEntity.badRequest().build());
+        return (slot != null ? ResponseEntity.ok().body(slot) : ResponseEntity.badRequest().build());
     }
 
     /**
@@ -76,6 +78,7 @@ public class StoreController {
 
     /**
      * Retrieve all the available slot given a certain store.
+     *
      * @param storeId the id of the store which slots have to be retrieved.
      * @return the list of all the slots.
      */
@@ -94,6 +97,15 @@ public class StoreController {
     }
 
     /**
+     * @param city the name of the city in which stores must be searched.
+     * @return the stores in that area.
+     */
+    @GetMapping("/getStoresByCity")
+    public ResponseEntity<?> getStoreByName(@RequestParam String city) {
+        return ResponseEntity.ok(storeService.getAllByCity(city));
+    }
+
+    /**
      * @return the store of a given manager or attendant, properly identified through him (her) token, which is appended
      * to the request.
      */
@@ -102,10 +114,9 @@ public class StoreController {
     public ResponseEntity<?> getMyStore() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findOne(authentication.getName());
-        if(user.getRoles().iterator().next().getName().equals("ATTENDANT")) {
+        if (user.getRoles().iterator().next().getName().equals("ATTENDANT")) {
             return ResponseEntity.ok(storeService.getStoreByAttendant(user));
-        }
-        else {
+        } else {
             return ResponseEntity.ok(storeService.getByManager(user));
         }
     }
@@ -135,6 +146,7 @@ public class StoreController {
 
     /**
      * Edit the store information. This procedure can only be made by the store manager.
+     *
      * @param storeDTO the Data Transfer Object containing the updated information about the store object.
      * @return the updated store object.
      */
@@ -149,6 +161,7 @@ public class StoreController {
 
     /**
      * Delete a slot given its id.
+     *
      * @param slotId the id of the slot to be deleted.
      * @return status code 200 if request is successful, status code 422 if there are active bookings in that slot,
      * status code 403 if the store manager does not manage the store which the slot is bound to.
@@ -157,7 +170,7 @@ public class StoreController {
     @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<?> deleteSlot(@RequestParam Long slotId) {
         try {
-            if(storeService.deleteSlot(storeService.getByManager(userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName())), slotId)) {
+            if (storeService.deleteSlot(storeService.getByManager(userService.findOne(SecurityContextHolder.getContext().getAuthentication().getName())), slotId)) {
                 return ResponseEntity.ok().build();
             } else {
                 return ResponseEntity.unprocessableEntity().body("You cannot delete this slot, because there are active bookings!");
@@ -169,6 +182,7 @@ public class StoreController {
 
     /**
      * Fire an attendant of a store given its id.
+     *
      * @param attendantId the id of the attendant to fire.
      * @return status code 200 if request is successful, status code 403 if the manager does not manage the attendant's store.
      */

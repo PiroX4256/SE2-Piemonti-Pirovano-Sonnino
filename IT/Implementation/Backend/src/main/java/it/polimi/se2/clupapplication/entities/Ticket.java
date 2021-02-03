@@ -1,6 +1,5 @@
 package it.polimi.se2.clupapplication.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import it.polimi.se2.clupapplication.model.Status;
 
@@ -29,7 +28,8 @@ public class Ticket {
     @JoinColumn
     private Booking booking;
 
-    protected Ticket() {}
+    protected Ticket() {
+    }
 
     public Ticket(User user, Store store, Status status) {
         this.user = user;
