@@ -97,6 +97,15 @@ public class StoreService {
     }
 
     /**
+     * Get all the available stores given a postcode.
+     * @param city the name of the city in which the store are searched.
+     * @return the list of the stores of that area.
+     */
+    public List<Store> getAllByCity(String city) {
+        return storeRepository.findByCityContaining(city);
+    }
+
+    /**
      * Find a store given its manager.
      * @param manager the manager.
      * @return the manager's store.

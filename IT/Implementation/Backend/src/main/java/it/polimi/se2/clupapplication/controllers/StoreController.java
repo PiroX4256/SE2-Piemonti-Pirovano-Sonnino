@@ -94,6 +94,15 @@ public class StoreController {
     }
 
     /**
+     * @param city the name of the city in which stores must be searched.
+     * @return the stores in that area.
+     */
+    @GetMapping("/getStoresByCity")
+    public ResponseEntity<?> getStoreByName(@RequestParam String city) {
+        return ResponseEntity.ok(storeService.getAllByCity(city));
+    }
+
+    /**
      * @return the store of a given manager or attendant, properly identified through him (her) token, which is appended
      * to the request.
      */

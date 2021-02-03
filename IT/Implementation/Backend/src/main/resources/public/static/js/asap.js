@@ -36,6 +36,23 @@ $('#searchByCap').on('click', function () {
     });
 });
 
+$('#searchByCity').on('click', function () {
+    var city = document.getElementById("cityContainer").value;
+    $.ajax({
+        url: '/api/store/getStoresByCity?city=' + city,
+        method: 'GET',
+        headers: headers,
+        success: function (data) {
+            storeCall(data);
+        },
+        error: function (err) {
+            if (err.status == 401) {
+                window.location.href = "/login";
+            }
+        }
+    });
+});
+
 function storeCall(stores) {
     document.getElementById('storeContainer').innerHTML =
         "                <tr v-for=\"store in stores\" :key=\"store.id\" style=\"visibility: hidden\" id=\"tableRows\">\n" +
