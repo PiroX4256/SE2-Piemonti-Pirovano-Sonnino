@@ -1,8 +1,10 @@
+import 'package:c_lup/widgets/CustomBox.dart';
 import 'package:c_lup/widgets/MainAppbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 
+///Page for choosing signUp method.
 class SignUpIntermediatePage extends StatefulWidget {
   SignUpIntermediatePage({Key key}) : super(key: key);
 
@@ -37,24 +39,19 @@ class _SignUpIntermediatePageState extends State<SignUpIntermediatePage> {
                 style: Theme.of(context).textTheme.button,
               ),
             ),
-            SizedBox(
-              height: 6.0,
-            ),
+            CustomBox(6, 6),
             SignInButton(
               Buttons.Google,
               text: "Sign up with Google",
               onPressed: () {},
             ),
-            SizedBox(
-              height: 6.0,
-            ),
+            CustomBox(6, 6),
             SignInButton(
               Buttons.Facebook,
               text: "Sign up with Facebook",
               onPressed: () {},
             ),
           ]),
-
     );
   }
 }

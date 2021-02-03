@@ -12,6 +12,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive/hive.dart';
 
+///Page for the selection of the user's store.
 class EditStorePage extends StatefulWidget {
   EditStorePage({Key key}) : super(key: key);
 
@@ -30,7 +31,7 @@ class _EditStorePageState extends State<EditStorePage> {
   @override
   void initState() {
     super.initState();
-    fetchCose();
+    fetchStoresAndUpdateState();
     Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         _showGoogleMaps = true;
@@ -38,7 +39,8 @@ class _EditStorePageState extends State<EditStorePage> {
     });
   }
 
-  void fetchCose() async {
+  ///Call [AuthService] [fetchStores] function and setState.
+  void fetchStoresAndUpdateState() async {
     await Generator.fetchStores(
         (Hive.box<User>('properties')).get('user').token);
     setState(() {
@@ -47,6 +49,7 @@ class _EditStorePageState extends State<EditStorePage> {
     });
   }
 
+  //Set markers on Map.
   void _onMapCreated(GoogleMapController controller) {
     _controller = controller;
     _markers = Set.from(stores.map<Marker>((store) {
@@ -103,34 +106,7 @@ class _EditStorePageState extends State<EditStorePage> {
                                     child: StatefulBuilder(builder:
                                         (BuildContext context,
                                             StateSetter setState) {
-                                      return DropdownButton<Store>(
-                                        value: selectedStore,
-                                        onChanged: (Store value) {
-                                          setState(() {
-                                            selectedStore = value;
-                                            _controller.animateCamera(
-                                              CameraUpdate.newCameraPosition(
-                                                  CameraPosition(
-                                                      target: LatLng(
-                                                          double.parse(
-                                                              selectedStore
-                                                                  .latitude),
-                                                          double.parse(
-                                                              selectedStore
-                                                                  .longitude)),
-                                                      zoom: 13)),
-                                            );
-                                          });
-                                        },
-                                        items: stores
-                                            .map<DropdownMenuItem<Store>>(
-                                                (Store store) {
-                                          return DropdownMenuItem(
-                                            child: Text(store.name),
-                                            value: store,
-                                          );
-                                        }).toList(),
-                                      );
+                                      return dropDownButton(setState);
                                     }),
                                   ),
                                   RaisedButton(
@@ -168,9 +144,13 @@ class _EditStorePageState extends State<EditStorePage> {
                                                             .elementAt(0)
                                                             .longitude)),
                                                     zoom: 13),
-                                            gestureRecognizers: < Factory < OneSequenceGestureRecognizer >> [
-                                              new Factory < OneSequenceGestureRecognizer > (
-                                                    () => new EagerGestureRecognizer(),
+                                            gestureRecognizers: <
+                                                Factory<
+                                                    OneSequenceGestureRecognizer>>[
+                                              new Factory<
+                                                  OneSequenceGestureRecognizer>(
+                                                () =>
+                                                    new EagerGestureRecognizer(),
                                               ),
                                             ].toSet()),
                                       )
@@ -183,5 +163,29 @@ class _EditStorePageState extends State<EditStorePage> {
                 return Container();
               }
             }));
+  }
+
+  ///Populate DropdownButton with stores.
+  DropdownButton<Store> dropDownButton(StateSetter setState) {
+    return DropdownButton<Store>(
+      value: selectedStore,
+      onChanged: (Store value) {
+        setState(() {
+          selectedStore = value;
+          _controller.animateCamera(
+            CameraUpdate.newCameraPosition(CameraPosition(
+                target: LatLng(double.parse(selectedStore.latitude),
+                    double.parse(selectedStore.longitude)),
+                zoom: 13)),
+          );
+        });
+      },
+      items: stores.map<DropdownMenuItem<Store>>((Store store) {
+        return DropdownMenuItem(
+          child: Text(store.name),
+          value: store,
+        );
+      }).toList(),
+    );
   }
 }

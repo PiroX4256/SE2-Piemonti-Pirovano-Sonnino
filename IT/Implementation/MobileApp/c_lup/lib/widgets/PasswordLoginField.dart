@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+///Password field used in Login Page.
 class PasswordLoginField extends StatefulWidget {
   PasswordLoginField({this.controller});
+
   @override
   _PasswordLoginFieldState createState() => _PasswordLoginFieldState();
   final TextEditingController controller;
@@ -19,8 +21,7 @@ class _PasswordLoginFieldState extends State<PasswordLoginField> {
       validator: (value) {
         if (value.isEmpty) {
           return "Password field cannot be empty";
-        }
-        else
+        } else
           return null;
       },
       obscureText: _isHidden,
@@ -33,6 +34,7 @@ class _PasswordLoginFieldState extends State<PasswordLoginField> {
     );
   }
 
+  ///Show/Hide password.
   void _togglePasswordView() {
     setState(() {
       _isHidden = !_isHidden;

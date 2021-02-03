@@ -1,11 +1,13 @@
 import 'dart:typed_data';
+
+import 'package:c_lup/utils/QrCodeArguments.dart';
+import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:c_lup/utils/QrCodeArguments.dart';
-import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+///Page displaying QR code.
 class QrCodePage extends StatefulWidget {
   QrCodePage({Key key}) : super(key: key);
 
@@ -66,6 +68,7 @@ class _QrCodePageState extends State<QrCodePage> {
         ));
   }
 
+  ///Convert QR to Image.
   Future<ByteData> getData(String data) {
     return QrPainter(data: data, version: QrVersions.auto).toImageData(200);
   }

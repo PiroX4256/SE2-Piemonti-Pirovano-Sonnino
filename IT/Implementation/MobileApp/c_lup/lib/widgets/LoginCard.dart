@@ -1,10 +1,12 @@
 import 'package:c_lup/utils/AuthService.dart';
+import 'package:c_lup/widgets/CustomBox.dart';
 import 'package:c_lup/widgets/EmailField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'PasswordLoginField.dart';
 
+///Login card.
 class LoginCard extends StatefulWidget {
   LoginCard({
     Key key,
@@ -30,15 +32,11 @@ class _LoginCardState extends State<LoginCard> {
               child: Column(
                 children: [
                   EmailField(controller: controller),
-                  SizedBox(
-                    height: 15.0,
-                  ),
+                  CustomBox(15, 15),
                   PasswordLoginField(
                     controller: controller2,
                   ),
-                  SizedBox(
-                    height: 1.0,
-                  ),
+                  CustomBox(1, 1),
                   FlatButton(
                     onPressed: () {
                       Navigator.pushNamed(context, "/forgot");

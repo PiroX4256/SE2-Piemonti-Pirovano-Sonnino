@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+///Sign Up Button.
 class SignUpButton extends StatelessWidget {
   const SignUpButton({
     Key key,
@@ -15,10 +17,7 @@ class SignUpButton extends StatelessWidget {
       },
       child: Text(
         'CREATE A NEW ACCOUNT',
-        style: Theme
-            .of(context)
-            .textTheme
-            .button,
+        style: Theme.of(context).textTheme.button,
       ),
     );
   }

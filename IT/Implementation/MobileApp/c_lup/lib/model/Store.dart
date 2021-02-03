@@ -4,6 +4,8 @@ import 'Slot.dart';
 
 part 'Store.g.dart';
 
+///Store Hive class, it contains the store's id, name, chain, address, city,
+///cap, longitude, latitude and List<[Slot]>
 @HiveType(typeId: 2)
 // ignore: must_be_immutable
 class Store extends HiveObject {
@@ -26,6 +28,14 @@ class Store extends HiveObject {
   @HiveField(8)
   List<Slot> slots;
 
-  Store({this.id, this.name, this.chain, this.address, this.city, this.cap, this.longitude, this.latitude, this.slots});
-
+  Store(
+      {this.id,
+      this.name,
+      this.chain,
+      this.address,
+      this.city,
+      this.cap,
+      this.longitude,
+      this.latitude,
+      this.slots});
 }

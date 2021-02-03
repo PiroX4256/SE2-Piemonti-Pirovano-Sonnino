@@ -1,4 +1,5 @@
 import 'package:c_lup/utils/AuthService.dart';
+import 'package:c_lup/widgets/CustomBox.dart';
 import 'package:c_lup/widgets/EmailField.dart';
 import 'package:c_lup/widgets/PasswordField.dart';
 import 'package:flutter/gestures.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+///Sign Up Card.
 class SignUpCard extends StatefulWidget {
   SignUpCard({
     Key key,
@@ -44,15 +46,11 @@ class _SignUpCardState extends State<SignUpCard> {
                   EmailField(
                     controller: controller,
                   ),
-                  SizedBox(
-                    height: 15.0,
-                  ),
+                  CustomBox(15, 15),
                   PasswordField(
                     controller: controller2,
                   ),
-                  SizedBox(
-                    height: 1.0,
-                  ),
+                  CustomBox(1, 1),
                   ListTile(
                     title: Text(
                       "Customer",
@@ -99,9 +97,7 @@ class _SignUpCardState extends State<SignUpCard> {
                             hintStyle: Theme.of(context).textTheme.bodyText1,
                           ))
                       : Container(),
-                  SizedBox(
-                    height: 10.0,
-                  ),
+                  CustomBox(10, 10),
                   Row(
                     children: <Widget>[
                       Checkbox(
@@ -188,31 +184,7 @@ class _SignUpCardState extends State<SignUpCard> {
                             alertButtonText = Text('Ok');
                           });
                         }
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: alertTitle,
-                                content: SingleChildScrollView(
-                                    child: ListBody(
-                                        children: <Widget>[alertBody])),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: alertButtonText,
-                                    onPressed: () {
-                                      if (error) {
-                                        Navigator.popAndPushNamed(
-                                            context, "/sign-up");
-                                      } else {
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context, "/home", (r) => false);
-                                      }
-                                    },
-                                  )
-                                ],
-                              );
-                            });
+                        signUpDialog(context);
                       }
                     },
                     child: Text(
@@ -227,5 +199,32 @@ class _SignUpCardState extends State<SignUpCard> {
         ),
       ),
     );
+  }
+
+  ///Sign up Dialog.
+  Future signUpDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: alertTitle,
+            content: SingleChildScrollView(
+                child: ListBody(children: <Widget>[alertBody])),
+            actions: <Widget>[
+              TextButton(
+                child: alertButtonText,
+                onPressed: () {
+                  if (error) {
+                    Navigator.popAndPushNamed(context, "/sign-up");
+                  } else {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, "/home", (r) => false);
+                  }
+                },
+              )
+            ],
+          );
+        });
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:c_lup/model/Booking.dart';
 import 'package:c_lup/model/Reservation.dart';
 import 'package:c_lup/model/Slot.dart';
@@ -12,8 +13,9 @@ import 'package:http/http.dart' as http;
 
 import 'Globals.dart';
 
+///Generator class: support class used for REST API ticket handling.
 class Generator {
-  static Future<bool> fetchBookings(String token) async{
+  static Future<bool> fetchBookings(String token) async {
     var response = await http.get(
         'https://' + Globals.ip + '/api/ticket/getMyTickets',
         headers: <String, String>{
@@ -58,6 +60,7 @@ class Generator {
     }
   }
 
+  ///Function retrieving all available stores.
   static Future<bool> fetchStores(String token) async {
     var response = await http.get(
         'https://' + Globals.ip + '/api/store/getAllStores',
@@ -95,6 +98,7 @@ class Generator {
       return false;
   }
 
+  ///Function retrieving all tickets of a single store (ATTENDANT ONLY).
   static Future<List<Ticket>> fetchStoreTickets(String token) async {
     List<Ticket> tickets = [];
     var response = await http.get(
@@ -117,6 +121,7 @@ class Generator {
       return null;
   }
 
+  ///Function used for requesting a ticket ASAP (ATTENDANT ONLY).
   static Future<TicketQueue> retrieve(String token) async {
     var response = await http.get(
         'https://' + Globals.ip + '/api/ticket/handOutOnSpot',

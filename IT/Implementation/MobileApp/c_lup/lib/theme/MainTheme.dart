@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+///Main app's theme class.
 class MainTheme {
   static const Color primaryColor = Color(0xffF85F6A);
   static const Color textMain = Color(0xffF85F6A);
@@ -37,7 +38,4 @@ class MainTheme {
               fontSize: 18,
               fontWeight: FontWeight.w600,
               color: textAlternative))));
-
-//TODO  DART THEME NON SONO SICURO CHE RESETTANDO FUNZIONI
-
 }

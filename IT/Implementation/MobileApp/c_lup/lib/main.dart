@@ -7,7 +7,6 @@ import 'package:c_lup/pages/ForgotPage.dart';
 import 'package:c_lup/pages/HomePage.dart';
 import 'package:c_lup/pages/LoginPage.dart';
 import 'package:c_lup/pages/QrCodePage.dart';
-import 'package:c_lup/pages/RetrievePage.dart';
 import 'package:c_lup/pages/SignUpIntermediatePage.dart';
 import 'package:c_lup/pages/SignUpPage.dart';
 import 'package:c_lup/theme/MainTheme.dart';
@@ -16,23 +15,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'model/Reservation.dart';
-import 'model/Store.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import 'model/Reservation.dart';
+import 'model/Store.dart';
 
 void main() async {
+  //Initialize plugins.
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //Initialize tz timezones for related plugin.
   tz.initializeTimeZones();
   tz.setLocalLocation(tz.getLocation("Europe/Rome"));
-  WidgetsFlutterBinding.ensureInitialized();
+
+  //Define default HomePage.
   Widget _defaultHome = new LoginPage();
+
+  //Initialize Hive and Adapters.
   await Hive.initFlutter();
   Hive.registerAdapter<User>(UserAdapter());
   Hive.registerAdapter<Booking>(BookingAdapter());
   Hive.registerAdapter<Reservation>(ReservationAdapter());
   Hive.registerAdapter<Slot>(SlotAdapter());
   Hive.registerAdapter<Store>(StoreAdapter());
+  _defaultHome = await defineHomePage(_defaultHome);
+  runApp(MyApp(home: _defaultHome));
+}
+
+///Define default HomePage based on token.
+Future<Widget> defineHomePage(Widget _defaultHome) async {
   var box = await Hive.openBox<User>('properties');
   User user = box.get('user');
   if (user != null && user.token != null && user.role != null) {
@@ -41,7 +53,7 @@ void main() async {
       _defaultHome = new HomePage();
     }
   }
-  runApp(MyApp(home: _defaultHome));
+  return _defaultHome;
 }
 
 class MyApp extends StatelessWidget {
@@ -58,6 +70,7 @@ class MyApp extends StatelessWidget {
       title: 'CLup',
       home: home,
       theme: MainTheme.getLightTheme(),
+      //Define routes.
       routes: {
         '/forgot': (context) => ForgotPage(),
         '/intermediate': (context) => SignUpIntermediatePage(),
@@ -66,7 +79,6 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/qr-code': (context) => QrCodePage(),
         '/delete-booking': (context) => DeletePage(),
-        '/retrieve': (context) => RetrievePage(),
         '/edit-store': (context) => EditStorePage(),
       },
       builder: EasyLoading.init(),

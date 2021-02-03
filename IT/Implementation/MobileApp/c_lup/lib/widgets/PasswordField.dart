@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+///Password field.
 class PasswordField extends StatefulWidget {
   PasswordField({this.controller});
+
   @override
   _PasswordFieldState createState() => _PasswordFieldState();
   final TextEditingController controller;
@@ -36,6 +38,7 @@ class _PasswordFieldState extends State<PasswordField> {
     );
   }
 
+  ///Show/hide password.
   void _togglePasswordView() {
     setState(() {
       _isHidden = !_isHidden;

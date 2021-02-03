@@ -4,6 +4,8 @@ import 'Slot.dart';
 
 part 'Booking.g.dart';
 
+///Booking Hive class, it contains the ticket's id, date, [Slot], uuid
+///(QR Code), visit duration.
 @HiveType(typeId: 3)
 class Booking extends HiveObject {
   @HiveField(0)

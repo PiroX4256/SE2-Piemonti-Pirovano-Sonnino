@@ -3,6 +3,10 @@ import 'package:c_lup/model/Store.dart';
 import 'package:hive/hive.dart';
 
 part 'User.g.dart';
+
+///User Hive class, it contains all user's information such as token,
+///reservations, role, stores and selected store.
+
 @HiveType(typeId: 0)
 class User extends HiveObject {
   @HiveField(0)
@@ -25,18 +29,20 @@ class User extends HiveObject {
   void setReservation(List<Reservation> reservations) {
     this.reservations = reservations;
   }
+
   void setToken(String token) {
     this.token = token;
   }
+
   void setRole(String role) {
     this.role = role;
   }
-  void setStores(List<Store> stores){
+
+  void setStores(List<Store> stores) {
     this.stores = stores;
   }
 
-  void setStoreId(String storeId){
+  void setStoreId(String storeId) {
     this.storeId = storeId;
   }
 }
-

@@ -5,6 +5,8 @@ import 'Store.dart';
 
 part 'Reservation.g.dart';
 
+///Reservation Hive class, it contains the reservation's id, [Store], [Booking],
+/// status.
 @HiveType(typeId: 1)
 class Reservation extends HiveObject {
   @HiveField(0)

@@ -43,7 +43,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "it.polimi.c_lup"
         minSdkVersion 20
         targetSdkVersion 29
@@ -61,9 +60,7 @@ android {
     }
             buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.release //TODO
+            signingConfig signingConfigs.release
         }
     }
 }
