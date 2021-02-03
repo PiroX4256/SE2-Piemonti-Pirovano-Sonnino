@@ -30,7 +30,8 @@
 
 <div class="container-login100" style="background-image: url('/static/img/queue.svg');">
     <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30" id="signupContainer">
-        <form class="login100-form validate-form" id="signupForm" action="#" onsubmit="return false" method="post" name="signUpForm">
+        <form class="login100-form validate-form" id="signupForm" action="#" onsubmit="return false" method="post"
+              name="signUpForm">
 				<span class="login100-form-title p-b-37">
 					Sign Up
 				</span>
@@ -40,22 +41,29 @@
                 <span class="focus-input100"></span>
             </div>
 
+            <p style="font-size: 12px; margin: auto; text-align: center">
+                Password must be at leat 8 characters long and must
+                contain at leas one symbol, one uppercase letter and one number.
+            </p>
             <div class="wrap-input100 validate-input m-b-25" data-validate="Enter password">
                 <input class="input100" type="password" name="password" placeholder="password" id="password">
                 <span class="focus-input100"></span>
             </div>
 
             <div class="wrap-input100 validate-input m-b-25" data-validate="Confirm password">
-                <input class="input100" type="password" name="confirmPassword" placeholder="password" id="confirmPassword">
+                <input class="input100" type="password" name="confirmPassword" placeholder="confirm password"
+                       id="confirmPassword">
                 <span class="focus-input100"></span>
             </div>
 
-            <div class="wrap-input100 validate-input m-b-25" data-validate="Enter your name" v-if="attendant===true || manager===true">
+            <div class="wrap-input100 validate-input m-b-25" data-validate="Enter your name"
+                 v-if="attendant===true || manager===true">
                 <input class="input100" type="text" name="name" placeholder="name" id="name">
                 <span class="focus-input100"></span>
             </div>
 
-            <div class="wrap-input100 validate-input m-b-25" data-validate="Enter your surname" v-if="attendant===true || manager===true">
+            <div class="wrap-input100 validate-input m-b-25" data-validate="Enter your surname"
+                 v-if="attendant===true || manager===true">
                 <input class="input100" type="text" name="surname" placeholder="surname" id="surname">
                 <span class="focus-input100"></span>
             </div>

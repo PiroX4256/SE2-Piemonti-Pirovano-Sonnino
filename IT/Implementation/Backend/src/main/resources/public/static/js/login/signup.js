@@ -19,6 +19,7 @@ var signupContainer = new Vue({
 
 function submitForm() {
     var form = document.signUpForm;
+    const passRegexp = new RegExp("r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\\$&*~]).{8,}$'");
     if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(form.username.value)) {
         let role, jsonReq;
         if (signupContainer.manager) {
@@ -48,6 +49,10 @@ function submitForm() {
             alert("Passwords do not match!");
             return;
         }
+        if (! passRegexp.test(form.password.value)) {
+            alert("Password does not match the security constraints.");
+            return;
+        }
         $.ajax({
             url: '/api/auth/signup',
             method: 'POST',
@@ -67,6 +72,6 @@ function submitForm() {
             }
         });
     } else {
-        alert("You are pleased to insert a valid email");
+        alert("Email must be valid!");
     }
 }
