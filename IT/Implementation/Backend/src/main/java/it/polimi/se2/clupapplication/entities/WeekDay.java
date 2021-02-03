@@ -4,8 +4,6 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
 
 /**
  * This class is an abstract representation of a day of a week, which is useful for defining store time slots.
@@ -18,7 +16,8 @@ public class WeekDay {
     @NotNull
     private String dayName;
 
-    public WeekDay() {}
+    public WeekDay() {
+    }
 
     public WeekDay(int dayCode, String dayName) {
         this.dayCode = dayCode;

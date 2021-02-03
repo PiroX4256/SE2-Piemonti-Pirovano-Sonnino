@@ -4,6 +4,7 @@ import it.polimi.se2.clupapplication.entities.User;
 
 /**
  * Data Transfer Object representing the User object information, generally used during the sign up process.
+ *
  * @see it.polimi.se2.clupapplication.entities.User for more details.
  */
 public class UserDTO {
@@ -15,7 +16,7 @@ public class UserDTO {
     private String role;
     private Long storeId;
 
-    public User getUserFromDto(){
+    public User getUserFromDto() {
         User user = new User(username, password);
         user.setName(name);
         user.setSurname(surname);

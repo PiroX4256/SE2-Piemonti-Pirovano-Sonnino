@@ -3,10 +3,8 @@ package it.polimi.se2.clupapplication.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import com.sun.istack.Nullable;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -38,19 +36,21 @@ public class User {
                     @JoinColumn(name = "USER_ID")
             },
             inverseJoinColumns = {
-                    @JoinColumn(name = "ROLE_ID") })
+                    @JoinColumn(name = "ROLE_ID")})
     private Set<Role> roles;
 
     @JsonBackReference
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<Ticket> tickets;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
+
     public Long getId() {
         return id;
     }

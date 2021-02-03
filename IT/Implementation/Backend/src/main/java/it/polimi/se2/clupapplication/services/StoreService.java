@@ -32,8 +32,9 @@ public class StoreService {
 
     /**
      * Create a new instance of Store object and put it in the database.
+     *
      * @param storeDTO the Data Transfer Object that represent the store entity.
-     * @param manager the manager who made the request.
+     * @param manager  the manager who made the request.
      * @return a new Store instance.
      */
     public Store save(StoreDTO storeDTO, User manager) {
@@ -45,13 +46,14 @@ public class StoreService {
 
     /**
      * This method permits adding a new time slot to an existent store.
+     *
      * @param slotDTO the Data Transfer Object that represent the Slot entity.
      * @param manager the store manager, who is expected to be the author of the request.
      */
     public Slot addSlot(SlotDTO slotDTO, User manager) {
         Store store = storeRepository.findByManager(manager);
         Optional<WeekDay> weekDay = weekDayRepository.findById(slotDTO.getDayCode());
-        if(weekDay.isPresent()) {
+        if (weekDay.isPresent()) {
             Slot slot = new Slot(weekDay.get(), slotDTO.getStartingHour(), slotDTO.getStoreCapacity(), store);
             store.addSlot(slot);
             slotRepository.save(slot);
@@ -78,6 +80,7 @@ public class StoreService {
 
     /**
      * Get all the available slot for a specified store in the current day.
+     *
      * @param storeId the store whose slots are searched.
      * @return all the available slot of the current day.
      */
@@ -89,6 +92,7 @@ public class StoreService {
 
     /**
      * Get all the available stores given a postcode.
+     *
      * @param cap the postcode in which the store are searched.
      * @return the list of the stores of that area.
      */
@@ -98,6 +102,7 @@ public class StoreService {
 
     /**
      * Get all the available stores given a postcode.
+     *
      * @param city the name of the city in which the store are searched.
      * @return the list of the stores of that area.
      */
@@ -107,6 +112,7 @@ public class StoreService {
 
     /**
      * Find a store given its manager.
+     *
      * @param manager the manager.
      * @return the manager's store.
      */
@@ -116,6 +122,7 @@ public class StoreService {
 
     /**
      * Find all the slots ordered by week days, given a store object.
+     *
      * @param store the store whose slots are needed to be fetched.
      * @return the list of slots ordered by week days (from 1 to 7)
      */
@@ -125,8 +132,9 @@ public class StoreService {
 
     /**
      * Update the store object in the database.
+     *
      * @param storeDTO the Data Transfer Object representing the store entity.
-     * @param manager the store manager
+     * @param manager  the store manager
      * @return the modified Store object.
      */
     public Store editStore(StoreDTO storeDTO, User manager) {
@@ -144,7 +152,8 @@ public class StoreService {
 
     /**
      * Delete a certain slot of a specified store.
-     * @param store the store whose slot has to be deleted.
+     *
+     * @param store  the store whose slot has to be deleted.
      * @param slotId the slot id to be deleted.
      * @return true if the process is successful, false otherwise.
      * @throws IllegalAccessException if the request comes from a manager that is not the owner of the specified store.
@@ -152,9 +161,9 @@ public class StoreService {
     public boolean deleteSlot(Store store, Long slotId) throws IllegalAccessException {
         Slot slot = slotRepository.findById(slotId).get();
         List<Booking> bookings = bookingRepository.findAllBySlotAndVisitDate(slot, new Date());
-        if(!store.getSlots().contains(slot)) {
+        if (!store.getSlots().contains(slot)) {
             throw new IllegalAccessException();
-        } else if(bookings.size() > 0){
+        } else if (bookings.size() > 0) {
             return false;
 
         } else {

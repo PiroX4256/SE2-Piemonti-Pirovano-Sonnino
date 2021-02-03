@@ -31,6 +31,7 @@ import javax.annotation.Resource;
 
 /**
  * This class is the configuration one of the Web Security Backend offered by Spring framework.
+ *
  * @see org.springframework.security.config.annotation.SecurityConfigurer
  */
 @Configuration
@@ -97,7 +98,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public BCryptPasswordEncoder encoder(){
+    public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 

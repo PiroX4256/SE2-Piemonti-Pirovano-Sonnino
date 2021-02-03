@@ -1,7 +1,5 @@
 package it.polimi.se2.clupapplication.model;
 
-import it.polimi.se2.clupapplication.entities.Role;
-
 /**
  * Data Transfer Object representing the authentication response information, which consists in a username and a
  * redirect url to which users will be brought if the login process is successful.

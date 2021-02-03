@@ -3,7 +3,6 @@ package it.polimi.se2.clupapplication.security.services.socialAuth;
 import it.polimi.se2.clupapplication.entities.User;
 import it.polimi.se2.clupapplication.model.UserDTO;
 import it.polimi.se2.clupapplication.repositories.UserRepository;
-
 import it.polimi.se2.clupapplication.services.UserService;
 import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class FacebookConnectionSignup implements ConnectionSignUp {
         RandomStringGenerator pwdGenerator = new RandomStringGenerator.Builder().withinRange(33, 45)
                 .build();
         User user = userRepository.findByUsername(connection.getKey().getProviderUserId());
-        if (user!=null) {
+        if (user != null) {
             return user.getUsername();
         }
         String[] nameAndSurname = connection.getDisplayName().split(" ");

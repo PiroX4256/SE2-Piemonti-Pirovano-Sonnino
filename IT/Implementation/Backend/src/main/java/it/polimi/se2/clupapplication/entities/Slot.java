@@ -2,14 +2,11 @@ package it.polimi.se2.clupapplication.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,8 +33,8 @@ public class Slot {
     private List<Booking> bookings;
 
 
-
-    protected Slot() {}
+    protected Slot() {
+    }
 
     public Slot(WeekDay weekDay, LocalTime startingHour, int maxCapacity, Store store) {
         this.weekDay = weekDay;

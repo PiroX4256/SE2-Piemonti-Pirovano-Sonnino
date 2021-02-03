@@ -42,9 +42,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     /**
      * Return the role authority for a given user.
-     * @see org.springframework.security for more details
+     *
      * @param user the user whose role has to be fetched.
      * @return its authority.
+     * @see org.springframework.security for more details
      */
     private Set<SimpleGrantedAuthority> getAuthority(User user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
@@ -74,7 +75,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         Role role = roleService.findByName(user.getRole().toUpperCase(Locale.ROOT));
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(role);
-        if (user.getRole().toUpperCase().equals("ATTENDANT")) {
+        if (user.getRole().equalsIgnoreCase("ATTENDANT")) {
             Store store = storeRepository.findById(user.getStoreId()).get();
             store.addAttendant(nUser);
         }

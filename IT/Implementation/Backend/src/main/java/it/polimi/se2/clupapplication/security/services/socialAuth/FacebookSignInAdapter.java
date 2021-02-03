@@ -21,7 +21,7 @@ public class FacebookSignInAdapter implements SignInAdapter {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    private TokenProvider jwtTokenUtil;
+    private final TokenProvider jwtTokenUtil;
 
     @Autowired
     private UserService userService;

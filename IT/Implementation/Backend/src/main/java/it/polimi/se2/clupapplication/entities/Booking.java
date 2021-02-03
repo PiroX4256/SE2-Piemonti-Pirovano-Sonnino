@@ -3,11 +3,8 @@ package it.polimi.se2.clupapplication.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
 import com.sun.istack.Nullable;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
-import java.time.LocalTime;
 import java.util.Date;
 
 /**
@@ -37,8 +34,8 @@ public class Booking {
     private int visitDuration;
 
 
-
-    public Booking() {}
+    public Booking() {
+    }
 
     public Booking(Ticket ticket, Date visitDate, Slot slot, String uuid) {
         this.ticket = ticket;

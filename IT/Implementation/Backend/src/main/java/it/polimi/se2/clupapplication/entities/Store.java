@@ -1,10 +1,8 @@
 package it.polimi.se2.clupapplication.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import com.sun.istack.Nullable;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
@@ -46,11 +44,12 @@ public class Store {
     @OneToMany(mappedBy = "store", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Slot> slots = new ArrayList<>();
 
-    protected Store() {}
+    protected Store() {
+    }
 
     public Store(String name, String chain, String city, String address, int cap, double longitude, double latitude) {
         this.name = name;
-        if(chain!=null) {
+        if (chain != null) {
             this.chain = chain;
         }
         this.longitude = longitude;

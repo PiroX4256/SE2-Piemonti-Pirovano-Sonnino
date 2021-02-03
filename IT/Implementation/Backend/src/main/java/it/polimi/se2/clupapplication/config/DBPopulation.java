@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Component
 public class DBPopulation {
-    private static Log LOG = LogFactory.getLog("ContextLoaderListener");
+    private static final Log LOG = LogFactory.getLog("ContextLoaderListener");
 
     @Autowired
     private RoleRepository roleRepository;
@@ -25,7 +25,7 @@ public class DBPopulation {
     @PostConstruct
     public void dbInitializer() {
 
-        if(roleRepository.findAll().size()==0) {
+        if (roleRepository.findAll().size() == 0) {
             LOG.info("Role table empty ... adding new data");
             Role manager = new Role();
             manager.setName("MANAGER");
@@ -40,7 +40,7 @@ public class DBPopulation {
             user.setDescription("Customer Role");
             roleRepository.save(user);
         }
-        if(weekDayRepository.findAll().size() == 0) {
+        if (weekDayRepository.findAll().size() == 0) {
             LOG.info("Days table empty ... adding new data");
             Set<WeekDay> weekDaySet = new HashSet<>();
             weekDaySet.add(new WeekDay(1, "Sunday"));
