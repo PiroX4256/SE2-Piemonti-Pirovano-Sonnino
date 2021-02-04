@@ -101,7 +101,7 @@ public class TicketService {
      */
     public boolean validateTicket(String uuid) throws ParseException {
         Booking booking = bookingRepository.findByUuid(uuid);
-        if (booking != null) {
+        if (booking != null && (booking.getTicket().getStatus() == Status.SCHEDULED || booking.getTicket().getStatus() == Status.BOOKED)) {
             LocalTime localTime = LocalTime.now();
             if (!DateComparison.compareDates(booking.getVisitDate(), new Date())
                     || localTime.compareTo(booking.getSlot().getStartingHour().plusHours(1)) > 0 || localTime.compareTo(booking.getSlot().getStartingHour()) < 0) {
