@@ -352,25 +352,27 @@ Starting from the beginning, the \textbf{AccessInterface} is needed in order to 
 
 Then we can see the \textbf{UserInterface}, which main goal is to achieve user functionalities, such as the ASAP or the Reservation ones. It is realized by five different controllers, one for each functionality.
 \begin{itemize}
-    \item \textbf{ASAPController}: it manages the ASAP request sent by the user and returns a valid response with the booked slot or an error.
-    \item \textbf{ReservationController}: same as above, but specifically designed for the \textit{Book a visit} functionality.
-    \item \textbf{AlternativeSlotRecommender}: it calculates the best alternative slot and returns them back to the user.
-    \item \textbf{QRCodeGenerator}: it manages the creation of the QRCode, when the user confirm the given (or chosen) slot.
-    \item \textbf{Notification}: it manages the feature of periodic notification, sending to the user a message when it is almost time to go.
+    \item \textbf{UserController}: it manages the operations w.r.t. the user interface. In fact, it contains the login and signup methods, toghether with all the useful other methods in order to handle the interaction with him. For example, getMyInformation() returns the serialized user object with some information useful for a client computation (e.g. username, role, etc.).
+    \item \textbf{StoreController}: in the case of the user, it simply contains methods in order to retrieve a list of stores relying on city or cap. It can also retrieve a complete list of stores. Finally, it also contains methods for retrieving the first available slot (given a store id) or other information about a specific store.
+    \item \textbf{TicketController}: it manages the process of asap or book a visit ticket retrieving, which will be used by the customers in order to plan their visit to the shop. It also contains a method to void a ticket given its id.
+    \item \textbf{SecurityController}: it manages the correct authorization of the user operations. In fact, through a correct tagging of them, methods can be defined only for users who have a specific role.
 \end{itemize}
 
 Then we have a store attendant interface, which main features are realized through different controllers.
 \begin{itemize}
-    \item \textbf{QRCodeValidationController}: it manages the process of QRCode validation at the entrances of the store. It receives the data sent from the attendant's mobile device and processes them in order to send him a response, which can be valid (so the customer can enter the store) or not.
-    \item \textbf{GenerateOnSpot}: it manages the creation of a booking, held by the attendant from a proper desk. It simply receives the request from the attendant's device and computes a valid booking slot, sending it back to the attendant.
+    \item \textbf{UserController}: it manages the operations w.r.t. the attendant interface. In fact, it contains the login and signup methods, toghether with all the useful other methods in order to handle the interaction with him. For example, getMyInformation() returns the serialized user object with some information useful for a client computation (e.g. username, role, etc.).
+    \item \textbf{TicketController}: in the attendant case, this controller manages the validation process of a ticket and gives the possibility of voiding an existent ticket. The validation method expects a ticket unique id (on the client it would be represented under a QR Code form) and check if it is valid. In this case, a positive status code is returned.
+    \item \textbf{SecurityController}: it manages the correct authorization of the attendant operations. In fact, through a correct tagging of them, methods can be defined only for users who have a specific role.
 \end{itemize}
 
-Finally, we have the \textbf{StoreAdminInterface}, which permits to each store manager to edit all the information about the shop. This job is done through different methods:
+Finally, we have the \textbf{StoreManagerInterface}, which permits to each store manager to edit all the information about the shop. This job is done through different methods:
 \begin{itemize}
-    \item \underline{editStoreInfo}: this method receives as input some new store information (which are basically String objects) and a StoreAdministrator object. It edits the Store object in the database if only the manager is its administrator.
-    \item \underline{editTimeslots}: this method receives as input the new time slot information and, as before, a StoreAdministrator object. It edits the information in the database.
-    \item \underline{editAttendants}: this last method receives some information about an attendant to be edited, and makes the change in the database.
+    \item \textbf{UserController}: it manages the operations w.r.t. the manager interface.
+    \item \textbf{StoreController}: it contains methods in order to manage the store. It permits creating a new store, editing an existent one, inserting new time slots (or deleting the existent ones) and to retrieve the list of active bookings. Finally, it permits to manage the store attendants (i.e. firing them from the application).
+    \item \textbf{SecurityController}: it manages the correct authorization of the attendant operations. In fact, through a correct tagging of them, methods can be defined only for users who have a specific role.
 \end{itemize}
+
+Out of every previous context, there is the email controller, which manages the feature of periodic notification, sending messages relying on active bookings. It also sends the confirmation and recovery emails for the accounts.
 
 \subsection{Logical Description of Data}
 \begin{figure}[H]
@@ -383,7 +385,7 @@ The diagram in figure\ref{er_diagram} shows a logic representation of what kind 
 
 First of all, we can see the distinction in different modules (as s. 1.1 of RASD explains) and their respectively database structure in case of deployment on organization's servers. Of course, if the buyer chooses to remain on CLup official servers, the structure will remain the entire one, limiting the functionalities store by store.
 
-The most important fact is that there are three different tables, each one for each customer type. In fact, since they contain different types of information, the most intuitive choice is the one of separating these types of data.
+Another important fact is that there is a distinction of responsibility in the user table, which provides several roles. 
 
 Then, we can see a table containing the list of all tickets, each of them associated to a specific store and (in case of \textit{Reservation} functionality) to a specific booking.
 
@@ -426,12 +428,14 @@ This choice leads to a higher deployment effort but also to a lower hardware upg
 
 Once split, the system requires a load balancer in order to correctly redirects the incoming requests to the node with the lowest workload.
 
-\subsubsection{Thin client and fat server}
-This architecture consists of keeping as low information as possible on client side. It means that the business logic resides only on server side.
-
-The minimum requirement of this choice is a stable connection between the parts; otherwise the application would not work as expected.
-
+\subsubsection{Thin and thick client and fat server}
+The thin client will be the web application.\\
+This architecture consists of keeping as low information as possible on client side. It means that the business logic resides only on server side.\\
+The minimum requirement of this choice is a stable connection between the parts; otherwise the application would not work as expected.\\
 Of course, the main advantage of choosing this implementation style is that the client machine is not required to have an high computational power.
+
+Instead, in the case of mobile application, the best choice is to save useful information on a local database, in order to avoid continuos requests to the server (less computational load) and also to keep information even when the Internet connection is not available. 
+In this second case it is said to be a thick client.
 
 \subsubsection{Adoption of IdP Providers}
 We decided to adopt some external IdP providers (such as Facebook, Google, etc.) in order to simplify the process of user registration, without asking him any additional information.
@@ -507,49 +511,51 @@ This section will shown the traceability between requirements and modules descri
 \begin{itemize}
     \item \textbf{R1:} The system allows registered users to select the store where they want to shop
           \begin{itemize}
-              \item \textbf{Login Handler}: this module allows registered users to select a store if they provide a correct combination of username and password.
-              \item \textbf{ASAP Handler} \textit{or} \textbf{Reservation Handler:} this module allows to select a store either in case of ASAP functionality choice or Reservation functionality choice.
+              \item \textbf{User Manager}: in order to login or sign up.
+              \item \textbf{Store Manager}: in order to choose a store.
+              \item \textbf{Ticket Manager}: in order to retrieve or book a ticket.
           \end{itemize}
     \item \textbf{R2:} The system allows users to retrieve a queue number
           \begin{itemize}
-              \item \textbf{ASAP Handler}
-              \item \textbf{Generate on spot:} this module allows people who are not registered to CLup service to be queued up manually by the store attendants.
+              \item \textbf{Store Manager}: in order to choose a store.
+              \item \textbf{Ticket Manager}: in order to retrieve or book a ticket or to use the handle on spot functionality.
           \end{itemize}
     \item \textbf{R3:} The system generates a QR Code associated to the ticket
           \begin{itemize}
-              \item \textbf{QRCode Generator:} this component allows the QRCode to be generated from the ticket id.
+              \item \textbf{Ticket Controller}: it simply returns a unique id to the client, which has then to show the information under form of QR Code.
           \end{itemize}
     \item \textbf{R4:} The system allows Store Administrators to add GPS Position and opening hours of the store
           \begin{itemize}
-              \item \textbf{Store Management:} this module allows store administrator to edit all the information about their stores.
+              \item \textbf{Store Manager}: this module allows store administrator to edit all the information about their stores.
           \end{itemize}
     \item \textbf{R5:} The system allows Store Attendants to register with their attendant code
           \begin{itemize}
-              \item \textbf{Sign Up:} this module allows the three types of users to register to the platform of CLup.
+              \item \textbf{User Manager}: this module allows the three types of users to register to the platform of CLup.
           \end{itemize}
     \item \textbf{R6:} The system allows users to select a day/time slot from the available ones
           \begin{itemize}
-              \item \textbf{Reservation Handler:} this module allows to accomplish to book a visit functionality.
+              \item \textbf{Store Manager}: in order to choose a store.
+              \item \textbf{Ticket Manager} this module allows to accomplish to book a visit functionality given a store id.
           \end{itemize}
     \item \textbf{R7:} The system allows users to add a list of products (categories) to purchase and the duration time of the visit
           \begin{itemize}
-              \item \textbf{Reservation Handler}
+              \item \textbf{Ticket Manager}
           \end{itemize}
     \item \textbf{R8:} The system computes a prediction of expected time duration of a customer's visit
           \begin{itemize}
-              \item \textbf{AlternativeSlotRecommender} this component lets the system suggests alternative choices relying on people past bookings.
+              \item \textbf{Alternative Slot Recommender} this component lets the system suggests alternative choices relying on people past bookings.
           \end{itemize}
     \item \textbf{R9:} The system recommends alternative day/time slots or store/chains to a user
           \begin{itemize}
               \item \textbf{Alternative slot recommender}
           \end{itemize}
-    \item \textbf{R10:} The system takes note about the actual queue number
+    \item \textbf{R10:} The system takes note about the actual in-queue tickets
           \begin{itemize}
-              \item \textbf{ASAP Handler} \textit{or} \textbf{Reservation Handler}
+              \item \textbf{Ticket Manager}
           \end{itemize}
     \item \textbf{R11:} The system notifies the user when its queue number is going to be called
           \begin{itemize}
-              \item \textbf{Notification Handler:} this module triggers an action when a number is going to be called and informs the user through a notification.
+              \item \textbf{Email Manager}: this module triggers an action when a number is going to be called and informs the user through an email notification. On client side, it would be done by an integrated mobile app behavior.
           \end{itemize}
 \end{itemize}
 
@@ -583,7 +589,7 @@ The following table presents the functionalities described in the RASD document 
         \begin{tabular}{ | c |c | c | c |}
             \hline
             \textbf{Functionality} & \textbf{Module} & \textbf{Importance for customer} & \textbf{Difficulty} \\ \hline
-            Sign Up and Login      & 1 (MVP)         & Low                              & Low                 \\ \hline
+            Sign Up and Login      & 1 (MVP)         & High                             & Low                 \\ \hline
             ASAP                   & 1 (MVP)         & High                             & Medium              \\\hline
             Make a reservation     & 2               & Medium                           & High                \\\hline
             Hand out on spot       & 1 (MVP)         & High                             & Medium              \\\hline
@@ -599,11 +605,11 @@ All the modules described in this document rely on DBMS of the internal database
 According to the table\ref{implementation_precedences} we decided to implement the functionalities relying on their importance.
 
 \begin{itemize}
-    \item \textbf{ASAP:} for this functionality it is necessary to implement and execute tests on the ASAPHandler and the QRCode Generation component. The ASAP handler is tested through an appropriate choice of store and through a check about the assigned time slot. The QRCode Generation is tested through a check on the content of it, which can also test the functionality of the QRCode Validation component.
-    \item \textbf{Hand out on spot:} this functionality is managed by the GenerateOnSpot component, on which the unit tests will be made. They will check that the module manages in a correct way all the requests of ticket that are made on spot, by an attendant of the considered store. Finally, an integration test with the DBMS is made.
-    \item \textbf{Make a reservation:} this module is an extension of the MVP one. It exploits some components, which are the ReservationHandler, AlternativeSlotRecommender, QRCode Validation and QRCode Generation ones. They will need some unit tests and, in particular, the ReservationHandler one also needs an integration test with the DBMS.
-    \item \textbf{SignUp and Login:} the two functionalities are strictly related, since the Login result is somehow affected by the SignUp function. So it would be a good idea to implement the SignUpHandler first and then the LoginHandler and then execute a unit and integration test. The test of the SignUpHandler requires a demo of the DBMS containing some accounts. In fact it’s necessary to test the correct call to the DBMS functions in order to retrieve the account already registered and then it is important to check the module recognize when a user is already registered or if the sent data presents some inconsistencies. Relying on the DBMS functions, an integration test is required to check the correct communication between the module and DBMS. These tests must also be executed for the LoginHandler because it retrieves data from the database to execute credentials check.
-    \item \textbf{Periodic notifications:} this functionality is accomplished through the NotificationHandler, on which some unit tests are needed to be executed. To properly make this tests, a demo scenario is needed, in which a customer retrieves a ticket (through, for example, the ASAP functionality) and the system triggers because the ticket is going to be called.
+    \item \textbf{SignUp and Login:} the two functionalities are strictly related, since the Login result is somehow affected by the SignUp function. So it would be a good idea to implement the sign up method first and then the login one and then execute a unit and integration test. The test of the User Manager requires a demo of the DBMS containing some accounts. In fact it’s necessary to test the correct call to the DBMS functions in order to retrieve the account already registered and then it is important to check the module recognize when a user is already registered or if the sent data presents some inconsistencies. Relying on the DBMS functions, an integration test is required to check the correct communication between the module and DBMS.
+    \item \textbf{ASAP:} for this functionality it is necessary to implement and execute tests on the Store Manager and the Ticket Manager components. They will be both tested through an automated test class. In fact, it is necessary to create a store, add a time slot and, finally, retrieve a ticket through different controller calls.
+    \item \textbf{Hand out on spot:} this functionality is managed by the Ticket component, on which the unit tests will be made. They will check that the module manages in a correct way all the requests of ticket that are made on spot, by an attendant of the considered store. Finally, an integration test with the DBMS is made.
+    \item \textbf{Make a reservation:} this module is an extension of the MVP one. It exploits some components, which are the Store Manager, Ticket Manager and Alternative Slot Recommender ones. They will need some unit tests and, in particular, the Ticket Manager one also needs an integration test with the DBMS.
+    \item \textbf{Periodic notifications:} this functionality is accomplished through the Email Manager, on which some unit tests are needed to be executed. To properly make this tests, a demo scenario is needed, in which a customer retrieves a ticket (through, for example, the ASAP functionality) and the system triggers because the ticket is going to be called.
 \end{itemize}
 
 \subsection{Clarification on component integration}
@@ -628,7 +634,7 @@ After this, we have to integrate the API communication between the S2B and the e
     \end{figure}
 \end{center}
 
-At this point it is possible to integrate the Client Manager, which permits to the end user to exploit all the functionalities, as shown in figure\ref{client_manager}.
+At this point it is possible to integrate the Client Manager, which permits to the end user to exploit all the functionalities, as shown in figure \ref{client_manager}.
 
 \begin{center}
     \begin{figure}[H]
