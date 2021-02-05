@@ -49,6 +49,9 @@ $(document).ready(function () {
                     }
                 }
             });
+            $('#ticketsTable').DataTable( {
+                "order": [[ 1, "desc" ]]
+            } );
         },
         error: function (err) {
             if (err.status == 403) {

@@ -19,7 +19,7 @@ var signupContainer = new Vue({
 
 function submitForm() {
     var form = document.signUpForm;
-    const passRegexp = new RegExp("r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\\$&*~]).{8,}$'");
+    const passRegexp = new RegExp("(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\\$&*~]).{8,}$");
     if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(form.username.value)) {
         let role, jsonReq;
         if (signupContainer.manager) {
