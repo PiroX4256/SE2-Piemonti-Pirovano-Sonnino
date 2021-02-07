@@ -68,12 +68,27 @@ The code and the releases can be find on the official CLup repository hosted on 
 \subsection{Definitions, Acronyms, Abbreviations}
 \subsubsection{Acronyms}
 \begin{itemize}
+    \item \textbf{API:} Application Programming Interface.
+    \item \textbf{APK:} Android Package
     \item \textbf{DBMS:} DataBase Management System.
     \item \textbf{DD:} Design Document.
+    \item \textbf{DOM:} Document Object Model.
     \item \textbf{DTO:} Data Transfer Object, represents a link between the user input and a Java Object.
+    \item \textbf{HTTP:} HyperText Transfer Protocol.
+    \item \textbf{IPA:} iOS App Store Package.
+    \item \textbf{JPA:} Java Persistence API.
+    \item \textbf{JS:} JavaScript.
     \item \textbf{QR Code:} Quick Response Code.
+    \item \textbf{REST:} REpresentational State Transfer (see DD).
     \item \textbf{RASD:} Requirements Analysis and Specification Document.
     \item \textbf{S2B:} Software To Be.
+    \item \textbf{UI:} User Interface.
+    \item \textbf{URL:} Uniform Resource Locator.
+\end{itemize}
+
+\subsubsection{Abbreviations}
+\begin{itemize}
+    \item \textbf{CMD:} Command Prompt.
 \end{itemize}
 
 \subsection{Revision history}
@@ -206,7 +221,7 @@ Spring Data JPA aims to significantly improve the implementation of data access 
 In fact, through services and repositories, interfacing with the database becomes very simple. Useless to say that, furthermore, the security of the queries from SQL injection is high, because it is totally managed by Spring.
 
 \subsubsection{Spring Security}
-Spring Security is a plugin of the Spring Mvc suite, which manages the application security.
+Spring Security is a plugin of the Spring MVC suite, which manages the application security.
 
 In fact, it is role-based and permits, through several annotations, to grant access to controller only to authorized people.
 
@@ -265,7 +280,7 @@ It includes a rich set of platform, layout, and foundational libraries, composed
 \end{itemize}
 \subsubsection{Hive}
 Hive is a lightweight and blazing fast key-value database written in pure Dart.\\
-It has the of Model in the MVC pattern used in the Mobile App as some information are stored on the client in order to improve performance.\\
+It has the role of Model in the MVC pattern used in the Mobile App as some information are stored on the client in order to improve performance.\\
 It uses HiveObjects as basic structure which are then implemented or extended through TypeAdapters.
 \subsubsection{QR Flutter}
 QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter.\\
@@ -312,9 +327,9 @@ First of all, it is intercepted by the Dispatcher Servlet, which forwards the re
 
 Once URL Handler has resolved the associated controller, the request is dispatched to the correct controller, which calls the classes needed for elaboration (such as services and, consequently, repositories).
 
-After the elaboration, the controller creates a ResponseEntity object and sends it to the view resolver which, with the help of Views class, return the response to Dispatcher Servlet.
+After the elaboration, the controller creates a ResponseEntity object and sends it to the view resolver which, with the help of Views class, returns the response to Dispatcher Servlet.
 
-Finally, the Dispatcher Servlet return the created response to the client.
+Finally, the Dispatcher Servlet returns the created response to the client.
 
 \subsubsection{Test cases}
 The test cases, which are described in details in section \ref{testing}, are located under the maven \textit{test} folder, into the package it.polimi.se2.clupapplication.
@@ -374,7 +389,7 @@ Having separate state and widget objects lets other widgets treat both stateless
 
 
 \subsection{Other Useful Information}
-The application is configured to fetch data from a MySQL database, which credentials must be specified in the application.yaml properties file. This configuration file can be found in \textit{resources} folder and contains also all the other static configurations of the application, such as jpa configurations, social login credentials, jwt token settings, etc.
+The application is configured to fetch data from a MySQL database, which credentials must be specified in the application.yaml properties file. This configuration file can be found in \textit{resources} folder and contains also all the other static configurations of the application, such as JPA configurations, social login credentials, JWT token settings, etc.
 \newpage
 \section{Testing}
 \label{testing}
@@ -410,7 +425,7 @@ Furthermore, we made some tests on the correct DBMS initialization, through a sp
 \subsection{Mobile Application}
 Integration testing is possible in Flutter, but Widgets have very strict assertions on input data; another very useful functionality of this framework is \textit{hot reload} and \textit{hot restart} which let runtime testing while coding it and without rebuilding it.\\
 We decided that integration on widgets was very time consuming and not worth it compared to the effort spent.\\
-Instead we tested our application on daily basis but more importantly we deployed our application \textit{APK} and \textit{IPA} on \textbf{TestFlight} (Apple's App Store for beta builds) and \textbf{Google Play Store}.\\
+Instead we tested our application on daily basis but more importantly we deployed our application \textit{APK} and \textit{IPA} on \textbf{Google Play Store} and \textbf{TestFlight} (Apple's App Store for beta builds).\\
 Once the builds were approved by Google/Apple we invited about 20 testers in order to stress the app and receive constant feedbacks, using them as the baseline for each new update. 
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{assets/console.png}
