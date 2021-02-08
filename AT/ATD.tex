@@ -1,0 +1,81 @@
+\documentclass[table, 12pt]{article}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{tocloft}
+\usepackage{todonotes}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{pdfpages}
+\usepackage{pdflscape}
+\usepackage{textpos}
+\usepackage{scrhack}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{tasks}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{listing}
+\usepackage{graphicx}
+\usepackage{subcaption}
+
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\begin{document}
+\begin{titlepage}
+    \centering
+    {\scshape\large AY 2020/2021 \par}
+    \vfill
+    \includegraphics[width=100pt]{assets/logo-polimi-new}\par\vspace{1cm}
+    {\scshape\LARGE Politecnico di Milano \par}
+    \vspace{1.5cm}
+    {\huge\bfseries Acceptance Testing Document \par}
+    \vspace{2cm}
+    {\Large {Luca Pirovano\quad Nicolò Sonnino}\par}
+    \vfill
+    {\large Professor\par
+        Matteo \textsc{Rossi}}
+    \vfill
+    {\large \textbf{Version 1.0} \\ \today \par}
+\end{titlepage}
+\hypersetup{%
+    pdfborder = {0 0 0}
+}
+\thispagestyle{plain}
+\pagenumbering{gobble}
+\mbox{}
+\newpage
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section{Tested Project}
+
+\newpage
+\section{Installation}
+
+\newpage
+\section{Acceptance Test Cases}
+
+\newpage
+\section{Conclusions}
+
+\section{Effort Spent}
+\begin{center}
+    \begin{tabular}{ | c || c | c | c | c| c|}
+        \hline
+        Student        & Time for Acceptance Testing \\ \hline
+        Luca Pirovano  & hours                       \\ \hline
+        Nicolò Sonnino & hours                       \\
+        \hline
+    \end{tabular}
+\end{center}
+
+\end{document}
