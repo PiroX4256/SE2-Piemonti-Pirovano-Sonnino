@@ -14,7 +14,7 @@
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{longtable}
-\usepackage{enumitem}
+\usepackage{enumerate}
 \usepackage{tasks}
 \usepackage{tabularx}
 \usepackage{titlesec}
@@ -57,23 +57,238 @@
 \pagenumbering{arabic}
 
 \section{Tested Project}
-
+\begin{itemize}
+    \item \textbf{Authors}\\Robert Medvedec\\Toma Sikora
+    \item \textbf{Repository URL}\\ \underline{\href{https://github.com/robertodavinci/Software_Engineering_2_Project_Medvedec_Sikora}{Link}}
+    \item \textbf{Documents considered}\begin{itemize}
+              \item RASD: Requirements Analysis Specification Document;
+              \item DD: Design Document;
+              \item ITD: Implementation and Testing Document;
+          \end{itemize}
+\end{itemize}
 \newpage
 \section{Installation}
+For the installation phase, we followed the \textit{Installation Instructions} section in the ITD (6.0).
 
+We have installed the two application artifacts (CLup and CLupSM) for Android operating system (.apk file) provided by the developers in the following environments:
+\begin{itemize}
+    \item Google Pixel 3A:
+          \begin{itemize}
+              \item \textbf{Platform:} emulated on the Android Virtual Device (AVD) environment, with SDK Version: 29.
+              \item \textbf{O.S.:} Android 10 (Q).
+          \end{itemize}
+    \item OnePlus 6T:
+          \begin{itemize}
+              \item \textbf{Platform:} physical device with SDK 29.
+              \item \textbf{O.S.:} Android 10 (Q).
+          \end{itemize}
+    \item NVIDIA Shield Tablet:
+          \begin{itemize}
+              \item \textbf{Platform:} physical device with SDK 26.
+              \item \textbf{O.S.:} Lineage O.S. 15.0 (Android Oreo).
+          \end{itemize}
+\end{itemize}
+
+Since there were neither iOS release and web GUI we only tested the Android artifact directly on the devices listed above and also debugged the project through the Android Studio Suite.
 \newpage
 \section{Acceptance Test Cases}
+Since the database was deployed on the Firebase platform, we could not access to it and consequently we could not perform tests on it. At the same time, we could not have any idea about how data was stored in the DBMS and how errors were handled.
 
+\subsection{Test Scenarios}
+\subsubsection{Store Selection}
+\label{store_selection}
+\begin{enumerate}[i]
+    \item \textbf{Goal:} choose a specific store located in Pavia.
+    \item \textbf{Steps to reproduce:}
+          \begin{itemize}
+              \item[-] Open the app.
+              \item[-] Tap \textit{SELECT A STORE} button.
+              \item[-] Click the first text box and select the city \textit{Pavia, Italy}.
+              \item[-] Click on the second text box and select the grocery shop.
+              \item[-] Select one of the addresses printed in the last text area.
+              \item[-] Tap \textit{SELECT STORE}.
+          \end{itemize}
+    \item \textbf{Issues:}
+          \begin{itemize}
+              \item[-] Selecting a field in the form produced no UI changes visible to the user. After a code inspection, we realized that the issue was related to the system theme. In fact, we had the dark mode enabled on each device. This produced a different UI color palette, with the consequence of white text on white background. An issue screenshot is shown in figure \ref{white_label_issue}.
+              \item[-] Tapping on \textit{SELECT STORE} without confirming the address leads to an application (or sometimes page) crash, reporting a runtime exception.
+          \end{itemize}
+\end{enumerate}
+
+\begin{figure}[!tbp]
+    \centering
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{assets/screenshots/white_label_fix_jpg.jpg}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{assets/screenshots/white_label_issue.jpg}
+    \end{minipage}
+    \caption{Store selection (expected vs. actual)}
+    \label{white_label_issue}
+\end{figure}
+
+
+\subsubsection{New Ticket Request}
+\begin{enumerate}[i]
+    \item \textbf{Goal:} retrieve a ticket at Minimarket located in Pavia.
+    \item \textbf{Steps to reproduce:}
+          \begin{itemize}
+              \item[-] Select a store as described in paragraph \ref{store_selection}
+              \item[-] Click on \textit{REQUEST TICKET} button.
+              \item[-] Visualize the QR Code of the fresh new ticket.
+          \end{itemize}
+    \item \textbf{Test cases:}
+          \begin{enumerate}
+              \item Use of \textit{CHECK TICKET} button.
+              \item Retrieve a ticket for a closed store.
+          \end{enumerate}
+    \item \textbf{Test results:}
+          \begin{enumerate}
+              \item If the ticket had been validated, the app returned a confirmation message. Otherwise, no actions were performed.
+              \item The app correctly threw an error stating that the store was closed.
+          \end{enumerate}
+    \item \textbf{Issues:}
+          \begin{itemize}
+              \item[-] Once a ticket has been retrieved, if the user closes the application or returns to previous page, the ticket is definitely lost and there is no way of recovering it.\\The main consequence of this behavior is that the ticket keeps its queue position, blocking all following tickets in the same slot. This issue makes the entire application useless for the affected slot.
+          \end{itemize}
+\end{enumerate}
+
+\subsubsection{Login as a Store Manager}
+\label{login_store_manager}
+\begin{enumerate}[i]
+    \item \textbf{Goal:} login using an existing Store Manager account.
+    \item \textbf{Steps to reproduce:}
+          \begin{itemize}
+              \item[-] Open the application.
+              \item[-] Tap on \textit{STORE MANAGER LOGIN} button.
+              \item[-] Insert credentials.
+              \item[-] Tap on \textit{LOGIN} button.
+          \end{itemize}
+    \item \textbf{Test Cases:}
+          \begin{enumerate}
+              \item Insertion of wrong credentials.
+              \item Insertion of unconfirmed account credentials.
+              \item Password reset (if forgotten).
+              \item Tap the login button without credentials insertion.
+              \item Account switching.
+          \end{enumerate}
+    \item \textbf{Test results:}
+          \begin{enumerate}
+              \item Correct throwing of a login error.
+              \item Correct sending of confirmation email.
+              \item Correct password reset flow.
+              \item Correct throwing of a missing fields error.
+              \item Correct logout (and successive login) of users.
+          \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Manage a store as Store Manager}
+\begin{enumerate}[i]
+    \item \textbf{Goal:} open or close an existent shop managed by our profile.
+    \item \textbf{Steps to reproduce:}
+          \begin{itemize}
+              \item[-] Login as a store manager, as described in section \ref{login_store_manager}
+              \item[-] Click on \textit{OPEN STORE} or \textit{CLOSE STORE}
+          \end{itemize}
+    \item \textbf{Test results:} the store correctly reacted to our requests, closing and opening itself. In case of closure, slots in that store became unavailable.
+\end{enumerate}
+
+\subsubsection{Customer Control}
+\begin{enumerate}[i]
+    \item \textbf{Goal:} scan tickets and monitor accesses.
+    \item \textbf{Steps to reproduce:}
+          \begin{itemize}
+              \item[-] Login as a store manager, as described in section \ref{login_store_manager}.
+              \item[-] Tap on \textit{CUSTOMER CONTROL} button.
+              \item[-] Tap on \textit{SCAN A TICKET} button.
+              \item[-] Read the QR Code using the device integrated camera and validate ticket.
+              \item[-] Tap on \textit{STORE EXIT} button.
+          \end{itemize}
+    \item \textbf{Test Cases:}
+          \begin{enumerate}
+              \item Scan a valid ticket.
+              \item Scan an expired or lost ticket.
+              \item Scan a ticket after reaching the maximum slot capacity.
+              \item Scan a ticket retrieved immediately after a lost one.
+          \end{enumerate}
+    \item \textbf{Test results:}
+          \begin{enumerate}
+              \item The application correctly validated the ticket, giving also a confirmation message.
+              \item In the case of an expired ticket, the application correctly displayed an error message. In the second case the application validated the ticket.
+              \item The ticket was validated and the available slot counter went below zero, as shown in figure \ref{counter_going_brr}.
+              \item The ticket was not validated.
+          \end{enumerate}
+    \item \textbf{Issues}
+          \begin{itemize}
+              \item[-] Losing a ticket resulted in blocking the whole queue. Since the ticket was still valid but not scannable, every following booking was considered invalid, resulting in an unavailability of the slot.
+              \item[-] Scanning more tickets than the available store slots produced more accesses than the allowed ones, resulting in a negative value of the slots counter.
+          \end{itemize}
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth/3]{assets/screenshots/oh_no.jpg}
+    \caption{The counter became negative.}
+    \label{counter_going_brr}
+\end{figure}
+
+\section{Project Inspection}
+\subsection{Documentation Quality}
+\subsubsection{RASD}
+Inside the Overall Description section (2.1.1) the figure used for describing the internal structure of the system is too technical.
+In fact, since the audience of this document is a possible CLup customer without any IT skills, concepts like database, API, mobile operating systems and so on are meaningless and may cause confusion for the document reader.
+
+The choice of manually inserting each store manager into the database is a waste of resource for CLup System Administrators. Consider for example an entire medium-size city using CLup, for every store (about 50) there are a certain number of managers (realistically a minimum set of 50 people); the system administrators will then need to manually create and maintain all these accounts, resulting in an enormous amount of work.
+
+Finally, there is a lack of details in the use case diagrams, which are not covering all the use cases described before.
+\subsubsection{DD}
+Inside the Architectural Design Overview section (2.1) the application server is designed to communicate with the Google Maps API (in order to provide a map representation).
+In our opinion, linking these two components is unrealistic and resource consuming, because the map needs to be rendered directly on client machine. In a real world scenario, the client would directly contact the maps API without passing through the server.
+
+In the deployment diagram, we could not understand why \textit{Spring Boot - MySQL} is deployed into the Database Server. In fact, Spring is a complete Java Enterprise backend framework, which interfaces with the database server through several data access interfaces (JPA, MongoDB and so on).
+
+Finally, the Implementation, Integration and Test Plan section is well done and very detailed. In fact, the precedence of components implementation follows a well defined logic that we think it is required in this kind of document.
+\subsubsection{ITD}
+The Adopted Development Frameworks and Languages section (3.1) is in our opinion very poor of information.
+In fact, the technology choices are not motivated; furthermore, there is a digression on the IDE used, which is not relevant to the section scope.
+
+The structure of the technologies used, such as Kotlin and Firebase, is not explained.
+For example, we do not know the whole firebase interaction flow, Kotlin integration with Android and so on.
+
+On the other hand, meaningless details, such as QR Code AES encryption (completely useless in our opinion), are explained and commented too much (even with random code snippet in certain points).
+
+In the section 3.3 there is a tree description of an existent set of data in the Firebase DBMS. In our opinion this whole section is required in the Design Document instead of in the implementation one. In fact, if your project is realized in outsourcing, the assigned developer needs to know the exact organization of the database; otherwise, the resulting product could be completely different from the designed one (in the Design Document the logical description of data is omitted).
+
+The code structure section contains only a list of components/packages without any explanation about their utility and role. We expected at least the description of the application packages with their functionalities.
+
+\subsection{Architecture Quality}
+First of all, the architecture constraints and guidelines stated in the Design Documents has not been followed.
+In fact, the original three-tiered system became a two-tiered one, because of the total lack of an application server or any backend platform. Furthermore, the application and presentation layers both reside on the client machine.
+
+The application interfaces directly with the Firebase DBMS system, which leads to a potential dangerous security breach; decompiling the APK (fairly easy job) lets everybody obtain firebase credential keys, google developer keys and other sensitive data.
+
+In the current implementation is even possible for a malicious user to edit, insert or delete data from database simply making an API request.
+
+\subsection{Code Quality}
+During our testing phase, we faced several critical implementation issues, such as exception throwing (resulting in application crash) instead of error messages and lack of feedbacks on user actions.
+
+The adoption of JUnit is completely pointless because it is never used as intended. In fact, unit testing means automatic model consistency test, which implies mocking up objects, runtime assertions and so on. The only type of tests made were simply some \texttt{System.out.println()} statements on several objects.
+
+The tests are then explained with the usage of code snippets completely out of context (and also without any form of description or comment).
+
+Finally, code commenting is not constant and, together with the total absence of code docs, make it very difficult to read.
 \newpage
 \section{Conclusions}
+After a complete analysis of the previous sections, we can surely assume that this implementation project was carried very hastily, often overlooking major considerations (some of them stated in the Design Document) which would have created a solid and secure system.
 
 \section{Effort Spent}
 \begin{center}
     \begin{tabular}{ | c || c | c | c | c| c|}
         \hline
         Student        & Time for Acceptance Testing \\ \hline
-        Luca Pirovano  & hours                       \\ \hline
-        Nicolò Sonnino & hours                       \\
+        Luca Pirovano  & 10 hours                    \\ \hline
+        Nicolò Sonnino & 10 hours                    \\
         \hline
     \end{tabular}
 \end{center}

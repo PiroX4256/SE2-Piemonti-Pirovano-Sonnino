@@ -1,0 +1,3 @@
+- Quando selezioni negozio e città non compare nulla, quindi se non selezioni nulla ti tira un exception. Devi schiacciare sul bianco a caso e sperare di centrare un negozio
+- La coda è sempre vuota
+- Se l'app dovesse crashare dopo aver appena preso un biglietto, tale biglietto è perso per sempre
