@@ -229,7 +229,7 @@ Since the database was deployed on the Firebase platform, we could not access to
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth/3]{assets/screenshots/oh_no.jpg}
-    \caption{The counter became negative.}
+    \caption{The counter reached a negative value.}
     \label{counter_going_brr}
 \end{figure}
 
@@ -254,7 +254,7 @@ The Adopted Development Frameworks and Languages section (3.1) is in our opinion
 In fact, the technology choices are not motivated; furthermore, there is a digression on the IDE used, which is not relevant to the section scope.
 
 The structure of the technologies used, such as Kotlin and Firebase, is not explained.
-For example, we do not know the whole firebase interaction flow, Kotlin integration with Android and so on.
+For example, we do not know the whole Firebase interaction flow, Kotlin integration with Android and so on.
 
 On the other hand, meaningless details, such as QR Code AES encryption (completely useless in our opinion), are explained and commented too much (even with random code snippet in certain points).
 
@@ -266,7 +266,7 @@ The code structure section contains only a list of components/packages without a
 First of all, the architecture constraints and guidelines stated in the Design Documents has not been followed.
 In fact, the original three-tiered system became a two-tiered one, because of the total lack of an application server or any backend platform. Furthermore, the application and presentation layers both reside on the client machine.
 
-The application interfaces directly with the Firebase DBMS system, which leads to a potential dangerous security breach; decompiling the APK (fairly easy job) lets everybody obtain firebase credential keys, google developer keys and other sensitive data.
+The application interfaces directly with the Firebase DBMS system, which leads to a potential dangerous security breach; decompiling the APK (fairly easy job) lets everybody obtain Firebase credential keys, Google Developer keys and other sensitive data.
 
 In the current implementation is even possible for a malicious user to edit, insert or delete data from database simply making an API request.
 
